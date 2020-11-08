@@ -12,3 +12,8 @@ Layout: /_layout.cshtml
 
 LinksUseHttps: true
 DateTimeInputCulture: ja-JP
+
+GitHubOwner: AconCavy
+GitHubName: Blog
+GitHubToken: => Config.FromSetting<string>("GITHUB_TOKEN")
+GitHubBranch: main
