@@ -1,7 +1,6 @@
 ﻿@{
-    var url = @Document.GetLink();
+    var url = "https://" + Metadata.GetString("Host") + Document.GetLink();
 }
-
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="@url" data-size="large">
     Tweet
 </a>

@@ -2,7 +2,7 @@
     var site = Document.GetString("SiteTitle");
     var title = Document.GetString("Title") ?? site;
     var description = Document.GetString("Lead") ?? string.Empty;
-    var url = Document.GetLink();
+    var url = "https://" + Metadata.GetString("Host") + Document.GetLink();
 }
 
 <meta name="twitter:card" content="summary">
