@@ -1,6 +1,13 @@
+@{
+    var site = Document.GetString("SiteTitle");
+    var title = Document.GetString("Title") ?? site;
+    var description = Document.GetString("Lead") ?? string.Empty;
+    var url = Document.GetLink();
+}
+
 <meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@Document.GetString("SiteTitle")">
-<meta property="og:title" content="@Document.GetString("Title")">
-<meta property="og:description" content="@Document.GetString("Lead")">
+<meta name="twitter:site" content="@site">
+<meta property="og:title" content="@title">
+<meta property="og:description" content="@description">
 @* <meta property="og:image" content="5.カードに表示する画像のURL"> *@
-<meta property="og:url" content="@Document.GetLink()">
+<meta property="og:url" content="@url">
