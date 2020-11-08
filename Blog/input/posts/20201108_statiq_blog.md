@@ -13,7 +13,7 @@ Tags: [Statiq, Github Pages, Github Actions]
 [Statiq](https://statiq.dev/) は [前回の記事](20200819wyamblog) で紹介した `Wyam` をリブランディングし，機能の追加に柔軟性を持たせたフレームワークだそうです．
 大きく3つのフレームワークに分かれており，基礎となる `Statiq.Framework`，一般的なWebサイト生成のための `Statiq.Web`，ドキュメントサイト生成のための `Statiq.Doc` に分かれています．
 
-`Statiq.Framework` はMITライセンスで公開されている一方，`Statiq.Web` と `Statiq.Doc` は [License Zero Prosperity Public License]((https://licensezero.com/licenses/prosperity)) (Public License) と [License Zero Private License](https://licensezero.com/licenses/private) (Private License)` のデュアルライセンスを取ります．
+`Statiq.Framework` はMITライセンスで公開されている一方，`Statiq.Web` と `Statiq.Doc` は [License Zero Prosperity Public License](https://licensezero.com/licenses/prosperity) (Public License) と [License Zero Private License](https://licensezero.com/licenses/private) (Private License)` のデュアルライセンスを取ります．
 そのため，商用利用の場合は，はじめ30日間の無料体験期間のあと，開発者一人当たり50ドルのPrivate Licenseを取得する必要があります．
 非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます．
 詳しくは[こちら](https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md).
