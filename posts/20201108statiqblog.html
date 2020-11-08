@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <script src="/Blog/syntax/prism.js"></script>
+    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/scss/acon-log.css">
+
+    <title>acon.log - &#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;</title>
+
+    
+    
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/about">About</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="post-heading">
+                    <h1>
+                        &#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;
+                    </h1>
+                        <div class="meta">Published on Sunday, 08 November 2020</div>
+                            <div class="mt-3">
+                                    <a href="/Blog/tags/statiq" class="badge badge-dark"> Statiq</a>
+                                    <a href="/Blog/tags/github-pages" class="badge badge-dark"> Github Pages</a>
+                                    <a href="/Blog/tags/github-actions" class="badge badge-dark"> Github Actions</a>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content" class="col-md-12">
+            <h1 id="section">はじめに</h1>
+<p>前回のブログから一度も更新せずに3か月経ち，サイト生成を <code>Wyam</code> から <code>Statiq</code> に変えたついでに，サイトのレイアウトを頑張ってアレンジしたので記事を書きます．</p>
+<h1 id="statiq">Statiq</h1>
+<p><a href="https://statiq.dev/">Statiq</a> は <a href="20200819_wyam_blog">前回の記事</a> で紹介した <code>Wyam</code> をリブランディングし，機能の追加に柔軟性を持たせたフレームワークだそうです．
+大きく3つのフレームワークに分かれており，基礎となる <code>Statiq.Framework</code>，一般的なWebサイト生成のための <code>Statiq.Web</code>，ドキュメントサイト生成のための <code>Statiq.Doc</code> に分かれています．</p>
+<p><code>Statiq.Framework</code> はMITライセンスで公開されている一方，<code>Statiq.Web</code> と <code>Statiq.Doc</code> は <a href="(https://licensezero.com/licenses/prosperity)">License Zero Prosperity Public License</a> (Public License) と <a href="https://licensezero.com/licenses/private">License Zero Private License</a> (Private License)` のデュアルライセンスを取ります．
+そのため，商用利用の場合は，はじめ30日間の無料体験期間のあと，開発者一人当たり50ドルのPrivate Licenseを取得する必要があります．
+非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます．
+詳しくは<a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md">こちら</a>.</p>
+<h2 id="section-1">使い方</h2>
+<p>Wyamは.NET上にツールをインストールして実行するのに対して，Statiqの場合はコンソールアプリケーションとして実行します．</p>
+<pre><code class="language-sh">dotnet new console --name Blog
+dotnet add package Statiq.Web --version x.y.z
+</code></pre>
+<p>そして，エントリポイントの <code>Program.cs</code> にBootStrapeprを追記します．</p>
+<pre><code class="language-csharp">using System.Threading.Tasks;
+using Statiq.App;
+using Statiq.Web;
+
+namespace Blog
+{
+    public static class Program
+    {
+        public static async Task&lt;int&gt; Main(string[] args) =&gt;
+            await Bootstrapper.Factory
+                .CreateWeb(args)
+                .RunAsync();
+    }
+}
+</code></pre>
+<p>次に，<code>./input/</code> ディレクトリ内に <code>index.md</code> を作成し，適当な内容を書いて保存します．</p>
+<pre><code>Title: Hello Statiq
+---
+Hello world!
+</code></pre>
+<p>Wyamと同様に，ファイル上部にFront Matterを記述することで，記事タイトルやタグといったメタ情報を付与することができます．</p>
+<pre><code class="language-sh">dotnet run -- preview
+</code></pre>
+<p>そして，プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます．(デフォルトでは <code>localhost:5080</code>)</p>
+<p>素の状態では，テーマは存在しないので，<code>./theme/input/</code> にWebサイトのテーマを用意する必要があります．</p>
+<p>サンプルとして，公式テーマの<a href="https://github.com/statiqdev/CleanBlog">CleanBlog</a>を <code>./theme/</code> ディレクトリ内に配置してプロジェクトを実行することで，WyamのCleanBlogテーマと同様のWebサイトを生成することができます．</p>
+<h2 id="github-pages">Github Pagesへの展開</h2>
+<p>Statiq.Webでは，公式でGithub Pagesへのデプロイ方法が用意されています．</p>
+<p>Wyamの時と同様に，設定ファイル(今回は <code>settings.yml</code>)に設定を追記する必要があります．</p>
+<pre><code>Host: aconcavy.github.io // github pagesのホスト
+LinkRoot: /Blog // バーチャルパス
+LinksUseHttps: true
+
+GitHubOwner: AconCavy // ユーザ名
+GitHubName: Blog // リポジトリ名
+GitHubToken: =&gt; Config.FromSetting&lt;string&gt;(&quot;GITHUB_TOKEN&quot;) // これはこのまま
+GitHubBranch: gh-pages // 生成先ブランチ
+</code></pre>
+<p>Github Actionでは次のようなワークフローを指定します．
+この時に，<code>GitHubBranch</code>で指定したブランチは，存在しない場合はエラーが吐かれるので，先にブランチを作成しておきましょう(5敗)．</p>
+<pre><code class="language-yaml">name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout&#64;v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet&#64;v1
+      with:
+        dotnet-version: 3.1
+    - name: Deploy
+      run: dotnet run -p Blog -- deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<p>ワークフローが成功すると，指定したブランチにファイルが生成されるので，リポジトリの設定からGithub Pagesのブランチを指定します．
+すべて成功すると，<code>{user}.github.io/{repository}</code> (今回は<a href="https://aconcavy.github.io/Blog/">aconcavy.github.io/Blog</a>`)にサイトが表示されます．</p>
+<p>サイトのテーマがうまく適用されない場合は，設定ファイルの <code>Host</code> や <code>LinkRoot</code> を見直すといいでしょう．</p>
+<h1 id="section-2">まとめ</h1>
+<p>Statiqで作成した静的Webサイトを，GitHub ActionsとGitHub Pagesデプロイする方法をまとめました．</p>
+<p>Wyamと比べてカスタマイズの自由度が高いみたいだけど，ドキュメントを調べても調べたいことにいまいち辿り着かないので，ドキュメントが豊富になればもっと使いやすくなりそうです．APIリファレンスとかも欲しい．
+まだプレビュー段階なので今後に期待しています．</p>
+<h1 id="section-3">あとがき</h1>
+<p>Webフロントなんもわからんマンだったので，CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました．おかげでWebデザインを学ぶことができたので，ちょっと前進でしょうか．</p>
+<p>画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど，Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね．</p>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © AconCavy 2020</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+</body>
+
+</html>
