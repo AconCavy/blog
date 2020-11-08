@@ -1,0 +1,118 @@
+html { font-size: 20px; }
+
+body { background-color: #212121; color: #e6e6e6; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; font-family: "Noto Sans JP", sans-serif; }
+
+p { font-weight: 400; font-family: "Noto Serif JP", serif; }
+
+p { line-height: 1.5; margin: 30px 0; }
+
+p a { text-decoration: underline; font-family: "Noto Sans JP", sans-serif; }
+
+a { color: #82AAFF; }
+
+a:focus, a:hover { color: #80CBC4; }
+
+#mainNav { background-color: #1a1a1a; }
+
+#mainNav .navbar-brand { font-weight: 700; color: #666666; }
+
+#mainNav .navbar-toggler { padding: -1rem 0; border-color: rgba(0, 0, 0, 0); outline: none; box-shadow: none; }
+
+#mainNav .navbar-toggler > .navbar-toggler-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(102, 102, 102, 1)' stroke-width='2' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); }
+
+#mainNav .navbar-nav > li.nav-item > a { color: #666666; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+@media only screen { #mainNav .navbar-brand { color: #666666; }
+  #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover { color: #80CBC4; }
+  #mainNav .navbar-nav > li.nav-item > a { color: #666666; }
+  #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover { color: #80CBC4; } }
+
+header { margin: 6rem 0 1rem; background-attachment: scroll; position: relative; }
+
+header .page-heading, header .post-heading, header .site-heading { color: #e6e6e6; text-align: center; font-family: "Noto Sans JP", sans-serif; }
+
+header .page-heading h1, header .post-heading h1, header .site-heading h1 { font-size: 2rem; }
+
+header .page-heading .subheading, header .site-heading .subheading { font-size: 1.5rem; font-weight: 300; line-height: 2; }
+
+header .post-heading .meta, header .post-heading .subheading { line-height: 2; }
+
+header .post-heading .subheading { font-size: 1.5rem; font-weight: 700; }
+
+header .post-heading .meta { color: #e6e6e6; font-size: 1rem; font-weight: 300; }
+
+a.badge.badge-dark, a.badge.badge-light, a.badge.select { font-family: "Noto Sans JP", sans-serif; font-weight: 300; }
+
+a.badge.badge-dark:focus, a.badge.badge-dark:hover, a.badge.badge-light:focus, a.badge.badge-light:hover, a.badge.select:focus, a.badge.select:hover { background-color: #1a1a1a; text-decoration: underline; color: #80CBC4; }
+
+a.badge.badge-light { background-color: #C792EA; color: #1a1a1a; }
+
+a.badge.badge-dark { background-color: #1a1a1a; color: #C792EA; }
+
+a.badge.select { background-color: #1a1a1a; color: #80CBC4; }
+
+.tag-area { background-color: #1a1a1a; padding: 1rem 2rem; }
+
+.post-preview { background-color: #1a1a1a; padding: 1rem 2rem .5rem; margin-bottom: 1rem; }
+
+.post-preview > a { color: #e6e6e6; }
+
+.post-preview > a:focus, .post-preview > a:hover { text-decoration: none; color: #80CBC4; }
+
+.post-preview > a > .post-title { font-size: 2rem; }
+
+.post-preview > a > .post-subtitle { font-weight: 300; }
+
+.post-preview > .post-meta { color: #666666; }
+
+.post-preview > .post-meta > a { text-decoration: none; color: #666666; }
+
+.post-preview > .post-meta > a:focus, .post-preview > .post-meta > a:hover { text-decoration: underline; color: #80CBC4; }
+
+h1.group-year { color: #80CBC4; text-align: center; background-color: #1a1a1a; padding: 1rem 2rem; margin-bottom: 1rem; }
+
+footer p { color: #666666; font-family: "Noto Sans JP", sans-serif; }
+
+.btn { font-size: .8rem; font-weight: 700; text-transform: uppercase; font-family: "Noto Sans JP", sans-serif; }
+
+.btn:hover, .btn:focus, .btn:active { color: #1a1a1a !important; background-color: #80CBC4 !important; border-color: #80CBC4 !important; }
+
+.btn:focus { box-shadow: 0 0 0 0.2rem #347e77 !important; }
+
+.btn-primary { color: #1a1a1a; background-color: #82AAFF; border-color: #82AAFF; }
+
+code, pre, code[class*="language-"], pre[class*="language-"] { color: #e6e6e6; background: #1a1a1a; font-family: "Source Code Pro", monospace; font-size: 1rem; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; word-wrap: normal; line-height: 1.5; }
+
+pre, pre[class*="language-"] { padding: .5rem; margin: .5rem 0; }
+
+:not(pre) > code, pre, code[class*="language-"], pre[class*="language-"] { color: #ff9cac; }
+
+:not(pre) > code { padding: 0 .5rem; }
+
+div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span { color: #80CBC4; background: #1a1a1a; font-size: 1em; background: rgba(224, 224, 224, 0.2); }
+
+code[class*="language-csharp"] .token.string, pre[class*="language-csharp"] .token.string { color: #C3E88D; }
+
+code[class*="language-csharp"] .token.namespace, pre[class*="language-csharp"] .token.namespace { color: #FFCB6B; }
+
+code[class*="language-csharp"] .token.namespace > .punctuation, pre[class*="language-csharp"] .token.namespace > .punctuation { color: #f07178; }
+
+code[class*="language-csharp"] .token.type-list > .class-name, pre[class*="language-csharp"] .token.type-list > .class-name { color: #C792EA; }
+
+code[class*="language-csharp"] .token.class-name, pre[class*="language-csharp"] .token.class-name { color: #FFCB6B; }
+
+code[class*="language-csharp"] .token.class-name > .keyword, pre[class*="language-csharp"] .token.class-name > .keyword { color: #F78C6C; }
+
+code[class*="language-csharp"] .token.keyword, pre[class*="language-csharp"] .token.keyword { color: #C792EA; }
+
+code[class*="language-csharp"] .token.boolean, pre[class*="language-csharp"] .token.boolean { color: #ff9cac; }
+
+code[class*="language-csharp"] .token.function, pre[class*="language-csharp"] .token.function { color: #82AAFF; }
+
+code[class*="language-csharp"] .token.operator, pre[class*="language-csharp"] .token.operator { color: #89DDFF; }
+
+code[class*="language-csharp"] .token.named-parameter.punctuation, pre[class*="language-csharp"] .token.named-parameter.punctuation { color: #FFCB6B; }
+
+code[class*="language-csharp"] .token.punctuation, pre[class*="language-csharp"] .token.punctuation { color: #89DDFF; }
