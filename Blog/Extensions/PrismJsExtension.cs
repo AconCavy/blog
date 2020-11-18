@@ -5,7 +5,7 @@ using Markdig.Syntax;
 
 namespace Blog.Extensions
 {
-    public class MarkdownExtension : IMarkdownExtension
+    public class PrismJsExtension : IMarkdownExtension
     {
         public void Setup(MarkdownPipelineBuilder pipeline)
         {

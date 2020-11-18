@@ -18,7 +18,7 @@ namespace Blog
                     var markdownModule = new RenderMarkdown()
                         .UseExtensions()
                         .UseExtension<BootstrapExtension>()
-                        .UseExtension<MarkdownExtension>();
+                        .UseExtension<PrismJsExtension>();
                     if (templates.ContainsKey(MediaTypes.Markdown))
                         templates[MediaTypes.Markdown].Module = markdownModule;
                     else
