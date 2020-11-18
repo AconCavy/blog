@@ -95,13 +95,15 @@ footer p { color: #666666; font-family: "Noto Sans JP", sans-serif; }
 
 .btn-primary { color: #1a1a1a; background-color: #82AAFF; border-color: #82AAFF; }
 
+.table { background-color: #1a1a1a; color: #e6e6e6; }
+
+.table thead { color: #f07178; }
+
 code, pre, code[class*="language-"], pre[class*="language-"] { color: #e6e6e6; background: #1a1a1a; font-family: "Source Code Pro", monospace; font-size: 1rem; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; word-wrap: normal; line-height: 1.5; }
 
 pre, pre[class*="language-"] { padding: .5rem; margin: .5rem 0; }
 
-:not(pre) > code, pre, code[class*="language-"], pre[class*="language-"] { color: #ff9cac; }
-
-:not(pre) > code { padding: 0 .5rem; }
+:not(pre) > code { color: #ff9cac; padding: 0 .5rem; }
 
 div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span { color: #80CBC4; background: #1a1a1a; font-size: 1em; background: rgba(224, 224, 224, 0.2); }
 

@@ -85,34 +85,34 @@
 <h2 id="wyam-is">Wyam is 何</h2>
 <p>.NET Core製の静的サイトジェネレータで，ブログやドキュメント等を markdown と Razor ファイルで作ることができます．</p>
 <p>見た目はテンプレートが6種類あり，カスタマイズ可能で，.NET Core および C# で機能の拡張をすることもできます．</p>
-<blockquote>
+<blockquote class="blockquote">
 <p><em><strong>Easy! Flexible! Powerful!</strong></em></p>
 </blockquote>
 <h2 id="section-1">ダウンロードとインストール</h2>
 <p><a href="https://dotnet.microsoft.com/">.NET SDK</a> をインストールしていない場合はインストールします．2020年8月19日現在，最新の .NET Core Runtime は3.1ですが， Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします．</p>
 <p>.NET Core SDK,および Runtime がインストールされたら，.NET Core ツールを用いて Wyam をインストールします．</p>
-<pre><code>dotnet tool -g Wyam.Tool
+<pre><code class="line-numbers">dotnet tool -g Wyam.Tool
 </code></pre>
 <h2 id="section-2">プロジェクトの作成</h2>
 <p>プロジェクトを作成したいディレクトリに移動し，ブログテンプレートを<code>--recipe</code> または <code>-r</code> オプションで生成します．</p>
-<pre><code>wyam new -r Blog
+<pre><code class="line-numbers">wyam new -r Blog
 </code></pre>
 <p>テンプレートが生成されたら，次のコマンドでビルドします．</p>
-<pre><code>wyam -r Blog
+<pre><code class="line-numbers">wyam -r Blog
 </code></pre>
 <p>また，ビルドの際には <code>--theme</code> または <code>-t</code> オプションでテーマを指定することができます．テーマについては<a href="https://wyam.io/recipes/blog/themes/">こちら</a>．</p>
-<pre><code>wyam -r Blog -t CleanBlog
+<pre><code class="line-numbers">wyam -r Blog -t CleanBlog
 </code></pre>
 <p>ビルドが終わったら，ローカル環境で実行してみます．</p>
-<pre><code>wyam preview
+<pre><code class="line-numbers">wyam preview
 </code></pre>
-<p><img src="assets/images/hello_wyam.png" alt="hello_wyam" /></p>
+<p><img src="assets/images/hello_wyam.png" class="img-fluid" alt="hello_wyam" /></p>
 <p>あっという間にブログが出来上がりました👏</p>
 <h2 id="section-3">記事の編集</h2>
 <p><code>./input/</code> 内に <code>about.md</code> が，また <code>./input/posts/</code> 内に <code>first-post.md</code> が生成されています．これらのように markdown ファイルを追加および編集することで，記事の編集および追加をすることができます．</p>
 <h2 id="front-matter">Front Matter の設定</h2>
 <p><code>first-post.md</code> ファイルの先頭に以下のようなものが書かれています．</p>
-<pre><code>Title: First Post
+<pre><code class="line-numbers">Title: First Post
 Published: 1/1/2016
 Tags: Introduction
 ---
@@ -132,7 +132,7 @@ Tags: Introduction
 <p>リポジトリが Public なら無料，Private なら従量課金らしいです．</p>
 <h2 id="section-5">プロジェクトの設定を変更する</h2>
 <p>GitHubにリポジトリを作成し，Wyam で作成したプロジェクトを Commit / Push します．この際 <code>.gitignore</code> には以下の設定を指定しておくといいでしょう．</p>
-<pre><code># Wyam files
+<pre><code class="line-numbers"># Wyam files
 output/
 config.wyam.dll
 config.wyam.hash
@@ -140,40 +140,40 @@ config.wyam.packages.xml
 </code></pre>
 <p>次に，<code>config.wyam</code> を編集してプロジェクトの設定を行います．</p>
 <p><code>BlogKeys.Title</code> でWeb サイトのタイトルを，<code>BlogKeys.Description</code> でWeb サイトのトップに表示される簡単な説明を指定できます．</p>
-<pre><code>Settings[BlogKeys.Title] = &quot;This is title&quot;;
+<pre><code class="line-numbers">Settings[BlogKeys.Title] = &quot;This is title&quot;;
 Settings[BlogKeys.Description] = &quot;Welcome!&quot;;
 </code></pre>
 <p>Web サイトを <code>https</code> に指定する場合は以下のオプションを有効にします．</p>
-<pre><code>Settings[Keys.LinksUseHttps] = true;
+<pre><code class="line-numbers">Settings[Keys.LinksUseHttps] = true;
 </code></pre>
 <p>Web サイトで表示するカルチャ情報を設定する場合は <code>Keys.DateTimeDisplayCulture</code> と <code>Keys.DateTimeInputCulture</code> を変更します．
 <code>2020年8月19日</code> のように表示したい場合は <code>Keys.DateTimeDisplayCulture</code> に <code>ja-JP</code> を指定します．
 日本時間を表示したい場合も同様に <code>Keys.DateTimeInputCulture</code> に <code>ja-JP</code> を指定します．</p>
-<pre><code>Settings[Keys.DateTimeDisplayCulture] = &quot;ja-JP&quot;;
+<pre><code class="line-numbers">Settings[Keys.DateTimeDisplayCulture] = &quot;ja-JP&quot;;
 Settings[Keys.DateTimeInputCulture] = &quot;ja-JP&quot;;
 </code></pre>
 <p>プロジェクトのルーティングでは，GitHub のリポジトリがユーザページ用のリポジトリの場合 (<code>ユーザ名.github.io</code>) と，それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります．</p>
 <h3 id="section-6">1 ユーザページの場合</h3>
 <p>例として，GitHubユーザ名が <code>AconCavy</code> の場合は以下のようになります．</p>
-<pre><code>Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
+<pre><code class="line-numbers">Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
 </code></pre>
 <h3 id="section-7">2 プロジェクトページの場合</h3>
 <p>プロジェクトページで作成する場合，<code>Keys.LinkRoot</code> にリポジトリ名を設定する必要があります．例として，リポジトリ名が <code>Blog</code> の場合は以下のようになります．<strong>大文字と小文字の区別があるようなので注意が必要です．</strong></p>
-<pre><code>Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
+<pre><code class="line-numbers">Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
 Settings[Keys.LinkRoot] = &quot;Blog&quot;;
 </code></pre>
 <p>この設定を変更した場合，<code>wyam preview</code> を使ってローカルでプレビューをしようとしても，Path が <code>localhost:5080/</code> のままで，正しくプレビューすることができません．そのため，<code>--virtual-dir</code> オプションを指定することで正しくプレビューすることができます．</p>
-<pre><code>wyam preview --virtual-dir Blog
+<pre><code class="line-numbers">wyam preview --virtual-dir Blog
 </code></pre>
 <p>プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります．</p>
-<pre><code>&#64;echo off
+<pre><code class="line-numbers">&#64;echo off
 wyam -r Blog
 wyam preview --virtual-dir Blog
 </code></pre>
 <h2 id="github-actions">GitHub Actions の設定</h2>
 <p>GitHub のリポジトリページに移動し，<code>Actions</code> タブで新しいワークフローを作成します．
 <code>Simple workflow</code> を作成すると，新規の YAML ファイルがリポジトリの <code>.github/workflows</code> に作成されます．そして，作成された YAMLファイルを <code>gh-pages.yml</code> に変更し，次のような内容に変更します．</p>
-<pre><code class="language-yaml">name: Wyam
+<pre><code class="language-yaml line-numbers">name: Wyam
 
 on:
   push:

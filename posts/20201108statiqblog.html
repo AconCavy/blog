@@ -85,11 +85,11 @@
 詳しくは<a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md">こちら</a>.</p>
 <h2 id="section-1">使い方</h2>
 <p>Wyamは.NET上にツールをインストールして実行するのに対して，Statiqの場合はコンソールアプリケーションとして実行します．</p>
-<pre><code class="language-sh">dotnet new console --name Blog
+<pre><code class="language-sh line-numbers">dotnet new console --name Blog
 dotnet add package Statiq.Web --version x.y.z
 </code></pre>
 <p>そして，エントリポイントの <code>Program.cs</code> にBootStrapeprを追記します．</p>
-<pre><code class="language-csharp">using System.Threading.Tasks;
+<pre><code class="language-csharp line-numbers">using System.Threading.Tasks;
 using Statiq.App;
 using Statiq.Web;
 
@@ -105,12 +105,12 @@ namespace Blog
 }
 </code></pre>
 <p>次に，<code>./input/</code> ディレクトリ内に <code>index.md</code> を作成し，適当な内容を書いて保存します．</p>
-<pre><code>Title: Hello Statiq
+<pre><code class="line-numbers">Title: Hello Statiq
 ---
 Hello world!
 </code></pre>
 <p>Wyamと同様に，ファイル上部にFront Matterを記述することで，記事タイトルやタグといったメタ情報を付与することができます．</p>
-<pre><code class="language-sh">dotnet run -- preview
+<pre><code class="language-sh line-numbers">dotnet run -- preview
 </code></pre>
 <p>そして，プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます．(デフォルトでは <code>localhost:5080</code>)</p>
 <p>素の状態では，テーマは存在しないので，<code>./theme/input/</code> にWebサイトのテーマを用意する必要があります．</p>
@@ -118,7 +118,7 @@ Hello world!
 <h2 id="github-pages">Github Pagesへの展開</h2>
 <p>Statiq.Webでは，公式でGithub Pagesへのデプロイ方法が用意されています．</p>
 <p>Wyamの時と同様に，設定ファイル(今回は <code>settings.yml</code>)に設定を追記する必要があります．</p>
-<pre><code>Host: aconcavy.github.io // github pagesのホスト
+<pre><code class="line-numbers">Host: aconcavy.github.io // github pagesのホスト
 LinkRoot: /Blog // バーチャルパス
 LinksUseHttps: true
 
@@ -129,7 +129,7 @@ GitHubBranch: gh-pages // 生成先ブランチ
 </code></pre>
 <p>Github Actionでは次のようなワークフローを指定します．
 この時に，<code>GitHubBranch</code>で指定したブランチは，存在しない場合はエラーが吐かれるので，先にブランチを作成しておきましょう(5敗)．</p>
-<pre><code class="language-yaml">name: deploy
+<pre><code class="language-yaml line-numbers">name: deploy
 
 on:
   push:

@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <script src="/Blog/syntax/prism.js"></script>
+    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/scss/acon-log.css">
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <title>acon.log - .NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content=".NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Blog/posts/20201119forbenchmark">
+    
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/about">About</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="post-heading">
+                    <h1>
+                        .NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;
+                    </h1>
+                        <div class="meta">Published on Thursday, 19 November 2020</div>
+                            <div class="mt-3">
+                                    <a href="/Blog/tags/net" class="badge badge-dark"> .NET</a>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content" class="col-md-12">
+            <h1 id="section">環境</h1>
+<ul>
+<li>OS: Windows 10</li>
+<li>CPU: AMD Ryzen 5 3600</li>
+<li>SDK: .NET 5.0</li>
+<li>BenchmarkDotnet: 0.12.1</li>
+</ul>
+<h2 id="section-1">計測対象</h2>
+<ul>
+<li>Runtimes
+<ul>
+<li>.NET Core 3.1.9</li>
+<li>.NET 5</li>
+</ul>
+</li>
+<li>Targets
+<ul>
+<li>1次元配列 (1e6)</li>
+<li>2次元配列 (1e3 * 1e3)</li>
+<li>2次元ジャグ配列 (1e3 * 1e3)</li>
+<li>3次元配列 (1e2 * 1e2 * 1e2)</li>
+<li>3次元ジャグ配列 (1e2 * 1e2 * 1e2)</li>
+</ul>
+</li>
+</ul>
+<h2 id="section-2">操作</h2>
+<p>全ての要素に値を代入</p>
+<h2 id="section-3">スクリプト</h2>
+<pre><code class="language-csharp line-numbers">using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+
+namespace BenchmarkSharp
+{
+    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [MemoryDiagnoser]
+    public class ForLoopBenchmark
+    {
+        private const int Size1 = (int) 1e6;
+        private const int Size2 = (int) 1e3;
+        private const int Size3 = (int) 1e2;
+        private int[] _dim1;
+        private int[,] _dim2;
+        private int[][] _dim2Jagged;
+        private int[,,] _dim3;
+        private int[][][] _dim3Jagged;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _dim1 = new int[Size1];
+            _dim2 = new int[Size2, Size2];
+            _dim3 = new int[Size3, Size3, Size3];
+            _dim2Jagged = new int[Size2][];
+            for (var i = 0; i &lt; _dim2Jagged.Length; i++) _dim2Jagged[i] = new int[Size2];
+            _dim3Jagged = new int[Size3][][];
+            for (var i = 0; i &lt; _dim3Jagged.Length; i++)
+            {
+                _dim3Jagged[i] = new int[Size3][];
+                for (var j = 0; j &lt; _dim3Jagged[i].Length; j++)
+                {
+                    _dim3Jagged[i][j] = new int[Size2];
+                }
+            }
+        }
+
+        [Benchmark]
+        public void Dim1()
+        {
+            for (var i = 0; i &lt; _dim1.Length; i++) _dim1[i] = i;
+        }
+
+        [Benchmark]
+        public void Dim2()
+        {
+            for (var i = 0; i &lt; _dim2.GetLength(0); i++)
+            for (var j = 0; j &lt; _dim2.GetLength(1); j++)
+                _dim2[i, j] = j;
+        }
+
+        [Benchmark]
+        public void Dim2Jagged()
+        {
+            for (var i = 0; i &lt; _dim2Jagged.Length; i++)
+            for (var j = 0; j &lt; _dim2Jagged[i].Length; j++)
+                _dim2Jagged[i][j] = j;
+        }
+
+        [Benchmark]
+        public void Dim3()
+        {
+            for (var i = 0; i &lt; _dim3.GetLength(0); i++)
+            for (var j = 0; j &lt; _dim3.GetLength(1); j++)
+            for (var k = 0; k &lt; _dim3.GetLength(2); k++)
+                _dim3[i, j, k] = k;
+        }
+
+        [Benchmark]
+        public void Dim3Jagged()
+        {
+            for (var i = 0; i &lt; _dim3Jagged.Length; i++)
+            for (var j = 0; j &lt; _dim3Jagged[i].Length; j++)
+            for (var k = 0; k &lt; _dim3Jagged[i][j].Length; k++)
+                _dim3Jagged[i][j][k] = k;
+        }
+    }
+}
+</code></pre>
+<h1 id="section-4">結果</h1>
+<table class="table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Job</th>
+<th>Runtime</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+<th style="text-align: right;">Gen 0</th>
+<th style="text-align: right;">Gen 1</th>
+<th style="text-align: right;">Gen 2</th>
+<th style="text-align: right;">Allocated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dim1</td>
+<td>.NET Core 3.1</td>
+<td>.NET Core 3.1</td>
+<td style="text-align: right;">565.1 μs</td>
+<td style="text-align: right;">3.35 μs</td>
+<td style="text-align: right;">3.14 μs</td>
+<td style="text-align: right;">566.0 μs</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">1 B</td>
+</tr>
+<tr>
+<td>Dim1</td>
+<td>.NET Core 5.0</td>
+<td>.NET Core 5.0</td>
+<td style="text-align: right;">525.8 μs</td>
+<td style="text-align: right;">10.49 μs</td>
+<td style="text-align: right;">24.53 μs</td>
+<td style="text-align: right;">508.9 μs</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Dim2</td>
+<td>.NET Core 3.1</td>
+<td>.NET Core 3.1</td>
+<td style="text-align: right;">5,366.7 μs</td>
+<td style="text-align: right;">47.74 μs</td>
+<td style="text-align: right;">44.65 μs</td>
+<td style="text-align: right;">5,357.6 μs</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">111 B</td>
+</tr>
+<tr>
+<td>Dim2</td>
+<td>.NET Core 5.0</td>
+<td>.NET Core 5.0</td>
+<td style="text-align: right;">3,544.6 μs</td>
+<td style="text-align: right;">230.75 μs</td>
+<td style="text-align: right;">680.38 μs</td>
+<td style="text-align: right;">3,060.7 μs</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Dim2Jagged</td>
+<td>.NET Core 3.1</td>
+<td>.NET Core 3.1</td>
+<td style="text-align: right;">1,514.8 μs</td>
+<td style="text-align: right;">29.53 μs</td>
+<td style="text-align: right;">35.16 μs</td>
+<td style="text-align: right;">1,522.0 μs</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td>Dim2Jagged</td>
+<td>.NET Core 5.0</td>
+<td>.NET Core 5.0</td>
+<td style="text-align: right;">2,003.3 μs</td>
+<td style="text-align: right;">8.14 μs</td>
+<td style="text-align: right;">7.22 μs</td>
+<td style="text-align: right;">2,001.9 μs</td>
+<td style="text-align: right;">1.33</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Dim3</td>
+<td>.NET Core 3.1</td>
+<td>.NET Core 3.1</td>
+<td style="text-align: right;">5,209.7 μs</td>
+<td style="text-align: right;">45.24 μs</td>
+<td style="text-align: right;">40.10 μs</td>
+<td style="text-align: right;">5,201.5 μs</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">10 B</td>
+</tr>
+<tr>
+<td>Dim3</td>
+<td>.NET Core 5.0</td>
+<td>.NET Core 5.0</td>
+<td style="text-align: right;">4,525.7 μs</td>
+<td style="text-align: right;">246.02 μs</td>
+<td style="text-align: right;">725.38 μs</td>
+<td style="text-align: right;">4,114.5 μs</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Dim3Jagged</td>
+<td>.NET Core 3.1</td>
+<td>.NET Core 3.1</td>
+<td style="text-align: right;">18,504.2 μs</td>
+<td style="text-align: right;">466.86 μs</td>
+<td style="text-align: right;">1,376.55 μs</td>
+<td style="text-align: right;">18,885.7 μs</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td>Dim3Jagged</td>
+<td>.NET Core 5.0</td>
+<td>.NET Core 5.0</td>
+<td style="text-align: right;">17,920.7 μs</td>
+<td style="text-align: right;">1,043.53 μs</td>
+<td style="text-align: right;">3,076.86 μs</td>
+<td style="text-align: right;">19,831.3 μs</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+</tbody>
+</table>
+<h1 id="section-5">まとめ</h1>
+<p>.NET 5.0は .NET Core 3.1に比べて</p>
+<ul>
+<li>1次元配列 -&gt; 10%程度高速</li>
+<li>2次元配列 -&gt; 35%程度高速</li>
+<li>2次元ジャグ配列 -&gt; 35%程度低速</li>
+<li>3次元配列 -&gt; 10%程度高速</li>
+<li>3次元ジャグ配列 -&gt; ほぼ一緒</li>
+</ul>
+<p>.NET 5.0において多次元配列と多次元ジャグ配列の各次元のサイズが同じ大きさであれば</p>
+<ul>
+<li>2次元 -&gt; ジャグ配列のほうが40%程度高速</li>
+<li>3次元 -&gt; 配列のほうが75%程度高速</li>
+</ul>
+
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201119forbenchmark" data-size="large">
+    Tweet
+</a>        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © 2020 AconCavy</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+</body>
+
+</html>
