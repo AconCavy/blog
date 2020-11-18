@@ -72,14 +72,16 @@
 <div class="container">
     <div class="row">
         <div id="content" class="col-md-12">
-            <h1 id="section">環境</h1>
+            <h1 id="section">はじめに</h1>
+<p>.NET 5でいろいろなパフォーマンスが向上したらしいので，1次元配列，2次元配列，2次元ジャグ配列，3次元配列，3次元配列のfor-loopのベンチマークを取ってみた．</p>
+<h1 id="section-1">環境</h1>
 <ul>
 <li>OS: Windows 10</li>
 <li>CPU: AMD Ryzen 5 3600</li>
 <li>SDK: .NET 5.0</li>
 <li>BenchmarkDotnet: 0.12.1</li>
 </ul>
-<h2 id="section-1">計測対象</h2>
+<h2 id="section-2">計測対象</h2>
 <ul>
 <li>Runtimes
 <ul>
@@ -97,9 +99,9 @@
 </ul>
 </li>
 </ul>
-<h2 id="section-2">操作</h2>
+<h2 id="section-3">操作</h2>
 <p>全ての要素に値を代入</p>
-<h2 id="section-3">スクリプト</h2>
+<h2 id="section-4">スクリプト</h2>
 <pre><code class="language-csharp line-numbers">using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
@@ -180,7 +182,7 @@ namespace BenchmarkSharp
     }
 }
 </code></pre>
-<h1 id="section-4">結果</h1>
+<h1 id="section-5">結果</h1>
 <table class="table">
 <thead>
 <tr>
@@ -412,7 +414,7 @@ namespace BenchmarkSharp
 </tr>
 </tbody>
 </table>
-<h1 id="section-5">まとめ</h1>
+<h1 id="section-6">まとめ</h1>
 <p>.NET 5.0は .NET Core 3.1に比べて</p>
 <ul>
 <li>1次元配列 -&gt; 10%程度高速</li>
