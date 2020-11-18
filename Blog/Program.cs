@@ -15,13 +15,15 @@ namespace Blog
                 .CreateWeb(args)
                 .ConfigureTemplates(templates =>
                 {
-                    if (!templates.ContainsKey(MediaTypes.Markdown)) return;
-                    templates.Remove(MediaTypes.Markdown);
-                    templates.Add(MediaTypes.Markdown, new Template(ContentType.Content, Phase.Process,
-                        new RenderMarkdown()
-                            .UseExtensions()
-                            .UseExtension<BootstrapExtension>()
-                            .UseExtension<MarkdownExtension>()));
+                    var markdownModule = new RenderMarkdown()
+                        .UseExtensions()
+                        .UseExtension<BootstrapExtension>()
+                        .UseExtension<MarkdownExtension>();
+                    if (templates.ContainsKey(MediaTypes.Markdown))
+                        templates[MediaTypes.Markdown].Module = markdownModule;
+                    else
+                        templates.Add(MediaTypes.Markdown,
+                            new Template(ContentType.Content, Phase.Process, markdownModule));
                 })
                 .RunAsync();
     }
