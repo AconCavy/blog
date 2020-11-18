@@ -20,14 +20,8 @@ pre[class*="language-"] {
   margin: .5rem 0;
 }
 
-:not(pre) > code,
-pre,
-code[class*="language-"],
-pre[class*="language-"] {
-  color: $pink;
-}
-
 :not(pre) > code {
+  color: $pink;
   padding: 0 .5rem;
 }
 

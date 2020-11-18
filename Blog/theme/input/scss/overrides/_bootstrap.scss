@@ -22,3 +22,12 @@
   background-color: $blue;
   border-color: $blue;
 }
+
+.table {
+  background-color: $backgroundAlt;
+  color: $primary;
+
+  thead {
+    color: $red;
+  }
+}
