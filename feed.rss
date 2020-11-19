@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+	<channel>
+		<title />
+		<link>https://aconcavy.github.io/Blog</link>
+		<description />
+		<copyright>2020</copyright>
+		<pubDate>Thu, 19 Nov 2020 14:51:15 GMT</pubDate>
+		<lastBuildDate>Thu, 19 Nov 2020 14:51:15 GMT</lastBuildDate>
+		<item>
+			<title>Statiqがmarkdownから生成するhtmlのカスタマイズ</title>
+			<link>https://aconcavy.github.io/Blog/posts/20201119statiqextension</link>
+			<description>&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20201119statiqextension</guid>
+			<pubDate>Thu, 19 Nov 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;
+&lt;h1 id="section-1"&gt;方法&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Bootstrapper&lt;/code&gt;において，&lt;code&gt;Statiq.Web&lt;/code&gt;でWebサイトを生成するメソッドである&lt;code&gt;CreateWeb()&lt;/code&gt;では，markdownに関わるModuleの&lt;code&gt;RenderMarkdown&lt;/code&gt;を&lt;code&gt;Templates&lt;/code&gt;内で設定している．
+そのため，&lt;code&gt;ConfigureTemplates()&lt;/code&gt;を通じて，予め設定されたModuleを上書きすることで好みの設定を反映することができる．
+Statiqでは，markdownを生成するために&lt;a href="https://github.com/lunet-io/markdig"&gt;markdig&lt;/a&gt;を使っているようなので，markdownの設定を追加するには&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを&lt;code&gt;Rendermarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に渡す必要がある．&lt;/p&gt;
+&lt;p&gt;今回は，&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグをレスポンシブ対応と，&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグにクラスを追加するために，markdigの&lt;code&gt;BootstrapExtension&lt;/code&gt;を設定に追加する．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
+    await Bootstrapper.Factory
+        .CreateWeb(args)
+        .ConfigureTemplates(templates =&amp;gt;
+        {
+            // 新しい設定のModuleを作成
+            // デフォルトはUseExtensionsのみ
+            var markdownModule = new RenderMarkdown()
+                .UseExtensions()
+                .UseExtension&amp;lt;BootstrapExtension&amp;gt;() // bootstrap
+                .UseExtension&amp;lt;PrismJsExtension&amp;gt;(); // オリジナル
+            if (templates.ContainsKey(MediaTypes.Markdown)) 
+                templates[MediaTypes.Markdown].Module = markdownModule; // 既にあるならば書き換え
+            else 
+                templates.Add(MediaTypes.Markdown,
+                    new Template(ContentType.Content, Phase.Process, markdownModule)); // 無ければ追加
+        })
+        .RunAsync();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また，&lt;code&gt;prism.js&lt;/code&gt;のコードブロックに行数を表示するクラスの&lt;code&gt;line-number&lt;/code&gt;を追加するために，新しく&lt;code&gt;PrismJsExtension.cs&lt;/code&gt;を作成し，&lt;code&gt;BootstrapExtension&lt;/code&gt;に倣い，&lt;code&gt;MarkdownObject&lt;/code&gt;が&lt;code&gt;CodeBlock&lt;/code&gt;であれば&lt;code&gt;line-numbers&lt;/code&gt;をクラスに追加するメソッドの&lt;code&gt;PipelineOnDocumentProcessed()&lt;/code&gt;markdigの生成パイプラインにデリゲートを追加する．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;// PrismJsExtension.cs
+using Markdig;
+using Markdig.Renderers;
+using Markdig.Renderers.Html;
+using Markdig.Syntax;
+
+namespace Blog.Extensions
+{
+    public class PrismJsExtension : IMarkdownExtension
+    {
+        public void Setup(MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
+            pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
+        }
+
+        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+        {
+        }
+
+        private static void PipelineOnDocumentProcessed(MarkdownDocument document)
+        {
+            foreach (var node in document.Descendants())
+            {
+                if (node is CodeBlock)
+                {
+                    node.GetAttributes().AddClass(&amp;quot;line-numbers&amp;quot;); // 行数表示のクラスを追加
+                }
+            }
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以上の2つの設定を追加してビルドすることで，bootstrapによる&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグのレスポンシブ対応，&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグのレイアウト，prism.jsの言語を指定したコードブロックに行数が表示されるようになる．&lt;/p&gt;
+&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで，markdownからhtmlを生成する設定を変更することができ，&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで，htmlタグのクラス等を変更することができる．&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>.NET Core 3.1と.NET 5のfor-loopの速度比較</title>
+			<link>https://aconcavy.github.io/Blog/posts/20201119forbenchmark</link>
+			<description>&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので，1次元配列，2次元配列，2次元ジャグ配列，3次元配列，3次元配列のfor-loopのベンチマークを取ってみた．&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20201119forbenchmark</guid>
+			<pubDate>Thu, 19 Nov 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので，1次元配列，2次元配列，2次元ジャグ配列，3次元配列，3次元配列のfor-loopのベンチマークを取ってみた．&lt;/p&gt;
+&lt;h1 id="section-1"&gt;環境&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;OS: Windows 10&lt;/li&gt;
+&lt;li&gt;CPU: AMD Ryzen 5 3600&lt;/li&gt;
+&lt;li&gt;SDK: .NET 5.0&lt;/li&gt;
+&lt;li&gt;BenchmarkDotnet: 0.12.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-2"&gt;計測対象&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Runtimes
+&lt;ul&gt;
+&lt;li&gt;.NET Core 3.1.9&lt;/li&gt;
+&lt;li&gt;.NET 5&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Targets
+&lt;ul&gt;
+&lt;li&gt;1次元配列 (1e6)&lt;/li&gt;
+&lt;li&gt;2次元配列 (1e3 * 1e3)&lt;/li&gt;
+&lt;li&gt;2次元ジャグ配列 (1e3 * 1e3)&lt;/li&gt;
+&lt;li&gt;3次元配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
+&lt;li&gt;3次元ジャグ配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-3"&gt;操作&lt;/h2&gt;
+&lt;p&gt;全ての要素に値を代入&lt;/p&gt;
+&lt;h2 id="section-4"&gt;スクリプト&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+
+namespace BenchmarkSharp
+{
+    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [MemoryDiagnoser]
+    public class ForLoopBenchmark
+    {
+        private const int Size1 = (int) 1e6;
+        private const int Size2 = (int) 1e3;
+        private const int Size3 = (int) 1e2;
+        private int[] _dim1;
+        private int[,] _dim2;
+        private int[][] _dim2Jagged;
+        private int[,,] _dim3;
+        private int[][][] _dim3Jagged;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _dim1 = new int[Size1];
+            _dim2 = new int[Size2, Size2];
+            _dim3 = new int[Size3, Size3, Size3];
+            _dim2Jagged = new int[Size2][];
+            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++) _dim2Jagged[i] = new int[Size2];
+            _dim3Jagged = new int[Size3][][];
+            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
+            {
+                _dim3Jagged[i] = new int[Size3][];
+                for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
+                {
+                    _dim3Jagged[i][j] = new int[Size2];
+                }
+            }
+        }
+
+        [Benchmark]
+        public void Dim1()
+        {
+            for (var i = 0; i &amp;lt; _dim1.Length; i++) _dim1[i] = i;
+        }
+
+        [Benchmark]
+        public void Dim2()
+        {
+            for (var i = 0; i &amp;lt; _dim2.GetLength(0); i++)
+            for (var j = 0; j &amp;lt; _dim2.GetLength(1); j++)
+                _dim2[i, j] = j;
+        }
+
+        [Benchmark]
+        public void Dim2Jagged()
+        {
+            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++)
+            for (var j = 0; j &amp;lt; _dim2Jagged[i].Length; j++)
+                _dim2Jagged[i][j] = j;
+        }
+
+        [Benchmark]
+        public void Dim3()
+        {
+            for (var i = 0; i &amp;lt; _dim3.GetLength(0); i++)
+            for (var j = 0; j &amp;lt; _dim3.GetLength(1); j++)
+            for (var k = 0; k &amp;lt; _dim3.GetLength(2); k++)
+                _dim3[i, j, k] = k;
+        }
+
+        [Benchmark]
+        public void Dim3Jagged()
+        {
+            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
+            for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
+            for (var k = 0; k &amp;lt; _dim3Jagged[i][j].Length; k++)
+                _dim3Jagged[i][j][k] = k;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-5"&gt;結果&lt;/h1&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Job&lt;/th&gt;
+&lt;th&gt;Runtime&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Mean&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Error&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;StdDev&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Median&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Ratio&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;RatioSD&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 0&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 1&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 2&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Allocated&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;565.1 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3.35 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3.14 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;566.0 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim1&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;525.8 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;10.49 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;24.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;508.9 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.92&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,366.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;47.74 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;44.65 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,357.6 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;111 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,544.6 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;230.75 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;680.38 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,060.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.64&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.13&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,514.8 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;29.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;35.16 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,522.0 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;2,003.3 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;8.14 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;7.22 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;2,001.9 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,209.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;45.24 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;40.10 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,201.5 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;10 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;4,525.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;246.02 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;725.38 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;4,114.5 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.90&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.15&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;18,504.2 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;466.86 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,376.55 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;18,885.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;17,920.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,043.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,076.86 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;19,831.3 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.98&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.20&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;.NET 5.0は .NET Core 3.1に比べて&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
+&lt;li&gt;2次元配列 -&amp;gt; 35%程度高速&lt;/li&gt;
+&lt;li&gt;2次元ジャグ配列 -&amp;gt; 35%程度低速&lt;/li&gt;
+&lt;li&gt;3次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
+&lt;li&gt;3次元ジャグ配列 -&amp;gt; ほぼ一緒&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;.NET 5.0において多次元配列と多次元ジャグ配列の各次元のサイズが同じ大きさであれば&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
+&lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>ブログのレイアウト変更とStatiqを使った静的サイトの生成</title>
+			<link>https://aconcavy.github.io/Blog/posts/20201108statiqblog</link>
+			<description>&lt;p&gt;前回のブログから一度も更新せずに3か月経ち，サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに，サイトのレイアウトを頑張ってアレンジしたので記事を書きます．&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20201108statiqblog</guid>
+			<pubDate>Sun, 08 Nov 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;前回のブログから一度も更新せずに3か月経ち，サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに，サイトのレイアウトを頑張ってアレンジしたので記事を書きます．&lt;/p&gt;
+&lt;h1 id="statiq"&gt;Statiq&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://statiq.dev/"&gt;Statiq&lt;/a&gt; は &lt;a href="https://aconcavy.github.io/Blog/20200819wyamblog"&gt;前回の記事&lt;/a&gt; で紹介した &lt;code&gt;Wyam&lt;/code&gt; をリブランディングし，機能の追加に柔軟性を持たせたフレームワークだそうです．
+大きく3つのフレームワークに分かれており，基礎となる &lt;code&gt;Statiq.Framework&lt;/code&gt;，一般的なWebサイト生成のための &lt;code&gt;Statiq.Web&lt;/code&gt;，ドキュメントサイト生成のための &lt;code&gt;Statiq.Doc&lt;/code&gt; に分かれています．&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Statiq.Framework&lt;/code&gt; はMITライセンスで公開されている一方，&lt;code&gt;Statiq.Web&lt;/code&gt; と &lt;code&gt;Statiq.Doc&lt;/code&gt; は &lt;a href="https://licensezero.com/licenses/prosperity"&gt;License Zero Prosperity Public License&lt;/a&gt; (Public License) と &lt;a href="https://licensezero.com/licenses/private"&gt;License Zero Private License&lt;/a&gt; (Private License)` のデュアルライセンスを取ります．
+そのため，商用利用の場合は，はじめ30日間の無料体験期間のあと，開発者一人当たり50ドルのPrivate Licenseを取得する必要があります．
+非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます．
+詳しくは&lt;a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md"&gt;こちら&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="section-1"&gt;使い方&lt;/h2&gt;
+&lt;p&gt;Wyamは.NET上にツールをインストールして実行するのに対して，Statiqの場合はコンソールアプリケーションとして実行します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console --name Blog
+dotnet add package Statiq.Web --version x.y.z
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして，エントリポイントの &lt;code&gt;Program.cs&lt;/code&gt; にBootStrapeprを追記します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
+using Statiq.App;
+using Statiq.Web;
+
+namespace Blog
+{
+    public static class Program
+    {
+        public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
+            await Bootstrapper.Factory
+                .CreateWeb(args)
+                .RunAsync();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に，&lt;code&gt;./input/&lt;/code&gt; ディレクトリ内に &lt;code&gt;index.md&lt;/code&gt; を作成し，適当な内容を書いて保存します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: Hello Statiq
+---
+Hello world!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wyamと同様に，ファイル上部にFront Matterを記述することで，記事タイトルやタグといったメタ情報を付与することができます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet run -- preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして，プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます．(デフォルトでは &lt;code&gt;localhost:5080&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;素の状態では，テーマは存在しないので，&lt;code&gt;./theme/input/&lt;/code&gt; にWebサイトのテーマを用意する必要があります．&lt;/p&gt;
+&lt;p&gt;サンプルとして，公式テーマの&lt;a href="https://github.com/statiqdev/CleanBlog"&gt;CleanBlog&lt;/a&gt;を &lt;code&gt;./theme/&lt;/code&gt; ディレクトリ内に配置してプロジェクトを実行することで，WyamのCleanBlogテーマと同様のWebサイトを生成することができます．&lt;/p&gt;
+&lt;h2 id="github-pages"&gt;Github Pagesへの展開&lt;/h2&gt;
+&lt;p&gt;Statiq.Webでは，公式でGithub Pagesへのデプロイ方法が用意されています．&lt;/p&gt;
+&lt;p&gt;Wyamの時と同様に，設定ファイル(今回は &lt;code&gt;settings.yml&lt;/code&gt;)に設定を追記する必要があります．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Host: aconcavy.github.io // github pagesのホスト
+LinkRoot: /Blog // バーチャルパス
+LinksUseHttps: true
+
+GitHubOwner: AconCavy // ユーザ名
+GitHubName: Blog // リポジトリ名
+GitHubToken: =&amp;gt; Config.FromSetting&amp;lt;string&amp;gt;("GITHUB_TOKEN") // これはこのまま
+GitHubBranch: gh-pages // 生成先ブランチ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Github Actionでは次のようなワークフローを指定します．
+この時に，&lt;code&gt;GitHubBranch&lt;/code&gt;で指定したブランチは，存在しない場合はエラーが吐かれるので，先にブランチを作成しておきましょう(5敗)．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1
+    - name: Deploy
+      run: dotnet run -p Blog -- deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ワークフローが成功すると，指定したブランチにファイルが生成されるので，リポジトリの設定からGithub Pagesのブランチを指定します．
+すべて成功すると，&lt;code&gt;{user}.github.io/{repository}&lt;/code&gt; (今回は&lt;a href="https://aconcavy.github.io/Blog/"&gt;aconcavy.github.io/Blog&lt;/a&gt;`)にサイトが表示されます．&lt;/p&gt;
+&lt;p&gt;サイトのテーマがうまく適用されない場合は，設定ファイルの &lt;code&gt;Host&lt;/code&gt; や &lt;code&gt;LinkRoot&lt;/code&gt; を見直すといいでしょう．&lt;/p&gt;
+&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;Statiqで作成した静的Webサイトを，GitHub ActionsとGitHub Pagesデプロイする方法をまとめました．&lt;/p&gt;
+&lt;p&gt;Wyamと比べてカスタマイズの自由度が高いみたいだけど，ドキュメントを調べても調べたいことにいまいち辿り着かないので，ドキュメントが豊富になればもっと使いやすくなりそうです．APIリファレンスとかも欲しい．
+まだプレビュー段階なので今後に期待しています．&lt;/p&gt;
+&lt;h1 id="section-3"&gt;あとがき&lt;/h1&gt;
+&lt;p&gt;Webフロントなんもわからんマンだったので，CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました．おかげでWebデザインを学ぶことができたので，ちょっと前進でしょうか．&lt;/p&gt;
+&lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど，Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね．&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Wyamを使った静的サイトの生成とGitHub Actionsを使ったGitHub Pagesへのデプロイ</title>
+			<link>https://aconcavy.github.io/Blog/posts/20200819wyamblog</link>
+			<description>&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し，Github Pages でホスティング，Github Actions でデプロイさせた手順をまとめたものです．&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20200819wyamblog</guid>
+			<pubDate>Wed, 19 Aug 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="is"&gt;これ is 何&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し，Github Pages でホスティング，Github Actions でデプロイさせた手順をまとめたものです．&lt;/p&gt;
+&lt;h1 id="section"&gt;実行環境&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 10 1909&lt;/li&gt;
+&lt;li&gt;Microsoft.NETCore.App 2.1.21&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="wyam"&gt;Wyam&lt;/h1&gt;
+&lt;h2 id="wyam-is"&gt;Wyam is 何&lt;/h2&gt;
+&lt;p&gt;.NET Core製の静的サイトジェネレータで，ブログやドキュメント等を markdown と Razor ファイルで作ることができます．&lt;/p&gt;
+&lt;p&gt;見た目はテンプレートが6種類あり，カスタマイズ可能で，.NET Core および C# で機能の拡張をすることもできます．&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Easy! Flexible! Powerful!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="section-1"&gt;ダウンロードとインストール&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://dotnet.microsoft.com/"&gt;.NET SDK&lt;/a&gt; をインストールしていない場合はインストールします．2020年8月19日現在，最新の .NET Core Runtime は3.1ですが， Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします．&lt;/p&gt;
+&lt;p&gt;.NET Core SDK,および Runtime がインストールされたら，.NET Core ツールを用いて Wyam をインストールします．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet tool -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-2"&gt;プロジェクトの作成&lt;/h2&gt;
+&lt;p&gt;プロジェクトを作成したいディレクトリに移動し，ブログテンプレートを&lt;code&gt;--recipe&lt;/code&gt; または &lt;code&gt;-r&lt;/code&gt; オプションで生成します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;テンプレートが生成されたら，次のコマンドでビルドします．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また，ビルドの際には &lt;code&gt;--theme&lt;/code&gt; または &lt;code&gt;-t&lt;/code&gt; オプションでテーマを指定することができます．テーマについては&lt;a href="https://wyam.io/recipes/blog/themes/"&gt;こちら&lt;/a&gt;．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ビルドが終わったら，ローカル環境で実行してみます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/hello_wyam.png" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
+&lt;p&gt;あっという間にブログが出来上がりました👏&lt;/p&gt;
+&lt;h2 id="section-3"&gt;記事の編集&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;./input/&lt;/code&gt; 内に &lt;code&gt;about.md&lt;/code&gt; が，また &lt;code&gt;./input/posts/&lt;/code&gt; 内に &lt;code&gt;first-post.md&lt;/code&gt; が生成されています．これらのように markdown ファイルを追加および編集することで，記事の編集および追加をすることができます．&lt;/p&gt;
+&lt;h2 id="front-matter"&gt;Front Matter の設定&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;first-post.md&lt;/code&gt; ファイルの先頭に以下のようなものが書かれています．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: First Post
+Published: 1/1/2016
+Tags: Introduction
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これらは &lt;code&gt;Front Matter&lt;/code&gt; といい，YAML や JSON フォーマットで使うことができる固有の変数です．これを使って記事にメタデータを付与することができます．Wyam では，&lt;a href="https://hexo.io/docs/front-matter.html"&gt;Hexo&lt;/a&gt; や &lt;a href="https://gohugo.io/content-management/front-matter/"&gt;Hugo&lt;/a&gt; のような別の静的サイトジェネレータと同じ変数を使うことができるそうです．&lt;/p&gt;
+&lt;p&gt;Published の日付を未来にするとその日になるまで表示されないようなので注意．
+日本時間の深夜に記事を作成して，ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)．&lt;/p&gt;
+&lt;h1 id="section-4"&gt;ブログを公開する&lt;/h1&gt;
+&lt;p&gt;Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い，Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド，およびGitHub Pagesにホスティングを行います．&lt;/p&gt;
+&lt;h2 id="github-pages-is"&gt;GitHub Pages is 何&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです．
+詳しくは&lt;a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages"&gt;こちら&lt;/a&gt;．&lt;/p&gt;
+&lt;p&gt;リポジトリ名が &lt;code&gt;ユーザ名.github.io&lt;/code&gt; の場合はユーザのページに，それ以外の場合はプロジェクトのページとして扱うことができます．&lt;/p&gt;
+&lt;h2 id="github-actions-is"&gt;Github Actions is 何&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリから，プロジェクトをビルド，テスト，デプロイすることができるサービスです．CI/CDです．
+詳しくは&lt;a href="https://github.co.jp/features/actions"&gt;こちら&lt;/a&gt;．&lt;/p&gt;
+&lt;p&gt;リポジトリが Public なら無料，Private なら従量課金らしいです．&lt;/p&gt;
+&lt;h2 id="section-5"&gt;プロジェクトの設定を変更する&lt;/h2&gt;
+&lt;p&gt;GitHubにリポジトリを作成し，Wyam で作成したプロジェクトを Commit / Push します．この際 &lt;code&gt;.gitignore&lt;/code&gt; には以下の設定を指定しておくといいでしょう．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;# Wyam files
+output/
+config.wyam.dll
+config.wyam.hash
+config.wyam.packages.xml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に，&lt;code&gt;config.wyam&lt;/code&gt; を編集してプロジェクトの設定を行います．&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;BlogKeys.Title&lt;/code&gt; でWeb サイトのタイトルを，&lt;code&gt;BlogKeys.Description&lt;/code&gt; でWeb サイトのトップに表示される簡単な説明を指定できます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[BlogKeys.Title] = "This is title";
+Settings[BlogKeys.Description] = "Welcome!";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Web サイトを &lt;code&gt;https&lt;/code&gt; に指定する場合は以下のオプションを有効にします．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.LinksUseHttps] = true;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Web サイトで表示するカルチャ情報を設定する場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; と &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; を変更します．
+&lt;code&gt;2020年8月19日&lt;/code&gt; のように表示したい場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します．
+日本時間を表示したい場合も同様に &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.DateTimeDisplayCulture] = "ja-JP";
+Settings[Keys.DateTimeInputCulture] = "ja-JP";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プロジェクトのルーティングでは，GitHub のリポジトリがユーザページ用のリポジトリの場合 (&lt;code&gt;ユーザ名.github.io&lt;/code&gt;) と，それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります．&lt;/p&gt;
+&lt;h3 id="section-6"&gt;1 ユーザページの場合&lt;/h3&gt;
+&lt;p&gt;例として，GitHubユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; の場合は以下のようになります．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-7"&gt;2 プロジェクトページの場合&lt;/h3&gt;
+&lt;p&gt;プロジェクトページで作成する場合，&lt;code&gt;Keys.LinkRoot&lt;/code&gt; にリポジトリ名を設定する必要があります．例として，リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は以下のようになります．&lt;strong&gt;大文字と小文字の区別があるようなので注意が必要です．&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
+Settings[Keys.LinkRoot] = "Blog";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この設定を変更した場合，&lt;code&gt;wyam preview&lt;/code&gt; を使ってローカルでプレビューをしようとしても，Path が &lt;code&gt;localhost:5080/&lt;/code&gt; のままで，正しくプレビューすることができません．そのため，&lt;code&gt;--virtual-dir&lt;/code&gt; オプションを指定することで正しくプレビューすることができます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview --virtual-dir Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;@echo off
+wyam -r Blog
+wyam preview --virtual-dir Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="github-actions"&gt;GitHub Actions の設定&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリページに移動し，&lt;code&gt;Actions&lt;/code&gt; タブで新しいワークフローを作成します．
+&lt;code&gt;Simple workflow&lt;/code&gt; を作成すると，新規の YAML ファイルがリポジトリの &lt;code&gt;.github/workflows&lt;/code&gt; に作成されます．そして，作成された YAMLファイルを &lt;code&gt;gh-pages.yml&lt;/code&gt; に変更し，次のような内容に変更します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: Wyam
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.6.0
+      with:
+        dotnet-version: 2.1
+    
+    - name: Install Wyam
+      run: dotnet tool install --tool-path . Wyam.Tool
+    
+    - name: Build static site
+      run: ./wyam -r blog
+      
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.6.4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この &lt;code&gt;Wyam&lt;/code&gt; というワークフローは &lt;code&gt;master&lt;/code&gt; ブランチに Push または Pull Request が送られたときに，Ubuntu 環境で &lt;code&gt;.NET Core SDK / Runtime&lt;/code&gt; のインストール，&lt;code&gt;Wyam&lt;/code&gt; のインストール，プロジェクトのビルド，GitHub Pages へのデプロイが行われます．&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意点&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;.NET Core SDK は Wyamの対応している2.1を使用する．&lt;/li&gt;
+&lt;li&gt;Wyam のインストールで &lt;code&gt;--tool-path .&lt;/code&gt; オプションを指定して Wyam ツールをビルド環境のローカルに作成する．&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;作成した YAML ファイルを Commit すると，GitHub Actions が有効になり，master ブランチが更新されるため，ワークフローが実行されます．そして，ワークフローのステータスが &lt;code&gt;completed job&lt;/code&gt; になれば成功です．&lt;/p&gt;
+&lt;h2 id="github-pages"&gt;GitHub Pages の設定&lt;/h2&gt;
+&lt;p&gt;リポジトリが GitHub Pages の条件に満たしていれば，&lt;code&gt;Settings&lt;/code&gt; タブに移動すると，&lt;code&gt;GitHub Pages&lt;/code&gt; の項目が表示されます．そこで &lt;code&gt;Source&lt;/code&gt; 欄の &lt;code&gt;Branch&lt;/code&gt; を &lt;code&gt;gh-pages&lt;/code&gt; に，ディレクトリを &lt;code&gt;/(root)&lt;/code&gt; に変更して &lt;code&gt;Save&lt;/code&gt; することで，GitHub Pagesが有効化されます．&lt;/p&gt;
+&lt;p&gt;GitHub Pagesの条件は Public リポジトリであるか，Pro 以上のライセンスであれば Private リポジトリであれば有効です．&lt;/p&gt;
+&lt;p&gt;正しく設定ができれば，ユーザページならば &lt;code&gt;ユーザ名.github.io&lt;/code&gt; に，プロジェクトページならば &lt;code&gt;ユーザ名.github.io/リポジトリ名&lt;/code&gt; にプロジェクトがホスティングされます．&lt;/p&gt;
+&lt;p&gt;例として，ユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; で リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は &lt;code&gt;aconcavy.github.io/Blog&lt;/code&gt; にホスティングされます．&lt;/p&gt;
+&lt;h1 id="section-8"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;Wyam で 作成した静的 Web サイト (本ブログ) を，GitHub Actions を使って更新を自動化し，GitHub Pages でホスティングする方法をまとめました．&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Wyam のプロジェクトを作成する．&lt;/li&gt;
+&lt;li&gt;Wyam のプロジェクト設定を変更する．&lt;/li&gt;
+&lt;li&gt;GitHub Actions の YAML を編集する．&lt;/li&gt;
+&lt;li&gt;GitHub Pages の設定を有効化する．&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大きく分けて4つの手順で，GitHub Pages に Wyam プロジェクトをホスティングすることができます．&lt;/p&gt;
+&lt;h1 id="section-9"&gt;あとがき&lt;/h1&gt;
+&lt;p&gt;とりあえず本ブログ初の投稿として，本ブログ作成までの手順の記事を簡単に書きました．今後も触った技術や何か変なものをまとめて記事にしたいと思います．&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+	</channel>
+</rss>
