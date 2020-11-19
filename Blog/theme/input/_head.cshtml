@@ -2,6 +2,7 @@
     var site = Document.GetString("SiteTitle");
     var title = Document.GetString("Title") ?? site;
     var description = Document.GetString("Lead") ?? string.Empty;
+    var image = Context.GetLink() + "/posts/assets/images/icon-1024.png";
     var url = Document.GetLink();
 }
 
@@ -9,5 +10,5 @@
 <meta name="twitter:site" content="@site">
 <meta property="og:title" content="@title">
 <meta property="og:description" content="@description">
-@* <meta property="og:image" content="5.カードに表示する画像のURL"> *@
+<meta property="og:image" content="@image">
 <meta property="og:url" content="@url">
