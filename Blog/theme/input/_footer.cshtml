@@ -3,6 +3,26 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright © @DateTime.Now.Year AconCavy</p>
+                @* <br/> *@
+                <ul class="list-inline text-center small">
+                    @{
+                        var rssFeed = Outputs["**/*.rss"].FirstOrDefault();
+                        var atomFeed = Outputs["**/*.atom"].FirstOrDefault();
+                    }
+                    @if (rssFeed != null)
+                    {
+                        <li class="list-inline-item">
+                            <a href="@Context.GetLink(rssFeed)"><i class="fa fa-rss"></i>RSS Feed</a>
+                        </li>
+                    }
+                    @if (atomFeed != null)
+                    {
+                        <li class="list-inline-item">
+                            <a href="@Context.GetLink(atomFeed)"><i class="fa fa-rss"></i>Atom Feed</a>
+                        </li>
+                    }
+                </ul>
+                @* <br/> *@
             </div>
         </div>
     </div>
