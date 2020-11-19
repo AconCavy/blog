@@ -3,11 +3,9 @@ Title: About
 
 # About
 
-C#が好きです．
+C#が好きなひきニート．
 
-UnityやXamarin.Forms, ASP.NET Coreをメインに触ってます．
+[![AconCavy](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FAconCavy)](https://atcoder.jp/users/AconCavy)
 
-絶賛ひきニート中.
-
-- Github: [AconCavy](https://github.com/AconCavy)
-- Twitter: [@AconCavy](https://twitter.com/AconCavy)
+[![https://twitter.com/AconCavy](posts/assets/images/Twitter-Mark-Light-32px.png)](https://twitter.com/AconCavy)
+[![https://twitter.com/AconCavy](posts/assets/images/GitHub-Mark-Light-32px.png)](https://github.com/AconCavy)
