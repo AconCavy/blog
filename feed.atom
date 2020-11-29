@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>2020</rights>
-	<updated>2020-11-29T19:04:00Z</updated>
+	<updated>2020-11-29T19:08:07Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20201129dotnettemplate</id>
 		<title>dotnet newのカスタムテンプレート</title>
@@ -116,7 +116,7 @@
     &amp;quot;preferNameDirectory&amp;quot;: true,
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に指定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行した場合，&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ，&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ，&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行した場合，&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ，&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ，&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．&lt;/p&gt;
 &lt;p&gt;この状態で，&lt;code&gt;dotnet new -i path-to-template&lt;/code&gt;コマンドでインストールし，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="line-numbers"&gt;Sample/
     |
@@ -327,7 +327,7 @@ Template.Tests/
     |    |
     |    |- Debug/
     |    |    |
-    |    |    |- AconCavy.Templates.1.0.nupkg
+    |    |    |- AconCavy.Templates.1.0.0.nupkg
     ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;この&lt;code&gt;nupkg&lt;/code&gt;を&lt;code&gt;dotnet new&lt;/code&gt;コマンドでインストールすることで，3つのテンプレートを1回でインストールすることができます．&lt;/p&gt;

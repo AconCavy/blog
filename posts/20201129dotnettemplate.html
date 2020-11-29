@@ -180,7 +180,7 @@
     &quot;preferNameDirectory&quot;: true,
 }
 </code></pre>
-<p><code>sourceName</code>に指定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，<code>dotnet new csproj -n Sample</code>を実行した場合，<code>Template.Project/</code>ディレクトリ，<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ，<code>Sample.sln</code>に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．</p>
+<p><code>sourceName</code>に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，<code>dotnet new csproj -n Sample</code>を実行した場合，<code>Template.Project/</code>ディレクトリ，<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ，<code>Sample.sln</code>に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．</p>
 <p>この状態で，<code>dotnet new -i path-to-template</code>コマンドでインストールし，<code>dotnet new csproj -n Sample</code>を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．</p>
 <pre><code class="line-numbers">Sample/
     |
@@ -391,7 +391,7 @@ Template.Tests/
     |    |
     |    |- Debug/
     |    |    |
-    |    |    |- AconCavy.Templates.1.0.nupkg
+    |    |    |- AconCavy.Templates.1.0.0.nupkg
     ...
 </code></pre>
 <p>この<code>nupkg</code>を<code>dotnet new</code>コマンドでインストールすることで，3つのテンプレートを1回でインストールすることができます．</p>
