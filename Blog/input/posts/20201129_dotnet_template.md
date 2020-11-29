@@ -106,7 +106,7 @@ Template.Project/
 }
 ```
 
-`sourceName`に指定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，`dotnet new csproj -n Sample`を実行した場合，`Template.Project/`ディレクトリ，`Template.Project.sln`が`Sample/`ディレクトリ，`Sample.sln`に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．
+`sourceName`に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，`dotnet new csproj -n Sample`を実行した場合，`Template.Project/`ディレクトリ，`Template.Project.sln`が`Sample/`ディレクトリ，`Sample.sln`に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．
 
 この状態で，`dotnet new -i path-to-template`コマンドでインストールし，`dotnet new csproj -n Sample`を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．
 
@@ -314,7 +314,7 @@ CPTemplate/
     |    |
     |    |- Debug/
     |    |    |
-    |    |    |- AconCavy.Templates.1.0.nupkg
+    |    |    |- AconCavy.Templates.1.0.0.nupkg
     ...
 ```
 
