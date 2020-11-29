@@ -1,5 +1,5 @@
 Title: dotnet newのカスタムテンプレート
-Published: 11/30/2020
+Published: 11/29/2020
 Updated: 11/30/2020
 Tags: [.NET] 
 ---
