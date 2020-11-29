@@ -4,7 +4,344 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>2020</rights>
-	<updated>2020-11-26T23:35:57Z</updated>
+	<updated>2020-11-29T19:02:07Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/Blog/posts/20201129dotnettemplate</id>
+		<title>dotnet newのカスタムテンプレート</title>
+		<link href="https://aconcavy.github.io/Blog/posts/20201129dotnettemplate" />
+		<updated>2020-11-30T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので，&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です．&lt;/p&gt;
+&lt;h1 id="dotnet-new"&gt;dotnet new のカスタムテンプレートとは&lt;/h1&gt;
+&lt;p&gt;公式の情報は&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates"&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;.NETのプロジェクトを作成する際，&lt;code&gt;dotnet&lt;/code&gt;コマンドを利用してプロジェクトを生成します．
+例えば，コンソールアプリケーションを作成する場合，&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console -n Sample
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のようなコマンドを実行することで，&lt;code&gt;Sample&lt;/code&gt;という名称のプロジェクトが作成されます．
+これは，&lt;code&gt;dotnet new&lt;/code&gt;コマンドで，&lt;code&gt;console&lt;/code&gt;というデフォルトテンプレートを使ってプロジェクトを生成するという意味になります．&lt;/p&gt;
+&lt;p&gt;この&lt;code&gt;dotnet new&lt;/code&gt;コマンドに，プロジェクトやスクリプトをカスタムテンプレートとして登録しておくことで，プロジェクトやファイルの作成を使いまわすことができます．&lt;/p&gt;
+&lt;p&gt;既定のテンプレートとして，&lt;code&gt;dotnet new&lt;/code&gt;コマンドに&lt;code&gt;-l|--list&lt;/code&gt;オプションをつけて実行すると，現在インストールされている&lt;code&gt;dotnet new&lt;/code&gt;コマンドで生成できるテンプレートを確認することができます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -l
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-1"&gt;作ってみる&lt;/h1&gt;
+&lt;p&gt;テンプレートの基本として，テンプレート化したいプロジェクトのディレクトリ下に，&lt;code&gt;.template.config&lt;/code&gt;のディレクトリを作成し，さらにその下に，&lt;code&gt;template.json&lt;/code&gt;を作成します．
+そして，&lt;code&gt;template.json&lt;/code&gt;にプロパティを設定し，&lt;code&gt;dotnet new&lt;/code&gt;コマンドを使ってインストールすることで，テンプレートを使うことができるようになります．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -i path-to-template
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;競技プロ用のプロジェクトテンプレートでは，次の3つをテンプレートとして準備します．&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;プロジェクト&lt;/li&gt;
+&lt;li&gt;解答用のクラス&lt;/li&gt;
+&lt;li&gt;テスト用のクラス&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-2"&gt;プロジェクトのテンプレート&lt;/h2&gt;
+&lt;p&gt;プロジェクトでは，解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Project/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Template.Project.sln
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;このプロジェクトをベースとして，&lt;code&gt;Project/&lt;/code&gt;下に&lt;code&gt;.template.config/&lt;/code&gt;ディレクトリを作成し，その下に&lt;code&gt;template.json&lt;/code&gt;を作成します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Project/
+    |
+    |- .template.config
+    |    |
+    |    |- template.json
+    ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;template.json&lt;/code&gt;では，次のメンバを記述します．&lt;/p&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;メンバ&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$schema&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;template.json&lt;/code&gt;のスキーマ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;author&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの作成者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;classfication&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの種類&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;identity&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの識別子&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;name&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの名前&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;shortName&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;dotnet new&lt;/code&gt; で指定する際の名前 (例: &lt;code&gt;dotnet new cpproj&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;sourceName&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレート使用時に置き換える文字列  (&lt;code&gt;dotnet new&lt;/code&gt;コマンドに，&lt;code&gt;-n|--name&lt;/code&gt;オプションで名前を指定することで，指定された文字列を全てその名前に置換することができます)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;preferNameDirectory&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;出力先ディレクトリがない場合テンプレートのディレクトリを作成するか (既定値: false)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;例えば，上記のプロジェクトでは次のような&lt;code&gt;json&lt;/code&gt;を記述します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/template&amp;quot;,
+    &amp;quot;author&amp;quot;: &amp;quot;AconCavy&amp;quot;,
+    &amp;quot;classifications&amp;quot;: [
+        &amp;quot;C#&amp;quot;,
+        &amp;quot;Console&amp;quot;
+    ],
+    &amp;quot;name&amp;quot;: &amp;quot;Template Project&amp;quot;,
+    &amp;quot;identity&amp;quot;: &amp;quot;AconCavy.Template.Project&amp;quot;,
+    &amp;quot;shortName&amp;quot;: &amp;quot;cpproj&amp;quot;,
+    &amp;quot;sourceName&amp;quot;: &amp;quot;Template.Project&amp;quot;,
+    &amp;quot;preferNameDirectory&amp;quot;: true,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に指定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行した場合，&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ，&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ，&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．&lt;/p&gt;
+&lt;p&gt;この状態で，&lt;code&gt;dotnet new -i path-to-template&lt;/code&gt;コマンドでインストールし，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Sample/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Sample.sln
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-3"&gt;コマンドの追加オプション&lt;/h3&gt;
+&lt;p&gt;また，&lt;code&gt;Task.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;のターゲットフレームワークをテンプレート生成時に指定できるようにするため，&lt;code&gt;dotnet new csproj&lt;/code&gt;コマンドにオプションを追加します．&lt;/p&gt;
+&lt;p&gt;まず，&lt;code&gt;.template.config&lt;/code&gt;下に&lt;code&gt;dotnetcli.host.json&lt;/code&gt;を追加します．
+&lt;code&gt;symbolInfo&lt;/code&gt;メンバに，&lt;code&gt;longName&lt;/code&gt;のオプションに&lt;code&gt;framework&lt;/code&gt;を，&lt;code&gt;shortName&lt;/code&gt;に&lt;code&gt;f&lt;/code&gt;をもった&lt;code&gt;Framework&lt;/code&gt;というメンバを追加します．
+追加することで，&lt;code&gt;dotnet new csproj&lt;/code&gt;にオプションとして，&lt;code&gt;-f|--framework&lt;/code&gt;のオプションを付与することができるようになります．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/dotnetcli.host&amp;quot;,
+    &amp;quot;symbolInfo&amp;quot;: {
+        &amp;quot;Framework&amp;quot;: {
+            &amp;quot;longName&amp;quot;: &amp;quot;framework&amp;quot;,
+            &amp;quot;shortName&amp;quot;: &amp;quot;f&amp;quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に&lt;code&gt;template.json&lt;/code&gt;に&lt;code&gt;symbols&lt;/code&gt;というメンバを追加し，ここに先ほど定義した&lt;code&gt;Framework&lt;/code&gt;メンバを追加します．
+ここではオプションの振る舞いを定義します．&lt;/p&gt;
+&lt;p&gt;今回はターゲットフレームワークを&lt;code&gt;.NET 5&lt;/code&gt;と&lt;code&gt;.NET Core 3.1&lt;/code&gt;を選択肢として定義します．
+&lt;code&gt;datatype&lt;/code&gt;を&lt;code&gt;choice&lt;/code&gt;にして，&lt;code&gt;choices&lt;/code&gt;に選択肢を定義します．
+&lt;code&gt;csproj&lt;/code&gt;の&lt;code&gt;TargetFramework&lt;/code&gt;に指定する文字列として，&lt;code&gt;.NET 5&lt;/code&gt;の場合は&lt;code&gt;net5.0&lt;/code&gt;，&lt;code&gt;.NET Core 3.1&lt;/code&gt;の場合は&lt;code&gt;netcoreapp3.1&lt;/code&gt;を&lt;code&gt;choice&lt;/code&gt;に設定します．
+&lt;code&gt;replaces&lt;/code&gt;に置換する文字列を，&lt;code&gt;defaultValue&lt;/code&gt;にオプションを指定しない場合の文字列を設定します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    ...
+    &amp;quot;symbols&amp;quot;: {
+        &amp;quot;Framework&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;parameter&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The target framework for the project.&amp;quot;,
+            &amp;quot;datatype&amp;quot;: &amp;quot;choice&amp;quot;,
+            &amp;quot;choices&amp;quot;: [
+                {
+                    &amp;quot;choice&amp;quot;: &amp;quot;net5.0&amp;quot;,
+                    &amp;quot;description&amp;quot;: &amp;quot;Target net5.0&amp;quot;
+                },
+                {
+                    &amp;quot;choice&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;,
+                    &amp;quot;description&amp;quot;: &amp;quot;Target netcoreapp3.1&amp;quot;
+                }
+            ],
+            &amp;quot;replaces&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;,
+            &amp;quot;defaultValue&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;
+        }
+    },
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして，&lt;code&gt;Tasks.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;の&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;replaces&lt;/code&gt;で設定した文字列を設定します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
+
+  &amp;lt;PropertyGroup&amp;gt;
+    ...
+    &amp;lt;TargetFramework&amp;gt;netcoreapp3.1&amp;lt;/TargetFramework&amp;gt;
+    ...
+  &amp;lt;/PropertyGroup&amp;gt;
+  ...
+
+&amp;lt;/Project&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この状態で，&lt;code&gt;dotnet new csproj -n Sample -f net5.0&lt;/code&gt;を実行することで，&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;が設定されたプロジェクトを生成することができます．&lt;/p&gt;
+&lt;h2 id="section-4"&gt;解答用のクラスとテスト用のクラスのテンプレート&lt;/h2&gt;
+&lt;p&gt;単一のファイルのみ生成するように，テンプレートを構築します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Solver/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.Solver.cs
+
+Template.Tests/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.TestsTests.cs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プロジェクトのテンプレートの作り方と同様に，&lt;code&gt;template.json&lt;/code&gt;を記述しますが，単一ファイルのみ生成させるため，&lt;code&gt;preferNameDirectory&lt;/code&gt;を削除，または&lt;code&gt;false&lt;/code&gt;にします．&lt;/p&gt;
+&lt;p&gt;解答用の&lt;code&gt;sourceName&lt;/code&gt;を&lt;code&gt;Template.Solver&lt;/code&gt;に，テスト用の&lt;code&gt;sourceName&lt;/code&gt;を&lt;code&gt;Template.Tests&lt;/code&gt;にすることで，&lt;code&gt;dotnet new&lt;/code&gt;コマンドの&lt;code&gt;-n|--name&lt;/code&gt;オプションに&lt;code&gt;Sample&lt;/code&gt;を指定すると，それぞれ&lt;code&gt;Sample.cs&lt;/code&gt;と&lt;code&gt;SampleTests.cs&lt;/code&gt;が生成されます．&lt;/p&gt;
+&lt;h2 id="section-5"&gt;プロジェクトのパッケージ化&lt;/h2&gt;
+&lt;p&gt;テンプレートが3つ用意できましたが，テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります．
+そのため，3つのテンプレートまとめて，1つの&lt;code&gt;nuget&lt;/code&gt;パッケージを生成します．
+3つのディレクトリを一つのディレクトリにまとめ，そのディレクトリと同じ階層に&lt;code&gt;csproj&lt;/code&gt;ファイルを生成します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;CPTemplate/
+    |
+    |- content/
+    |    |
+    |    |- Template.Project/
+    |    |- Template.Solver/
+    |    |- Template.Tests/
+    |
+    |- CPTemplate.csproj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ディレクトリを整理したら，&lt;code&gt;CPTemplate.csproj&lt;/code&gt;を編集し，ビルド情報を定義します．&lt;/p&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;メンバ&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageType&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;nuget&lt;/code&gt;パッケージタイプ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageVersion&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージのバージョン&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageId&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの識別子&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Title&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの名称&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Authors&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの作成者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Description&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの説明&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageTags&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージのタグ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;TargetFramework&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージをビルドするためのターゲットフレームワーク&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageProjectUrl&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;プロジェクトURL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;IncludeBuildOutput&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;ビルド時に生成されるファイルをパッケージに含めるか&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;ContentTargetFolders&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージ化するプロジェクトのルートが&lt;code&gt;content&lt;/code&gt;か&lt;code&gt;contentFiles&lt;/code&gt;以外の場合は設定する&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Content&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージに含めるファイルや除くファイルを設定する&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
+
+  &amp;lt;PropertyGroup&amp;gt;
+    &amp;lt;PackageType&amp;gt;Template&amp;lt;/PackageType&amp;gt;
+    &amp;lt;PackageVersion&amp;gt;1.0&amp;lt;/PackageVersion&amp;gt;
+    &amp;lt;PackageId&amp;gt;AconCavy.Templates&amp;lt;/PackageId&amp;gt;
+    &amp;lt;Title&amp;gt;Templates&amp;lt;/Title&amp;gt;
+    &amp;lt;Authors&amp;gt;AconCavy&amp;lt;/Authors&amp;gt;
+    &amp;lt;Description&amp;gt;sample template.&amp;lt;/Description&amp;gt;
+    &amp;lt;PackageTags&amp;gt;dotnet-new;templates;competitive-programming&amp;lt;/PackageTags&amp;gt;
+    &amp;lt;TargetFramework&amp;gt;netcoreapp3.1&amp;lt;/TargetFramework&amp;gt;
+    &amp;lt;PackageProjectUrl&amp;gt;https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp&amp;lt;/PackageProjectUrl&amp;gt;
+
+    &amp;lt;IncludeBuildOutput&amp;gt;false&amp;lt;/IncludeBuildOutput&amp;gt;
+    &amp;lt;ContentTargetFolders&amp;gt;content&amp;lt;/ContentTargetFolders&amp;gt;
+  &amp;lt;/PropertyGroup&amp;gt;
+
+  &amp;lt;ItemGroup&amp;gt;
+    &amp;lt;Content Include=&amp;quot;content/**/*&amp;quot; Exclude=&amp;quot;content/**/bin/**;content/**/obj/**&amp;quot; /&amp;gt;
+    &amp;lt;Compile Remove=&amp;quot;**/*&amp;quot; /&amp;gt;
+  &amp;lt;/ItemGroup&amp;gt;
+
+&amp;lt;/Project&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また，それぞれのテンプレートの&lt;code&gt;template.json&lt;/code&gt;に&lt;code&gt;groupIdentity&lt;/code&gt;を追加します．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;// Project
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Project&amp;quot;
+
+// Solver
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Solver&amp;quot;
+
+// Tests
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Tests&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;dotnet pack&lt;/code&gt;コマンドを実行することで&lt;code&gt;nuget&lt;/code&gt;パッケージを生成することができます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet pack
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;実行後，&lt;code&gt;bin/Debug/&lt;/code&gt;下に&lt;code&gt;{PackageId}.{PackageVersion}.nupkg&lt;/code&gt;が生成されます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;CPTemplate/
+    |
+    |- bin/
+    |    |
+    |    |- Debug/
+    |    |    |
+    |    |    |- AconCavy.Templates.1.0.nupkg
+    ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この&lt;code&gt;nupkg&lt;/code&gt;を&lt;code&gt;dotnet new&lt;/code&gt;コマンドでインストールすることで，3つのテンプレートを1回でインストールすることができます．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレートの作り方と，テンプレートのパッケージ化の手順をまとめました．&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;テンプレートのルートに&lt;code&gt;.template.config&lt;/code&gt;ディレクトリを作成し，内に&lt;code&gt;template.json&lt;/code&gt;を作成する．&lt;/li&gt;
+&lt;li&gt;テンプレートが複数ある場合は1つのディレクトリにまとめ，&lt;code&gt;dotnet pack&lt;/code&gt;コマンドでパッケージ化する．&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので，&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です．&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20201119statiqextension</id>
 		<title>Statiqがmarkdownから生成するhtmlのカスタマイズ</title>

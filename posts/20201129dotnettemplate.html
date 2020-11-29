@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/scss/style.css">
+
+    <title>acon.log - dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/posts/assets/images/icon-1024px.png">
+<meta property="og:url" content="/Blog/posts/20201129dotnettemplate">
+    
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="https://twitter.com/AconCavy">
+            <i class="fab fa-twitter"></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="https://github.com/AconCavy">
+            <i class="fab fa-github"></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/about">About</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="post-heading">
+                    <h1>
+                        dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;
+                    </h1>
+                        <div class="meta">Published on Monday, 30 November 2020</div>
+                            <div class="mt-3">
+                                    <a href="/Blog/tags/net" class="badge badge-dark"> .NET</a>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content" class="col-md-12">
+            <h1 id="section">はじめに</h1>
+<p><a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp">競プロ用のプロジェクトテンプレート</a>を整備したので，<code>dotnet new</code>のカスタムテンプレート作成の備忘録です．</p>
+<h1 id="dotnet-new">dotnet new のカスタムテンプレートとは</h1>
+<p>公式の情報は<a href="https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates">こちら</a></p>
+<p>.NETのプロジェクトを作成する際，<code>dotnet</code>コマンドを利用してプロジェクトを生成します．
+例えば，コンソールアプリケーションを作成する場合，</p>
+<pre><code class="language-sh line-numbers">dotnet new console -n Sample
+</code></pre>
+<p>のようなコマンドを実行することで，<code>Sample</code>という名称のプロジェクトが作成されます．
+これは，<code>dotnet new</code>コマンドで，<code>console</code>というデフォルトテンプレートを使ってプロジェクトを生成するという意味になります．</p>
+<p>この<code>dotnet new</code>コマンドに，プロジェクトやスクリプトをカスタムテンプレートとして登録しておくことで，プロジェクトやファイルの作成を使いまわすことができます．</p>
+<p>既定のテンプレートとして，<code>dotnet new</code>コマンドに<code>-l|--list</code>オプションをつけて実行すると，現在インストールされている<code>dotnet new</code>コマンドで生成できるテンプレートを確認することができます．</p>
+<pre><code class="language-sh line-numbers">dotnet new -l
+</code></pre>
+<h1 id="section-1">作ってみる</h1>
+<p>テンプレートの基本として，テンプレート化したいプロジェクトのディレクトリ下に，<code>.template.config</code>のディレクトリを作成し，さらにその下に，<code>template.json</code>を作成します．
+そして，<code>template.json</code>にプロパティを設定し，<code>dotnet new</code>コマンドを使ってインストールすることで，テンプレートを使うことができるようになります．</p>
+<pre><code class="language-sh line-numbers">dotnet new -i path-to-template
+</code></pre>
+<p>競技プロ用のプロジェクトテンプレートでは，次の3つをテンプレートとして準備します．</p>
+<ul>
+<li>プロジェクト</li>
+<li>解答用のクラス</li>
+<li>テスト用のクラス</li>
+</ul>
+<h2 id="section-2">プロジェクトのテンプレート</h2>
+<p>プロジェクトでは，解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします．</p>
+<pre><code class="line-numbers">Template.Project/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Template.Project.sln
+</code></pre>
+<p>このプロジェクトをベースとして，<code>Project/</code>下に<code>.template.config/</code>ディレクトリを作成し，その下に<code>template.json</code>を作成します．</p>
+<pre><code class="line-numbers">Template.Project/
+    |
+    |- .template.config
+    |    |
+    |    |- template.json
+    ...
+</code></pre>
+<p><code>template.json</code>では，次のメンバを記述します．</p>
+<table class="table">
+<thead>
+<tr>
+<th style="text-align: center;">メンバ</th>
+<th style="text-align: left;">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>$schema</code></td>
+<td style="text-align: left;"><code>template.json</code>のスキーマ</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>author</code></td>
+<td style="text-align: left;">テンプレートの作成者</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>classfication</code></td>
+<td style="text-align: left;">テンプレートの種類</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>identity</code></td>
+<td style="text-align: left;">テンプレートの識別子</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>name</code></td>
+<td style="text-align: left;">テンプレートの名前</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>shortName</code></td>
+<td style="text-align: left;"><code>dotnet new</code> で指定する際の名前 (例: <code>dotnet new cpproj</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>sourceName</code></td>
+<td style="text-align: left;">テンプレート使用時に置き換える文字列  (<code>dotnet new</code>コマンドに，<code>-n|--name</code>オプションで名前を指定することで，指定された文字列を全てその名前に置換することができます)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>preferNameDirectory</code></td>
+<td style="text-align: left;">出力先ディレクトリがない場合テンプレートのディレクトリを作成するか (既定値: false)</td>
+</tr>
+</tbody>
+</table>
+<p>例えば，上記のプロジェクトでは次のような<code>json</code>を記述します．</p>
+<pre><code class="language-json line-numbers">{
+    &quot;$schema&quot;: &quot;http://json.schemastore.org/template&quot;,
+    &quot;author&quot;: &quot;AconCavy&quot;,
+    &quot;classifications&quot;: [
+        &quot;C#&quot;,
+        &quot;Console&quot;
+    ],
+    &quot;name&quot;: &quot;Template Project&quot;,
+    &quot;identity&quot;: &quot;AconCavy.Template.Project&quot;,
+    &quot;shortName&quot;: &quot;cpproj&quot;,
+    &quot;sourceName&quot;: &quot;Template.Project&quot;,
+    &quot;preferNameDirectory&quot;: true,
+}
+</code></pre>
+<p><code>sourceName</code>に指定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，<code>dotnet new csproj -n Sample</code>を実行した場合，<code>Template.Project/</code>ディレクトリ，<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ，<code>Sample.sln</code>に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．</p>
+<p>この状態で，<code>dotnet new -i path-to-template</code>コマンドでインストールし，<code>dotnet new csproj -n Sample</code>を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．</p>
+<pre><code class="line-numbers">Sample/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Sample.sln
+</code></pre>
+<h3 id="section-3">コマンドの追加オプション</h3>
+<p>また，<code>Task.csproj</code>と<code>Tests.csproj</code>のターゲットフレームワークをテンプレート生成時に指定できるようにするため，<code>dotnet new csproj</code>コマンドにオプションを追加します．</p>
+<p>まず，<code>.template.config</code>下に<code>dotnetcli.host.json</code>を追加します．
+<code>symbolInfo</code>メンバに，<code>longName</code>のオプションに<code>framework</code>を，<code>shortName</code>に<code>f</code>をもった<code>Framework</code>というメンバを追加します．
+追加することで，<code>dotnet new csproj</code>にオプションとして，<code>-f|--framework</code>のオプションを付与することができるようになります．</p>
+<pre><code class="language-json line-numbers">{
+    &quot;$schema&quot;: &quot;http://json.schemastore.org/dotnetcli.host&quot;,
+    &quot;symbolInfo&quot;: {
+        &quot;Framework&quot;: {
+            &quot;longName&quot;: &quot;framework&quot;,
+            &quot;shortName&quot;: &quot;f&quot;
+        }
+    }
+}
+</code></pre>
+<p>次に<code>template.json</code>に<code>symbols</code>というメンバを追加し，ここに先ほど定義した<code>Framework</code>メンバを追加します．
+ここではオプションの振る舞いを定義します．</p>
+<p>今回はターゲットフレームワークを<code>.NET 5</code>と<code>.NET Core 3.1</code>を選択肢として定義します．
+<code>datatype</code>を<code>choice</code>にして，<code>choices</code>に選択肢を定義します．
+<code>csproj</code>の<code>TargetFramework</code>に指定する文字列として，<code>.NET 5</code>の場合は<code>net5.0</code>，<code>.NET Core 3.1</code>の場合は<code>netcoreapp3.1</code>を<code>choice</code>に設定します．
+<code>replaces</code>に置換する文字列を，<code>defaultValue</code>にオプションを指定しない場合の文字列を設定します．</p>
+<pre><code class="language-json line-numbers">{
+    ...
+    &quot;symbols&quot;: {
+        &quot;Framework&quot;: {
+            &quot;type&quot;: &quot;parameter&quot;,
+            &quot;description&quot;: &quot;The target framework for the project.&quot;,
+            &quot;datatype&quot;: &quot;choice&quot;,
+            &quot;choices&quot;: [
+                {
+                    &quot;choice&quot;: &quot;net5.0&quot;,
+                    &quot;description&quot;: &quot;Target net5.0&quot;
+                },
+                {
+                    &quot;choice&quot;: &quot;netcoreapp3.1&quot;,
+                    &quot;description&quot;: &quot;Target netcoreapp3.1&quot;
+                }
+            ],
+            &quot;replaces&quot;: &quot;netcoreapp3.1&quot;,
+            &quot;defaultValue&quot;: &quot;netcoreapp3.1&quot;
+        }
+    },
+    ...
+}
+</code></pre>
+<p>そして，<code>Tasks.csproj</code>と<code>Tests.csproj</code>の<code>TargetFramework</code>に<code>replaces</code>で設定した文字列を設定します．</p>
+<pre><code class="language-xml line-numbers">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+
+  &lt;PropertyGroup&gt;
+    ...
+    &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt;
+    ...
+  &lt;/PropertyGroup&gt;
+  ...
+
+&lt;/Project&gt;
+
+</code></pre>
+<p>この状態で，<code>dotnet new csproj -n Sample -f net5.0</code>を実行することで，<code>TargetFramework</code>に<code>net5.0</code>が設定されたプロジェクトを生成することができます．</p>
+<h2 id="section-4">解答用のクラスとテスト用のクラスのテンプレート</h2>
+<p>単一のファイルのみ生成するように，テンプレートを構築します．</p>
+<pre><code class="line-numbers">Template.Solver/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.Solver.cs
+
+Template.Tests/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.TestsTests.cs
+</code></pre>
+<p>プロジェクトのテンプレートの作り方と同様に，<code>template.json</code>を記述しますが，単一ファイルのみ生成させるため，<code>preferNameDirectory</code>を削除，または<code>false</code>にします．</p>
+<p>解答用の<code>sourceName</code>を<code>Template.Solver</code>に，テスト用の<code>sourceName</code>を<code>Template.Tests</code>にすることで，<code>dotnet new</code>コマンドの<code>-n|--name</code>オプションに<code>Sample</code>を指定すると，それぞれ<code>Sample.cs</code>と<code>SampleTests.cs</code>が生成されます．</p>
+<h2 id="section-5">プロジェクトのパッケージ化</h2>
+<p>テンプレートが3つ用意できましたが，テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります．
+そのため，3つのテンプレートまとめて，1つの<code>nuget</code>パッケージを生成します．
+3つのディレクトリを一つのディレクトリにまとめ，そのディレクトリと同じ階層に<code>csproj</code>ファイルを生成します．</p>
+<pre><code class="line-numbers">CPTemplate/
+    |
+    |- content/
+    |    |
+    |    |- Template.Project/
+    |    |- Template.Solver/
+    |    |- Template.Tests/
+    |
+    |- CPTemplate.csproj
+</code></pre>
+<p>ディレクトリを整理したら，<code>CPTemplate.csproj</code>を編集し，ビルド情報を定義します．</p>
+<table class="table">
+<thead>
+<tr>
+<th style="text-align: center;">メンバ</th>
+<th style="text-align: left;">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>PackageType</code></td>
+<td style="text-align: left;"><code>nuget</code>パッケージタイプ</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>PackageVersion</code></td>
+<td style="text-align: left;">パッケージのバージョン</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>PackageId</code></td>
+<td style="text-align: left;">パッケージの識別子</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Title</code></td>
+<td style="text-align: left;">パッケージの名称</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Authors</code></td>
+<td style="text-align: left;">パッケージの作成者</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Description</code></td>
+<td style="text-align: left;">パッケージの説明</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>PackageTags</code></td>
+<td style="text-align: left;">パッケージのタグ</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>TargetFramework</code></td>
+<td style="text-align: left;">パッケージをビルドするためのターゲットフレームワーク</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>PackageProjectUrl</code></td>
+<td style="text-align: left;">プロジェクトURL</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>IncludeBuildOutput</code></td>
+<td style="text-align: left;">ビルド時に生成されるファイルをパッケージに含めるか</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>ContentTargetFolders</code></td>
+<td style="text-align: left;">パッケージ化するプロジェクトのルートが<code>content</code>か<code>contentFiles</code>以外の場合は設定する</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Content</code></td>
+<td style="text-align: left;">パッケージに含めるファイルや除くファイルを設定する</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-xml line-numbers">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;PackageType&gt;Template&lt;/PackageType&gt;
+    &lt;PackageVersion&gt;1.0&lt;/PackageVersion&gt;
+    &lt;PackageId&gt;AconCavy.Templates&lt;/PackageId&gt;
+    &lt;Title&gt;Templates&lt;/Title&gt;
+    &lt;Authors&gt;AconCavy&lt;/Authors&gt;
+    &lt;Description&gt;sample template.&lt;/Description&gt;
+    &lt;PackageTags&gt;dotnet-new;templates;competitive-programming&lt;/PackageTags&gt;
+    &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt;
+    &lt;PackageProjectUrl&gt;https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp&lt;/PackageProjectUrl&gt;
+
+    &lt;IncludeBuildOutput&gt;false&lt;/IncludeBuildOutput&gt;
+    &lt;ContentTargetFolders&gt;content&lt;/ContentTargetFolders&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;Content Include=&quot;content/**/*&quot; Exclude=&quot;content/**/bin/**;content/**/obj/**&quot; /&gt;
+    &lt;Compile Remove=&quot;**/*&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;/Project&gt;
+</code></pre>
+<p>また，それぞれのテンプレートの<code>template.json</code>に<code>groupIdentity</code>を追加します．</p>
+<pre><code class="language-json line-numbers">// Project
+&quot;groupIdentity&quot;: &quot;AconCavy.Templates.Project&quot;
+
+// Solver
+&quot;groupIdentity&quot;: &quot;AconCavy.Templates.Solver&quot;
+
+// Tests
+&quot;groupIdentity&quot;: &quot;AconCavy.Templates.Tests&quot;
+</code></pre>
+<p><code>dotnet pack</code>コマンドを実行することで<code>nuget</code>パッケージを生成することができます．</p>
+<pre><code class="language-sh line-numbers">dotnet pack
+</code></pre>
+<p>実行後，<code>bin/Debug/</code>下に<code>{PackageId}.{PackageVersion}.nupkg</code>が生成されます．</p>
+<pre><code class="line-numbers">CPTemplate/
+    |
+    |- bin/
+    |    |
+    |    |- Debug/
+    |    |    |
+    |    |    |- AconCavy.Templates.1.0.nupkg
+    ...
+</code></pre>
+<p>この<code>nupkg</code>を<code>dotnet new</code>コマンドでインストールすることで，3つのテンプレートを1回でインストールすることができます．</p>
+<pre><code class="language-sh line-numbers">dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
+</code></pre>
+<h1 id="section-6">まとめ</h1>
+<p><code>dotnet new</code>のカスタムテンプレートの作り方と，テンプレートのパッケージ化の手順をまとめました．</p>
+<ul>
+<li>テンプレートのルートに<code>.template.config</code>ディレクトリを作成し，内に<code>template.json</code>を作成する．</li>
+<li>テンプレートが複数ある場合は1つのディレクトリにまとめ，<code>dotnet pack</code>コマンドでパッケージ化する．</li>
+</ul>
+
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201129dotnettemplate" data-size="large">
+    Tweet
+</a>        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © 2020 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i>RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i>Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/Blog/syntax/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+</body>
+
+</html>
