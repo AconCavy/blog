@@ -22,6 +22,7 @@
                     @if (isPost)
                     {
                         <div class="meta">Published on @Document.GetDateTime(WebKeys.Published).ToLongDateString()</div>
+                        <div class="meta">Updated on @Document.GetDateTime(WebKeys.Updated).ToLongDateString()</div>
                         @if (Document.ContainsKey("Tags"))
                         {
                             <div class="mt-3">
