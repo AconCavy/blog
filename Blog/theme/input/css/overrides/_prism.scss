@@ -2,27 +2,22 @@ code,
 pre,
 code[class*="language-"],
 pre[class*="language-"] {
-  color: $primary;
-  background: $backgroundAlt;
+  background: #2A2D37;
   font-family: $font-code;
-  font-size: 1rem;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  line-height: 1.5;
 }
 
-pre,
-pre[class*="language-"] {
-  padding: .5rem;
-  margin: .5rem 0;
+pre {
+  padding: 1rem;
 }
 
 :not(pre) > code {
   color: $pink;
-  padding: 0 .5rem;
+  padding: .2rem .5rem;
 }
 
 div.code-toolbar > .toolbar a,
