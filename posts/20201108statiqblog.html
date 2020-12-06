@@ -3,13 +3,14 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
-    <link rel="stylesheet" href="/Blog/scss/style.css">
+    <link rel="stylesheet" href="/Blog/prism/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/css/style.css">
 
     <title>acon.log - &#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;</title>
 
@@ -18,13 +19,14 @@
 <meta name="twitter:site" content="acon.log">
 <meta property="og:title" content="&#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://aconcavy.github.io/Blog/posts/assets/images/icon-1024px.png">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.png">
 <meta property="og:url" content="/Blog/posts/20201108statiqblog">
-    
+
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/Blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,20 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-        <a class="nav-link" href="https://twitter.com/AconCavy">
-            <i class="fab fa-twitter"></i>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="https://github.com/AconCavy">
-            <i class="fab fa-github"></i>
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="/Blog/posts">Posts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/Blog/about">About</a>
     </li>
 </ul>
         </div>
@@ -54,30 +43,33 @@
 </nav>
 
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="post-heading">
-                    <h1>
-                        &#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;
-                    </h1>
-                        <div class="meta">Published on Sunday, 08 November 2020</div>
-                        <div class="meta">Updated on Sunday, 08 November 2020</div>
-                            <div class="mt-3">
-                                    <a href="/Blog/tags/statiq" class="badge badge-dark"> Statiq</a>
-                                    <a href="/Blog/tags/github-pages" class="badge badge-dark"> Github Pages</a>
-                                    <a href="/Blog/tags/github-actions" class="badge badge-dark"> Github Actions</a>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </header>
 
 <div class="container">
     <div class="row">
-        <div id="content" class="col-md-12">
-            <h1 id="section">はじめに</h1>
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">&#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;</h1>
+
+            <div class="card-text post-meta">Published on Sunday, 08 November 2020</div>
+            <div class="card-text post-meta">Updated on Sunday, 08 November 2020</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/statiq" class="badge badge-light"> Statiq</a>
+                        <a href="/Blog/tags/github-pages" class="badge badge-light"> Github Pages</a>
+                        <a href="/Blog/tags/github-actions" class="badge badge-light"> Github Actions</a>
+                </div>
+        </div>
+    </div>
+</div>
+                        <hr>
+                        <h1 id="section">はじめに</h1>
 <p>前回のブログから一度も更新せずに3か月経ち，サイト生成を <code>Wyam</code> から <code>Statiq</code> に変えたついでに，サイトのレイアウトを頑張ってアレンジしたので記事を書きます．</p>
 <h1 id="statiq">Statiq</h1>
 <p><a href="https://statiq.dev/">Statiq</a> は <a href="20200819wyamblog">前回の記事</a> で紹介した <code>Wyam</code> をリブランディングし，機能の追加に柔軟性を持たせたフレームワークだそうです．
@@ -166,9 +158,37 @@ jobs:
 <p>Webフロントなんもわからんマンだったので，CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました．おかげでWebデザインを学ぶことができたので，ちょっと前進でしょうか．</p>
 <p>画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど，Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね．</p>
 
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201108statiqblog" data-size="large">
-    Tweet
-</a>        </div>
+                        <div class="post-footer">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201108statiqblog" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center mt-4 about">
+        <div class="col-md-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.png" alt="icon"/>
+        </div>
+        <div class="col-md-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
     </div>
 </div>
 
@@ -179,10 +199,10 @@ jobs:
                 <p>Copyright © 2020 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i>RSS Feed</a>
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i>Atom Feed</a>
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>
@@ -195,11 +215,9 @@ jobs:
 
 <script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
 
-<script src="/Blog/syntax/prism.js"></script>
+<script src="/Blog/prism/prism.js"></script>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
 
 </body>
 

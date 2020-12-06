@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>2020</rights>
-	<updated>2020-12-04T16:12:38Z</updated>
+	<updated>2020-12-06T15:01:58Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20201129dotnettemplate</id>
 		<title>dotnet newのカスタムテンプレート</title>
@@ -59,6 +59,7 @@
     ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;template.json&lt;/code&gt;では，次のメンバを記述します．&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
 &lt;table class="table"&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -101,6 +102,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;/div&gt;
 &lt;p&gt;例えば，上記のプロジェクトでは次のような&lt;code&gt;json&lt;/code&gt;を記述します．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
     &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/template&amp;quot;,
@@ -225,6 +227,7 @@ Template.Tests/
     |- CPTemplate.csproj
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;ディレクトリを整理したら，&lt;code&gt;CPTemplate.csproj&lt;/code&gt;を編集し，ビルド情報を定義します．&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
 &lt;table class="table"&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -283,6 +286,7 @@ Template.Tests/
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;/div&gt;
 &lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
 
   &amp;lt;PropertyGroup&amp;gt;
@@ -530,6 +534,7 @@ namespace BenchmarkSharp
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="section-5"&gt;結果&lt;/h1&gt;
+&lt;div class="table-responsive"&gt;
 &lt;table class="table"&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -761,6 +766,7 @@ namespace BenchmarkSharp
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;/div&gt;
 &lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;.NET 5.0は .NET Core 3.1に比べて&lt;/p&gt;
 &lt;ul&gt;

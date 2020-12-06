@@ -3,13 +3,14 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
-    <link rel="stylesheet" href="/Blog/scss/style.css">
+    <link rel="stylesheet" href="/Blog/prism/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/css/style.css">
 
     <title>acon.log - Tags</title>
 
@@ -18,13 +19,14 @@
 <meta name="twitter:site" content="acon.log">
 <meta property="og:title" content="Tags">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://aconcavy.github.io/Blog/posts/assets/images/icon-1024px.png">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.png">
 <meta property="og:url" content="/Blog/tags">
-    
+
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/Blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,20 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-        <a class="nav-link" href="https://twitter.com/AconCavy">
-            <i class="fab fa-twitter"></i>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="https://github.com/AconCavy">
-            <i class="fab fa-github"></i>
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="/Blog/posts">Posts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/Blog/about">About</a>
     </li>
 </ul>
         </div>
@@ -54,23 +43,22 @@
 </nav>
 
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="site-heading">
-                    <h1>
-                        Tags
-                    </h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="site-heading">
+                        <h1>Tags</h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </header>
 
 <div class="container">
     <div class="row">
-        <div id="content" class="col-md-12">
-                    <a role="button" href="/Blog/tags/net" class="badge badge-light"> .NET (3)</a>
+        <div id="content">
+
+        <a role="button" href="/Blog/tags/net" class="badge badge-light"> .NET (3)</a>
         <a role="button" href="/Blog/tags/statiq" class="badge badge-light"> Statiq (2)</a>
         <a role="button" href="/Blog/tags/github-pages" class="badge badge-light"> Github Pages (2)</a>
         <a role="button" href="/Blog/tags/github-actions" class="badge badge-light"> Github Actions (2)</a>
@@ -87,10 +75,10 @@
                 <p>Copyright © 2020 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i>RSS Feed</a>
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i>Atom Feed</a>
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>
@@ -103,11 +91,9 @@
 
 <script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
 
-<script src="/Blog/syntax/prism.js"></script>
+<script src="/Blog/prism/prism.js"></script>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
 
 </body>
 

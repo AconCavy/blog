@@ -3,13 +3,14 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Blog/syntax/prism.css" type="text/css">
-    <link rel="stylesheet" href="/Blog/scss/style.css">
+    <link rel="stylesheet" href="/Blog/prism/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/css/style.css">
 
     <title>acon.log - Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;</title>
 
@@ -18,13 +19,14 @@
 <meta name="twitter:site" content="acon.log">
 <meta property="og:title" content="Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://aconcavy.github.io/Blog/posts/assets/images/icon-1024px.png">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.png">
 <meta property="og:url" content="/Blog/posts/20201119statiqextension">
-    
+
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/Blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,20 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-        <a class="nav-link" href="https://twitter.com/AconCavy">
-            <i class="fab fa-twitter"></i>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="https://github.com/AconCavy">
-            <i class="fab fa-github"></i>
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="/Blog/posts">Posts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/Blog/about">About</a>
     </li>
 </ul>
         </div>
@@ -54,29 +43,32 @@
 </nav>
 
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="post-heading">
-                    <h1>
-                        Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;
-                    </h1>
-                        <div class="meta">Published on Thursday, 19 November 2020</div>
-                        <div class="meta">Updated on Thursday, 19 November 2020</div>
-                            <div class="mt-3">
-                                    <a href="/Blog/tags/net" class="badge badge-dark"> .NET</a>
-                                    <a href="/Blog/tags/statiq" class="badge badge-dark"> Statiq</a>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </header>
 
 <div class="container">
     <div class="row">
-        <div id="content" class="col-md-12">
-            <h1 id="section">はじめに</h1>
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;</h1>
+
+            <div class="card-text post-meta">Published on Thursday, 19 November 2020</div>
+            <div class="card-text post-meta">Updated on Thursday, 19 November 2020</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/net" class="badge badge-light"> .NET</a>
+                        <a href="/Blog/tags/statiq" class="badge badge-light"> Statiq</a>
+                </div>
+        </div>
+    </div>
+</div>
+                        <hr>
+                        <h1 id="section">はじめに</h1>
 <p>Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録</p>
 <h1 id="section-1">方法</h1>
 <p><code>Bootstrapper</code>において，<code>Statiq.Web</code>でWebサイトを生成するメソッドである<code>CreateWeb()</code>では，markdownに関わるModuleの<code>RenderMarkdown</code>を<code>Templates</code>内で設定している．
@@ -141,9 +133,37 @@ namespace Blog.Extensions
 <h1 id="section-2">まとめ</h1>
 <p>StatiqのBootstrapperにて<code>ConfigureTemplates()</code>からテンプレートのmarkdownに関わるModuleを書き換えることで，markdownからhtmlを生成する設定を変更することができ，<code>RenderMarkdown.UseExtension&lt;TExtension&gt;()</code>に<code>IMarkdownExtension</code>を継承したクラスを設定することで，htmlタグのクラス等を変更することができる．</p>
 
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201119statiqextension" data-size="large">
-    Tweet
-</a>        </div>
+                        <div class="post-footer">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201119statiqextension" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center mt-4 about">
+        <div class="col-md-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.png" alt="icon"/>
+        </div>
+        <div class="col-md-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
     </div>
 </div>
 
@@ -154,10 +174,10 @@ namespace Blog.Extensions
                 <p>Copyright © 2020 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i>RSS Feed</a>
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i>Atom Feed</a>
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>
@@ -170,11 +190,9 @@ namespace Blog.Extensions
 
 <script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
 
-<script src="/Blog/syntax/prism.js"></script>
+<script src="/Blog/prism/prism.js"></script>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
 
 </body>
 

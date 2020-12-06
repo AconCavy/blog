@@ -41,7 +41,7 @@ a:focus, a:hover { color: #80CBC4; }
   #mainNav .navbar-nav > li.nav-item > a { color: #666666; }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover { color: #80CBC4; } }
 
-header { margin: 6rem 0 1rem; background-attachment: scroll; position: relative; }
+header { margin: 6rem 0 2rem; }
 
 header .page-heading, header .post-heading, header .site-heading { color: #e6e6e6; text-align: center; font-family: "Noto Sans JP", sans-serif; }
 
@@ -65,9 +65,17 @@ a.badge.badge-dark { background-color: #1a1a1a; color: #C792EA; }
 
 a.badge.select { background-color: #1a1a1a; color: #80CBC4; }
 
-.tag-area { background-color: #1a1a1a; padding: 1rem 2rem; }
+.post-header { text-align: center; }
 
-.post-preview { background-color: #1a1a1a; padding: 1rem 2rem .5rem; margin-bottom: 1rem; }
+.post-footer { margin-top: 2rem; }
+
+.post-footer img { width: 6rem; }
+
+.post-footer .about { text-align: center; }
+
+.post-meta { color: #666666; }
+
+.post-preview { background-color: #1a1a1a; margin-bottom: 1rem; }
 
 .post-preview > a { color: #e6e6e6; }
 
@@ -83,7 +91,7 @@ a.badge.select { background-color: #1a1a1a; color: #80CBC4; }
 
 .post-preview > .post-meta > a:focus, .post-preview > .post-meta > a:hover { text-decoration: underline; color: #80CBC4; }
 
-h1.group-year { color: #80CBC4; text-align: center; background-color: #1a1a1a; padding: 1rem 2rem; margin-bottom: 1rem; }
+h1.group-year { color: #80CBC4; text-align: center; }
 
 footer p { color: #666666; font-family: "Noto Sans JP", sans-serif; }
 
@@ -97,13 +105,13 @@ footer p { color: #666666; font-family: "Noto Sans JP", sans-serif; }
 
 .table { background-color: #1a1a1a; color: #e6e6e6; }
 
-.table thead { color: #f07178; }
+.card { background-color: #1a1a1a; margin-bottom: 1.5rem; }
 
-code, pre, code[class*="language-"], pre[class*="language-"] { color: #e6e6e6; background: #1a1a1a; font-family: "Source Code Pro", monospace; font-size: 1rem; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; word-wrap: normal; line-height: 1.5; }
+code, pre, code[class*="language-"], pre[class*="language-"] { background: #2A2D37; font-family: "Source Code Pro", monospace; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; word-wrap: normal; }
 
-pre, pre[class*="language-"] { padding: .5rem; margin: .5rem 0; }
+pre { padding: 1rem; }
 
-:not(pre) > code { color: #ff9cac; padding: 0 .5rem; }
+:not(pre) > code { color: #ff9cac; padding: .2rem .5rem; }
 
 div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span { color: #80CBC4; background: #1a1a1a; font-size: 1em; background: rgba(224, 224, 224, 0.2); }
 
