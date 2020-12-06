@@ -1,6 +1,30 @@
-﻿.post-preview {
+﻿.post-header {
+  text-align: center;
+}
+
+.post-footer {
+  margin-top: 2rem;
+
+  img {
+    width: 6rem;
+  }
+
+  .about {
+    text-align: center;
+
+    .profile {
+
+    }
+  }
+}
+
+.post-meta {
+  color: $secondary;
+}
+
+.post-preview {
   background-color: $backgroundAlt;
-  padding: 1rem 2rem .5rem;
+  //padding: 1rem 2rem .5rem;
   margin-bottom: 1rem;
 
   > a {
@@ -40,7 +64,4 @@
 h1.group-year {
   color: $accent;
   text-align: center;
-  background-color: $backgroundAlt;
-  padding: 1rem 2rem;
-  margin-bottom: 1rem;
 }
