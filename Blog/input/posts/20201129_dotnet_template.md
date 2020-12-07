@@ -1,6 +1,6 @@
 Title: dotnet newのカスタムテンプレート
 Published: 11/29/2020
-Updated: 11/30/2020
+Updated: 12/08/2020
 Tags: [.NET] 
 ---
 
@@ -82,6 +82,7 @@ Template.Project/
 | `$schema` | `template.json`のスキーマ |
 | `author` | テンプレートの作成者 |
 | `classfication` | テンプレートの種類 |
+| `tags` | テンプレートのタグ |
 | `identity` | テンプレートの識別子 |
 | `name` | テンプレートの名前 |
 | `shortName` | `dotnet new` で指定する際の名前 (例: `dotnet new cpproj`) |
@@ -98,17 +99,21 @@ Template.Project/
         "C#",
         "Console"
     ],
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
     "name": "Template Project",
     "identity": "AconCavy.Template.Project",
     "shortName": "cpproj",
     "sourceName": "Template.Project",
-    "preferNameDirectory": true,
+    "preferNameDirectory": true
 }
 ```
 
-`sourceName`に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，`dotnet new csproj -n Sample`を実行した場合，`Template.Project/`ディレクトリ，`Template.Project.sln`が`Sample/`ディレクトリ，`Sample.sln`に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．
+`sourceName`に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，`dotnet new cpproj -n Sample`を実行した場合，`Template.Project/`ディレクトリ，`Template.Project.sln`が`Sample/`ディレクトリ，`Sample.sln`に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．
 
-この状態で，`dotnet new -i path-to-template`コマンドでインストールし，`dotnet new csproj -n Sample`を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．
+この状態で，`dotnet new -i path-to-template`コマンドでインストールし，`dotnet new cpproj -n Sample`を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．
 
 ```
 Sample/
@@ -127,11 +132,11 @@ Sample/
 
 ### コマンドの追加オプション
 
-また，`Task.csproj`と`Tests.csproj`のターゲットフレームワークをテンプレート生成時に指定できるようにするため，`dotnet new csproj`コマンドにオプションを追加します．
+また，`Task.csproj`と`Tests.csproj`のターゲットフレームワークをテンプレート生成時に指定できるようにするため，`dotnet new cpproj`コマンドにオプションを追加します．
 
 まず，`.template.config`下に`dotnetcli.host.json`を追加します．
 `symbolInfo`メンバに，`longName`のオプションに`framework`を，`shortName`に`f`をもった`Framework`というメンバを追加します．
-追加することで，`dotnet new csproj`にオプションとして，`-f|--framework`のオプションを付与することができるようになります．
+追加することで，`dotnet new cpproj`にオプションとして，`-f|--framework`のオプションを付与することができるようになります．
 
 ```json
 {
@@ -195,7 +200,7 @@ Sample/
 
 ```
 
-この状態で，`dotnet new csproj -n Sample -f net5.0`を実行することで，`TargetFramework`に`net5.0`が設定されたプロジェクトを生成することができます．
+この状態で，`dotnet new cpproj -n Sample -f net5.0`を実行することで，`TargetFramework`に`net5.0`が設定されたプロジェクトを生成することができます．
 
 
 ## 解答用のクラスとテスト用のクラスのテンプレート
