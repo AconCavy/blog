@@ -1,5 +1,5 @@
 header {
-  margin: 6rem 0 2rem;
+  margin-top: 4.5rem;
 
   .page-heading,
   .post-heading,
@@ -38,5 +38,11 @@ header {
       font-size: 1rem;
       font-weight: 300;
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  header {
+    margin: 6rem 0 2rem;
   }
 }

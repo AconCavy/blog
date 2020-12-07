@@ -3,11 +3,12 @@ a.badge.badge-light,
 a.badge.select {
   font-family: $font-sans-serif;
   font-weight: 300;
+  padding-top: .3rem;
+  text-decoration: none;
 
   &:focus,
   &:hover {
-    background-color: $backgroundAlt;
-    text-decoration: underline;
+    background-color: $secondary;
     color: $accent;
   }
 }
