@@ -5,14 +5,14 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2020</copyright>
-		<pubDate>Sun, 06 Dec 2020 15:18:59 GMT</pubDate>
-		<lastBuildDate>Sun, 06 Dec 2020 15:18:59 GMT</lastBuildDate>
+		<pubDate>Mon, 07 Dec 2020 16:13:08 GMT</pubDate>
+		<lastBuildDate>Mon, 07 Dec 2020 16:13:08 GMT</lastBuildDate>
 		<item>
 			<title>dotnet newのカスタムテンプレート</title>
 			<link>https://aconcavy.github.io/Blog/posts/20201129dotnettemplate</link>
 			<description>&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので，&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です．&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/Blog/posts/20201129dotnettemplate</guid>
-			<pubDate>Mon, 30 Nov 2020 00:00:00 GMT</pubDate>
+			<pubDate>Tue, 08 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので，&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です．&lt;/p&gt;
 &lt;h1 id="dotnet-new"&gt;dotnet new のカスタムテンプレートとは&lt;/h1&gt;
@@ -84,6 +84,10 @@
 &lt;td style="text-align: left;"&gt;テンプレートの種類&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートのタグ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
 &lt;td style="text-align: center;"&gt;&lt;code&gt;identity&lt;/code&gt;&lt;/td&gt;
 &lt;td style="text-align: left;"&gt;テンプレートの識別子&lt;/td&gt;
 &lt;/tr&gt;
@@ -114,15 +118,19 @@
         &amp;quot;C#&amp;quot;,
         &amp;quot;Console&amp;quot;
     ],
+    &amp;quot;tags&amp;quot;: {
+        &amp;quot;language&amp;quot;: &amp;quot;C#&amp;quot;,
+        &amp;quot;type&amp;quot;: &amp;quot;project&amp;quot;
+    },
     &amp;quot;name&amp;quot;: &amp;quot;Template Project&amp;quot;,
     &amp;quot;identity&amp;quot;: &amp;quot;AconCavy.Template.Project&amp;quot;,
     &amp;quot;shortName&amp;quot;: &amp;quot;cpproj&amp;quot;,
     &amp;quot;sourceName&amp;quot;: &amp;quot;Template.Project&amp;quot;,
-    &amp;quot;preferNameDirectory&amp;quot;: true,
+    &amp;quot;preferNameDirectory&amp;quot;: true
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行した場合，&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ，&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ，&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．&lt;/p&gt;
-&lt;p&gt;この状態で，&lt;code&gt;dotnet new -i path-to-template&lt;/code&gt;コマンドでインストールし，&lt;code&gt;dotnet new csproj -n Sample&lt;/code&gt;を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，&lt;code&gt;dotnet new cpproj -n Sample&lt;/code&gt;を実行した場合，&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ，&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ，&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．&lt;/p&gt;
+&lt;p&gt;この状態で，&lt;code&gt;dotnet new -i path-to-template&lt;/code&gt;コマンドでインストールし，&lt;code&gt;dotnet new cpproj -n Sample&lt;/code&gt;を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="line-numbers"&gt;Sample/
     |
     |- Tasks/
@@ -137,10 +145,10 @@
     |- Sample.sln
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="section-3"&gt;コマンドの追加オプション&lt;/h3&gt;
-&lt;p&gt;また，&lt;code&gt;Task.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;のターゲットフレームワークをテンプレート生成時に指定できるようにするため，&lt;code&gt;dotnet new csproj&lt;/code&gt;コマンドにオプションを追加します．&lt;/p&gt;
+&lt;p&gt;また，&lt;code&gt;Task.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;のターゲットフレームワークをテンプレート生成時に指定できるようにするため，&lt;code&gt;dotnet new cpproj&lt;/code&gt;コマンドにオプションを追加します．&lt;/p&gt;
 &lt;p&gt;まず，&lt;code&gt;.template.config&lt;/code&gt;下に&lt;code&gt;dotnetcli.host.json&lt;/code&gt;を追加します．
 &lt;code&gt;symbolInfo&lt;/code&gt;メンバに，&lt;code&gt;longName&lt;/code&gt;のオプションに&lt;code&gt;framework&lt;/code&gt;を，&lt;code&gt;shortName&lt;/code&gt;に&lt;code&gt;f&lt;/code&gt;をもった&lt;code&gt;Framework&lt;/code&gt;というメンバを追加します．
-追加することで，&lt;code&gt;dotnet new csproj&lt;/code&gt;にオプションとして，&lt;code&gt;-f|--framework&lt;/code&gt;のオプションを付与することができるようになります．&lt;/p&gt;
+追加することで，&lt;code&gt;dotnet new cpproj&lt;/code&gt;にオプションとして，&lt;code&gt;-f|--framework&lt;/code&gt;のオプションを付与することができるようになります．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
     &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/dotnetcli.host&amp;quot;,
     &amp;quot;symbolInfo&amp;quot;: {
@@ -194,7 +202,7 @@
 &amp;lt;/Project&amp;gt;
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この状態で，&lt;code&gt;dotnet new csproj -n Sample -f net5.0&lt;/code&gt;を実行することで，&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;が設定されたプロジェクトを生成することができます．&lt;/p&gt;
+&lt;p&gt;この状態で，&lt;code&gt;dotnet new cpproj -n Sample -f net5.0&lt;/code&gt;を実行することで，&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;が設定されたプロジェクトを生成することができます．&lt;/p&gt;
 &lt;h2 id="section-4"&gt;解答用のクラスとテスト用のクラスのテンプレート&lt;/h2&gt;
 &lt;p&gt;単一のファイルのみ生成するように，テンプレートを構築します．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Solver/

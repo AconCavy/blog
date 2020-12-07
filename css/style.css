@@ -41,7 +41,7 @@ a:focus, a:hover { color: #80CBC4; }
   #mainNav .navbar-nav > li.nav-item > a { color: #666666; }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover { color: #80CBC4; } }
 
-header { margin: 6rem 0 2rem; }
+header { margin-top: 4.5rem; }
 
 header .page-heading, header .post-heading, header .site-heading { color: #e6e6e6; text-align: center; font-family: "Noto Sans JP", sans-serif; }
 
@@ -55,9 +55,11 @@ header .post-heading .subheading { font-size: 1.5rem; font-weight: 700; }
 
 header .post-heading .meta { color: #e6e6e6; font-size: 1rem; font-weight: 300; }
 
-a.badge.badge-dark, a.badge.badge-light, a.badge.select { font-family: "Noto Sans JP", sans-serif; font-weight: 300; }
+@media screen and (min-width: 768px) { header { margin: 6rem 0 2rem; } }
 
-a.badge.badge-dark:focus, a.badge.badge-dark:hover, a.badge.badge-light:focus, a.badge.badge-light:hover, a.badge.select:focus, a.badge.select:hover { background-color: #1a1a1a; text-decoration: underline; color: #80CBC4; }
+a.badge.badge-dark, a.badge.badge-light, a.badge.select { font-family: "Noto Sans JP", sans-serif; font-weight: 300; padding-top: .3rem; text-decoration: none; }
+
+a.badge.badge-dark:focus, a.badge.badge-dark:hover, a.badge.badge-light:focus, a.badge.badge-light:hover, a.badge.select:focus, a.badge.select:hover { background-color: #666666; color: #80CBC4; }
 
 a.badge.badge-light { background-color: #C792EA; color: #1a1a1a; }
 
@@ -111,7 +113,7 @@ code, pre, code[class*="language-"], pre[class*="language-"] { background: #2A2D
 
 pre { padding: 1rem; }
 
-:not(pre) > code { color: #ff9cac; padding: .2rem .5rem; }
+:not(pre) > code { color: #ff9cac; padding: .1rem .2rem; }
 
 div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span { color: #80CBC4; background: #1a1a1a; font-size: 1em; background: rgba(224, 224, 224, 0.2); }
 
