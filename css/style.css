@@ -41,7 +41,7 @@ a:focus, a:hover { color: #80CBC4; }
   #mainNav .navbar-nav > li.nav-item > a { color: #666666; }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover { color: #80CBC4; } }
 
-header { margin-top: 4.5rem; }
+header { margin: 4.5rem 0 1rem; }
 
 header .page-heading, header .post-heading, header .site-heading { color: #e6e6e6; text-align: center; font-family: "Noto Sans JP", sans-serif; }
 
