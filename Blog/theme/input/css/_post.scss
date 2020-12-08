@@ -8,23 +8,18 @@
   img {
     width: 6rem;
   }
-
-  .about {
-    text-align: center;
-
-    .profile {
-
-    }
-  }
 }
 
 .post-meta {
   color: $secondary;
 }
 
+.post-nav {
+  margin-bottom: 1.5rem;
+}
+
 .post-preview {
   background-color: $backgroundAlt;
-  //padding: 1rem 2rem .5rem;
   margin-bottom: 1rem;
 
   > a {

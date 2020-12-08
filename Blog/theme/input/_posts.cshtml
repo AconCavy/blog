@@ -12,8 +12,8 @@
 
 @if (older != null || newer != null)
 {
-    <div style="margin-bottom: 4rem">
-        <div class="float-sm-left">
+    <div class="post-nav">
+        <div class="float-left">
             @if (newer != null)
             {
                 <a class="btn btn-primary" href="@Context.GetLink(newer)" role="button">
@@ -22,7 +22,7 @@
                 </a>
             }
         </div>
-        <div class="float-sm-right">
+        <div class="float-right">
             @if (older != null)
             {
                 <a class="btn btn-primary" href="@Context.GetLink(older)" role="button">
@@ -31,5 +31,6 @@
                 </a>
             }
         </div>
+        <div class="clearfix"></div>
     </div>
 }

@@ -3,12 +3,12 @@ a.badge.badge-light,
 a.badge.select {
   font-family: $font-sans-serif;
   font-weight: 300;
-  padding-top: .3rem;
+  padding-top: .2rem;
   text-decoration: none;
 
   &:focus,
   &:hover {
-    background-color: $secondary;
+    background-color: $background;
     color: $accent;
   }
 }
@@ -24,6 +24,6 @@ a.badge.badge-dark {
 }
 
 a.badge.select {
-  background-color: $backgroundAlt;
+  background-color: $background;
   color: $accent;
 }
