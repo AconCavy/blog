@@ -5,8 +5,8 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2020</copyright>
-		<pubDate>Fri, 11 Dec 2020 20:29:29 GMT</pubDate>
-		<lastBuildDate>Fri, 11 Dec 2020 20:29:29 GMT</lastBuildDate>
+		<pubDate>Fri, 11 Dec 2020 20:32:46 GMT</pubDate>
+		<lastBuildDate>Fri, 11 Dec 2020 20:32:46 GMT</lastBuildDate>
 		<item>
 			<title>リポジトリを作成したときにやっておきたいこと</title>
 			<link>https://aconcavy.github.io/Blog/posts/20201212createrepository</link>
@@ -1050,7 +1050,7 @@ jobs:
 &lt;p&gt;ビルドが終わったら，ローカル環境で実行してみます．&lt;/p&gt;
 &lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/hello_wyam.png" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/hello_wyam.webp" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
 &lt;p&gt;あっという間にブログが出来上がりました👏&lt;/p&gt;
 &lt;h2 id="section-3"&gt;記事の編集&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;./input/&lt;/code&gt; 内に &lt;code&gt;about.md&lt;/code&gt; が，また &lt;code&gt;./input/posts/&lt;/code&gt; 内に &lt;code&gt;first-post.md&lt;/code&gt; が生成されています．これらのように markdown ファイルを追加および編集することで，記事の編集および追加をすることができます．&lt;/p&gt;
