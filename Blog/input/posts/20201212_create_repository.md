@@ -1,6 +1,6 @@
 Title: リポジトリを作成したときにやっておきたいこと
 Published: 12/12/2020
-Updated: 12/12/2020
+Updated: 12/13/2020
 Tags: [Git, GitHub, GitHub Actions] 
 ---
 
@@ -20,13 +20,13 @@ WindowsとMacOS / LinuxではOSにより行の終端が異なるため，何も�
 また，`core.autocrlf`を`input`にすると，`LF`のままcheckoutとcommitが行われます．
 そのため，Windowsでは`true`，MacOS / Linuxでは`input`を指定しておくといいでしょう．
 
-### Windows
+- Windows
 
 ```powershell
 git config --global core.autocrlf true
 ```
 
-### Mac OS / Linux
+- Mac OS / Linux
 
 ```sh
 git config --global core.autocrlf input
@@ -44,20 +44,19 @@ git config --global core.autocrlf input
 
 その他詳しくは[こちら (GitHub Docs, 行終端を処理するようGitを設定する)](https://docs.github.com/ja/free-pro-team@latest/github/using-git/configuring-git-to-handle-line-endings)
 
-
 ## .gitignore
 
 プロジェクトの生成物やエディタが生成するファイルなど，プロジェクトに関わりのないファイルやディレクトリを指定しましょう．
 
 エディタの設定ファイルに関しては，リポジトリに開発者ごとのエディタ設定を無視させるのではなく，開発者自身が`.gitignore_global`を設定した方がいいかもしれません．
 
-### Windows
+- Windows
 
 ```powershell
 git config --global core.excludesfile core.excludesfile path/to/.gitignore_global
 ```
 
-### MacOS / Linux
+- MacOS / Linux
 
 ```sh
 git config --global core.excludesfile core.excludesfile ~/.gitignore_global
@@ -90,7 +89,7 @@ indent_size = 2               # インデント2
 
 Unit Testや正しくファイルがフォーマットされているかのチェック，，Releaseの作成，デプロイ等を自動化することによって，繰り返しの作業が楽になるので可能ならやっておきたいです．
 
-以下dotnetの場合
+以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合
 
 ## Unit test
 
@@ -161,7 +160,62 @@ jobs:
 
 # Releaseの作成
 
-まだ使ったことないのでそのうち書きたい
+Releaseでは，Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします．次の例では.dllファイルをアップロードします．
+
+```yml
+name: Release
+
+on:
+  push:
+    tags: 
+    - 'v[0-9]+.[0-9]+.[0-9]+*' # v0.0.1のようなTagがpushされたとき
+
+jobs:  
+  release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    
+    steps:
+    
+    # Build
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet build -c Release
+    
+    # リリースを作成
+    - name: Create Release 
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        # body |
+        # hoge hoge # Releaseコメント
+        draft: false
+        prerelease: false
+
+    # リリースの成果物にHello.dllを追加
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./src/Hello/bin/Release/net5.0/Hello.dll
+        asset_name: Hello.dll
+        asset_content_type: application/octet-stream # .dllファイルのcontent type
+```
+
+Workflowを実行すると次のようなReleaseが作成されます．
+
+![github action release](assets/images/gha_release.webp)
 
 # まとめ
 
