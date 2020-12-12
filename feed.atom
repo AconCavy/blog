@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>2020</rights>
-	<updated>2020-12-11T20:32:46Z</updated>
+	<updated>2020-12-12T21:22:09Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20201212createrepository</id>
 		<title>リポジトリを作成したときにやっておきたいこと</title>
 		<link href="https://aconcavy.github.io/Blog/posts/20201212createrepository" />
-		<updated>2020-12-12T00:00:00Z</updated>
+		<updated>2020-12-13T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;これ何&lt;/h1&gt;
 &lt;p&gt;リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです．&lt;/p&gt;
 &lt;h1 id="section-1"&gt;開発環境ごとの差異をなくすために&lt;/h1&gt;
@@ -19,10 +19,14 @@
 &lt;p&gt;&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;true&lt;/code&gt;にすると，ファイル形式が&lt;code&gt;CRLF&lt;/code&gt;と&lt;code&gt;LF&lt;/code&gt;のどちらであってもcheckout時に&lt;code&gt;CRLF&lt;/code&gt;に変換され，commit時には自動的に&lt;code&gt;LF&lt;/code&gt;へと変換されます．
 また，&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;input&lt;/code&gt;にすると，&lt;code&gt;LF&lt;/code&gt;のままcheckoutとcommitが行われます．
 そのため，Windowsでは&lt;code&gt;true&lt;/code&gt;，MacOS / Linuxでは&lt;code&gt;input&lt;/code&gt;を指定しておくといいでしょう．&lt;/p&gt;
-&lt;h3 id="windows"&gt;Windows&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.autocrlf true
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="mac-os-linux"&gt;Mac OS / Linux&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Mac OS / Linux&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.autocrlf input
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="gitattributes"&gt;.gitattributes&lt;/h2&gt;
@@ -34,10 +38,14 @@
 &lt;h2 id="gitignore"&gt;.gitignore&lt;/h2&gt;
 &lt;p&gt;プロジェクトの生成物やエディタが生成するファイルなど，プロジェクトに関わりのないファイルやディレクトリを指定しましょう．&lt;/p&gt;
 &lt;p&gt;エディタの設定ファイルに関しては，リポジトリに開発者ごとのエディタ設定を無視させるのではなく，開発者自身が&lt;code&gt;.gitignore_global&lt;/code&gt;を設定した方がいいかもしれません．&lt;/p&gt;
-&lt;h3 id="windows-1"&gt;Windows&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.excludesfile core.excludesfile path/to/.gitignore_global
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="macos-linux"&gt;MacOS / Linux&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;MacOS / Linux&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.excludesfile core.excludesfile ~/.gitignore_global
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="editorconfig"&gt;.editorconfig&lt;/h2&gt;
@@ -60,7 +68,7 @@ indent_size = 2               # インデント2
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="ci-cd"&gt;CI / CD&lt;/h1&gt;
 &lt;p&gt;Unit Testや正しくファイルがフォーマットされているかのチェック，，Releaseの作成，デプロイ等を自動化することによって，繰り返しの作業が楽になるので可能ならやっておきたいです．&lt;/p&gt;
-&lt;p&gt;以下dotnetの場合&lt;/p&gt;
+&lt;p&gt;以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合&lt;/p&gt;
 &lt;h2 id="unit-test"&gt;Unit test&lt;/h2&gt;
 &lt;p&gt;GitHub Workflowの&lt;code&gt;.NET Core&lt;/code&gt;を選択すれば必要最低限のWorkflowは実現できます．&lt;/p&gt;
 &lt;p&gt;リポジトリにコミットされた際にテストを実行し，一つでもテストが通らなかった場合は以下のように確認することができます．&lt;/p&gt;
@@ -115,7 +123,58 @@ jobs:
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_lint_fail.webp" class="img-fluid" alt="github action lint failed"&gt;&lt;/p&gt;
 &lt;h1 id="release"&gt;Releaseの作成&lt;/h1&gt;
-&lt;p&gt;まだ使ったことないのでそのうち書きたい&lt;/p&gt;
+&lt;p&gt;Releaseでは，Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします．次の例では.dllファイルをアップロードします．&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Release
+
+on:
+  push:
+    tags: 
+    - 'v[0-9]+.[0-9]+.[0-9]+*' # v0.0.1のようなTagがpushされたとき
+
+jobs:  
+  release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    
+    steps:
+    
+    # Build
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet build -c Release
+    
+    # リリースを作成
+    - name: Create Release 
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        # body |
+        # hoge hoge # Releaseコメント
+        draft: false
+        prerelease: false
+
+    # リリースの成果物にHello.dllを追加
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./src/Hello/bin/Release/net5.0/Hello.dll
+        asset_name: Hello.dll
+        asset_content_type: application/octet-stream # .dllファイルのcontent type
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Workflowを実行すると次のようなReleaseが作成されます．&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_release.webp" class="img-fluid" alt="github action release"&gt;&lt;/p&gt;
 &lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません．
 開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います．&lt;/p&gt;
