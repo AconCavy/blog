@@ -68,8 +68,11 @@
         </div>
     </div>
 </div>
-                        <hr>
-                        <h1 id="section">はじめに</h1>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
 <p>Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録</p>
 <h1 id="section-1">方法</h1>
 <p><code>Bootstrapper</code>において，<code>Statiq.Web</code>でWebサイトを生成するメソッドである<code>CreateWeb()</code>では，markdownに関わるModuleの<code>RenderMarkdown</code>を<code>Templates</code>内で設定している．
@@ -134,7 +137,8 @@ namespace Blog.Extensions
 <h1 id="section-2">まとめ</h1>
 <p>StatiqのBootstrapperにて<code>ConfigureTemplates()</code>からテンプレートのmarkdownに関わるModuleを書き換えることで，markdownからhtmlを生成する設定を変更することができ，<code>RenderMarkdown.UseExtension&lt;TExtension&gt;()</code>に<code>IMarkdownExtension</code>を継承したクラスを設定することで，htmlタグのクラス等を変更することができる．</p>
 
-                        <div class="post-footer">
+                        </div>
+                        <div class="post-footer mt-5">
     <div class="share">
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20201119statiqextension" data-size="large">
             Tweet

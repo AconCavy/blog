@@ -6,15 +6,13 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; font-family: "Noto Sans JP", sans-ser
 
 h1 { font-size: 2rem; }
 
-h2 { font-size: 1.8rem; }
+h2 { font-size: 1.75rem; }
 
-h3 { font-size: 1.6rem; }
+h3 { font-size: 1.5rem; }
 
-h4 { font-size: 1.4rem; }
+h4 { font-size: 1.25rem; }
 
-h5 { font-size: 1.2rem; }
-
-h6 { font-size: 1rem; }
+h5, h6 { font-size: 1rem; }
 
 p { font-weight: 400; font-family: "Noto Serif JP", serif; }
 
@@ -68,6 +66,10 @@ a.badge.badge-dark { background-color: #1a1a1a; color: #C698E6; }
 a.badge.select { background-color: #212121; color: #80CBC4; }
 
 .post-header { text-align: center; }
+
+.post-body { margin-top: -1rem; }
+
+.post-body h1, .post-body h2, .post-body h3 { margin-top: 3rem; }
 
 .post-footer { margin-top: 2rem; }
 
