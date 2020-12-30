@@ -34,8 +34,9 @@
                 <div class="card shadow-sm">
                     <div class="card-body p-md-5">
                         @await Html.PartialAsync("_post-header.cshtml")
-                        <hr>
-                        @RenderBody()
+                        <div class="post-body">
+                            @RenderBody()
+                        </div>
                         @await Html.PartialAsync("_post-footer.cshtml")
                     </div>
                 </div>
