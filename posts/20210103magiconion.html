@@ -1,0 +1,551 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Blog/prism/prism.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/css/style.css">
+
+    <title>acon.log - MagicOnion&#x306B;&#x5165;&#x9580;&#x3057;&#x305F;</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="MagicOnion&#x306B;&#x5165;&#x9580;&#x3057;&#x305F;">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.webp">
+<meta property="og:url" content="/Blog/posts/20210103magiconion">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">MagicOnion&#x306B;&#x5165;&#x9580;&#x3057;&#x305F;</h1>
+
+            <div class="card-text post-meta">Published on Sunday, 03 January 2021</div>
+            <div class="card-text post-meta">Updated on Sunday, 03 January 2021</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/unity" class="badge badge-light"> Unity</a>
+                        <a href="/Blog/tags/magiconion" class="badge badge-light"> MagicOnion</a>
+                        <a href="/Blog/tags/messagepack" class="badge badge-light"> MessagePack</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>友人がC#のgRPCライブラリの<code>MagicOnion</code>の導入に苦戦してたので，手伝いながら使ってみたときにつまったところを纏めたものです．</p>
+<p>リポジトリは<a href="https://github.com/AconCavy/MagicOnionSample">こちら</a></p>
+<h1 id="magiconion">MagicOnion</h1>
+<p><a href="https://github.com/Cysharp/MagicOnion">MagicOnion</a>は，共通のインターフェースを介してクライアントとサーバーで手続きを呼び合う技術の<a href="https://github.com/grpc/grpc">gRPC</a>をC#用に最適化した，リアルタイム通信ライブラリです．</p>
+<p>ASP.NET CoreにもgRPCのテンプレートは存在しますが，そちらは<code>proto</code>ファイルを作成し，そのファイルにインターフェースを定義を行います．一方MagicOnionの場合は，C#の<code>interface</code>を定義すればめんどくさいことはMagicOnion側でいろいろやってくれるため，クライアントとサーバーでどちらもC#を利用する場合には一つのソースを使いまわすことができたりと嬉しいことが多いです．そのため，クライアントはUnity，サーバーはASP.NET Coreを使うモバイルゲームなどのプロジェクトでよく使われるそうです．</p>
+<h1 id="section-1">環境</h1>
+<ul>
+<li>Unity 2019.4.17f1</li>
+<li><a href="https://github.com/Cysharp/MagicOnion/releases/tag/4.0.4">MagicOnion 4.0.4</a></li>
+<li><a href="https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85">MessagePack for C# 2.2.85</a></li>
+<li>gRPC (<a href="https://packages.grpc.io/archive/2020/12/d7b70c3ea25c48ffdae7b8bd3c757594d4fff4b6-2be69c7e-9b25-4273-a7d4-3840da2d6723/csharp/grpc_unity_package.2.35.0-dev202012021242.zip">grpc_unity_package.2.35.0-dev202012021242</a>)</li>
+</ul>
+<h1 id="section-2">作ってみる1</h1>
+<p>MagicOnionを使うにあたって，ASP.NET Coreでのサーバー，Unityでのクライアント，共有Apiの3つのプロジェクトを構成します．</p>
+<pre><code class="line-numbers">MagicOnionSample/
+  |- MagicOnionSample.Server/
+  |- MagicOnionSample.Shared/
+  |- MagicOnionSample.Unity/
+  |
+  |- MagicOnionSample.sln
+</code></pre>
+<p><code>MagicOnionSample.Server</code>はASP.NET CoreのgRPCテンプレートで作成しました．
+<code>MagicOnionSample.Unity</code>にはUnityプロジェクトを作成します．
+<code>MagicOnionSample.sln</code>には<code>MagicOnionSample.Server</code>と<code>MagicOnionSample.Shared</code>を追加します．</p>
+<h2 id="section-3">クライアント側の準備</h2>
+<p>プロジェクトを作成したら，はじめに<code>Project Settings</code>を以下に変更します．</p>
+<div class="table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th style="text-align: center;">Item</th>
+<th style="text-align: center;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>Scripting Backend</code></td>
+<td style="text-align: center;"><code>Mono</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Api Compatibility Level</code></td>
+<td style="text-align: center;"><code>.NET 4.x</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>Allow unsafe code</code></td>
+<td style="text-align: center;"><code>True</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>次に，MagicOnionとMessagePackの<code>unitypackage</code>をプロジェクトにインポートします．
+また，gRPCのパッケージから，<code>Google.Protobuf</code>，<code>Grpc.Core</code>， <code>Grpc.Core.Api</code>の3つのフォルダを<code>Assets/Plugins/</code>にインポートします．</p>
+<p>MagicOnionとMessagePackのバージョンによってはUnityのコンパイルエラーは発生しませんが，MagicOnion 4.0.4とMessagePack 2.2.85の場合はMagicOnion側でコンパイルエラーが発生してしまいます．MessagePack 2.2.85からMessagePackの属性が含まれている名前空間が<code>MessagePack</code>から<code>MessagePack.Annotations</code>に変更されているようなので，<code>Assets/Scripts/MagicOnion.Client/MagicOnion.Client.asmdef</code>の <code>AssemblyDefinition References</code>に<code>MessagePack.Annotations</code>の参照を追加することでコンパイルエラーを解消できます．</p>
+<h2 id="section-4">サーバー側の準備</h2>
+<p>ASP.NET CoreのgRPCテンプレートで作成した場合，以下のような構成でプロジェクトが作成されます．</p>
+<pre><code class="line-numbers">MagicOnionSample
+  |-MagicOnionSample.Server
+      |- Properties/
+      |    |- launchSettings.json
+      |- Protos/
+      |    |- greet.proto
+      |- Services/
+      |    |- GreeterService.cs
+      |- appsettings.json
+      |- appsettings.development.json
+      |- Program.cs
+      |- Startup.cs
+</code></pre>
+<p>この状態から，<code>Protos</code>ディレクトリと，<code>GreeterService.cs</code>を削除します．
+次に<code>Startup.cs</code>の<code>GenericHost</code>の構成にMagicOnionを追加します．</p>
+<pre><code class="language-csharp line-numbers">using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace MagicOnionSample.Server
+{
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddGrpc();
+            services.AddMagicOnion(); // Here
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints =&gt;
+            {
+                endpoints.MapMagicOnionService(); // Here
+                endpoints.MapGet(&quot;/&quot;,
+                    async context =&gt;
+                    {
+                        await context.Response.WriteAsync(
+                            &quot;Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909&quot;);
+                    });
+            });
+        }
+    }
+}
+</code></pre>
+<p>また，今回は<code>localhost</code>で通信を行うので，<code>appsettings.development.json</code>に以下の設定を追加します．</p>
+<pre><code class="language-json line-numbers">...
+&quot;Kestrel&quot;: {
+    &quot;Endpoints&quot;: {
+      &quot;Grpc&quot;: {
+        &quot;Url&quot;: &quot;http://localhost:5000&quot;,
+        &quot;Protocols&quot;: &quot;Http2&quot;
+      },
+      &quot;Https&quot;: {
+        &quot;Url&quot;: &quot;https://localhost:5001&quot;,
+        &quot;Protocols&quot;: &quot;Http1AndHttp2&quot;
+      },
+      &quot;Http&quot;: {
+        &quot;Url&quot;: &quot;http://localhost:5002&quot;,
+        &quot;Protocols&quot;: &quot;Http1&quot;
+      }
+    }
+  }
+...
+</code></pre>
+<p>また，<code>Program.cs</code>の<code>CreateHostBuilder</code>に<code>Kestrel</code>とHttp2を使うための設定を追加します．</p>
+<pre><code class="language-csharp line-numbers">using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Hosting;
+
+namespace MagicOnionSample.Server
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =&gt; webBuilder
+                    .UseKestrel(options =&gt; options.ConfigureEndpointDefaults(endpointOptions =&gt;
+                        endpointOptions.Protocols = HttpProtocols.Http2))
+                    .UseStartup&lt;Startup&gt;());
+        }
+    }
+}
+</code></pre>
+<p>Httpsで通信を行う場合は，<a href="https://docs.microsoft.com/ja-jp/aspnet/core/security/enforcing-ssl?view=aspnetcore-5.0&amp;tabs=visual-studio">こちら</a>を参照してください．</p>
+<h2 id="api">共有Apiの定義</h2>
+<p>Unityに戻り，MagicOnionで使用する<code>interface</code>やモデルクラス類を作成します．
+今回は<code>Assets/MagicOnionSample/Scripts/Shared/</code>に共有Apiを構成します．</p>
+<p><code>Shared</code>ディレクトリに<code>ISampleService.cs</code>を作成し,<code>string</code>の値を渡すと挨拶の<code>string</code>を返す<code>interface</code>を定義します．また，この<code>interface</code>には<code>IService&lt;T&gt;</code>もあわせて定義します．</p>
+<pre><code class="language-csharp line-numbers">using MagicOnion;
+
+namespace MagicOnionSample.Shared
+{
+    public interface ISampleService : IService&lt;ISampleService&gt;
+    {
+        UnaryResult&lt;string&gt; GreetAsync(string name);
+    }
+}
+</code></pre>
+<h2 id="section-5">クライアント側の実装</h2>
+<p><code>Shared</code>ディレクトリでは，クライアントとサーバーで共有できるクラスやインターフェースのみを持たせるために，<code>Shared</code>ディレクトリとは別に，<code>Assets/MagicOnionSample/Scripts/Unity/</code>を作成し，名前空間と実装を分離します．</p>
+<p><code>Unity</code>ディレクトリに<code>SampleEntryPoint.cs</code>を作成し，サーバーにローカルホストでアクセスする実装をします．</p>
+<p><code>MagicOnionClient</code>から<code>ISampleService</code>のエンドポイントに対して，上記で定義した<code>GreetAsync</code>を<code>interface</code>経由で呼び，結果を<code>Debug.Log</code>に表示させます．
+<code>interface</code>経由で呼ぶことで，クライアント側は実装を気にする必要がありません．</p>
+<pre><code class="language-csharp line-numbers">using System.Threading.Tasks;
+using Grpc.Core;
+using MagicOnion.Client;
+using MagicOnionSample.Shared;
+using UnityEngine;
+
+namespace MagicOnionSample.Unity
+{
+    public class SampleEntryPoint : MonoBehaviour
+    {
+        public string host = &quot;localhost&quot;;
+        public int port = 5000;
+
+        public string user = &quot;Foo&quot;;
+        public string room = &quot;Bar&quot;;
+
+        private Channel _channel;
+
+        private async Task Start()
+        {
+            _channel = new Channel(host, port, ChannelCredentials.Insecure);
+
+            var client = MagicOnionClient.Create&lt;ISampleService&gt;(_channel);
+            var greet = await client.GreetAsync(user);
+            Debug.Log(greet);
+        }
+
+        private async Task OnDestroy()
+        {
+            await _channel.ShutdownAsync();
+        }
+    }
+}
+</code></pre>
+<p>作成後，UnityのHierarchyに適当なGameObjectを作成し，<code>SampleEntryPoint</code>を付与します．</p>
+<h2 id="api-1">サーバー側における共有Api</h2>
+<p>Unityがコンパイルできるスクリプトは<code>Assets/</code>以下にあるものに限るため，サーバー側で共有Api用のプロジェクトを作成すると不整合がおきてしまうかもしれません．そのため，<code>MagicOnionSample.Shared</code>のプロジェクトでは，中身を実際には持たずに，上記で作成したUnityプロジェクト内の<code>Assets/MagicOnionSample/Scripts/Shared</code>ディレクトリにあるスクリプトを参照することでサーバー側でも共有Apiとして使えるようにします．</p>
+<p>そのため，<code>MagicOnionSample.Shared</code>のディレクトリ構成は以下のようになります．</p>
+<pre><code class="line-numbers">MagicOnionSample
+  |-MagicOnionSample.Shared
+      |-MagicOnionSample.Shared.csproj
+</code></pre>
+<p>nugetから<code>MagicOnion</code>，<code>MagicOnion.Abstractions</code>，<code>MessagePack</code>，<code>MessagePack.UnityShims</code>をインストールします．
+<code>MessagePack.UnityShims</code>をインストールすることで，UnityEngineのApiを利用することができるため，<code>Vector3</code>や<code>Quatarnion</code>などを使う場合はインストールします．</p>
+<p><code>&lt;Compile Include=&quot;path/to/file&quot;/&gt;</code>を定義することで，指定したパスのファイルをコンパイルに含めることができます．</p>
+<p><code>csproj</code>は以下のようになります．</p>
+<pre><code class="language-xml line-numbers">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+
+    &lt;PropertyGroup&gt;
+        &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt;
+    &lt;/PropertyGroup&gt;
+
+    &lt;ItemGroup&gt;
+        &lt;PackageReference Include=&quot;MagicOnion&quot; Version=&quot;4.0.4&quot; /&gt;
+        &lt;PackageReference Include=&quot;MagicOnion.Abstractions&quot; Version=&quot;4.0.4&quot; /&gt;
+        &lt;PackageReference Include=&quot;MessagePack&quot; Version=&quot;2.2.85&quot; /&gt;
+        &lt;PackageReference Include=&quot;MessagePack.UnityShims&quot; Version=&quot;2.2.85&quot; /&gt;
+    &lt;/ItemGroup&gt;
+
+    &lt;ItemGroup&gt;
+        &lt;Compile Include=&quot;../MagicOnionSample.Unity/Assets/MagicOnionSample/Scripts/Shared/**/*.cs&quot; /&gt;
+    &lt;/ItemGroup&gt;
+
+&lt;/Project&gt;
+</code></pre>
+<h2 id="section-6">サーバー側の実装</h2>
+<p>上記で準備した共有Apiのプロジェクトをサーバー側のプロジェクトで参照することで，Unity上で定義した<code>ISampleService</code>を利用することができるようになります．
+<code>SampleService.cs</code>を作成し，<code>ISampleService</code>の実装を行います．
+簡単な文字列を返すように実装しました．</p>
+<pre><code class="language-csharp line-numbers">using System;
+using MagicOnion;
+using MagicOnion.Server;
+using MagicOnionSample.Shared;
+
+namespace MagicOnionSample.Server.Services
+{
+    public class SampleService : ServiceBase&lt;ISampleService&gt;, ISampleService
+    {
+        public async UnaryResult&lt;string&gt; GreetAsync(string name)
+        {
+            await Console.Out.WriteLineAsync(name);
+            return $&quot;Welcome {name}!&quot;;
+        }
+    }
+}
+</code></pre>
+<h2 id="section-7">動作確認</h2>
+<p><code>dotnet run</code>コマンド等でサーバーを起動し，<code>SampleEntryPoint</code>が適当なGameObjectに付与されているのを確認した後にUnityを実行し，UnityのConsoleに<code>Welcome Foo!</code>と表示されたら成功です．
+以上で，サーバーとクライアントの1対1のApiコールができました．</p>
+<h1 id="section-8">作ってみる2</h1>
+<p>前の項では，サーバーとクライアントの1対1のApiコールを実装しました．次に，サーバーとクライアントの1対多のApiコールを実装します．
+マルチプレイでプレイヤーの座標をリアルタイムで同期させるといったことが用途としてあげられます．</p>
+<p>今回は，プレイヤーが部屋に参加したかどうかを知らせるApiを実装します．</p>
+<h2 id="api-2">共有Apiの定義</h2>
+<p>初めに，<code>Player</code>を一つのモデルとして管理するために，<code>Shared</code>ディレクトリに<code>Player.cs</code>を作成します．
+<code>MessagePackObject</code>の属性をクラスや構造体に付与することで，MessagePackがシリアライズできるようになり，<code>Key</code>によってそれぞれのプロパティを管理します．</p>
+<pre><code class="language-csharp line-numbers">using MessagePack;
+
+namespace MagicOnionSample.Shared
+{
+    [MessagePackObject]
+    public class Player
+    {
+        [Key(0)] public string Name { get; set; }
+        [Key(1)] public string Room { get; set; }
+    }
+}
+</code></pre>
+<p>次に，<code>Shared</code>ディレクトリに<code>ISampleHubReceiver.cs</code>を作成します．
+<code>Player</code>が部屋に参加したことを知らせるコールバークとしての<code>interface</code>を定義します．</p>
+<pre><code class="language-csharp line-numbers">namespace MagicOnionSample.Shared
+{
+    public interface ISampleHubReceiver
+    {
+        void OnJoin(Player player);
+    }
+}
+</code></pre>
+<p>また，<code>Shared</code>ディレクトリに<code>ISampleHub.cs</code>を作成します．
+<code>name</code>と<code>room</code>を渡すことで，部屋に参加する<code>interface</code>を定義します．この<code>interface</code>には<code>IStreamingHub&lt;T, U&gt;</code>もあわせて定義します．</p>
+<p><code>ISampleService</code>と同じようにApiコール用の<code>interface</code>です．</p>
+<pre><code class="language-csharp line-numbers">using System.Threading.Tasks;
+using MagicOnion;
+
+namespace MagicOnionSample.Shared
+{
+    public interface ISampleHub : IStreamingHub&lt;ISampleHub, ISampleHubReceiver&gt;
+    {
+        Task JoinAsync(string name, string room);
+    }
+}
+</code></pre>
+<p>これらのApiコールのの流れとして，<code>ISampleHub</code>の<code>JoinAsync</code>を呼ぶことで，サーバーに名前と部屋名を渡し，サーバー側の処理が完了すると<code>ISampleHubReceiver</code>の<code>OnJoin</code>がコールバックとして呼ばれる形になります．</p>
+<h2 id="section-9">クライアント側の実装</h2>
+<p>クライアント側では，<code>ISampleHubReceiver</code>を実装した<code>SampleHubReceiver</code>を作成します．
+<code>Unity</code>ディレクトリに<code>SampleHubReceiver.cs</code>を作成し，コールバックの内容を実装します．
+<code>Player</code>が参加したら<code>Player</code>の<code>Name</code>と<code>Room</code>がUnityのConsoleに表示されます．</p>
+<pre><code class="language-csharp line-numbers">using MagicOnionSample.Shared;
+using UnityEngine;
+
+namespace MagicOnionSample.Unity
+{
+    public class SampleHubReceiver : ISampleHubReceiver
+    {
+        public void OnJoin(Player player)
+        {
+            Debug.Log($&quot;{player.Name}, {player.Room}&quot;);
+        }
+    }
+}
+</code></pre>
+<p>上記で作成した<code>SampleEntryPoint.cs</code>を更新します．</p>
+<p><code>Channel</code>と<code>ISampleReceiver</code>のインスタンスを<code>StreamingHubClient.Connect</code>に渡すことで，<code>ISampleHub</code>を実装したインスタンスを得ることができます．このインスタンスはサーバー側で実装されるので，クライアント側は気にする必要がありません．
+<code>ISampleHub</code>のインスタンスを使って<code>JoinAsync</code>を呼ぶことで，サーバー側に<code>name</code>と<code>room</code>を渡すことができ，コールバックとして<code>SampleHubReceiver</code>の<code>OnJoin</code>に<code>Player</code>のインスタンスが渡されます．
+また，<code>ISampleHub</code>は<code>IDisposable</code>なので，忘れずに<code>Dispose</code>でリソースを解放します．</p>
+<pre><code class="language-csharp line-numbers">using System.Threading.Tasks;
+using Grpc.Core;
+using MagicOnion.Client;
+using MagicOnionSample.Shared;
+using UnityEngine;
+
+namespace MagicOnionSample.Unity
+{
+    public class SampleEntryPoint : MonoBehaviour
+    {
+        public string host = &quot;localhost&quot;;
+        public int port = 5000;
+
+        public string user = &quot;Foo&quot;;
+        public string room = &quot;Bar&quot;;
+
+        private Channel _channel;
+
+        // Here
+        private ISampleHub _hub;
+        private ISampleHubReceiver _receiver;
+
+        private async Task Start()
+        {
+            _channel = new Channel(host, port, ChannelCredentials.Insecure);
+
+            var client = MagicOnionClient.Create&lt;ISampleService&gt;(_channel);
+            var greet = await client.GreetAsync(user);
+            Debug.Log(greet);
+
+            // Here
+            _receiver = new SampleHubReceiver();
+            _hub = StreamingHubClient.Connect&lt;ISampleHub, ISampleHubReceiver&gt;(_channel, _receiver);
+            await _hub.JoinAsync(user, room);
+        }
+
+        private async Task OnDestroy()
+        {
+            await _hub.DisposeAsync(); // Here
+            await _channel.ShutdownAsync();
+        }
+    }
+}
+</code></pre>
+<h2 id="section-10">サーバー側の実装</h2>
+<p>サーバー側では<code>ISampleHub</code>の実装を行います．
+<code>SampleHub.cs</code>を作成し，<code>name</code>と<code>room</code>が与えられたら<code>Player</code>を作成して返すといった実装を行います．</p>
+<p><code>Broadcast</code>に<code>IGroup</code>のインスタンスを渡すことで，グループ内のすべてのクライアントに対してコールバックを呼ぶことができます．</p>
+<pre><code class="language-csharp line-numbers">using System;
+using System.Threading.Tasks;
+using MagicOnion.Server.Hubs;
+using MagicOnionSample.Shared;
+
+namespace MagicOnionSample.Server.Hubs
+{
+    public class SampleHub : StreamingHubBase&lt;ISampleHub, ISampleHubReceiver&gt;, ISampleHub
+    {
+        private Player _player;
+        private IGroup _room;
+
+        public async Task JoinAsync(string name, string room)
+        {
+            _player = new Player {Name = name, Room = room};
+            await Console.Out.WriteLineAsync($&quot;Join {_player.Name} to the {_player.Room}&quot;);
+            (_room, _) = await Group.AddAsync(_player.Room, _player);
+            Broadcast(_room).OnJoin(_player);
+        }
+    }
+}
+</code></pre>
+<h2 id="section-11">動作確認</h2>
+<p>上記の動作確認と同じように，<code>dotnet run</code>コマンド等でサーバーを起動してUnityを実行すると，UnityのConsoleに<code>Welcome Foo!</code>と<code>Foo, bar</code>表示されたら成功です．
+また，サーバー側のConsoleでは<code>Join Foo to the Bar</code>と表示されます．
+以上で，サーバーとクライアントの1対多のApiコールができました．</p>
+<h1 id="section-12">その他注意点</h1>
+<p><code>List&lt;T&gt;</code>や<code>Array&lt;T&gt;</code>などをMessagePackに渡す場合は，シリアライズの時に<code>null</code>の場合，エラーが発生することがあります．プロパティの初期化子を使って初期化をすることで，シリアライズでエラーを回避することができます．</p>
+<p>自作クラスのコンストラクタを実装する場合，コンストラクタ引数がないコンストラクタをMessagePackに渡すと，シリアライズ時にエラーが発生するため，引数があるコンストラクタに加えて，引数がないコンストラクタを作成する必要があります．</p>
+<h1 id="section-13">まとめ</h1>
+<p>MagicOnionを使ってリアルタイム通信の世界に入門しました．</p>
+<ul>
+<li>UnityプロジェクトにインストールしたMagicOnionとMessagePackでコンパイルエラーが発生する場合は<code>MagicOnion.Client</code>に<code>MessagePack.Annotations</code>を追加する</li>
+<li>1対1では<code>IService&lt;T&gt;</code>を使う</li>
+<li>1対多では<code>IStreamingHub&lt;T, U&gt;</code>を使う</li>
+<li>MessagePackでは<code>null</code>に注意</li>
+<li>MessagePackではコンストラクタに注意</li>
+</ul>
+<p>マルチプレイのゲームを作るときには有効活用したいです．</p>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20210103magiconion" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © 2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/Blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>
