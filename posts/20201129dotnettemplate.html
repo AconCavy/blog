@@ -71,32 +71,32 @@
 
                         <div class="post-body">
                             <h1 id="section">はじめに</h1>
-<p><a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp">競プロ用のプロジェクトテンプレート</a>を整備したので，<code>dotnet new</code>のカスタムテンプレート作成の備忘録です．</p>
+<p><a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp">競プロ用のプロジェクトテンプレート</a>を整備したので、<code>dotnet new</code>のカスタムテンプレート作成の備忘録です。</p>
 <h1 id="dotnet-new">dotnet new のカスタムテンプレートとは</h1>
 <p>公式の情報は<a href="https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates">こちら</a></p>
-<p>.NETのプロジェクトを作成する際，<code>dotnet</code>コマンドを利用してプロジェクトを生成します．
-例えば，コンソールアプリケーションを作成する場合，</p>
+<p>.NETのプロジェクトを作成する際、<code>dotnet</code>コマンドを利用してプロジェクトを生成します。
+例えば、コンソールアプリケーションを作成する場合、</p>
 <pre><code class="language-sh line-numbers">dotnet new console -n Sample
 </code></pre>
-<p>のようなコマンドを実行することで，<code>Sample</code>という名称のプロジェクトが作成されます．
-これは，<code>dotnet new</code>コマンドで，<code>console</code>というデフォルトテンプレートを使ってプロジェクトを生成するという意味になります．</p>
-<p>この<code>dotnet new</code>コマンドに，プロジェクトやスクリプトをカスタムテンプレートとして登録しておくことで，プロジェクトやファイルの作成を使いまわすことができます．</p>
-<p>既定のテンプレートとして，<code>dotnet new</code>コマンドに<code>-l|--list</code>オプションをつけて実行すると，現在インストールされている<code>dotnet new</code>コマンドで生成できるテンプレートを確認することができます．</p>
+<p>のようなコマンドを実行することで、<code>Sample</code>という名称のプロジェクトが作成されます。
+これは、<code>dotnet new</code>コマンドで、<code>console</code>というデフォルトテンプレートを使ってプロジェクトを生成するという意味になります。</p>
+<p>この<code>dotnet new</code>コマンドに、プロジェクトやスクリプトをカスタムテンプレートとして登録しておくことで、プロジェクトやファイルの作成を使いまわすことができます。</p>
+<p>既定のテンプレートとして、<code>dotnet new</code>コマンドに<code>-l|--list</code>オプションをつけて実行すると、現在インストールされている<code>dotnet new</code>コマンドで生成できるテンプレートを確認することができます。</p>
 <pre><code class="language-sh line-numbers">dotnet new -l
 </code></pre>
 <h1 id="section-1">作ってみる</h1>
-<p>テンプレートの基本として，テンプレート化したいプロジェクトのディレクトリ下に，<code>.template.config</code>のディレクトリを作成し，さらにその下に，<code>template.json</code>を作成します．
-そして，<code>template.json</code>にプロパティを設定し，<code>dotnet new</code>コマンドを使ってインストールすることで，テンプレートを使うことができるようになります．</p>
+<p>テンプレートの基本として、テンプレート化したいプロジェクトのディレクトリ下に、<code>.template.config</code>のディレクトリを作成し、さらにその下に、<code>template.json</code>を作成します。
+そして、<code>template.json</code>にプロパティを設定し、<code>dotnet new</code>コマンドを使ってインストールすることで、テンプレートを使うことができるようになります。</p>
 <pre><code class="language-sh line-numbers">dotnet new -i path-to-template
 </code></pre>
-<p>競技プロ用のプロジェクトテンプレートでは，次の3つをテンプレートとして準備します．</p>
+<p>競技プロ用のプロジェクトテンプレートでは、次の3つをテンプレートとして準備します。</p>
 <ul>
 <li>プロジェクト</li>
 <li>解答用のクラス</li>
 <li>テスト用のクラス</li>
 </ul>
 <h2 id="section-2">プロジェクトのテンプレート</h2>
-<p>プロジェクトでは，解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします．</p>
+<p>プロジェクトでは、解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします。</p>
 <pre><code class="line-numbers">Template.Project/
     |
     |- Tasks/
@@ -110,7 +110,7 @@
     |
     |- Template.Project.sln
 </code></pre>
-<p>このプロジェクトをベースとして，<code>Project/</code>下に<code>.template.config/</code>ディレクトリを作成し，その下に<code>template.json</code>を作成します．</p>
+<p>このプロジェクトをベースとして、<code>Project/</code>下に<code>.template.config/</code>ディレクトリを作成し、その下に<code>template.json</code>を作成します。</p>
 <pre><code class="line-numbers">Template.Project/
     |
     |- .template.config
@@ -118,7 +118,7 @@
     |    |- template.json
     ...
 </code></pre>
-<p><code>template.json</code>では，次のメンバを記述します．</p>
+<p><code>template.json</code>では、次のメンバを記述します。</p>
 <div class="table-responsive">
 <table class="table">
 <thead>
@@ -158,7 +158,7 @@
 </tr>
 <tr>
 <td style="text-align: center;"><code>sourceName</code></td>
-<td style="text-align: left;">テンプレート使用時に置き換える文字列  (<code>dotnet new</code>コマンドに，<code>-n|--name</code>オプションで名前を指定することで，指定された文字列を全てその名前に置換することができます)</td>
+<td style="text-align: left;">テンプレート使用時に置き換える文字列  (<code>dotnet new</code>コマンドに、<code>-n|--name</code>オプションで名前を指定することで、指定された文字列を全てその名前に置換することができます)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>preferNameDirectory</code></td>
@@ -167,7 +167,7 @@
 </tbody>
 </table>
 </div>
-<p>例えば，上記のプロジェクトでは次のような<code>json</code>を記述します．</p>
+<p>例えば、上記のプロジェクトでは次のような<code>json</code>を記述します。</p>
 <pre><code class="language-json line-numbers">{
     &quot;$schema&quot;: &quot;http://json.schemastore.org/template&quot;,
     &quot;author&quot;: &quot;AconCavy&quot;,
@@ -186,8 +186,8 @@
     &quot;preferNameDirectory&quot;: true
 }
 </code></pre>
-<p><code>sourceName</code>に設定した文字列は，テンプレート以下のすべての対象の文字列が置換されるため，<code>dotnet new cpproj -n Sample</code>を実行した場合，<code>Template.Project/</code>ディレクトリ，<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ，<code>Sample.sln</code>に置換されて生成されます．ファイル内の文字列も置換されるため注意が必要です．</p>
-<p>この状態で，<code>dotnet new -i path-to-template</code>コマンドでインストールし，<code>dotnet new cpproj -n Sample</code>を実行することで，上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます．</p>
+<p><code>sourceName</code>に設定した文字列は、テンプレート以下のすべての対象の文字列が置換されるため、<code>dotnet new cpproj -n Sample</code>を実行した場合、<code>Template.Project/</code>ディレクトリ、<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ、<code>Sample.sln</code>に置換されて生成されます。ファイル内の文字列も置換されるため注意が必要です。</p>
+<p>この状態で、<code>dotnet new -i path-to-template</code>コマンドでインストールし、<code>dotnet new cpproj -n Sample</code>を実行することで、上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます。</p>
 <pre><code class="line-numbers">Sample/
     |
     |- Tasks/
@@ -202,10 +202,10 @@
     |- Sample.sln
 </code></pre>
 <h3 id="section-3">コマンドの追加オプション</h3>
-<p>また，<code>Task.csproj</code>と<code>Tests.csproj</code>のターゲットフレームワークをテンプレート生成時に指定できるようにするため，<code>dotnet new cpproj</code>コマンドにオプションを追加します．</p>
-<p>まず，<code>.template.config</code>下に<code>dotnetcli.host.json</code>を追加します．
-<code>symbolInfo</code>メンバに，<code>longName</code>のオプションに<code>framework</code>を，<code>shortName</code>に<code>f</code>をもった<code>Framework</code>というメンバを追加します．
-追加することで，<code>dotnet new cpproj</code>にオプションとして，<code>-f|--framework</code>のオプションを付与することができるようになります．</p>
+<p>また、<code>Task.csproj</code>と<code>Tests.csproj</code>のターゲットフレームワークをテンプレート生成時に指定できるようにするため、<code>dotnet new cpproj</code>コマンドにオプションを追加します。</p>
+<p>まず、<code>.template.config</code>下に<code>dotnetcli.host.json</code>を追加します。
+<code>symbolInfo</code>メンバに、<code>longName</code>のオプションに<code>framework</code>を、<code>shortName</code>に<code>f</code>をもった<code>Framework</code>というメンバを追加します。
+追加することで、<code>dotnet new cpproj</code>にオプションとして、<code>-f|--framework</code>のオプションを付与することができるようになります。</p>
 <pre><code class="language-json line-numbers">{
     &quot;$schema&quot;: &quot;http://json.schemastore.org/dotnetcli.host&quot;,
     &quot;symbolInfo&quot;: {
@@ -216,12 +216,12 @@
     }
 }
 </code></pre>
-<p>次に<code>template.json</code>に<code>symbols</code>というメンバを追加し，ここに先ほど定義した<code>Framework</code>メンバを追加します．
-ここではオプションの振る舞いを定義します．</p>
-<p>今回はターゲットフレームワークを<code>.NET 5</code>と<code>.NET Core 3.1</code>を選択肢として定義します．
-<code>datatype</code>を<code>choice</code>にして，<code>choices</code>に選択肢を定義します．
-<code>csproj</code>の<code>TargetFramework</code>に指定する文字列として，<code>.NET 5</code>の場合は<code>net5.0</code>，<code>.NET Core 3.1</code>の場合は<code>netcoreapp3.1</code>を<code>choice</code>に設定します．
-<code>replaces</code>に置換する文字列を，<code>defaultValue</code>にオプションを指定しない場合の文字列を設定します．</p>
+<p>次に<code>template.json</code>に<code>symbols</code>というメンバを追加し、ここに先ほど定義した<code>Framework</code>メンバを追加します。
+ここではオプションの振る舞いを定義します。</p>
+<p>今回はターゲットフレームワークを<code>.NET 5</code>と<code>.NET Core 3.1</code>を選択肢として定義します。
+<code>datatype</code>を<code>choice</code>にして、<code>choices</code>に選択肢を定義します。
+<code>csproj</code>の<code>TargetFramework</code>に指定する文字列として、<code>.NET 5</code>の場合は<code>net5.0</code>、<code>.NET Core 3.1</code>の場合は<code>netcoreapp3.1</code>を<code>choice</code>に設定します。
+<code>replaces</code>に置換する文字列を、<code>defaultValue</code>にオプションを指定しない場合の文字列を設定します。</p>
 <pre><code class="language-json line-numbers">{
     ...
     &quot;symbols&quot;: {
@@ -246,7 +246,7 @@
     ...
 }
 </code></pre>
-<p>そして，<code>Tasks.csproj</code>と<code>Tests.csproj</code>の<code>TargetFramework</code>に<code>replaces</code>で設定した文字列を設定します．</p>
+<p>そして、<code>Tasks.csproj</code>と<code>Tests.csproj</code>の<code>TargetFramework</code>に<code>replaces</code>で設定した文字列を設定します。</p>
 <pre><code class="language-xml line-numbers">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
 
   &lt;PropertyGroup&gt;
@@ -259,9 +259,9 @@
 &lt;/Project&gt;
 
 </code></pre>
-<p>この状態で，<code>dotnet new cpproj -n Sample -f net5.0</code>を実行することで，<code>TargetFramework</code>に<code>net5.0</code>が設定されたプロジェクトを生成することができます．</p>
+<p>この状態で、<code>dotnet new cpproj -n Sample -f net5.0</code>を実行することで、<code>TargetFramework</code>に<code>net5.0</code>が設定されたプロジェクトを生成することができます。</p>
 <h2 id="section-4">解答用のクラスとテスト用のクラスのテンプレート</h2>
-<p>単一のファイルのみ生成するように，テンプレートを構築します．</p>
+<p>単一のファイルのみ生成するように、テンプレートを構築します。</p>
 <pre><code class="line-numbers">Template.Solver/
     |
     |- .template.config/
@@ -278,12 +278,12 @@ Template.Tests/
     |
     |- Template.TestsTests.cs
 </code></pre>
-<p>プロジェクトのテンプレートの作り方と同様に，<code>template.json</code>を記述しますが，単一ファイルのみ生成させるため，<code>preferNameDirectory</code>を削除，または<code>false</code>にします．</p>
-<p>解答用の<code>sourceName</code>を<code>Template.Solver</code>に，テスト用の<code>sourceName</code>を<code>Template.Tests</code>にすることで，<code>dotnet new</code>コマンドの<code>-n|--name</code>オプションに<code>Sample</code>を指定すると，それぞれ<code>Sample.cs</code>と<code>SampleTests.cs</code>が生成されます．</p>
+<p>プロジェクトのテンプレートの作り方と同様に、<code>template.json</code>を記述しますが、単一ファイルのみ生成させるため、<code>preferNameDirectory</code>を削除、または<code>false</code>にします。</p>
+<p>解答用の<code>sourceName</code>を<code>Template.Solver</code>に、テスト用の<code>sourceName</code>を<code>Template.Tests</code>にすることで、<code>dotnet new</code>コマンドの<code>-n|--name</code>オプションに<code>Sample</code>を指定すると、それぞれ<code>Sample.cs</code>と<code>SampleTests.cs</code>が生成されます。</p>
 <h2 id="section-5">プロジェクトのパッケージ化</h2>
-<p>テンプレートが3つ用意できましたが，テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります．
-そのため，3つのテンプレートまとめて，1つの<code>nuget</code>パッケージを生成します．
-3つのディレクトリを一つのディレクトリにまとめ，そのディレクトリと同じ階層に<code>csproj</code>ファイルを生成します．</p>
+<p>テンプレートが3つ用意できましたが、テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります。
+そのため、3つのテンプレートまとめて、1つの<code>nuget</code>パッケージを生成します。
+3つのディレクトリを一つのディレクトリにまとめ、そのディレクトリと同じ階層に<code>csproj</code>ファイルを生成します。</p>
 <pre><code class="line-numbers">CPTemplate/
     |
     |- content/
@@ -294,7 +294,7 @@ Template.Tests/
     |
     |- CPTemplate.csproj
 </code></pre>
-<p>ディレクトリを整理したら，<code>CPTemplate.csproj</code>を編集し，ビルド情報を定義します．</p>
+<p>ディレクトリを整理したら、<code>CPTemplate.csproj</code>を編集し、ビルド情報を定義します。</p>
 <div class="table-responsive">
 <table class="table">
 <thead>
@@ -379,7 +379,7 @@ Template.Tests/
 
 &lt;/Project&gt;
 </code></pre>
-<p>また，それぞれのテンプレートの<code>template.json</code>に<code>groupIdentity</code>を追加します．</p>
+<p>また、それぞれのテンプレートの<code>template.json</code>に<code>groupIdentity</code>を追加します。</p>
 <pre><code class="language-json line-numbers">// Project
 &quot;groupIdentity&quot;: &quot;AconCavy.Templates.Project&quot;
 
@@ -389,10 +389,10 @@ Template.Tests/
 // Tests
 &quot;groupIdentity&quot;: &quot;AconCavy.Templates.Tests&quot;
 </code></pre>
-<p><code>dotnet pack</code>コマンドを実行することで<code>nuget</code>パッケージを生成することができます．</p>
+<p><code>dotnet pack</code>コマンドを実行することで<code>nuget</code>パッケージを生成することができます。</p>
 <pre><code class="language-sh line-numbers">dotnet pack
 </code></pre>
-<p>実行後，<code>bin/Debug/</code>下に<code>{PackageId}.{PackageVersion}.nupkg</code>が生成されます．</p>
+<p>実行後、<code>bin/Debug/</code>下に<code>{PackageId}.{PackageVersion}.nupkg</code>が生成されます。</p>
 <pre><code class="line-numbers">CPTemplate/
     |
     |- bin/
@@ -402,14 +402,14 @@ Template.Tests/
     |    |    |- AconCavy.Templates.1.0.0.nupkg
     ...
 </code></pre>
-<p>この<code>nupkg</code>を<code>dotnet new</code>コマンドでインストールすることで，3つのテンプレートを1回でインストールすることができます．</p>
+<p>この<code>nupkg</code>を<code>dotnet new</code>コマンドでインストールすることで、3つのテンプレートを1回でインストールすることができます。</p>
 <pre><code class="language-sh line-numbers">dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
 </code></pre>
 <h1 id="section-6">まとめ</h1>
-<p><code>dotnet new</code>のカスタムテンプレートの作り方と，テンプレートのパッケージ化の手順をまとめました．</p>
+<p><code>dotnet new</code>のカスタムテンプレートの作り方と、テンプレートのパッケージ化の手順をまとめました。</p>
 <ul>
-<li>テンプレートのルートに<code>.template.config</code>ディレクトリを作成し，内に<code>template.json</code>を作成する．</li>
-<li>テンプレートが複数ある場合は1つのディレクトリにまとめ，<code>dotnet pack</code>コマンドでパッケージ化する．</li>
+<li>テンプレートのルートに<code>.template.config</code>ディレクトリを作成し、内に<code>template.json</code>を作成する。</li>
+<li>テンプレートが複数ある場合は1つのディレクトリにまとめ、<code>dotnet pack</code>コマンドでパッケージ化する。</li>
 </ul>
 
                         </div>

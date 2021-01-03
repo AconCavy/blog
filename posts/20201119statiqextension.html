@@ -74,10 +74,10 @@
                             <h1 id="section">はじめに</h1>
 <p>Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録</p>
 <h1 id="section-1">方法</h1>
-<p><code>Bootstrapper</code>において，<code>Statiq.Web</code>でWebサイトを生成するメソッドである<code>CreateWeb()</code>では，markdownに関わるModuleの<code>RenderMarkdown</code>を<code>Templates</code>内で設定している．
-そのため，<code>ConfigureTemplates()</code>を通じて，予め設定されたModuleを上書きすることで好みの設定を反映することができる．
-Statiqでは，markdownを生成するために<a href="https://github.com/lunet-io/markdig">markdig</a>を使っているようなので，markdownの設定を追加するには<code>IMarkdownExtension</code>を継承したクラスを<code>Rendermarkdown.UseExtension&lt;TExtension&gt;()</code>に渡す必要がある．</p>
-<p>今回は，<code>&lt;img&gt;</code>タグをレスポンシブ対応と，<code>&lt;table&gt;</code>タグにクラスを追加するために，markdigの<code>BootstrapExtension</code>を設定に追加する．</p>
+<p><code>Bootstrapper</code>において、<code>Statiq.Web</code>でWebサイトを生成するメソッドである<code>CreateWeb()</code>では、markdownに関わるModuleの<code>RenderMarkdown</code>を<code>Templates</code>内で設定している。
+そのため、<code>ConfigureTemplates()</code>を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
+Statiqでは、markdownを生成するために<a href="https://github.com/lunet-io/markdig">markdig</a>を使っているようなので、markdownの設定を追加するには<code>IMarkdownExtension</code>を継承したクラスを<code>Rendermarkdown.UseExtension&lt;TExtension&gt;()</code>に渡す必要がある。</p>
+<p>今回は、<code>&lt;img&gt;</code>タグをレスポンシブ対応と、<code>&lt;table&gt;</code>タグにクラスを追加するために、markdigの<code>BootstrapExtension</code>を設定に追加する。</p>
 <pre><code class="language-csharp line-numbers">public static async Task&lt;int&gt; Main(string[] args) =&gt;
     await Bootstrapper.Factory
         .CreateWeb(args)
@@ -97,7 +97,7 @@ Statiqでは，markdownを生成するために<a href="https://github.com/lunet
         })
         .RunAsync();
 </code></pre>
-<p>また，<code>prism.js</code>のコードブロックに行数を表示するクラスの<code>line-number</code>を追加するために，新しく<code>PrismJsExtension.cs</code>を作成し，<code>BootstrapExtension</code>に倣い，<code>MarkdownObject</code>が<code>CodeBlock</code>であれば<code>line-numbers</code>をクラスに追加するメソッドの<code>PipelineOnDocumentProcessed()</code>markdigの生成パイプラインにデリゲートを追加する．</p>
+<p>また、<code>prism.js</code>のコードブロックに行数を表示するクラスの<code>line-number</code>を追加するために、新しく<code>PrismJsExtension.cs</code>を作成し、<code>BootstrapExtension</code>に倣い、<code>MarkdownObject</code>が<code>CodeBlock</code>であれば<code>line-numbers</code>をクラスに追加するメソッドの<code>PipelineOnDocumentProcessed()</code>markdigの生成パイプラインにデリゲートを追加する。</p>
 <pre><code class="language-csharp line-numbers">// PrismJsExtension.cs
 using Markdig;
 using Markdig.Renderers;
@@ -132,9 +132,9 @@ namespace Blog.Extensions
 }
 
 </code></pre>
-<p>以上の2つの設定を追加してビルドすることで，bootstrapによる<code>&lt;img&gt;</code>タグのレスポンシブ対応，<code>&lt;table&gt;</code>タグのレイアウト，prism.jsの言語を指定したコードブロックに行数が表示されるようになる．</p>
+<p>以上の2つの設定を追加してビルドすることで、bootstrapによる<code>&lt;img&gt;</code>タグのレスポンシブ対応、<code>&lt;table&gt;</code>タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。</p>
 <h1 id="section-2">まとめ</h1>
-<p>StatiqのBootstrapperにて<code>ConfigureTemplates()</code>からテンプレートのmarkdownに関わるModuleを書き換えることで，markdownからhtmlを生成する設定を変更することができ，<code>RenderMarkdown.UseExtension&lt;TExtension&gt;()</code>に<code>IMarkdownExtension</code>を継承したクラスを設定することで，htmlタグのクラス等を変更することができる．</p>
+<p>StatiqのBootstrapperにて<code>ConfigureTemplates()</code>からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、<code>RenderMarkdown.UseExtension&lt;TExtension&gt;()</code>に<code>IMarkdownExtension</code>を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。</p>
 
                         </div>
                         <div class="post-footer mt-5">

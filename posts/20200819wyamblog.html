@@ -73,7 +73,7 @@
 
                         <div class="post-body">
                             <h1 id="is">これ is 何</h1>
-<p><a href="https://wyam.io/">Wyam</a> を使ってブログを作成し，Github Pages でホスティング，Github Actions でデプロイさせた手順をまとめたものです．</p>
+<p><a href="https://wyam.io/">Wyam</a> を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。</p>
 <h1 id="section">実行環境</h1>
 <ul>
 <li>Windows 10 1909</li>
@@ -81,96 +81,96 @@
 </ul>
 <h1 id="wyam">Wyam</h1>
 <h2 id="wyam-is">Wyam is 何</h2>
-<p>.NET Core製の静的サイトジェネレータで，ブログやドキュメント等を markdown と Razor ファイルで作ることができます．</p>
-<p>見た目はテンプレートが6種類あり，カスタマイズ可能で，.NET Core および C# で機能の拡張をすることもできます．</p>
+<p>.NET Core製の静的サイトジェネレータで、ブログやドキュメント等を markdown と Razor ファイルで作ることができます。</p>
+<p>見た目はテンプレートが6種類あり、カスタマイズ可能で、.NET Core および C# で機能の拡張をすることもできます。</p>
 <blockquote class="blockquote">
 <p><em><strong>Easy! Flexible! Powerful!</strong></em></p>
 </blockquote>
 <h2 id="section-1">ダウンロードとインストール</h2>
-<p><a href="https://dotnet.microsoft.com/">.NET SDK</a> をインストールしていない場合はインストールします．2020年8月19日現在，最新の .NET Core Runtime は3.1ですが， Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします．</p>
-<p>.NET Core SDK,および Runtime がインストールされたら，.NET Core ツールを用いて Wyam をインストールします．</p>
+<p><a href="https://dotnet.microsoft.com/">.NET SDK</a> をインストールしていない場合はインストールします。2020年8月19日現在、最新の .NET Core Runtime は3.1ですが、 Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします。</p>
+<p>.NET Core SDK,および Runtime がインストールされたら、.NET Core ツールを用いて Wyam をインストールします。</p>
 <pre><code class="line-numbers">dotnet tool -g Wyam.Tool
 </code></pre>
 <h2 id="section-2">プロジェクトの作成</h2>
-<p>プロジェクトを作成したいディレクトリに移動し，ブログテンプレートを<code>--recipe</code> または <code>-r</code> オプションで生成します．</p>
+<p>プロジェクトを作成したいディレクトリに移動し、ブログテンプレートを<code>--recipe</code> または <code>-r</code> オプションで生成します。</p>
 <pre><code class="line-numbers">wyam new -r Blog
 </code></pre>
-<p>テンプレートが生成されたら，次のコマンドでビルドします．</p>
+<p>テンプレートが生成されたら、次のコマンドでビルドします。</p>
 <pre><code class="line-numbers">wyam -r Blog
 </code></pre>
-<p>また，ビルドの際には <code>--theme</code> または <code>-t</code> オプションでテーマを指定することができます．テーマについては<a href="https://wyam.io/recipes/blog/themes/">こちら</a>．</p>
+<p>また、ビルドの際には <code>--theme</code> または <code>-t</code> オプションでテーマを指定することができます。テーマについては<a href="https://wyam.io/recipes/blog/themes/">こちら</a>。</p>
 <pre><code class="line-numbers">wyam -r Blog -t CleanBlog
 </code></pre>
-<p>ビルドが終わったら，ローカル環境で実行してみます．</p>
+<p>ビルドが終わったら、ローカル環境で実行してみます。</p>
 <pre><code class="line-numbers">wyam preview
 </code></pre>
 <p><img src="assets/images/hello_wyam.webp" class="img-fluid" alt="hello_wyam" /></p>
 <p>あっという間にブログが出来上がりました👏</p>
 <h2 id="section-3">記事の編集</h2>
-<p><code>./input/</code> 内に <code>about.md</code> が，また <code>./input/posts/</code> 内に <code>first-post.md</code> が生成されています．これらのように markdown ファイルを追加および編集することで，記事の編集および追加をすることができます．</p>
+<p><code>./input/</code> 内に <code>about.md</code> が、また <code>./input/posts/</code> 内に <code>first-post.md</code> が生成されています。これらのように markdown ファイルを追加および編集することで、記事の編集および追加をすることができます。</p>
 <h2 id="front-matter">Front Matter の設定</h2>
-<p><code>first-post.md</code> ファイルの先頭に以下のようなものが書かれています．</p>
+<p><code>first-post.md</code> ファイルの先頭に以下のようなものが書かれています。</p>
 <pre><code class="line-numbers">Title: First Post
 Published: 1/1/2016
 Tags: Introduction
 ---
 </code></pre>
-<p>これらは <code>Front Matter</code> といい，YAML や JSON フォーマットで使うことができる固有の変数です．これを使って記事にメタデータを付与することができます．Wyam では，<a href="https://hexo.io/docs/front-matter.html">Hexo</a> や <a href="https://gohugo.io/content-management/front-matter/">Hugo</a> のような別の静的サイトジェネレータと同じ変数を使うことができるそうです．</p>
-<p>Published の日付を未来にするとその日になるまで表示されないようなので注意．
-日本時間の深夜に記事を作成して，ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)．</p>
+<p>これらは <code>Front Matter</code> といい、YAML や JSON フォーマットで使うことができる固有の変数です。これを使って記事にメタデータを付与することができます。Wyam では、<a href="https://hexo.io/docs/front-matter.html">Hexo</a> や <a href="https://gohugo.io/content-management/front-matter/">Hugo</a> のような別の静的サイトジェネレータと同じ変数を使うことができるそうです。</p>
+<p>Published の日付を未来にするとその日になるまで表示されないようなので注意。
+日本時間の深夜に記事を作成して、ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)。</p>
 <h1 id="section-4">ブログを公開する</h1>
-<p>Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い，Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド，およびGitHub Pagesにホスティングを行います．</p>
+<p>Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い、Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド、およびGitHub Pagesにホスティングを行います。</p>
 <h2 id="github-pages-is">GitHub Pages is 何</h2>
-<p>GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです．
-詳しくは<a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages">こちら</a>．</p>
-<p>リポジトリ名が <code>ユーザ名.github.io</code> の場合はユーザのページに，それ以外の場合はプロジェクトのページとして扱うことができます．</p>
+<p>GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです。
+詳しくは<a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages">こちら</a>。</p>
+<p>リポジトリ名が <code>ユーザ名.github.io</code> の場合はユーザのページに、それ以外の場合はプロジェクトのページとして扱うことができます。</p>
 <h2 id="github-actions-is">Github Actions is 何</h2>
-<p>GitHub のリポジトリから，プロジェクトをビルド，テスト，デプロイすることができるサービスです．CI/CDです．
-詳しくは<a href="https://github.co.jp/features/actions">こちら</a>．</p>
-<p>リポジトリが Public なら無料，Private なら従量課金らしいです．</p>
+<p>GitHub のリポジトリから、プロジェクトをビルド、テスト、デプロイすることができるサービスです。CI/CDです。
+詳しくは<a href="https://github.co.jp/features/actions">こちら</a>。</p>
+<p>リポジトリが Public なら無料、Private なら従量課金らしいです。</p>
 <h2 id="section-5">プロジェクトの設定を変更する</h2>
-<p>GitHubにリポジトリを作成し，Wyam で作成したプロジェクトを Commit / Push します．この際 <code>.gitignore</code> には以下の設定を指定しておくといいでしょう．</p>
+<p>GitHubにリポジトリを作成し、Wyam で作成したプロジェクトを Commit / Push します。この際 <code>.gitignore</code> には以下の設定を指定しておくといいでしょう。</p>
 <pre><code class="line-numbers"># Wyam files
 output/
 config.wyam.dll
 config.wyam.hash
 config.wyam.packages.xml
 </code></pre>
-<p>次に，<code>config.wyam</code> を編集してプロジェクトの設定を行います．</p>
-<p><code>BlogKeys.Title</code> でWeb サイトのタイトルを，<code>BlogKeys.Description</code> でWeb サイトのトップに表示される簡単な説明を指定できます．</p>
+<p>次に、<code>config.wyam</code> を編集してプロジェクトの設定を行います。</p>
+<p><code>BlogKeys.Title</code> でWeb サイトのタイトルを、<code>BlogKeys.Description</code> でWeb サイトのトップに表示される簡単な説明を指定できます。</p>
 <pre><code class="line-numbers">Settings[BlogKeys.Title] = &quot;This is title&quot;;
 Settings[BlogKeys.Description] = &quot;Welcome!&quot;;
 </code></pre>
-<p>Web サイトを <code>https</code> に指定する場合は以下のオプションを有効にします．</p>
+<p>Web サイトを <code>https</code> に指定する場合は以下のオプションを有効にします。</p>
 <pre><code class="line-numbers">Settings[Keys.LinksUseHttps] = true;
 </code></pre>
-<p>Web サイトで表示するカルチャ情報を設定する場合は <code>Keys.DateTimeDisplayCulture</code> と <code>Keys.DateTimeInputCulture</code> を変更します．
-<code>2020年8月19日</code> のように表示したい場合は <code>Keys.DateTimeDisplayCulture</code> に <code>ja-JP</code> を指定します．
-日本時間を表示したい場合も同様に <code>Keys.DateTimeInputCulture</code> に <code>ja-JP</code> を指定します．</p>
+<p>Web サイトで表示するカルチャ情報を設定する場合は <code>Keys.DateTimeDisplayCulture</code> と <code>Keys.DateTimeInputCulture</code> を変更します。
+<code>2020年8月19日</code> のように表示したい場合は <code>Keys.DateTimeDisplayCulture</code> に <code>ja-JP</code> を指定します。
+日本時間を表示したい場合も同様に <code>Keys.DateTimeInputCulture</code> に <code>ja-JP</code> を指定します。</p>
 <pre><code class="line-numbers">Settings[Keys.DateTimeDisplayCulture] = &quot;ja-JP&quot;;
 Settings[Keys.DateTimeInputCulture] = &quot;ja-JP&quot;;
 </code></pre>
-<p>プロジェクトのルーティングでは，GitHub のリポジトリがユーザページ用のリポジトリの場合 (<code>ユーザ名.github.io</code>) と，それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります．</p>
+<p>プロジェクトのルーティングでは、GitHub のリポジトリがユーザページ用のリポジトリの場合 (<code>ユーザ名.github.io</code>) と、それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります。</p>
 <h3 id="section-6">1 ユーザページの場合</h3>
-<p>例として，GitHubユーザ名が <code>AconCavy</code> の場合は以下のようになります．</p>
+<p>例として、GitHubユーザ名が <code>AconCavy</code> の場合は以下のようになります。</p>
 <pre><code class="line-numbers">Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
 </code></pre>
 <h3 id="section-7">2 プロジェクトページの場合</h3>
-<p>プロジェクトページで作成する場合，<code>Keys.LinkRoot</code> にリポジトリ名を設定する必要があります．例として，リポジトリ名が <code>Blog</code> の場合は以下のようになります．<strong>大文字と小文字の区別があるようなので注意が必要です．</strong></p>
+<p>プロジェクトページで作成する場合、<code>Keys.LinkRoot</code> にリポジトリ名を設定する必要があります。例として、リポジトリ名が <code>Blog</code> の場合は以下のようになります。<strong>大文字と小文字の区別があるようなので注意が必要です。</strong></p>
 <pre><code class="line-numbers">Settings[Keys.Host] = &quot;aconcavy.github.io&quot;;
 Settings[Keys.LinkRoot] = &quot;Blog&quot;;
 </code></pre>
-<p>この設定を変更した場合，<code>wyam preview</code> を使ってローカルでプレビューをしようとしても，Path が <code>localhost:5080/</code> のままで，正しくプレビューすることができません．そのため，<code>--virtual-dir</code> オプションを指定することで正しくプレビューすることができます．</p>
+<p>この設定を変更した場合、<code>wyam preview</code> を使ってローカルでプレビューをしようとしても、Path が <code>localhost:5080/</code> のままで、正しくプレビューすることができません。そのため、<code>--virtual-dir</code> オプションを指定することで正しくプレビューすることができます。</p>
 <pre><code class="line-numbers">wyam preview --virtual-dir Blog
 </code></pre>
-<p>プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります．</p>
+<p>プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります。</p>
 <pre><code class="line-numbers">&#64;echo off
 wyam -r Blog
 wyam preview --virtual-dir Blog
 </code></pre>
 <h2 id="github-actions">GitHub Actions の設定</h2>
-<p>GitHub のリポジトリページに移動し，<code>Actions</code> タブで新しいワークフローを作成します．
-<code>Simple workflow</code> を作成すると，新規の YAML ファイルがリポジトリの <code>.github/workflows</code> に作成されます．そして，作成された YAMLファイルを <code>gh-pages.yml</code> に変更し，次のような内容に変更します．</p>
+<p>GitHub のリポジトリページに移動し、<code>Actions</code> タブで新しいワークフローを作成します。
+<code>Simple workflow</code> を作成すると、新規の YAML ファイルがリポジトリの <code>.github/workflows</code> に作成されます。そして、作成された YAMLファイルを <code>gh-pages.yml</code> に変更し、次のような内容に変更します。</p>
 <pre><code class="language-yaml line-numbers">name: Wyam
 
 on:
@@ -203,29 +203,29 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./output
 </code></pre>
-<p>この <code>Wyam</code> というワークフローは <code>master</code> ブランチに Push または Pull Request が送られたときに，Ubuntu 環境で <code>.NET Core SDK / Runtime</code> のインストール，<code>Wyam</code> のインストール，プロジェクトのビルド，GitHub Pages へのデプロイが行われます．</p>
+<p>この <code>Wyam</code> というワークフローは <code>master</code> ブランチに Push または Pull Request が送られたときに、Ubuntu 環境で <code>.NET Core SDK / Runtime</code> のインストール、<code>Wyam</code> のインストール、プロジェクトのビルド、GitHub Pages へのデプロイが行われます。</p>
 <p><strong>注意点</strong></p>
 <ol>
-<li>.NET Core SDK は Wyamの対応している2.1を使用する．</li>
-<li>Wyam のインストールで <code>--tool-path .</code> オプションを指定して Wyam ツールをビルド環境のローカルに作成する．</li>
+<li>.NET Core SDK は Wyamの対応している2.1を使用する。</li>
+<li>Wyam のインストールで <code>--tool-path .</code> オプションを指定して Wyam ツールをビルド環境のローカルに作成する。</li>
 </ol>
-<p>作成した YAML ファイルを Commit すると，GitHub Actions が有効になり，master ブランチが更新されるため，ワークフローが実行されます．そして，ワークフローのステータスが <code>completed job</code> になれば成功です．</p>
+<p>作成した YAML ファイルを Commit すると、GitHub Actions が有効になり、master ブランチが更新されるため、ワークフローが実行されます。そして、ワークフローのステータスが <code>completed job</code> になれば成功です。</p>
 <h2 id="github-pages">GitHub Pages の設定</h2>
-<p>リポジトリが GitHub Pages の条件に満たしていれば，<code>Settings</code> タブに移動すると，<code>GitHub Pages</code> の項目が表示されます．そこで <code>Source</code> 欄の <code>Branch</code> を <code>gh-pages</code> に，ディレクトリを <code>/(root)</code> に変更して <code>Save</code> することで，GitHub Pagesが有効化されます．</p>
-<p>GitHub Pagesの条件は Public リポジトリであるか，Pro 以上のライセンスであれば Private リポジトリであれば有効です．</p>
-<p>正しく設定ができれば，ユーザページならば <code>ユーザ名.github.io</code> に，プロジェクトページならば <code>ユーザ名.github.io/リポジトリ名</code> にプロジェクトがホスティングされます．</p>
-<p>例として，ユーザ名が <code>AconCavy</code> で リポジトリ名が <code>Blog</code> の場合は <code>aconcavy.github.io/Blog</code> にホスティングされます．</p>
+<p>リポジトリが GitHub Pages の条件に満たしていれば、<code>Settings</code> タブに移動すると、<code>GitHub Pages</code> の項目が表示されます。そこで <code>Source</code> 欄の <code>Branch</code> を <code>gh-pages</code> に、ディレクトリを <code>/(root)</code> に変更して <code>Save</code> することで、GitHub Pagesが有効化されます。</p>
+<p>GitHub Pagesの条件は Public リポジトリであるか、Pro 以上のライセンスであれば Private リポジトリであれば有効です。</p>
+<p>正しく設定ができれば、ユーザページならば <code>ユーザ名.github.io</code> に、プロジェクトページならば <code>ユーザ名.github.io/リポジトリ名</code> にプロジェクトがホスティングされます。</p>
+<p>例として、ユーザ名が <code>AconCavy</code> で リポジトリ名が <code>Blog</code> の場合は <code>aconcavy.github.io/Blog</code> にホスティングされます。</p>
 <h1 id="section-8">まとめ</h1>
-<p>Wyam で 作成した静的 Web サイト (本ブログ) を，GitHub Actions を使って更新を自動化し，GitHub Pages でホスティングする方法をまとめました．</p>
+<p>Wyam で 作成した静的 Web サイト (本ブログ) を、GitHub Actions を使って更新を自動化し、GitHub Pages でホスティングする方法をまとめました。</p>
 <ol>
-<li>Wyam のプロジェクトを作成する．</li>
-<li>Wyam のプロジェクト設定を変更する．</li>
-<li>GitHub Actions の YAML を編集する．</li>
-<li>GitHub Pages の設定を有効化する．</li>
+<li>Wyam のプロジェクトを作成する。</li>
+<li>Wyam のプロジェクト設定を変更する。</li>
+<li>GitHub Actions の YAML を編集する。</li>
+<li>GitHub Pages の設定を有効化する。</li>
 </ol>
-<p>大きく分けて4つの手順で，GitHub Pages に Wyam プロジェクトをホスティングすることができます．</p>
+<p>大きく分けて4つの手順で、GitHub Pages に Wyam プロジェクトをホスティングすることができます。</p>
 <h1 id="section-9">あとがき</h1>
-<p>とりあえず本ブログ初の投稿として，本ブログ作成までの手順の記事を簡単に書きました．今後も触った技術や何か変なものをまとめて記事にしたいと思います．</p>
+<p>とりあえず本ブログ初の投稿として、本ブログ作成までの手順の記事を簡単に書きました。今後も触った技術や何か変なものをまとめて記事にしたいと思います。</p>
 
                         </div>
                         <div class="post-footer mt-5">

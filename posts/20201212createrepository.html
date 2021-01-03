@@ -73,14 +73,14 @@
 
                         <div class="post-body">
                             <h1 id="section">これ何</h1>
-<p>リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです．</p>
+<p>リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。</p>
 <h1 id="section-1">開発環境ごとの差異をなくすために</h1>
-<p>開発者によってOSやエディタ等の開発環境が異なるのでルールを決めます．</p>
+<p>開発者によってOSやエディタ等の開発環境が異なるのでルールを決めます。</p>
 <h2 id="git-config">git config</h2>
-<p>WindowsとMacOS / LinuxではOSにより行の終端が異なるため，何も変更していないつもりでも，OSが異なるとdiffが発生してしまう場合があります．それを避けるために，Gitの設定でbranchをcheckoutしたときに，ファイルをどの形式で認識するかを設定します．</p>
-<p><code>core.autocrlf</code>を<code>true</code>にすると，ファイル形式が<code>CRLF</code>と<code>LF</code>のどちらであってもcheckout時に<code>CRLF</code>に変換され，commit時には自動的に<code>LF</code>へと変換されます．
-また，<code>core.autocrlf</code>を<code>input</code>にすると，<code>LF</code>のままcheckoutとcommitが行われます．
-そのため，Windowsでは<code>true</code>，MacOS / Linuxでは<code>input</code>を指定しておくといいでしょう．</p>
+<p>WindowsとMacOS / LinuxではOSにより行の終端が異なるため、何も変更していないつもりでも、OSが異なるとdiffが発生してしまう場合があります。それを避けるために、Gitの設定でbranchをcheckoutしたときに、ファイルをどの形式で認識するかを設定します。</p>
+<p><code>core.autocrlf</code>を<code>true</code>にすると、ファイル形式が<code>CRLF</code>と<code>LF</code>のどちらであってもcheckout時に<code>CRLF</code>に変換され、commit時には自動的に<code>LF</code>へと変換されます。
+また、<code>core.autocrlf</code>を<code>input</code>にすると、<code>LF</code>のままcheckoutとcommitが行われます。
+そのため、Windowsでは<code>true</code>、MacOS / Linuxでは<code>input</code>を指定しておくといいでしょう。</p>
 <ul>
 <li>Windows</li>
 </ul>
@@ -92,14 +92,14 @@
 <pre><code class="language-sh line-numbers">git config --global core.autocrlf input
 </code></pre>
 <h2 id="gitattributes">.gitattributes</h2>
-<p>リポジトリ単位で行の終端処理を行う場合は，<code>.gitattributes</code>をリポジトリのルートに作成して設定を行うことで，<code>core.autocrlf</code>を設定していない開発者がいてもGitが自動的にファイルの終端を変更してくれます．</p>
+<p>リポジトリ単位で行の終端処理を行う場合は、<code>.gitattributes</code>をリポジトリのルートに作成して設定を行うことで、<code>core.autocrlf</code>を設定していない開発者がいてもGitが自動的にファイルの終端を変更してくれます。</p>
 <pre><code class="line-numbers">* text=auto
 </code></pre>
-<p><code>.gitattributes</code>には<a href="https://git-lfs.github.com/">GitLFS</a>の設定をすることもできるので，音声や画像，データセットなどの容量が大きなファイルはLFSの設定をするといいかもしれません．</p>
+<p><code>.gitattributes</code>には<a href="https://git-lfs.github.com/">GitLFS</a>の設定をすることもできるので、音声や画像、データセットなどの容量が大きなファイルはLFSの設定をするといいかもしれません。</p>
 <p>その他詳しくは<a href="https://docs.github.com/ja/free-pro-team&#64;latest/github/using-git/configuring-git-to-handle-line-endings">こちら (GitHub Docs, 行終端を処理するようGitを設定する)</a></p>
 <h2 id="gitignore">.gitignore</h2>
-<p>プロジェクトの生成物やエディタが生成するファイルなど，プロジェクトに関わりのないファイルやディレクトリを指定しましょう．</p>
-<p>エディタの設定ファイルに関しては，リポジトリに開発者ごとのエディタ設定を無視させるのではなく，開発者自身が<code>.gitignore_global</code>を設定した方がいいかもしれません．</p>
+<p>プロジェクトの生成物やエディタが生成するファイルなど、プロジェクトに関わりのないファイルやディレクトリを指定しましょう。</p>
+<p>エディタの設定ファイルに関しては、リポジトリに開発者ごとのエディタ設定を無視させるのではなく、開発者自身が<code>.gitignore_global</code>を設定した方がいいかもしれません。</p>
 <ul>
 <li>Windows</li>
 </ul>
@@ -111,8 +111,8 @@
 <pre><code class="language-sh line-numbers">git config --global core.excludesfile core.excludesfile ~/.gitignore_global
 </code></pre>
 <h2 id="editorconfig">.editorconfig</h2>
-<p>エディタによってインデントのサイズやコードスタイルなどのフォーマットの設定が変わります．ファイルごとにバラバラなフォーマットが適用されてしまうことを避けるために<a href="https://editorconfig.org/">EditorConfig</a>を利用して，フォーマットスタイルを統一させます．EditorConfigはJetbrainsのIDEやVisualStudio等のIDEでは標準で搭載しており，Visual Studio Codeなどのエディタでもプラグインをインストールすることで利用することができるようになります．</p>
-<p><code>.editorconfig</code>を作成し，エディタのフォーマット機能やEditorConfig対応のcliを利用することで，そのリポジトリのファイルを決まったルールでフォーマットすることができます．</p>
+<p>エディタによってインデントのサイズやコードスタイルなどのフォーマットの設定が変わります。ファイルごとにバラバラなフォーマットが適用されてしまうことを避けるために<a href="https://editorconfig.org/">EditorConfig</a>を利用して、フォーマットスタイルを統一させます。EditorConfigはJetbrainsのIDEやVisualStudio等のIDEでは標準で搭載しており、Visual Studio Codeなどのエディタでもプラグインをインストールすることで利用することができるようになります。</p>
+<p><code>.editorconfig</code>を作成し、エディタのフォーマット機能やEditorConfig対応のcliを利用することで、そのリポジトリのファイルを決まったルールでフォーマットすることができます。</p>
 <pre><code class="line-numbers">root = true
 
 # すべてのファイル
@@ -129,11 +129,11 @@ indent_size = 2               # インデント2
 ...
 </code></pre>
 <h1 id="ci-cd">CI / CD</h1>
-<p>Unit Testや正しくファイルがフォーマットされているかのチェック，，Releaseの作成，デプロイ等を自動化することによって，繰り返しの作業が楽になるので可能ならやっておきたいです．</p>
+<p>Unit Testや正しくファイルがフォーマットされているかのチェック、Releaseの作成、デプロイ等を自動化することによって、繰り返しの作業が楽になるので可能ならやっておきたいです。</p>
 <p>以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合</p>
 <h2 id="unit-test">Unit test</h2>
-<p>GitHub Workflowの<code>.NET Core</code>を選択すれば必要最低限のWorkflowは実現できます．</p>
-<p>リポジトリにコミットされた際にテストを実行し，一つでもテストが通らなかった場合は以下のように確認することができます．</p>
+<p>GitHub Workflowの<code>.NET Core</code>を選択すれば必要最低限のWorkflowは実現できます。</p>
+<p>リポジトリにコミットされた際にテストを実行し、一つでもテストが通らなかった場合は以下のように確認することができます。</p>
 <pre><code class="language-yml line-numbers">name: Unit Test
 
 on: [push, pull_request]
@@ -158,11 +158,11 @@ jobs:
 </code></pre>
 <p><img src="assets/images/gha_test_fail.webp" class="img-fluid" alt="github action test failed" /></p>
 <h2 id="code-format">Code format</h2>
-<p>EditorConfigを設定しているとdotnet toolの<code>dotnet-format</code>を使うことでEditorConfigに合ったファイルのフォーマットの確認ができます．</p>
+<p>EditorConfigを設定しているとdotnet toolの<code>dotnet-format</code>を使うことでEditorConfigに合ったファイルのフォーマットの確認ができます。</p>
 <pre><code class="language-sh line-numbers">dotnet tool update -g dotnet-format
 dotnet format --check
 </code></pre>
-<p>GitHub Workflowの<code>.NET Core</code>をベースにフォーマットを実行し，1つでもファイルがフォーマットされればWorkflowを失敗させるWorkflowを作成します．</p>
+<p>GitHub Workflowの<code>.NET Core</code>をベースにフォーマットを実行し、1つでもファイルがフォーマットされればWorkflowを失敗させるWorkflowを作成します。</p>
 <pre><code class="language-yml line-numbers">name: Lint
 
 on: [push, pull_request]
@@ -185,7 +185,7 @@ jobs:
 </code></pre>
 <p><img src="assets/images/gha_lint_fail.webp" class="img-fluid" alt="github action lint failed" /></p>
 <h1 id="release">Releaseの作成</h1>
-<p>Releaseでは，Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします．次の例では.dllファイルをアップロードします．</p>
+<p>Releaseでは、Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします。次の例では.dllファイルをアップロードします。</p>
 <pre><code class="language-yml line-numbers">name: Release
 
 on:
@@ -235,11 +235,11 @@ jobs:
         asset_name: Hello.dll
         asset_content_type: application/octet-stream # .dllファイルのcontent type
 </code></pre>
-<p>Workflowを実行すると次のようなReleaseが作成されます．</p>
+<p>Workflowを実行すると次のようなReleaseが作成されます。</p>
 <p><img src="assets/images/gha_release.webp" class="img-fluid" alt="github action release" /></p>
 <h1 id="section-2">まとめ</h1>
-<p>リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません．
-開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います．</p>
+<p>リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません。
+開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います。</p>
 
                         </div>
                         <div class="post-footer mt-5">
