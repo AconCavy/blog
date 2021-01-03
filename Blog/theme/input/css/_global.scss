@@ -1,5 +1,6 @@
 html {
   font-size: 16px;
+  font-family: $font-sans-serif;
 }
 
 body {
@@ -9,7 +10,6 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  font-family: $font-sans-serif;
 }
 
 h1 {
@@ -33,8 +33,7 @@ h5, h6 {
 }
 
 p {
-  font-weight: 400;
-  font-family: $font-serif;
+  font-weight: 300;
 }
 
 p {
@@ -43,7 +42,6 @@ p {
 
   a {
     text-decoration: underline;
-    font-family: $font-sans-serif;
   }
 }
 
