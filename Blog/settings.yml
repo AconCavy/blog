@@ -12,6 +12,7 @@ Layout: /_layout.cshtml
 Host: aconcavy.github.io
 LinkRoot: /Blog
 LinksUseHttps: true
+UseCache: true
 DateTimeInputCulture: ja-JP
 
 GitHubOwner: AconCavy
