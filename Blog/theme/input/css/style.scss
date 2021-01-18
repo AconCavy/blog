@@ -1,11 +1,13 @@
-@import "variables.scss";
-@import "global.scss";
-@import "navbar.scss";
-@import "header.scss";
-@import "tag.scss";
-@import "post.scss";
-@import "footer.scss";
-@import "about.scss";
+@import "../prism/prism.css";
+
+@import "variables";
+@import "global";
+@import "navbar";
+@import "header";
+@import "tag";
+@import "post";
+@import "footer";
+@import "about";
 @import "overrides/bootstrap";
 @import "overrides/prism";
 @import "overrides/prism-csharp";

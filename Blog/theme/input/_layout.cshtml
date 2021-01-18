@@ -18,13 +18,13 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
     <link rel="icon" href="@Context.GetLink("/assets/favicon.ico")"/>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="@Context.GetLink("/prism/prism.css")" type="text/css">
-    <link rel="stylesheet" href="@Context.GetLink("/css/style.css")">
+    <link rel="stylesheet" href="@Context.GetLink("/css/style.css")" type="text/css">
 
     <title>@Document.GetString("PageTitle")</title>
 
     @await Html.PartialAsync("_head.cshtml")
+
+    <script src="@Context.GetLink("/js/adobe_fonts.js")"></script>
 
 </head>
 
