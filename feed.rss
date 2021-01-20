@@ -5,8 +5,199 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Mon, 18 Jan 2021 23:02:35 GMT</pubDate>
-		<lastBuildDate>Mon, 18 Jan 2021 23:02:35 GMT</lastBuildDate>
+		<pubDate>Wed, 20 Jan 2021 17:03:35 GMT</pubDate>
+		<lastBuildDate>Wed, 20 Jan 2021 17:03:35 GMT</lastBuildDate>
+		<item>
+			<title>GitHub ActionsからNuGetにパッケージをアップロードした</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210121uploadnuget</link>
+			<description>&lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210121uploadnuget</guid>
+			<pubDate>Thu, 21 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;
+&lt;p&gt;リポジトリは&lt;a href="https://github.com/AconCavy/Mulinq"&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="tldr"&gt;TL;DR&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub ActionsでNuGetパッケージを作成した。&lt;/li&gt;
+&lt;li&gt;作成したNuGetパッケージをNuGetにアップロードした。&lt;/li&gt;
+&lt;li&gt;タグからリリース/プレリリースを判断できるようにした。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="net"&gt;対象の.NETプロジェクトの設定&lt;/h1&gt;
+&lt;p&gt;パッケージ化する.NETプロジェクトの&lt;code&gt;.csproj&lt;/code&gt;ファイルを更新します。
+今回はビルド構成として.NET 5と.NET Core 3.1のdllを生成するために、&lt;code&gt;TargetFrameworks&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;と&lt;code&gt;netcoreapp3.1&lt;/code&gt;を構成します。&lt;/p&gt;
+&lt;p&gt;そして、NuGetの情報を構成します。今回は&lt;code&gt;.csproj&lt;/code&gt;に構成しましたが、&lt;code&gt;.nuspec&lt;/code&gt;ファイルを作成してNuGet情報だけを切り離して構成することも可能なようです。
+&lt;code&gt;PackageVersion&lt;/code&gt;はcsprojをリリースのたびに変更せずに、ビルド時にバージョンを指定できるように、&lt;code&gt;$(Version)&lt;/code&gt;の環境変数を使います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk="Microsoft.NET.Sdk"&amp;gt;
+
+    &amp;lt;PropertyGroup&amp;gt;
+        &amp;lt;TargetFrameworks&amp;gt;net5.0;netcoreapp3.1&amp;lt;/TargetFrameworks&amp;gt;
+    &amp;lt;/PropertyGroup&amp;gt;
+    
+    &amp;lt;!-- NuGet --&amp;gt;
+    &amp;lt;PropertyGroup&amp;gt;
+        &amp;lt;PackageId&amp;gt;Mulinq&amp;lt;/PackageId&amp;gt;
+        &amp;lt;PackageVersion&amp;gt;$(Version)&amp;lt;/PackageVersion&amp;gt;
+        &amp;lt;Title&amp;gt;Mulinq&amp;lt;/Title&amp;gt;
+        &amp;lt;Authors&amp;gt;AconCavy&amp;lt;/Authors&amp;gt;
+        &amp;lt;Description&amp;gt;Mulinq is C# LINQ extensions for collections and for multidimensional arrays.&amp;lt;/Description&amp;gt;
+        &amp;lt;PackageProjectUrl&amp;gt;https://github.com/AconCavy/Mulinq&amp;lt;/PackageProjectUrl&amp;gt;
+        &amp;lt;PackageLicenseExpression&amp;gt;MIT&amp;lt;/PackageLicenseExpression&amp;gt;
+        &amp;lt;RepositoryUrl&amp;gt;https://github.com/AconCavy/Mulinq&amp;lt;/RepositoryUrl&amp;gt;
+        &amp;lt;PackageTags&amp;gt;LINQ&amp;lt;/PackageTags&amp;gt;
+    &amp;lt;/PropertyGroup&amp;gt;
+
+&amp;lt;/Project&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="nuget"&gt;NuGetの設定&lt;/h1&gt;
+&lt;p&gt;NuGetアカウントを持っていない場合はアカウントの作成をします。Microsoftアカウントから作成もできるみたいです。&lt;/p&gt;
+&lt;p&gt;NuGetパッケージのアップロードには、NuGetのAPIキーが必要なので、APIキーを生成します。
+画面右上のユーザから、&lt;code&gt;API Keys&lt;/code&gt;のページに移動し、&lt;code&gt;Create&lt;/code&gt;フォームから、&lt;code&gt;Key Name&lt;/code&gt;や&lt;code&gt;Package Owner&lt;/code&gt;等必要な情報を埋め、APIキーを生成します。
+生成に成功すると、&lt;code&gt;Manage&lt;/code&gt;パネルに生成したAPIキーが並ぶので、&lt;code&gt;Copy&lt;/code&gt;でAPIキーをコピーします。一度ページから離れてしまうと、再びコピーできなくなるので、できなくなった場合は&lt;code&gt;Regenerate&lt;/code&gt;から再生成します。&lt;/p&gt;
+&lt;p&gt;コピーしたAPIキーをGitHubリポジトリの&lt;code&gt;Secrets&lt;/code&gt;に登録することで、GitHub Actionsの環境変数としてアクセスできるようになります。リポジトリの&lt;code&gt;Setting -&amp;gt; Secrets -&amp;gt; New repository secret&lt;/code&gt;で新しいシークレットを作成し、名前とAPIキーを登録します。今回は&lt;code&gt;NUGET_API_KEY&lt;/code&gt;として登録しました。&lt;/p&gt;
+&lt;h1 id="workflow"&gt;Workflowの作成&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://aconcavy.github.io/Blog/20201212createrepository"&gt;リポジトリを作成したときにやっておきたいこと&lt;/a&gt;のReleaseの作成をもとにWorkflowを作成します。&lt;/p&gt;
+&lt;p&gt;RelaseのWorkflowを実行するトリガーとして、&lt;code&gt;v1.0.0&lt;/code&gt;や&lt;code&gt;v1.0.0-alpha&lt;/code&gt;のようなGitのタグがpushされたときに限定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;on:
+  push:
+    tags: 
+    - 'v[0-9]+.[0-9]+.[0-9]+*'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最初にテストを実行します。今回はTargetFrameworkが複数あるため、複数の.NET SDKをセットアップします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 3.1.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Setup .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Test
+      run: dotnet test -c Release --verbosity normal
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次にテストが成功した場合のみリリースを実行します。&lt;code&gt;needs: [test]&lt;/code&gt;とすることで、&lt;code&gt;test&lt;/code&gt;のjobが成功した場合のみ実行されるようになります。
+まず、プロジェクトからNuGetパッケージを作成します。このとき、&lt;code&gt;-p:Version&lt;/code&gt;にバージョンを指定します。タグのバージョン情報を取得するために、&lt;code&gt;${GITHUB_REF##*/v}&lt;/code&gt;を指定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;GITHUB_REF&lt;/code&gt;の環境変数では、ワークフローをトリガーしたタグのrefを取得でき、&lt;code&gt;v1.0.0&lt;/code&gt;のようなタグの場合は&lt;code&gt;refs/heads/v1.0.0&lt;/code&gt;という文字列を取得できます。そこから&lt;code&gt;1.0.0&lt;/code&gt;の部分だけ取得し、&lt;code&gt;Version&lt;/code&gt;の環境変数に指定します。
+ビルドに成功した場合は、&lt;code&gt;./publish&lt;/code&gt;に&lt;code&gt;Mulinq.1.0.0.nupkg&lt;/code&gt;が生成されます。&lt;/p&gt;
+&lt;p&gt;そして、NuGetのAPIを叩き、作成した&lt;code&gt;.nupkg&lt;/code&gt;をアップロードします。&lt;code&gt;secrets.NUGET_API_KEY&lt;/code&gt;から、リポジトリに登録したNuGetのAPIキーを参照します。&lt;code&gt;secrets.&amp;lt;*&amp;gt;&lt;/code&gt;は上記で登録したシークレットの名前になります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core 3.1.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Setup .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
+    - name: Upload to NuGet
+      run: dotnet nuget push ./publish/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: ${{ contains(github.ref, '-') }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、GitHubにReleaseを作成します。
+&lt;code&gt;prerelease&lt;/code&gt;のプロパティに&lt;code&gt;true|false&lt;/code&gt;を指定することで、作成するリリースがプレリリースか否かを指定できます。そのため、タグに&lt;code&gt;-&lt;/code&gt;が含まれているかをチェックする&lt;code&gt;contains&lt;/code&gt;関数を使用して、&lt;code&gt;v1.0.0&lt;/code&gt;のような普通のリリースの場合と、&lt;code&gt;v1.0.0-alpha&lt;/code&gt;のようなプレリリースを区別できるようにしました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;- name: Create Release
+  id: create_release
+  uses: actions/create-release@v1
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  with:
+    tag_name: ${{ github.ref }}
+    release_name: ${{ github.ref }}
+    draft: false
+    prerelease: ${{ contains(github.ref, '-') }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Workflow全体としては次のようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Release
+
+on:
+  push:
+    tags: 
+    - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 3.1.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Setup .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Test
+      run: dotnet test -c Release --verbosity normal
+  
+  release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core 3.1.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Setup .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
+    - name: Upload to NuGet
+      run: dotnet nuget push ./publish/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: ${{ contains(github.ref, '-') }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="workflow-1"&gt;Workflowの実行&lt;/h1&gt;
+&lt;p&gt;適当にコミットを作成し、&lt;code&gt;v0.0.1-alpha&lt;/code&gt;というタグをつけ、GitHub上にプッシュします。&lt;/p&gt;
+&lt;p&gt;作成したWorkflowが実行され、テスト、ビルド、アップロード、Releaseの作成が行われます。&lt;/p&gt;
+&lt;p&gt;NuGetへアップロード直後は&lt;code&gt;Unlisted Packages&lt;/code&gt;の状態でしたが、しばらくすると&lt;code&gt;Published Packages&lt;/code&gt;になりました。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/nuget_upload.webp" class="img-fluid" alt="succeeded upload to nuget"&gt;&lt;/p&gt;
+&lt;p&gt;GitHubのリリースのほうは、ちゃんと&lt;code&gt;Pre-Release&lt;/code&gt;で作成されています。
+&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_prerelease.webp" class="img-fluid" alt="pre-release"&gt;&lt;/p&gt;
+&lt;h1 id="section-1"&gt;まとめ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub ActionsでNuGetパッケージを作成した。&lt;/li&gt;
+&lt;li&gt;作成したNuGetパッケージをNuGetにアップロードした。&lt;/li&gt;
+&lt;li&gt;タグからリリース/プレリリースを判断できるようにした。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;NuGetのパッケージ作成は怖くない！&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>MagicOnionに入門した</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210103magiconion</link>
