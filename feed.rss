@@ -5,8 +5,374 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Wed, 20 Jan 2021 17:03:35 GMT</pubDate>
-		<lastBuildDate>Wed, 20 Jan 2021 17:03:35 GMT</lastBuildDate>
+		<pubDate>Wed, 27 Jan 2021 18:35:34 GMT</pubDate>
+		<lastBuildDate>Wed, 27 Jan 2021 18:35:34 GMT</lastBuildDate>
+		<item>
+			<title>Rustのお勉強メモ1 (1-3)</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust1</link>
+			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210128hellorust1</guid>
+			<pubDate>Thu, 28 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;メモ1 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ2 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
+&lt;h2 id="rustup"&gt;rustup&lt;/h2&gt;
+&lt;p&gt;Rustのバージョンと関連するツールと管理するツール。&lt;/p&gt;
+&lt;h3 id="section-2"&gt;更新&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;rustup update
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="rustc"&gt;rustc&lt;/h2&gt;
+&lt;p&gt;コンパイラ&lt;/p&gt;
+&lt;h3 id="section-3"&gt;個別ファイルのコンパイル&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;rustc main.rs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="rustfmt"&gt;rustfmt&lt;/h2&gt;
+&lt;p&gt;フォーマッタ。&lt;/p&gt;
+&lt;h2 id="cargo"&gt;Cargo&lt;/h2&gt;
+&lt;p&gt;ビルドシステム、パッケージマネージャ。&lt;/p&gt;
+&lt;h3 id="section-4"&gt;プロジェクト作成&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo new hello --bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="cargo.toml"&gt;Cargo.toml&lt;/h3&gt;
+&lt;p&gt;Cargoの設定フォーマット。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[package]&lt;/code&gt;: パッケージの設定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[dependencies]&lt;/code&gt;: プロジェクトの依存関係&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;src&lt;/code&gt; ディレクトリにコード、 &lt;code&gt;root&lt;/code&gt; に &lt;code&gt;Cargo.toml&lt;/code&gt; 。&lt;/p&gt;
+&lt;h3 id="section-5"&gt;プロジェクトのビルド&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="cargo.lock"&gt;Cargo.lock&lt;/h3&gt;
+&lt;p&gt;Cargoが生成するファイル。プロジェクト依存関係の正確なバージョンを管理する。手動で変更してはいけない。&lt;/p&gt;
+&lt;h3 id="section-6"&gt;プロジェクトの実行&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo run
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-7"&gt;プロジェクトのビルド (バイナリ生成なし)&lt;/h3&gt;
+&lt;p&gt;バイナリを生成しないので、ビルドの確認を高速化できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo check
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-8"&gt;リリースビルド&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo build --release
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-9"&gt;プログラミングの概念&lt;/h1&gt;
+&lt;h2 id="section-10"&gt;変数と可変性&lt;/h2&gt;
+&lt;h3 id="section-11"&gt;変数&lt;/h3&gt;
+&lt;p&gt;Rustでは、&lt;code&gt;let&lt;/code&gt; キーワードで変数を宣言でき、型推論をしてくれるため、型注釈を省略できる。また、変数に &lt;code&gt;mut&lt;/code&gt; キーワードを付けることで、変更可能な変数として扱うことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5; // 不変変数 (let x: i32 = 5)
+x = 6 // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut x = 5 // 変数
+x = 6 // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-12"&gt;定数&lt;/h3&gt;
+&lt;p&gt;型注釈が必須.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;const MAX: u32 = 1000;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-13"&gt;シャドーイング&lt;/h3&gt;
+&lt;p&gt;前に定義した変数と同じ名前の変数を新しく宣言できる。新しい変数を生成するため、型が異なってもOK。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
+let x = x + 1; // OK 6
+let x = x * 2; // OK 12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let spaces = &amp;quot;   &amp;quot;;
+let spaces = spaces.len(); // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut spaces = &amp;quot;   &amp;quot;;
+spaces = spaces.len(); // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-14"&gt;データ型&lt;/h2&gt;
+&lt;p&gt;Rustにおける値は全て、何らかのデータ型である。&lt;/p&gt;
+&lt;p&gt;静的型付き言語のため、コンパイル時にすべての変数の型が判明している必要がある。&lt;/p&gt;
+&lt;p&gt;例えば、&lt;code&gt;String&lt;/code&gt;を数値型に変換した場合など、変換先が複数存在する場合は型注釈をつける必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: u32 = &amp;quot;42&amp;quot;.parse().expect(&amp;quot;Not a number!&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-15"&gt;スカラー型&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;整数&lt;/li&gt;
+&lt;li&gt;浮動小数点数&lt;/li&gt;
+&lt;li&gt;論理値&lt;/li&gt;
+&lt;li&gt;文字&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="section-16"&gt;整数型&lt;/h4&gt;
+&lt;p&gt;サイズごとに符号付きと符号なしの整数値の型が存在する。整数型のデフォルトは &lt;code&gt;i32&lt;/code&gt; 型。
+&lt;code&gt;isize&lt;/code&gt; と &lt;code&gt;usize&lt;/code&gt; はCPUのアーキテクチャによって可変し、64ビットアーキテクチャなら64ビット、32ビットアーキテクチャなら32ビットになる。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left;"&gt;サイズ&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;符号付き&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;符号なし&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;8-bit&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;i8&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;u8&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;16-bit&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;i16&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;u16&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;32-bit&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;i32&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;u32&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;64-bit&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;i64&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;u64&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;arch&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;isize&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;usize&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;バイトリテラルを覗く数値リテラルすべて、型接尾辞と &lt;code&gt;_&lt;/code&gt; を見た目の区切り記号に付加することができる。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left;"&gt;数値リテラル&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;10進数&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;10_000&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;16進数&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;0xff&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;8進数&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;0o77&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;2進数&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;0b1111_0000&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;バイト&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;b'A'&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h4 id="section-17"&gt;浮動小数点型&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;f32&lt;/code&gt; と &lt;code&gt;f64&lt;/code&gt; が存在する。浮動小数点型のデフォルトは &lt;code&gt;f64&lt;/code&gt; 型。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 2.0; // f64
+let x: f32 = 2.0; // f32
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-18"&gt;整数演算&lt;/h4&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let add = 5 + 10;
+let sub = 95.3 - 4.3;
+let mul = 4 * 30;
+let div = 56.7 / 32.2;
+let rem = 43 % 5; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-19"&gt;論理値型&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;true&lt;/code&gt; と &lt;code&gt;false&lt;/code&gt; が存在する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let t = true;
+let f: bool = false;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-20"&gt;文字型&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;char&lt;/code&gt; が存在する。ユニコードのスカラー値 (&lt;code&gt;U+0000&lt;/code&gt; から &lt;code&gt;U+D4FF&lt;/code&gt; までと &lt;code&gt;U+E000&lt;/code&gt; から &lt;code&gt;U+10FFFF&lt;/code&gt; まで) を表す。シングルクォートで指定する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let c = 'z';
+let cat = '😻';
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-21"&gt;複合型&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;タプル&lt;/li&gt;
+&lt;li&gt;配列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="section-22"&gt;タプル型&lt;/h4&gt;
+&lt;p&gt;複数の型の何らかの値を一つの複合型にまとめ上げられる。
+それぞれに変数名を与えることができたり、添え字にによってタプルの要素を参照できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let tuple: (i32, f64, u8) = (500, 6.4, 1);
+let tuple = (500, 6.4, 1);
+let (x, y, z) = tuple;
+
+println!(&amp;quot;{}, {}&amp;quot;, x, tuple.0);
+// #=&amp;gt; 500, 500
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-23"&gt;配列型&lt;/h4&gt;
+&lt;p&gt;複数の値のコレクションを得ることができる。配列の全要素は同じ型でなければならない。&lt;/p&gt;
+&lt;p&gt;固定長で、一度宣言されたらサイズの変更はできない。可変長のコレクション型を使いたい場合はベクタ型を使用する。&lt;/p&gt;
+&lt;p&gt;添え字によって配列の要素を参照できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
+println!(&amp;quot;{}&amp;quot;, a[0]); // OK
+println!(&amp;quot;{}&amp;quot;, a[10]); // NG 範囲外
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-24"&gt;関数&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fn&lt;/code&gt; キーワードで宣言することができる。&lt;/p&gt;
+&lt;p&gt;関数と変数の命名規則はスネークケース。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    greeting();
+    print_value(1);
+    print_values(1, 2);
+
+    // #=&amp;gt; Hello!
+    // #=&amp;gt; 1
+    // #=&amp;gt; 1, 2
+}
+
+fn greeting() {
+    println!(&amp;quot;Hello!&amp;quot;);
+}
+
+fn print_value(x: i32) {
+    println!(&amp;quot;{}&amp;quot;, x);
+}
+
+fn print_values(x: i32, y: i32) {
+    println!(&amp;quot;{}, {}&amp;quot;, x, y);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-25"&gt;文と式&lt;/h3&gt;
+&lt;p&gt;関数本体は、文が並び、最後に式を置くか分を置くという形で形成される。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left;"&gt;&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;特徴&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;終端セミコロン&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;文&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;何らかの動作をして値を返さない命令&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;含む&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left;"&gt;式&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;結果値に評価される&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;含まない&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let x = 5; // 文
+    let y = {
+        let x = 3; // 文
+        x + 1 // 式
+    }
+
+    println!(&amp;quot;{}, {}&amp;quot;, x, y);
+    // #=&amp;gt; 5, 4
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-26"&gt;戻り値のある関数&lt;/h3&gt;
+&lt;p&gt;矢印の後に型を書いて宣言する。関数本体ブロックの最後の式の値と同義である。 &lt;code&gt;return&lt;/code&gt; キーワードで早期リターンも可能。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn five() -&amp;gt; i32 {
+    5 // 式なのでセミコロンはなし
+}
+
+fn plus_one_ok(x: i32) -&amp;gt; i32 {
+    x + 1 // OK 文になるのでエラーになる
+}
+
+fn plus_one_ng(x: i32) -&amp;gt; i32 {
+    x + 1; // NG 文になって()が返るのでエラーになる
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-27"&gt;フロー制御&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; 式とループが存在する。&lt;/p&gt;
+&lt;h3 id="if"&gt;if式&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; 式の条件式と紐づけられる一連のコードは、時として&lt;strong&gt;アーム&lt;/strong&gt;と呼ばれることがある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 3;
+
+if x &amp;lt; 5 {
+    println!(&amp;quot;true&amp;quot;);
+} else {
+    println!(&amp;quot;false&amp;quot;);
+}
+
+if x { // 数値型ではダメ 論理値型のみ
+    println!(&amp;quot;error&amp;quot;);
+}
+
+if x % 4 == 0 {
+    println!(&amp;quot;x / 4 rem 0&amp;quot;);
+} else if x % 3 == 0 {
+    println!(&amp;quot;x / 3 rem 0&amp;quot;);
+} else if x % 2 == 0 {
+    println!(&amp;quot;x / 2 rem 0&amp;quot;);
+} else {
+    println!(&amp;quot;other&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;else if&lt;/code&gt; 多用する場合は、&lt;code&gt;match&lt;/code&gt;と呼ばれる枝分かれ文法が使える。&lt;/p&gt;
+&lt;h4 id="letif"&gt;let文内でのif式&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; は式なので、&lt;code&gt;let&lt;/code&gt; 文の右辺に持ってくることができる。全ての条件分岐で同じ型である必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let cond = true;
+let x = if cond { 5 } else { 6 };
+println!(&amp;quot;{}&amp;quot;, x);
+// #=&amp;gt; 5
+
+let y = if cond { 5 } else { &amp;quot;six&amp;quot; }; // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-28"&gt;ループでの繰り返し&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;loop&lt;/code&gt; 、 &lt;code&gt;while&lt;/code&gt; 、 &lt;code&gt;for&lt;/code&gt; の3種類のループが存在する。&lt;/p&gt;
+&lt;h4 id="loop"&gt;loop&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;loop&lt;/code&gt; キーワードでは、同じコードを何回も永遠に、明示的に辞めさせるまで実行される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;loop { // 無限ループ
+    println!(&amp;quot;Hello!&amp;quot;);
+}
+
+let mut x = 5;
+loop {
+    if x == 0 {
+        break;
+    }
+    x = x - 1;
+    println!(&amp;quot;Hello!&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="while"&gt;while&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;while&lt;/code&gt; キーワードでは、条件を指定できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut x = 5;
+while x != 0 {
+    x = x - 1;
+    println!(&amp;quot;Hello!&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="for"&gt;for&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;for&lt;/code&gt; でコレクションの各アイテムに対してコードを実行することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
+for x in a.iter() {
+    println!(&amp;quot;{}&amp;quot;, x);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Range&lt;/code&gt; 型を使うことで、回数ループができる。&lt;code&gt;rev&lt;/code&gt; メソッドで逆順も可能。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;for x in 1..4 {
+    println!(&amp;quot;{}&amp;quot;, x);
+}
+
+for x in (1..4).rev() {
+    println!(&amp;quot;{}&amp;quot;, x);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>GitHub ActionsからNuGetにパッケージをアップロードした</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210121uploadnuget</link>
