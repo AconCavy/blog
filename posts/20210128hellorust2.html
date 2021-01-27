@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/Blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Blog/css/style.css" type="text/css">
+
+    <title>acon.log - Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;2 (4)</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;2 (4)">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.webp">
+<meta property="og:url" content="/Blog/posts/20210128hellorust2">
+
+    <script src="/Blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;2 (4)</h1>
+
+            <div class="card-text post-meta">Published on Thursday, 28 January 2021</div>
+            <div class="card-text post-meta">Updated on Thursday, 28 January 2021</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/rust" class="badge badge-light"> Rust</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p><a href="https://doc.rust-jp.rs/book-ja/">The Rust Programming Language 日本語版</a> で学んだことのメモ2です。</p>
+<ul>
+<li><a href="20210128hellorust1">メモ1</a></li>
+<li>メモ2 (ここ)</li>
+<li>メモ3 (まだ)</li>
+<li>...</li>
+</ul>
+<h1 id="section-1">所有権</h1>
+<h2 id="section-2">所有権規則</h2>
+<ul>
+<li>Rustの各値は、<strong>所有者</strong>と呼ばれる変数と対応している。</li>
+<li>いかなる時も所有者は一つである。</li>
+<li>所有者がスコープから外れたら、値は破棄される。</li>
+</ul>
+<h2 id="section-3">変数スコープ</h2>
+<p>要素が有効になるプログラム内の範囲を<strong>スコープ</strong>という。
+変数は、宣言された地点から現在のスコープの終わりまでが有効となる。</p>
+<pre><code class="language-rust line-numbers">{ // 無効
+    let s = &quot;hello&quot;; // 有効
+} // 無効
+</code></pre>
+<h3 id="string">String型</h3>
+<p>文字列リテラルは不変だが、<code>String</code> 型はヒープにメモリを確保するので、コンパイル時にはサイズが不明なテキストも保持することができる。</p>
+<pre><code class="language-rust line-numbers">let s = &quot;hello&quot;; // 文字列リテラル
+let s = String::from(&quot;hello&quot;); // String型
+</code></pre>
+<pre><code class="language-rust line-numbers">let mut s = String::from(&quot;hello&quot;);
+s.push_str(&quot;, world!&quot;); // push_str()でリテラルを追加
+println!(&quot;{}&quot;, s);
+// #=&gt; hello, world!
+</code></pre>
+<h3 id="section-4">メモリと確保</h3>
+<p>文字列リテラルの場合、中身はコンパイル時に判明しているため、バイナリに直接ハードコードされ高速で効率的。
+一方、<code>String</code> 型では、可変かつ伸長可能なテキスト破片をサポートするために、コンパイル時には不明な量のメモリをヒープメモリに確保する。つまり、メモリの動的確保と解放が必要となる。</p>
+<p>ガベージコレクタ (GC) 機能付きの言語 (例えばC#) では、GCが使用されないメモリを検知して解放するため、プログラマはメモリの解放を考慮する必要はないが、CやC++等のGCがない言語では、プログラマが解放する責任がある。
+<code>allocate</code> と <code>free</code> は一対一対応である必要がある。</p>
+<p>変数がスコープを抜けるとき、Rustは <code>drop</code> と呼ばれる特別な関数を自動的に呼んでメモリを解放する。</p>
+<pre><code class="language-rust line-numbers">{
+    let s = String::from(&quot;hello&quot;); // 有効
+} // 無効 drop関数が呼ばれる。
+</code></pre>
+<h3 id="section-5">変数とデータの相互作用: ムーブ</h3>
+<p>Rustでは、複数の変数が同じデータに対して異なる手段で相互作用することができる。</p>
+<p>次の <code>x</code> と <code>y</code> は同じ値を持つが、二つの値はそれぞれスタックに積まれ、別のものとして扱われる。</p>
+<pre><code class="language-rust line-numbers">let x = 5;
+let y = x; // 5
+</code></pre>
+<p><code>String</code> 型では、文字列の中身を保持するメモリへのポインタ、長さ、許容量がデータとしてスタックに保持される。<code>s1</code> を <code>s2</code> に代入すると <code>String</code> 型のデータがコピーされ、ヒープ上のデータはコピーされない。
+<code>s1</code> と <code>s2</code> ではヒープ上の1つのデータにアクセスすることになり、ヒープ上に2つのデータの実体が生成されるわけではない。</p>
+<pre><code class="language-rust line-numbers">let s1 = String::from(&quot;hello&quot;); // ヒープ上に確保
+let s2 = s1; // s1と同一のデータにアクセスしている。
+</code></pre>
+<p>変数がスコープを抜けると自動的に<code>drop</code>関数が呼ばれ、ヒープメモリを解放するが、両方のデータポインタが同じ場所を指しているため、 <code>s1</code> と <code>s2</code> がスコープを抜けたら、両方とも同じメモリを解放しようとし (<strong>二重解放エラー</strong>) 、メモリ安全性上のバグの一つになり、セキュリティ上の脆弱性を生む可能性がある。</p>
+<p>Rustはメモリ安全性を保証するために、確保されたメモリをコピーしようとする代わりにコンパイラは、古い変数を有効ではないとする。</p>
+<pre><code class="language-rust line-numbers">let s1 = String::from(&quot;hello&quot;);
+let s2 = s1;
+println!(&quot;{}&quot;, s1) // NG
+</code></pre>
+<p>他言語では、<code>shallow copy</code> (データだけコピー) や <code>deep copy</code> (ヒープ上のデータ全てコピー) があるが、Rustでは <code>shallow copy</code> かつ古い変数を無効化するので <strong>ムーブ</strong>と呼ばれている。
+スタック上でのやりとりなので、実行時性能は悪くない。</p>
+<h3 id="section-6">変数とデータの相互作用: クローン</h3>
+<p><code>String</code> 型のヒープ上のデータの <code>deep copy</code> が必要ならば <code>clone</code> メソッドを使う。
+ただし、ヒープ上のデータをコピーするため、実行コストが高い。</p>
+<pre><code class="language-rust line-numbers">let s1 = String::from(&quot;hello&quot;);
+let s2 = s1.clone();
+println!(&quot;{}, {}&quot;, s1, s2) // OK
+</code></pre>
+<h3 id="section-7">スタックのみのデータ: コピー</h3>
+<p>整数型のようなコンパイル時に既知のサイズを持つ型は、データ自体がスタック上に保持されるため、ムーブが発生しない。</p>
+<pre><code class="language-rust line-numbers">let x = 5;
+let y = x;
+println!(&quot;{}, {}&quot;, x, y) // OK
+</code></pre>
+<p>Rustには <code>Copy</code> トレイトと呼ばれる特別な注釈があり、整数型のようなスタックに保持される型に対して実装される。型が <code>Copy</code> トレイトを実装していれば、代入後も古い変数が使用可能になる。一方、型や <code>Drop</code> トレイトを実装している場合、 <code>Copy</code> は実装されない。</p>
+<p><code>Copy</code> を実装している型</p>
+<ul>
+<li>整数型</li>
+<li>論理値型</li>
+<li>浮動小数点型</li>
+<li>文字型</li>
+<li>Copy型だけを含むタプル</li>
+</ul>
+<h2 id="section-8">所有権と関数</h2>
+<p>関数に値を渡すことと、値を変数に代入することは似ていて、関数に変数を渡すと、代入のようにムーブやコピーが発生する。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let s = String::from(&quot;hello&quot;); // sが有効になる。
+    takes_ownership(s); // sはムーブされ、無効になる。
+
+    let x = 5; // xが有効になる。
+    makes_copy(x); // xもムーブされるがi32はCopyのためまだ有効。
+
+    println!(&quot;{}&quot;, s); // NG
+}
+
+fn takes_ownership(some_string: String) { // some_stringが有効になる。
+    println!(&quot;{}&quot;, some_string);
+} // some_stringが無効になり、dropが呼ばれ、メモリが解放される。
+
+fn makes_copy(some_integer: i32) { // some_integerが有効になる。
+    println!(&quot;{}&quot;, some_integer);
+} // some_integerが無効になる。
+</code></pre>
+<h2 id="section-9">戻り値とスコープ</h2>
+<p>値を返すことでも、所有権は移動する。データが別の変数に所有されるようムーブされていない限り、 <code>drop</code> により解放される。</p>
+<pre><code class="language-rust line-numbers">fn main()
+{
+    let s1 = gives_ownership(); // 関数の戻り値がs1にムーブする。
+    let s2 = String::from(&quot;hello&quot;); // s2が有効になる。
+    let s3 = takes_and_gives_back(s2); // s2は関数にムーブされ、関数の戻り値がs3にムーブする。
+} // s3は無効になり、ドロップされる。s2はムーブされているので、何も起きない。s1は無効になり、ドロップされる。
+
+fn gives_ownership() -&gt; String {
+    let some_string = String::from(&quot;hello&quot;); // some_stringが有効になる。
+    some_string // some_stringが返され、呼び出し元関数にムーブされる。
+}
+
+fn takes_and_gives_back(some_string: String) -&gt; { // some_stringが有効になる
+    some_string // some_stringが返され、呼び出し元関数にムーブされる。
+}
+</code></pre>
+<h2 id="section-10">参照と借用</h2>
+<p>所有権をもらう代わりに、<code>&amp;</code> 記号を使うことで、オブジェクトへの参照を取ることができる。
+例えば、次の <code>calculate_length</code> 関数は、 <code>String</code> 型ではなく、 <code>&amp;String</code> を受け取ることになる。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let s = String::from(&quot;hello&quot;);
+    let len = calculate_length(&amp;s);
+    println!(&quot;{}:{}&quot;, s1, len);
+}
+
+fn calculate_length(s: &amp;String) -&gt; usize { // ｓはStringへの参照
+    s.len();
+} // sはスコープ外になるが、参照しているものの所有権は持っていないので何も起こらない。
+</code></pre>
+<p><code>&amp;</code> による参照の逆は、<strong>参照外し</strong>であり、<code>*</code> 記号を使うことで参照外しを行うことができる。</p>
+<p>関数の引数に参照をとることを<strong>借用</strong>と呼ぶ。借用した何かを変更するとエラーが発生する。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let s = String::from(&quot;hello&quot;);
+    change(&amp;s);
+}
+
+fn change(some_string: &amp;String) {
+    some_string.push_str(&quot;, world&quot;); // NG
+}
+</code></pre>
+<p>変数が標準で不変であるのと同様に参照も不変である。</p>
+<h3 id="section-11">可変な参照</h3>
+<p><code>&amp;mut</code> キーワードを使って可変な参照を生成することで、参照の値を変更することができる。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let mut s = String::from(&quot;hello&quot;);
+    change(&amp;mut s);
+}
+
+fn change(some_string: &amp;mut String) {
+    some_string.push_str(&quot;, world&quot;); // OK
+}
+</code></pre>
+<p>可変な参照の制約として、特定のスコープで、ある特定のデータに対しての可変な参照は、1つしか持つことができない。</p>
+<pre><code class="language-rust line-numbers">let mut s = String::from(&quot;hello&quot;);
+let r1 = &amp;mut s; 
+let r2 = &amp;mut s; // NG
+</code></pre>
+<p>可変として2回以上借用することができない制約があることで、コンパイル時にデータの競合を防ぐことができる。</p>
+<p>データ競合は次のような場合発生する。</p>
+<ul>
+<li>2つ以上のポインタが同じデータに同時アクセスする。</li>
+<li>少なくとも1つのポインタがデータに書き込みを行っている。</li>
+<li>データへのアクセスを同期する機構が使用されていない。</li>
+</ul>
+<p>新しいスコープを生成することで、複数の可変な参照を作ることもできる。</p>
+<pre><code class="language-rust line-numbers">let mut s = String::from(&quot;hello&quot;);
+{
+    let r1 = &amp;mut s; // r1が有効になる。
+} // r1が無効になる。
+let r2 = &amp;mut s; // OK
+</code></pre>
+<p>可変と不変な参照を組み合わせる場合も似たような規則が存在する。不変で借用されている場合は、可変で借用はできない。</p>
+<pre><code class="language-rust line-numbers">let mut s = String::from(&quot;hello&quot;);
+let r1 = &amp;s; // OK
+let r2 = &amp;s; // OK
+let r3 = &amp;mut s; // NG
+</code></pre>
+<h3 id="section-12">宙に浮いた参照</h3>
+<p>ポインタのある言語では、ダングリングポインタ (別のところに渡されてしまった可能性のあるメモリを指すポインタであり、ポインタを保持している間にメモリを開放してしまうと発生する) を生成してしまうことがある。
+Rustでは、何らかのデータへの参照がある場合、コンパイラは参照がスコープを抜けるまで、データがスコープを抜けることが無いように確認するため、コンパイラがダングリング参照にならないことを保証している。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -&gt; &amp;String { // Stringへの参照を返す。
+    let s = String::from(&quot;hello&quot;);
+    &amp;s // Stringの参照を返す。
+} // sが解放されるためエラーになる。
+
+fn no_dangle() -&gt; &amp;String {
+    let s = String::from(&quot;hello&quot;);
+    s // Stringを返す
+} // 所有権がムーブされているため、何も解放されない。
+</code></pre>
+<h3 id="section-13">参照の規則</h3>
+<ul>
+<li>任意のタイミングで、一つの可変参照か、一つ以上の不変参照のどちらかを行える。</li>
+<li>参照は常に有効でなければならない。</li>
+</ul>
+<h2 id="section-14">スライス型</h2>
+<p>所有権のない別のデータ型を<strong>スライス</strong>と呼ぶ。コレクションのうちの一部の要素を参照することができる。</p>
+<p>例えば、文字列を受け取り、その文字列中の最初の単語を返す関数 (<code>first_word</code>) を作成する。
+単語の終端の添え字を返すことにする。</p>
+<pre><code class="language-rust line-numbers">fn first_word(s: &amp;String) -&gt; usize {
+    let bytes = s.as_bytes(); // Stringをバイト配列に変換。
+
+    for (i, &amp;item) in bytes.iter().enumerate() { // コレクション内の各要素を添え字とともに返す。 (添え字, 要素への参照)
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+</code></pre>
+<p>文字列内の最初の単語の終端の添え字を見つけられるが、 <code>&amp;String</code> の文脈でのみ意味を持つため、 <code>String</code> が変更された場合有効である保証がない (=関連性がない)。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let mut s = String::from(&quot;hello world&quot;);
+    let word = first_word(&amp;s); // 5
+    s.clear(); // sを空にする。
+
+    // wordは5だが、有効に使用できる文字列は存在しない。
+}
+</code></pre>
+<h3 id="section-15">文字列スライス</h3>
+<p><code>String</code> の一部への参照。</p>
+<pre><code class="language-rust line-numbers">let s = String::from(&quot;hello world&quot;);
+let hello = &amp;s[0..5]; // hello
+let world = &amp;s[6..11]; // world
+</code></pre>
+<p>範囲記法 <code>..</code> を指定することで、スライスを生成することができる。</p>
+<pre><code class="language-rust line-numbers">let s = String::from(&quot;hello&quot;);
+
+let slice = &amp;s[0..2]; // he
+let slice = &amp;s[..2]; // he
+
+let len = s.len();
+let slice = &amp;s[0..len]; // hello
+let slice = &amp;s[..]; // hello
+</code></pre>
+<p>文字列スライスの範囲添え字は、有効なUTF-8文字境界に置かなければならない。マルチバイト文字の真ん中でスライスを行うとエラーになる。</p>
+<p>文字列スライスを使って <code>first_word</code> を書き直し、文字列スライス (<code>&amp;str</code>) を返すようにする。
+文字列スライスを返すことで、元のデータに紐づけられた単独の値を得られるようになる。</p>
+<pre><code class="language-rust line-numbers">fn first_word(s: &amp;String) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[..i];
+        }
+    }
+
+    &amp;s[..]
+}
+</code></pre>
+<p>スライスバージョンの <code>first_word</code> を使用したあとに、 <code>clear</code> を呼ぶとコンパイルエラーになる。</p>
+<pre><code class="language-rust line-numbers">fn main() {
+    let mut s = String::from(&quot;hello world&quot;);
+    let word = first_word(&amp;s); // hello への不変借用が発生。
+    s.clear(); // NG 可変借用しようとしているためエラーになる。
+    println!(&quot;{}&quot;, word); // 不変借用が使われる。
+}
+</code></pre>
+<h4 id="section-16">文字列リテラルはスライス</h4>
+<p>文字列リテラルはバイナリのその特定の位置を指すスライスであり、 <code>&amp;str</code>は不変な参照である。</p>
+<pre><code class="language-rust line-numbers">let s = &quot;Hello, world!&quot;; // &amp;str
+</code></pre>
+<h4 id="section-17">引数としての文字列スライス</h4>
+<p>引数を文字列スライスで受けることで、文字列リテラルと <code>String</code> 全体のスライスを渡すことができるようになる。</p>
+<pre><code class="language-rust line-numbers">let my_string = String::from(&quot;hello world&quot;);
+let word = first_word(&amp;my_string[..]);
+
+let my_string_literal = &quot;hello world&quot;;
+let word = first_word(&amp;my_string_literal[..]);
+let word = first_word(my_string_literal);
+</code></pre>
+<h4 id="section-18">他のスライス</h4>
+<p>配列に対してもスライスを行うことができる。</p>
+<pre><code class="language-rust line-numbers">let a = [1, 2, 3, 4, 5];
+let slice = &amp;a[1..3]; // [2, 3];
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20210128hellorust2" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © 2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/Blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>

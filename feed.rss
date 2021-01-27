@@ -5,8 +5,303 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Wed, 27 Jan 2021 18:35:34 GMT</pubDate>
-		<lastBuildDate>Wed, 27 Jan 2021 18:35:34 GMT</lastBuildDate>
+		<pubDate>Wed, 27 Jan 2021 21:27:32 GMT</pubDate>
+		<lastBuildDate>Wed, 27 Jan 2021 21:27:32 GMT</lastBuildDate>
+		<item>
+			<title>Rustのお勉強メモ2 (4)</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust2</link>
+			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210128hellorust2</guid>
+			<pubDate>Thu, 28 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;メモ2 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ3 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
+&lt;h2 id="section-2"&gt;所有権規則&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Rustの各値は、&lt;strong&gt;所有者&lt;/strong&gt;と呼ばれる変数と対応している。&lt;/li&gt;
+&lt;li&gt;いかなる時も所有者は一つである。&lt;/li&gt;
+&lt;li&gt;所有者がスコープから外れたら、値は破棄される。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-3"&gt;変数スコープ&lt;/h2&gt;
+&lt;p&gt;要素が有効になるプログラム内の範囲を&lt;strong&gt;スコープ&lt;/strong&gt;という。
+変数は、宣言された地点から現在のスコープの終わりまでが有効となる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{ // 無効
+    let s = "hello"; // 有効
+} // 無効
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="string"&gt;String型&lt;/h3&gt;
+&lt;p&gt;文字列リテラルは不変だが、&lt;code&gt;String&lt;/code&gt; 型はヒープにメモリを確保するので、コンパイル時にはサイズが不明なテキストも保持することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = "hello"; // 文字列リテラル
+let s = String::from("hello"); // String型
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
+s.push_str(", world!"); // push_str()でリテラルを追加
+println!("{}", s);
+// #=&amp;gt; hello, world!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-4"&gt;メモリと確保&lt;/h3&gt;
+&lt;p&gt;文字列リテラルの場合、中身はコンパイル時に判明しているため、バイナリに直接ハードコードされ高速で効率的。
+一方、&lt;code&gt;String&lt;/code&gt; 型では、可変かつ伸長可能なテキスト破片をサポートするために、コンパイル時には不明な量のメモリをヒープメモリに確保する。つまり、メモリの動的確保と解放が必要となる。&lt;/p&gt;
+&lt;p&gt;ガベージコレクタ (GC) 機能付きの言語 (例えばC#) では、GCが使用されないメモリを検知して解放するため、プログラマはメモリの解放を考慮する必要はないが、CやC++等のGCがない言語では、プログラマが解放する責任がある。
+&lt;code&gt;allocate&lt;/code&gt; と &lt;code&gt;free&lt;/code&gt; は一対一対応である必要がある。&lt;/p&gt;
+&lt;p&gt;変数がスコープを抜けるとき、Rustは &lt;code&gt;drop&lt;/code&gt; と呼ばれる特別な関数を自動的に呼んでメモリを解放する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
+    let s = String::from("hello"); // 有効
+} // 無効 drop関数が呼ばれる。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-5"&gt;変数とデータの相互作用: ムーブ&lt;/h3&gt;
+&lt;p&gt;Rustでは、複数の変数が同じデータに対して異なる手段で相互作用することができる。&lt;/p&gt;
+&lt;p&gt;次の &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; は同じ値を持つが、二つの値はそれぞれスタックに積まれ、別のものとして扱われる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
+let y = x; // 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型では、文字列の中身を保持するメモリへのポインタ、長さ、許容量がデータとしてスタックに保持される。&lt;code&gt;s1&lt;/code&gt; を &lt;code&gt;s2&lt;/code&gt; に代入すると &lt;code&gt;String&lt;/code&gt; 型のデータがコピーされ、ヒープ上のデータはコピーされない。
+&lt;code&gt;s1&lt;/code&gt; と &lt;code&gt;s2&lt;/code&gt; ではヒープ上の1つのデータにアクセスすることになり、ヒープ上に2つのデータの実体が生成されるわけではない。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello"); // ヒープ上に確保
+let s2 = s1; // s1と同一のデータにアクセスしている。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;変数がスコープを抜けると自動的に&lt;code&gt;drop&lt;/code&gt;関数が呼ばれ、ヒープメモリを解放するが、両方のデータポインタが同じ場所を指しているため、 &lt;code&gt;s1&lt;/code&gt; と &lt;code&gt;s2&lt;/code&gt; がスコープを抜けたら、両方とも同じメモリを解放しようとし (&lt;strong&gt;二重解放エラー&lt;/strong&gt;) 、メモリ安全性上のバグの一つになり、セキュリティ上の脆弱性を生む可能性がある。&lt;/p&gt;
+&lt;p&gt;Rustはメモリ安全性を保証するために、確保されたメモリをコピーしようとする代わりにコンパイラは、古い変数を有効ではないとする。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello");
+let s2 = s1;
+println!("{}", s1) // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;他言語では、&lt;code&gt;shallow copy&lt;/code&gt; (データだけコピー) や &lt;code&gt;deep copy&lt;/code&gt; (ヒープ上のデータ全てコピー) があるが、Rustでは &lt;code&gt;shallow copy&lt;/code&gt; かつ古い変数を無効化するので &lt;strong&gt;ムーブ&lt;/strong&gt;と呼ばれている。
+スタック上でのやりとりなので、実行時性能は悪くない。&lt;/p&gt;
+&lt;h3 id="section-6"&gt;変数とデータの相互作用: クローン&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型のヒープ上のデータの &lt;code&gt;deep copy&lt;/code&gt; が必要ならば &lt;code&gt;clone&lt;/code&gt; メソッドを使う。
+ただし、ヒープ上のデータをコピーするため、実行コストが高い。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello");
+let s2 = s1.clone();
+println!("{}, {}", s1, s2) // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-7"&gt;スタックのみのデータ: コピー&lt;/h3&gt;
+&lt;p&gt;整数型のようなコンパイル時に既知のサイズを持つ型は、データ自体がスタック上に保持されるため、ムーブが発生しない。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
+let y = x;
+println!("{}, {}", x, y) // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rustには &lt;code&gt;Copy&lt;/code&gt; トレイトと呼ばれる特別な注釈があり、整数型のようなスタックに保持される型に対して実装される。型が &lt;code&gt;Copy&lt;/code&gt; トレイトを実装していれば、代入後も古い変数が使用可能になる。一方、型や &lt;code&gt;Drop&lt;/code&gt; トレイトを実装している場合、 &lt;code&gt;Copy&lt;/code&gt; は実装されない。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Copy&lt;/code&gt; を実装している型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;整数型&lt;/li&gt;
+&lt;li&gt;論理値型&lt;/li&gt;
+&lt;li&gt;浮動小数点型&lt;/li&gt;
+&lt;li&gt;文字型&lt;/li&gt;
+&lt;li&gt;Copy型だけを含むタプル&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-8"&gt;所有権と関数&lt;/h2&gt;
+&lt;p&gt;関数に値を渡すことと、値を変数に代入することは似ていて、関数に変数を渡すと、代入のようにムーブやコピーが発生する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let s = String::from("hello"); // sが有効になる。
+    takes_ownership(s); // sはムーブされ、無効になる。
+
+    let x = 5; // xが有効になる。
+    makes_copy(x); // xもムーブされるがi32はCopyのためまだ有効。
+
+    println!("{}", s); // NG
+}
+
+fn takes_ownership(some_string: String) { // some_stringが有効になる。
+    println!("{}", some_string);
+} // some_stringが無効になり、dropが呼ばれ、メモリが解放される。
+
+fn makes_copy(some_integer: i32) { // some_integerが有効になる。
+    println!("{}", some_integer);
+} // some_integerが無効になる。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-9"&gt;戻り値とスコープ&lt;/h2&gt;
+&lt;p&gt;値を返すことでも、所有権は移動する。データが別の変数に所有されるようムーブされていない限り、 &lt;code&gt;drop&lt;/code&gt; により解放される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main()
+{
+    let s1 = gives_ownership(); // 関数の戻り値がs1にムーブする。
+    let s2 = String::from("hello"); // s2が有効になる。
+    let s3 = takes_and_gives_back(s2); // s2は関数にムーブされ、関数の戻り値がs3にムーブする。
+} // s3は無効になり、ドロップされる。s2はムーブされているので、何も起きない。s1は無効になり、ドロップされる。
+
+fn gives_ownership() -&amp;gt; String {
+    let some_string = String::from("hello"); // some_stringが有効になる。
+    some_string // some_stringが返され、呼び出し元関数にムーブされる。
+}
+
+fn takes_and_gives_back(some_string: String) -&amp;gt; { // some_stringが有効になる
+    some_string // some_stringが返され、呼び出し元関数にムーブされる。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-10"&gt;参照と借用&lt;/h2&gt;
+&lt;p&gt;所有権をもらう代わりに、&lt;code&gt;&amp;amp;&lt;/code&gt; 記号を使うことで、オブジェクトへの参照を取ることができる。
+例えば、次の &lt;code&gt;calculate_length&lt;/code&gt; 関数は、 &lt;code&gt;String&lt;/code&gt; 型ではなく、 &lt;code&gt;&amp;amp;String&lt;/code&gt; を受け取ることになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let s = String::from("hello");
+    let len = calculate_length(&amp;amp;s);
+    println!("{}:{}", s1, len);
+}
+
+fn calculate_length(s: &amp;amp;String) -&amp;gt; usize { // ｓはStringへの参照
+    s.len();
+} // sはスコープ外になるが、参照しているものの所有権は持っていないので何も起こらない。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;&amp;amp;&lt;/code&gt; による参照の逆は、&lt;strong&gt;参照外し&lt;/strong&gt;であり、&lt;code&gt;*&lt;/code&gt; 記号を使うことで参照外しを行うことができる。&lt;/p&gt;
+&lt;p&gt;関数の引数に参照をとることを&lt;strong&gt;借用&lt;/strong&gt;と呼ぶ。借用した何かを変更するとエラーが発生する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let s = String::from("hello");
+    change(&amp;amp;s);
+}
+
+fn change(some_string: &amp;amp;String) {
+    some_string.push_str(", world"); // NG
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;変数が標準で不変であるのと同様に参照も不変である。&lt;/p&gt;
+&lt;h3 id="section-11"&gt;可変な参照&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;&amp;amp;mut&lt;/code&gt; キーワードを使って可変な参照を生成することで、参照の値を変更することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let mut s = String::from("hello");
+    change(&amp;amp;mut s);
+}
+
+fn change(some_string: &amp;amp;mut String) {
+    some_string.push_str(", world"); // OK
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可変な参照の制約として、特定のスコープで、ある特定のデータに対しての可変な参照は、1つしか持つことができない。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
+let r1 = &amp;amp;mut s; 
+let r2 = &amp;amp;mut s; // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可変として2回以上借用することができない制約があることで、コンパイル時にデータの競合を防ぐことができる。&lt;/p&gt;
+&lt;p&gt;データ競合は次のような場合発生する。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2つ以上のポインタが同じデータに同時アクセスする。&lt;/li&gt;
+&lt;li&gt;少なくとも1つのポインタがデータに書き込みを行っている。&lt;/li&gt;
+&lt;li&gt;データへのアクセスを同期する機構が使用されていない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;新しいスコープを生成することで、複数の可変な参照を作ることもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
+{
+    let r1 = &amp;amp;mut s; // r1が有効になる。
+} // r1が無効になる。
+let r2 = &amp;amp;mut s; // OK
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可変と不変な参照を組み合わせる場合も似たような規則が存在する。不変で借用されている場合は、可変で借用はできない。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
+let r1 = &amp;amp;s; // OK
+let r2 = &amp;amp;s; // OK
+let r3 = &amp;amp;mut s; // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-12"&gt;宙に浮いた参照&lt;/h3&gt;
+&lt;p&gt;ポインタのある言語では、ダングリングポインタ (別のところに渡されてしまった可能性のあるメモリを指すポインタであり、ポインタを保持している間にメモリを開放してしまうと発生する) を生成してしまうことがある。
+Rustでは、何らかのデータへの参照がある場合、コンパイラは参照がスコープを抜けるまで、データがスコープを抜けることが無いように確認するため、コンパイラがダングリング参照にならないことを保証している。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -&amp;gt; &amp;amp;String { // Stringへの参照を返す。
+    let s = String::from("hello");
+    &amp;amp;s // Stringの参照を返す。
+} // sが解放されるためエラーになる。
+
+fn no_dangle() -&amp;gt; &amp;amp;String {
+    let s = String::from("hello");
+    s // Stringを返す
+} // 所有権がムーブされているため、何も解放されない。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-13"&gt;参照の規則&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;任意のタイミングで、一つの可変参照か、一つ以上の不変参照のどちらかを行える。&lt;/li&gt;
+&lt;li&gt;参照は常に有効でなければならない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-14"&gt;スライス型&lt;/h2&gt;
+&lt;p&gt;所有権のない別のデータ型を&lt;strong&gt;スライス&lt;/strong&gt;と呼ぶ。コレクションのうちの一部の要素を参照することができる。&lt;/p&gt;
+&lt;p&gt;例えば、文字列を受け取り、その文字列中の最初の単語を返す関数 (&lt;code&gt;first_word&lt;/code&gt;) を作成する。
+単語の終端の添え字を返すことにする。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn first_word(s: &amp;amp;String) -&amp;gt; usize {
+    let bytes = s.as_bytes(); // Stringをバイト配列に変換。
+
+    for (i, &amp;amp;item) in bytes.iter().enumerate() { // コレクション内の各要素を添え字とともに返す。 (添え字, 要素への参照)
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;文字列内の最初の単語の終端の添え字を見つけられるが、 &lt;code&gt;&amp;amp;String&lt;/code&gt; の文脈でのみ意味を持つため、 &lt;code&gt;String&lt;/code&gt; が変更された場合有効である保証がない (=関連性がない)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let mut s = String::from("hello world");
+    let word = first_word(&amp;amp;s); // 5
+    s.clear(); // sを空にする。
+
+    // wordは5だが、有効に使用できる文字列は存在しない。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-15"&gt;文字列スライス&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;String&lt;/code&gt; の一部への参照。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = String::from("hello world");
+let hello = &amp;amp;s[0..5]; // hello
+let world = &amp;amp;s[6..11]; // world
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;範囲記法 &lt;code&gt;..&lt;/code&gt; を指定することで、スライスを生成することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = String::from("hello");
+
+let slice = &amp;amp;s[0..2]; // he
+let slice = &amp;amp;s[..2]; // he
+
+let len = s.len();
+let slice = &amp;amp;s[0..len]; // hello
+let slice = &amp;amp;s[..]; // hello
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;文字列スライスの範囲添え字は、有効なUTF-8文字境界に置かなければならない。マルチバイト文字の真ん中でスライスを行うとエラーになる。&lt;/p&gt;
+&lt;p&gt;文字列スライスを使って &lt;code&gt;first_word&lt;/code&gt; を書き直し、文字列スライス (&lt;code&gt;&amp;amp;str&lt;/code&gt;) を返すようにする。
+文字列スライスを返すことで、元のデータに紐づけられた単独の値を得られるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn first_word(s: &amp;amp;String) -&amp;gt; &amp;amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;amp;s[..i];
+        }
+    }
+
+    &amp;amp;s[..]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;スライスバージョンの &lt;code&gt;first_word&lt;/code&gt; を使用したあとに、 &lt;code&gt;clear&lt;/code&gt; を呼ぶとコンパイルエラーになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let mut s = String::from("hello world");
+    let word = first_word(&amp;amp;s); // hello への不変借用が発生。
+    s.clear(); // NG 可変借用しようとしているためエラーになる。
+    println!("{}", word); // 不変借用が使われる。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-16"&gt;文字列リテラルはスライス&lt;/h4&gt;
+&lt;p&gt;文字列リテラルはバイナリのその特定の位置を指すスライスであり、 &lt;code&gt;&amp;amp;str&lt;/code&gt;は不変な参照である。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = "Hello, world!"; // &amp;amp;str
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-17"&gt;引数としての文字列スライス&lt;/h4&gt;
+&lt;p&gt;引数を文字列スライスで受けることで、文字列リテラルと &lt;code&gt;String&lt;/code&gt; 全体のスライスを渡すことができるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let my_string = String::from("hello world");
+let word = first_word(&amp;amp;my_string[..]);
+
+let my_string_literal = "hello world";
+let word = first_word(&amp;amp;my_string_literal[..]);
+let word = first_word(my_string_literal);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-18"&gt;他のスライス&lt;/h4&gt;
+&lt;p&gt;配列に対してもスライスを行うことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
+let slice = &amp;amp;a[1..3]; // [2, 3];
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>Rustのお勉強メモ1 (1-3)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust1</link>
@@ -17,7 +312,7 @@
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;メモ1 (ここ)&lt;/li&gt;
-&lt;li&gt;メモ2 (まだ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -27,7 +322,7 @@
 &lt;pre&gt;&lt;code class="line-numbers"&gt;rustup update
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="rustc"&gt;rustc&lt;/h2&gt;
-&lt;p&gt;コンパイラ&lt;/p&gt;
+&lt;p&gt;コンパイラ。&lt;/p&gt;
 &lt;h3 id="section-3"&gt;個別ファイルのコンパイル&lt;/h3&gt;
 &lt;pre&gt;&lt;code class="line-numbers"&gt;rustc main.rs
 &lt;/code&gt;&lt;/pre&gt;
@@ -80,17 +375,17 @@ x = 6 // OK
 let x = x + 1; // OK 6
 let x = x * 2; // OK 12
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let spaces = &amp;quot;   &amp;quot;;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let spaces = "   ";
 let spaces = spaces.len(); // OK
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut spaces = &amp;quot;   &amp;quot;;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut spaces = "   ";
 spaces = spaces.len(); // NG
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="section-14"&gt;データ型&lt;/h2&gt;
 &lt;p&gt;Rustにおける値は全て、何らかのデータ型である。&lt;/p&gt;
 &lt;p&gt;静的型付き言語のため、コンパイル時にすべての変数の型が判明している必要がある。&lt;/p&gt;
 &lt;p&gt;例えば、&lt;code&gt;String&lt;/code&gt;を数値型に変換した場合など、変換先が複数存在する場合は型注釈をつける必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: u32 = &amp;quot;42&amp;quot;.parse().expect(&amp;quot;Not a number!&amp;quot;);
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: u32 = "42".parse().expect("Not a number!");
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="section-15"&gt;スカラー型&lt;/h3&gt;
 &lt;ul&gt;
@@ -207,7 +502,7 @@ let cat = '😻';
 let tuple = (500, 6.4, 1);
 let (x, y, z) = tuple;
 
-println!(&amp;quot;{}, {}&amp;quot;, x, tuple.0);
+println!("{}, {}", x, tuple.0);
 // #=&amp;gt; 500, 500
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id="section-23"&gt;配列型&lt;/h4&gt;
@@ -215,8 +510,8 @@ println!(&amp;quot;{}, {}&amp;quot;, x, tuple.0);
 &lt;p&gt;固定長で、一度宣言されたらサイズの変更はできない。可変長のコレクション型を使いたい場合はベクタ型を使用する。&lt;/p&gt;
 &lt;p&gt;添え字によって配列の要素を参照できる。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
-println!(&amp;quot;{}&amp;quot;, a[0]); // OK
-println!(&amp;quot;{}&amp;quot;, a[10]); // NG 範囲外
+println!("{}", a[0]); // OK
+println!("{}", a[10]); // NG 範囲外
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="section-24"&gt;関数&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;fn&lt;/code&gt; キーワードで宣言することができる。&lt;/p&gt;
@@ -232,15 +527,15 @@ println!(&amp;quot;{}&amp;quot;, a[10]); // NG 範囲外
 }
 
 fn greeting() {
-    println!(&amp;quot;Hello!&amp;quot;);
+    println!("Hello!");
 }
 
 fn print_value(x: i32) {
-    println!(&amp;quot;{}&amp;quot;, x);
+    println!("{}", x);
 }
 
 fn print_values(x: i32, y: i32) {
-    println!(&amp;quot;{}, {}&amp;quot;, x, y);
+    println!("{}, {}", x, y);
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="section-25"&gt;文と式&lt;/h3&gt;
@@ -275,7 +570,7 @@ fn print_values(x: i32, y: i32) {
         x + 1 // 式
     }
 
-    println!(&amp;quot;{}, {}&amp;quot;, x, y);
+    println!("{}, {}", x, y);
     // #=&amp;gt; 5, 4
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -300,23 +595,23 @@ fn plus_one_ng(x: i32) -&amp;gt; i32 {
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 3;
 
 if x &amp;lt; 5 {
-    println!(&amp;quot;true&amp;quot;);
+    println!("true");
 } else {
-    println!(&amp;quot;false&amp;quot;);
+    println!("false");
 }
 
 if x { // 数値型ではダメ 論理値型のみ
-    println!(&amp;quot;error&amp;quot;);
+    println!("error");
 }
 
 if x % 4 == 0 {
-    println!(&amp;quot;x / 4 rem 0&amp;quot;);
+    println!("x / 4 rem 0");
 } else if x % 3 == 0 {
-    println!(&amp;quot;x / 3 rem 0&amp;quot;);
+    println!("x / 3 rem 0");
 } else if x % 2 == 0 {
-    println!(&amp;quot;x / 2 rem 0&amp;quot;);
+    println!("x / 2 rem 0");
 } else {
-    println!(&amp;quot;other&amp;quot;);
+    println!("other");
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;else if&lt;/code&gt; 多用する場合は、&lt;code&gt;match&lt;/code&gt;と呼ばれる枝分かれ文法が使える。&lt;/p&gt;
@@ -324,17 +619,17 @@ if x % 4 == 0 {
 &lt;p&gt;&lt;code&gt;if&lt;/code&gt; は式なので、&lt;code&gt;let&lt;/code&gt; 文の右辺に持ってくることができる。全ての条件分岐で同じ型である必要がある。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let cond = true;
 let x = if cond { 5 } else { 6 };
-println!(&amp;quot;{}&amp;quot;, x);
+println!("{}", x);
 // #=&amp;gt; 5
 
-let y = if cond { 5 } else { &amp;quot;six&amp;quot; }; // NG
+let y = if cond { 5 } else { "six" }; // NG
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="section-28"&gt;ループでの繰り返し&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;loop&lt;/code&gt; 、 &lt;code&gt;while&lt;/code&gt; 、 &lt;code&gt;for&lt;/code&gt; の3種類のループが存在する。&lt;/p&gt;
 &lt;h4 id="loop"&gt;loop&lt;/h4&gt;
 &lt;p&gt;&lt;code&gt;loop&lt;/code&gt; キーワードでは、同じコードを何回も永遠に、明示的に辞めさせるまで実行される。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;loop { // 無限ループ
-    println!(&amp;quot;Hello!&amp;quot;);
+    println!("Hello!");
 }
 
 let mut x = 5;
@@ -343,7 +638,7 @@ loop {
         break;
     }
     x = x - 1;
-    println!(&amp;quot;Hello!&amp;quot;);
+    println!("Hello!");
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id="while"&gt;while&lt;/h4&gt;
@@ -351,23 +646,23 @@ loop {
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut x = 5;
 while x != 0 {
     x = x - 1;
-    println!(&amp;quot;Hello!&amp;quot;);
+    println!("Hello!");
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id="for"&gt;for&lt;/h4&gt;
 &lt;p&gt;&lt;code&gt;for&lt;/code&gt; でコレクションの各アイテムに対してコードを実行することができる。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
 for x in a.iter() {
-    println!(&amp;quot;{}&amp;quot;, x);
+    println!("{}", x);
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;Range&lt;/code&gt; 型を使うことで、回数ループができる。&lt;code&gt;rev&lt;/code&gt; メソッドで逆順も可能。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;for x in 1..4 {
-    println!(&amp;quot;{}&amp;quot;, x);
+    println!("{}", x);
 }
 
 for x in (1..4).rev() {
-    println!(&amp;quot;{}&amp;quot;, x);
+    println!("{}", x);
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
