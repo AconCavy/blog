@@ -5,8 +5,454 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Thu, 28 Jan 2021 18:43:49 GMT</pubDate>
-		<lastBuildDate>Thu, 28 Jan 2021 18:43:49 GMT</lastBuildDate>
+		<pubDate>Thu, 28 Jan 2021 23:00:39 GMT</pubDate>
+		<lastBuildDate>Thu, 28 Jan 2021 23:00:39 GMT</lastBuildDate>
+		<item>
+			<title>Rustのお勉強メモ5 (コレクション | エラー処理)</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210129hellorust5</link>
+			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210129hellorust5</guid>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;メモ5 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ6 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;コレクション&lt;/h1&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;コレクション&lt;/th&gt;
+&lt;th&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;ベクタ型&lt;/td&gt;
+&lt;td&gt;可変長の値を並べて保持できる。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;文字列&lt;/td&gt;
+&lt;td&gt;文字のコレクション。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;ハッシュマップ&lt;/td&gt;
+&lt;td&gt;値を特定のキーと紐づけられる&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id="section-2"&gt;ベクタ型&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt; はメモリ上に値を隣り合わせに並べる単独のデータ構造である。
+ベクタには同じ型の値しか保持できない。&lt;/p&gt;
+&lt;h3 id="section-3"&gt;新しいベクタの生成&lt;/h3&gt;
+&lt;p&gt;宣言時にベクタに対して何も挿入しない場合、型注釈が必要となる。 &lt;code&gt;vec!&lt;/code&gt; マクロを使うことでもベクタを生成できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v: Vec&amp;lt;i32&amp;gt; = Vec::new();
+let v = vec![1, 2, 3];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-4"&gt;ベクタの更新&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;push&lt;/code&gt; メソッドでベクタに要素を追加することができる。一方、 &lt;code&gt;pop&lt;/code&gt; メソッドでは最後の要素を削除して &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; として返すことができる。
+中に配置する要素はすべて &lt;code&gt;i32&lt;/code&gt; 型で、コンパイラはデータを推論するため、 &lt;code&gt;Vec&amp;lt;i32&amp;gt;&lt;/code&gt; 型注釈は不要になる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = Vec::new();
+v.push(5);
+v.push(6);
+
+let x = v.pop(); // Some(5)
+let x = v.pop(); // Some(6)
+let x = v.pop(); // None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-5"&gt;ベクタをドロップすると要素もドロップする。&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
+    let v = vec![1, 2, 3, 4];
+} // vとともにvの中身はすべて無効になる。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-6"&gt;ベクタの要素を参照する&lt;/h3&gt;
+&lt;p&gt;ベクタの値は、添え字と &lt;code&gt;&amp;amp;&lt;/code&gt; を使うと参照が得られ、 &lt;code&gt;get&lt;/code&gt; メソッドを使うと &lt;code&gt;Option&amp;lt;&amp;amp;T&amp;gt;&lt;/code&gt; が得られる。&lt;/p&gt;
+&lt;p&gt;配列と同様に添え字が範囲外の場合、プログラムはパニックする。一方、 &lt;code&gt;get&lt;/code&gt; メソッドの場合は &lt;code&gt;None&lt;/code&gt; が返る。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v = vec![1, 2, 3, 4, 5];
+let third: &amp;amp;i32 = &amp;amp;v[2];
+let third: Option&amp;lt;&amp;amp;i32&amp;gt; = v.get(2);
+
+let does_not_exist = &amp;amp;v[100]; // NG
+let does_not_exist = v.get(100); // None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクタに対して有効な参照がある場合、所有権と借用規則を強制し、ベクタの中身への参照や、他のいかなる参照も有効であり続けることが保証される。&lt;/p&gt;
+&lt;p&gt;ベクタは、メモリに確保した領域以上の要素が追加されると、新しい領域に値をコピーを行い、参照先が変わる可能性があるため、次の例はエラーになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = vec![1, 2, 3, 4, 5];
+let first = &amp;amp;v[0]; // 不変借用
+v.push(6); // 可変借用のためエラーになる。
+println!("{}", first);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-7"&gt;ベクタの値を走査する&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;for&lt;/code&gt; ループで各要素の参照を行うことができる。不変な参照を得てそれらを出力する場合は次のようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v = vec![1, 2, 3];
+for x in &amp;amp;v {
+    println!("{}", x);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;全要素に変更を加える場合は、可変な参照を得て、各要素を変更することもできる。可変参照が参照している値を変更するために、参照外し演算子 (&lt;code&gt;*&lt;/code&gt;) を使用する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = vec![1, 2, 3];
+for x in &amp;amp;mut v {
+    *x += 10;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="enum"&gt;Enumを使って複数の型を保持する&lt;/h3&gt;
+&lt;p&gt;enumの場合は、列挙子に異なる型がある場合でもベクタに保持することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum SpreadsheetCell {
+    Int(i32),
+    Float(f64),
+    Text(String),
+}
+
+let row = vec![ // OK
+    SpreadsheetCell::Int(3),
+    SpreadsheetCell::Text(String::from("blue")),
+    SpreadsheetCell::Float(10.12),
+];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-8"&gt;文字列&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型は伸長可能、可変、所有権のあるUTF-8エンコードされた文字列型である。文字列を意味するのは &lt;code&gt;String&lt;/code&gt; と &lt;code&gt;&amp;amp;str&lt;/code&gt; 両方を指すことが多い。&lt;/p&gt;
+&lt;p&gt;Rustの標準ライブラリには、 &lt;code&gt;OsString&lt;/code&gt; 、 &lt;code&gt;OsStr&lt;/code&gt; 、 &lt;code&gt;CString&lt;/code&gt; 、 &lt;code&gt;CStr&lt;/code&gt; などの他の文字列型も存在し、異なるエンコード方法でテキストを格納していたり、メモリ上の表現が異なったりする。&lt;/p&gt;
+&lt;h3 id="section-9"&gt;新規文字列の生成&lt;/h3&gt;
+&lt;p&gt;空の文字列を生成する場合は、 &lt;code&gt;new&lt;/code&gt; 関数を使用する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::new();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、 &lt;code&gt;from&lt;/code&gt; 関数、または &lt;code&gt;to_string&lt;/code&gt; メソッドを使用することで、初期値ありの文字列を生成することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let data = "hello world";
+let s = data.to_string();
+let s = "hello world".to_string();
+let s = String::from(data);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-10"&gt;文字列を更新する&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt; に要素を追加したように、メソッドを使うほかに、&lt;code&gt;String&lt;/code&gt; を連結する &lt;code&gt;+&lt;/code&gt; 演算子や、 &lt;code&gt;format!&lt;/code&gt; マクロを利用することで中身を更新できる。&lt;/p&gt;
+&lt;h4 id="push_strpush"&gt;push_strとpush&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;push_str&lt;/code&gt; メソッドでは、文字列スライスを &lt;code&gt;String&lt;/code&gt; に追加することができる。また、所有権を奪わないので、元の文字列スライスを別に使うこともできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s1 = String::from("foo");
+let s2 = "bar";
+s1.push_str(s2);
+println!("{}", s1); // #=&amp;gt; foobar
+println!("{}", s2); // #=&amp;gt; bar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;push&lt;/code&gt; メソッドでは、1文字を引数として &lt;code&gt;String&lt;/code&gt; に追加することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("lo");
+s.push("l"); // lol
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="format"&gt;+演算子、またはformat!マクロで連結&lt;/h4&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("Hello, ");
+let s2 = String::from("world!");
+let s3 = s1 + &amp;amp;s2; // s1はムーブされ無効になる。s2は有効。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;+&lt;/code&gt; 演算子は、次のような &lt;code&gt;add&lt;/code&gt; メソッドを使用する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn add(self, s: &amp;amp;str) -&amp;gt; String {
+    // 省略
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 値とともに呼び出した場合、 &lt;code&gt;add&lt;/code&gt; 関数に渡された &lt;code&gt;&amp;amp;String&lt;/code&gt; はコンパイラにより &lt;code&gt;&amp;amp;str&lt;/code&gt; に型強制される。コンパイラは、参照外し型強制というものを使用した、 &lt;code&gt;&amp;amp;s2&lt;/code&gt; を &lt;code&gt;&amp;amp;s2[..]&lt;/code&gt; に変換するため、 &lt;code&gt;add&lt;/code&gt; の引数の &lt;code&gt;s&lt;/code&gt; は元の所有権を奪わないため、結合後の &lt;code&gt;s2&lt;/code&gt; は有効なままになる。
+一方、 &lt;code&gt;add&lt;/code&gt; は &lt;code&gt;self&lt;/code&gt; の所有権を奪うため、 &lt;code&gt;s1&lt;/code&gt; は &lt;code&gt;add&lt;/code&gt; にムーブされて、結合後の &lt;code&gt;s1&lt;/code&gt; は無効になる。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;format!&lt;/code&gt; マクロを使用すると、引数の所有権を奪わずに結合後の &lt;code&gt;String&lt;/code&gt; を取得できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("tic");
+let s2 = String::from("tac");
+let s3 = String::from("toe");
+let s = format!("{}-{}-{}", s1, s2, s3); // s1, s2, s3全て有効。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-11"&gt;文字列の添え字アクセス&lt;/h3&gt;
+&lt;p&gt;Rustの文字列は添え字アクセスをサポートしていないため、添え字で &lt;code&gt;String&lt;/code&gt; の一部にアクセスするとエラーが発生する。&lt;/p&gt;
+&lt;p&gt;Rustの文字列はUTF-８エンコードで扱われ、マルチバイト文字が使われると、文字列のバイト添え字は、必ずしも有効なスカラー値になるとは限らないため、エラーになる。&lt;/p&gt;
+&lt;p&gt;文字列のスライスにおいても、無効な添え字にアクセスしてしまうため、エラーが発生することがある。&lt;/p&gt;
+&lt;h3 id="section-12"&gt;文字列を操作するメソッド&lt;/h3&gt;
+&lt;p&gt;Unicodeスカラー値に対して処理を行う場合、 &lt;code&gt;chars&lt;/code&gt; メソッドを利用できる。 また、 &lt;code&gt;bytes&lt;/code&gt; メソッドでは、各バイトをそのまま返す。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;for c in "नमस्ते".chars() {
+    println!("{}", c);
+}
+
+// #=&amp;gt; न
+// #=&amp;gt; म
+// #=&amp;gt; स
+// #=&amp;gt; ्
+// #=&amp;gt; त
+// #=&amp;gt; े
+
+for b in "नमस्ते".bytes() {
+    println!("{}", b);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-13"&gt;ハッシュマップ&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;HashMap&amp;lt;K, V&amp;gt;&lt;/code&gt; 型は、 &lt;code&gt;K&lt;/code&gt; 型のKeyと、 &lt;code&gt;V&lt;/code&gt; 型のValueの対応関係を保持する。別のプログラミング言語では、hash, map, object, hashtable, 連想配列などがある。&lt;/p&gt;
+&lt;h3 id="section-14"&gt;新規ハッシュマップの生成&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;new&lt;/code&gt; 関数で空のハッシュマップを生成し、 &lt;code&gt;insert&lt;/code&gt; メソッドで要素を追加することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ベクタと同様に、ハッシュマップはデータをヒープに保持する。
+Keyは全て同じ型であり、Valueも全て同じ型である必要がある。&lt;/p&gt;
+&lt;p&gt;タプルのベクタに対して &lt;code&gt;collect&lt;/code&gt; メソッドを使用することで、ハッシュマップを生成することもできる。
+二つのベクタを &lt;code&gt;zip&lt;/code&gt; メソッドでタプルのベクタを作ることができ、&lt;code&gt;HashMap&amp;lt;_, _&amp;gt;&lt;/code&gt; という型注釈とともにハッシュマップに変換できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let teams = vec![String::from("Blue"), String::from("Yellow")];
+let scores = vec![10, 50];
+let map: HashMap&amp;lt;_, _&amp;gt; = teams.iter().zip(scores.iter()).collect();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-15"&gt;ハッシュマップと所有権&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Copy&lt;/code&gt; トレイトを実装する型の値はハッシュマップにコピーされ、所有権のある型の値なら値はムーブされる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let field_name = String::from("Favorite color");
+let field_value = String::from("Blue");
+let mut map = HashMap::new();
+map.insert(field_name, field_value);
+// field_nameとfield_valueは無効になる。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-16"&gt;ハッシュマップの値にアクセスする&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;get&lt;/code&gt; メソッドにKeyを与えることでハッシュマップから値を取り出すことができる。結果は &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; のため、Keyが有効であれば &lt;code&gt;Some&lt;/code&gt;が、無効であれば &lt;code&gt;None&lt;/code&gt; が返る。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+
+let key = String::from("Blue");
+let score = scores.get(&amp;amp;team_name); // Some(&amp;amp;10)
+let score = scores.Get("Yellow"); // None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;for&lt;/code&gt; ループでKeyとValueのペアを走査できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+for (key, value) in &amp;amp;scores {
+    println!("{}: {}", key, value);
+    // #=&amp;gt; Yellow: 50
+    // #=&amp;gt; Blue: 10
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-17"&gt;ハッシュマップを更新する&lt;/h3&gt;
+&lt;p&gt;ハッシュマップでは、一つのKeyには一つのValueしか紐づけることができないため、Value更新方法がいくつか存在する。&lt;/p&gt;
+&lt;h4 id="value"&gt;Valueの上書き&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;insert&lt;/code&gt; メソッドを使うとKeyの有無に拘わらず、KeyとValueが更新される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Blue"), 25);
+println!("{:?}", scores);
+// #=&amp;gt; {Blue: 25}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="keyvalue"&gt;Keyに値がない場合にValueを挿入する&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;entry&lt;/code&gt; メソッドを使うと、ハッシュマップにKeyが存在するか否かを示す &lt;code&gt;Entry&lt;/code&gt; enumが返される。
+&lt;code&gt;Entry&lt;/code&gt; の &lt;code&gt;or_insert&lt;/code&gt; メソッドでは、Keyが存在した場合は対象となるValueへの可変参照 (&lt;code&gt;&amp;amp;mut V&lt;/code&gt;) を返し、存在しない場合は新しい値として挿入し、新しい値への可変参照を返す。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.entry(String::from("Yellow")).or_insert(50); // 挿入される。
+scores.entry(String::from("Blue")).or_insert(50); // 挿入されない。
+println!("{:?}", scores);
+// #=&amp;gt; {"Yellow": 50, "Blue": 10}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-18"&gt;古い値に基づいて値を更新する&lt;/h4&gt;
+&lt;p&gt;次の例では、文字列に単語が何回出現したかを数え上げる処理をしている。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
+
+let text = "hello world wonderful world";
+let mut map = HashMap::new();
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0); // ない場合は0を挿入して可変参照を取得する。
+    *count += 1; // 参照外しを行って値を更新する。
+}
+
+println!("{:?}", map);
+// #=&amp;gt; {"world": 2, "hello": 1, "wonderful": 1}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-19"&gt;ハッシュ関数&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;HashMap&lt;/code&gt; は暗号学的に安全なハッシュ関数を使用するため、最速ではないが、異なる&lt;strong&gt;hasher&lt;/strong&gt;を指定することで、別の関数に切り替えることができる。hasherは &lt;code&gt;BuildHasher&lt;/code&gt; トレイトを実装する型である。&lt;/p&gt;
+&lt;h1 id="section-20"&gt;エラー処理&lt;/h1&gt;
+&lt;p&gt;Rustでは、エラーは&lt;strong&gt;回復可能&lt;/strong&gt;と&lt;strong&gt;回復不能&lt;/strong&gt;なエラーが存在する。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;エラー&lt;/th&gt;
+&lt;th&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;回復可能&lt;/td&gt;
+&lt;td&gt;ファイルが見つからないなどの処理を再試行可能な場合。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;回復不能&lt;/td&gt;
+&lt;td&gt;配列の境界を越えた箇所にアクセスしようとした場合。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;Rustには例外が存在せず、回復可能なエラーを示す &lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; 型と、回復不能なエラーの場合実行を中止する &lt;code&gt;panic!&lt;/code&gt; マクロが存在する。&lt;/p&gt;
+&lt;h2 id="panic"&gt;panic!で回避不能なエラー&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;panic!&lt;/code&gt; マクロが実行されると、プログラムは失敗のメッセージを表示して、スタックを巻き戻して、プログラムを終了させる。&lt;/p&gt;
+&lt;p&gt;標準ではパニックが発生するとプログラムは巻き戻しを行うが、 &lt;code&gt;Cargo.toml&lt;/code&gt; ファイルを変更することで、異常終了に切り替えることもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-toml line-numbers"&gt;[profile]
+panic = 'abort'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;panic!&lt;/code&gt; マクロで、パニックを実行できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main()
+{
+    panic!("crash and burn");
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="panic-1"&gt;panic!バックトレースを使用する。&lt;/h3&gt;
+&lt;p&gt;デバッグビルド時のみ、 &lt;code&gt;RUST_BACKTRACE&lt;/code&gt; 環境変数をセットしてエラーを発生させると、バックトレース (呼び出された関数の一覧) が表示される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;$ RUST_BACKTRACE=1 cargo run
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="result"&gt;Resultで回避可能なエラー&lt;/h2&gt;
+&lt;p&gt;多くのエラーは、プログラムを完全にストップさせるほど深刻ではなく、エラーに対して別の処理を行うなど、対応する方法が存在する。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Result&lt;/code&gt; enumは &lt;code&gt;Ok&lt;/code&gt; と &lt;code&gt;Err&lt;/code&gt; の列挙子からなり、&lt;code&gt;T&lt;/code&gt; と &lt;code&gt;E&lt;/code&gt; はジェネリックな型を取る。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Result&amp;lt;T, E&amp;gt; {
+    Ok(T),
+    Err(E),
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ファイルを開く例では、 &lt;code&gt;File::open&lt;/code&gt; が &lt;code&gt;Result&lt;/code&gt; を返すと &lt;code&gt;T&lt;/code&gt; には、ファイルハンドルの &lt;code&gt;std::fs::File&lt;/code&gt; が入り、 &lt;code&gt;E&lt;/code&gt; には &lt;code&gt;std::io::Error&lt;/code&gt; が入る。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
+
+fn main() {
+   let f = File::open("hello.txt"); // Result&amp;lt;T, E&amp;gt;が返る。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Option&lt;/code&gt; enumのように &lt;code&gt;Result&lt;/code&gt; enumも &lt;code&gt;match&lt;/code&gt; 式でハンドリングすることができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
+
+fn main() {
+    let f = File::open("hello.txt");
+    let f = match f {
+        Ok(file) =&amp;gt; file,
+        Err(error) =&amp;gt; {
+            panic!("{:?}", error)
+        },
+    } 
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-21"&gt;いろいろなエラーにマッチする&lt;/h3&gt;
+&lt;p&gt;上記のコードは &lt;code&gt;File::open&lt;/code&gt; の失敗理由が何であろうと &lt;code&gt;panic!&lt;/code&gt; が実行されるが、他の理由に対してマッチさせて異なる処理を実行できる。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;if error.kind() == ErrorKind::Notfound&lt;/code&gt; 条件式は、&lt;strong&gt;マッチガード&lt;/strong&gt;とよばれ、アームのパターンをさらに絞り込む条件式である。
+パターンの &lt;code&gt;ref&lt;/code&gt; は &lt;code&gt;error&lt;/code&gt; がガード条件式にムーブされないようにしている。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    let f = File::open("hello.txt");
+    let f = match f {
+        Ok(file) =&amp;gt; file,
+        Err(ref error) if error.kind() == ErrorKind::NotFound =&amp;gt; {
+            match File::create("hello.txt") {
+                Ok(new_file) =&amp;gt; new_file,
+                Err(in_error) =&amp;gt; {
+                    panic!("failed to create new file: {:?}", in_error);
+                }
+            }
+        },
+        Err(error) =&amp;gt; {
+            panic!("could not open file: {:?}", error);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-22"&gt;エラー時にパニックするショートカット&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; のヘルパーメソッドとして、&lt;code&gt;Result&lt;/code&gt; が &lt;code&gt;Err&lt;/code&gt; の場合 &lt;code&gt;panic!&lt;/code&gt; マクロを実行する &lt;code&gt;unwrap&lt;/code&gt; メソッドと &lt;code&gt;expect&lt;/code&gt; メソッドがある。
+&lt;code&gt;expect&lt;/code&gt; メソッドはエラーメッセージを引数として指定することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
+
+fn main() {
+    let f = File::open("hello1.txt").unwrap();
+    let f = File::open("hello2.txt").expect("Failed to open");
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-23"&gt;エラーを委譲する&lt;/h3&gt;
+&lt;p&gt;失敗する可能性のある何かを呼び出す実装をした関数を書く際、関数内でエラー処理をする代わりに、戻り値を &lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; で返すことで、呼び出し元にエラーを委譲することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
+    let f = File::open("hello.txt");
+
+    let mut f = match f {
+        Ok(file) =&amp;gt; file,
+        Err(e) =&amp;gt; return Err(e),
+    };
+
+    let mut s = String::new();
+    match f.read_to_string(&amp;amp;mut s) {
+        Ok(_) =&amp;gt; Ok(s),
+        Err(e) =&amp;gt; Err(e),
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-24"&gt;エラー委譲のショートカット: ?演算子&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;?&lt;/code&gt; 演算子を使用することで、 &lt;code&gt;match&lt;/code&gt; 式とほぼ同じように動作できる。
+&lt;code&gt;Result&lt;/code&gt; の値が &lt;code&gt;Ok&lt;/code&gt; の場合、中身が式から得られ、プログラムは継続し、値が &lt;code&gt;Err&lt;/code&gt; の場合、&lt;code&gt;return&lt;/code&gt; と同様に関数を終了し、呼び出し元に &lt;code&gt;Err&lt;/code&gt; の中身を返す。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
+    let f = File::open("hello.txt")?;
+    let mut s = String::new();
+    f.read_to_string(&amp;amp;mut s)?;
+    Ok(s);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;?&lt;/code&gt; を使ったエラー値は、標準ライブラリの &lt;code&gt;From&lt;/code&gt; トレイトで定義され、エラーの型を別のものに変換する &lt;code&gt;from&lt;/code&gt; 関数を通る。これにより、関数内で発生したエラー型は &lt;code&gt;from&lt;/code&gt; 関数によって、関数の戻り値に定義しているエラー型に自動的に変更される。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;?&lt;/code&gt;メソッドの呼び出しを連結することもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
+    let mut s = String::new();
+    let f = File::open("hello.txt")?.read_to_string(&amp;amp;mut s)?;
+
+    Ok(s);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、 &lt;code&gt;?&lt;/code&gt; 演算子はResultを返す関数でしか使用できないため、&lt;code&gt;Result&lt;/code&gt; を返さない関数では &lt;code&gt;match&lt;/code&gt; か &lt;code&gt;Result&lt;/code&gt; のメソッドを使う必要がある。&lt;/p&gt;
+&lt;h2 id="panic-2"&gt;panic!すべきか否か&lt;/h2&gt;
+&lt;p&gt;呼び出す側のコードの立場によって &lt;code&gt;panic!&lt;/code&gt; と &lt;code&gt;Result&lt;/code&gt; を使い分ける。&lt;/p&gt;
+&lt;h3 id="section-25"&gt;プロトタイプコード、テスト&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;unwrap&lt;/code&gt; などのパニックする可能性のあるメソッド呼び出しは、アプリケーションにエラーを処理してほしい方法へのプレースホルダーを意味していると理解され、残りのコードがしていることによって異なる可能性がある。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;unwrap&lt;/code&gt; や &lt;code&gt;expect&lt;/code&gt; メソッドはプロトタイプの段階では便利。&lt;/p&gt;
+&lt;p&gt;メソッド呼び出しがテスト内で失敗した場合、 &lt;code&gt;panic!&lt;/code&gt; することでテスト全体を失敗できる。&lt;/p&gt;
+&lt;h3 id="section-26"&gt;コンパイラよりもプログラマがより情報を持っている場合&lt;/h3&gt;
+&lt;p&gt;プログラムのハードコードなど、プログラマの持つ情報としてErr列挙子は存在しないと確認できる場合 &lt;code&gt;unwrap&lt;/code&gt; を使用することもできる。
+一方、失敗する可能性が確かにあるならば、 &lt;code&gt;Result&lt;/code&gt; として処理した方がいい。&lt;/p&gt;
+&lt;h3 id="section-27"&gt;エラー処理のガイドライン&lt;/h3&gt;
+&lt;p&gt;コードが悪い状態に陥る可能性があるときにパニックさせるのは推奨される。
+&lt;strong&gt;悪い状態&lt;/strong&gt;とは、何らかの前提、保証、契約、不変性が破られたことを指し、無効な値、矛盾する値、行方不明な値がコードに渡されること、以下のいずれか一つ以上の状態であることがあげられる。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;悪い状態がときに起こるとは予想されないとき&lt;/li&gt;
+&lt;li&gt;この時点以降、この悪い状態にないことを頼りにコードが書かれているとき&lt;/li&gt;
+&lt;li&gt;使用している方にこの情報をコード化するいい手段がない時&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不正な値を渡され、修正しようのない無効な状態を使用者に通知するために &lt;code&gt;panic!&lt;/code&gt; は適切だが、 &lt;code&gt;Result&lt;/code&gt; を返すことで悪い状態を委譲して、失敗が予想される可能性があることを示唆するほうが良い場合もある。&lt;/p&gt;
+&lt;p&gt;コードが値に対して処理を行う場合、安全性上の理由から、値が合法でなければパニックが適切。&lt;/p&gt;
+&lt;p&gt;関数には契約が伴い、入力が特定の条件を満たすときのみ振る舞いが保証される。契約が侵されたときにパニックすることは適切。関数の契約は、特に侵害がパニックを引き起こす際には、APIドキュメント内で言及する。&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>Rustのお勉強メモ4 (プロジェクトの管理)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210129hellorust4</link>
@@ -20,7 +466,7 @@
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ4 (ここ)&lt;/li&gt;
-&lt;li&gt;メモ5 (まだ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
@@ -297,6 +743,7 @@ pub fn eat_at_restaurant() {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ3 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
@@ -693,8 +1140,9 @@ if let Coin::Quarter(stete) = coint {
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ2 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
@@ -991,6 +1439,7 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -2553,373 +3002,6 @@ namespace Blog.Extensions
 &lt;p&gt;以上の2つの設定を追加してビルドすることで、bootstrapによる&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグのレスポンシブ対応、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。&lt;/p&gt;
 &lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>.NET Core 3.1と.NET 5のfor-loopの速度比較</title>
-			<link>https://aconcavy.github.io/Blog/posts/20201119forbenchmark</link>
-			<description>&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/Blog/posts/20201119forbenchmark</guid>
-			<pubDate>Thu, 19 Nov 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;環境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;OS: Windows 10&lt;/li&gt;
-&lt;li&gt;CPU: AMD Ryzen 5 3600&lt;/li&gt;
-&lt;li&gt;SDK: .NET 5.0&lt;/li&gt;
-&lt;li&gt;BenchmarkDotnet: 0.12.1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-2"&gt;計測対象&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Runtimes
-&lt;ul&gt;
-&lt;li&gt;.NET Core 3.1.9&lt;/li&gt;
-&lt;li&gt;.NET 5&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Targets
-&lt;ul&gt;
-&lt;li&gt;1次元配列 (1e6)&lt;/li&gt;
-&lt;li&gt;2次元配列 (1e3 * 1e3)&lt;/li&gt;
-&lt;li&gt;2次元ジャグ配列 (1e3 * 1e3)&lt;/li&gt;
-&lt;li&gt;3次元配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
-&lt;li&gt;3次元ジャグ配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-3"&gt;操作&lt;/h2&gt;
-&lt;p&gt;全ての要素に値を代入&lt;/p&gt;
-&lt;h2 id="section-4"&gt;スクリプト&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
-
-namespace BenchmarkSharp
-{
-    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
-    [MemoryDiagnoser]
-    public class ForLoopBenchmark
-    {
-        private const int Size1 = (int) 1e6;
-        private const int Size2 = (int) 1e3;
-        private const int Size3 = (int) 1e2;
-        private int[] _dim1;
-        private int[,] _dim2;
-        private int[][] _dim2Jagged;
-        private int[,,] _dim3;
-        private int[][][] _dim3Jagged;
-
-        [GlobalSetup]
-        public void Setup()
-        {
-            _dim1 = new int[Size1];
-            _dim2 = new int[Size2, Size2];
-            _dim3 = new int[Size3, Size3, Size3];
-            _dim2Jagged = new int[Size2][];
-            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++) _dim2Jagged[i] = new int[Size2];
-            _dim3Jagged = new int[Size3][][];
-            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
-            {
-                _dim3Jagged[i] = new int[Size3][];
-                for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
-                {
-                    _dim3Jagged[i][j] = new int[Size2];
-                }
-            }
-        }
-
-        [Benchmark]
-        public void Dim1()
-        {
-            for (var i = 0; i &amp;lt; _dim1.Length; i++) _dim1[i] = i;
-        }
-
-        [Benchmark]
-        public void Dim2()
-        {
-            for (var i = 0; i &amp;lt; _dim2.GetLength(0); i++)
-            for (var j = 0; j &amp;lt; _dim2.GetLength(1); j++)
-                _dim2[i, j] = j;
-        }
-
-        [Benchmark]
-        public void Dim2Jagged()
-        {
-            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++)
-            for (var j = 0; j &amp;lt; _dim2Jagged[i].Length; j++)
-                _dim2Jagged[i][j] = j;
-        }
-
-        [Benchmark]
-        public void Dim3()
-        {
-            for (var i = 0; i &amp;lt; _dim3.GetLength(0); i++)
-            for (var j = 0; j &amp;lt; _dim3.GetLength(1); j++)
-            for (var k = 0; k &amp;lt; _dim3.GetLength(2); k++)
-                _dim3[i, j, k] = k;
-        }
-
-        [Benchmark]
-        public void Dim3Jagged()
-        {
-            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
-            for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
-            for (var k = 0; k &amp;lt; _dim3Jagged[i][j].Length; k++)
-                _dim3Jagged[i][j][k] = k;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="section-5"&gt;結果&lt;/h1&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Method&lt;/th&gt;
-&lt;th&gt;Job&lt;/th&gt;
-&lt;th&gt;Runtime&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Mean&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Error&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;StdDev&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Median&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Ratio&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;RatioSD&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 0&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 1&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 2&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Allocated&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;565.1 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3.35 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3.14 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;566.0 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim1&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;525.8 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;10.49 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;24.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;508.9 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.92&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,366.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;47.74 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;44.65 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,357.6 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;111 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,544.6 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;230.75 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;680.38 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,060.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.64&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.13&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,514.8 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;29.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;35.16 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,522.0 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;2,003.3 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;8.14 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;7.22 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;2,001.9 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.33&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,209.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;45.24 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;40.10 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,201.5 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;10 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;4,525.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;246.02 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;725.38 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;4,114.5 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.90&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.15&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;18,504.2 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;466.86 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,376.55 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;18,885.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;17,920.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,043.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,076.86 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;19,831.3 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.98&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.20&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;.NET 5.0は .NET Core 3.1に比べて&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
-&lt;li&gt;2次元配列 -&amp;gt; 35%程度高速&lt;/li&gt;
-&lt;li&gt;2次元ジャグ配列 -&amp;gt; 35%程度低速&lt;/li&gt;
-&lt;li&gt;3次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
-&lt;li&gt;3次元ジャグ配列 -&amp;gt; ほぼ一緒&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;.NET 5.0において多次元配列と多次元ジャグ配列の各次元のサイズが同じ大きさであれば&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
-&lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
-&lt;/ul&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
