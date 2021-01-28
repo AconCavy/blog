@@ -4,7 +4,404 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>2021</rights>
-	<updated>2021-01-27T21:27:32Z</updated>
+	<updated>2021-01-28T15:00:10Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/Blog/posts/20210128hellorust3</id>
+		<title>Rustのお勉強メモ3 (5-6)</title>
+		<link href="https://aconcavy.github.io/Blog/posts/20210128hellorust3" />
+		<updated>2021-01-28T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;メモ3 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ4 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
+&lt;h2 id="section-2"&gt;定義とインスタンス化&lt;/h2&gt;
+&lt;p&gt;Rustの構造体の定義は &lt;code&gt;struct&lt;/code&gt; キーワードを使用し、&lt;code&gt;key: value&lt;/code&gt; ペアでフィールドを宣言できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;インスタンスの生成では、 &lt;code&gt;key: value&lt;/code&gt; ペアでフィールドを指定することで、宣言通りの順番ではなくてもフィールドに値を代入できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let user = User {
+    email: String::from("foo@exmaple.com"),
+    username: String::from("foo"),
+    active: true,
+    sign_in_count: 1,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;構造体のフィールドはドット記法を使うことでアクセスできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut user = User {
+    username: String::from("foo"),
+    email: String::from("foo@exmaple.com"),
+    sign_in_count: 1,
+    active: true,
+}
+
+user.email = String::from("bar@example.com");
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rustでは、インスタンス全体が可変でなければならず、一部のフィールドのみを可変にすることはできない。&lt;/p&gt;
+&lt;h3 id="section-3"&gt;フィールド初期化省略記法&lt;/h3&gt;
+&lt;p&gt;変数名と構造体のフィールド名が同じ場合、フィールド名を省略できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn build_user_1(email: String, username: String) -&amp;gt; User {
+    User {
+        email: email,
+        username: username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+fn build_user_2(email: String, username: String) -&amp;gt; User {
+    User {
+        email, // フィールド名省略
+        username, // フィールド名省略
+        active: true,
+        sign_in_count: 1,
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-4"&gt;構造体更新記法&lt;/h3&gt;
+&lt;p&gt;他の構造体インスタンスと同じ値を使用して、一部のフィールドを変えてインスタンスを生成できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let user1 = User {
+    username: String::from("foo"),
+    email: String::from("foo@exmaple.com"),
+    sign_in_count: 1,
+    active: true,
+}
+
+let user2 = User {
+    username: String::from("bar"),
+    email: String::from("bar@exmaple.com"),
+    ..user1 // sign_in_countとactiveはuser1と同じ値になる。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-5"&gt;タプル構造体&lt;/h3&gt;
+&lt;p&gt;フィールドに紐づけられた名前がない構造体を&lt;strong&gt;タプル構造体と&lt;/strong&gt;呼ぶ。
+次の &lt;code&gt;Color&lt;/code&gt; と &lt;code&gt;Point&lt;/code&gt; は異なる型となる。フィールドへのアクセスは添え字を使う。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+let black = Color(0, 0, 0);
+let origin = Point(0, 0, 0);
+
+println!("({}, {}, {})", black.0, black.1, black.2);
+// #=&amp;gt; (0, 0, 0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-6"&gt;ユニット様構造体&lt;/h3&gt;
+&lt;p&gt;フィールドのない構造体を&lt;strong&gt;ユニット様構造体&lt;/strong&gt;と呼ぶ。トレイトの実装はするが、型自体に保持させるデータはない場合に使う。&lt;/p&gt;
+&lt;h3 id="section-7"&gt;構造体データの所有権&lt;/h3&gt;
+&lt;p&gt;構造体全体が有効な間はずっと有効である必要があるため、&lt;code&gt;&amp;amp;str&lt;/code&gt; 文字列スライス型ではなく、所有権のある &lt;code&gt;String&lt;/code&gt; 型を利用する。ライフタイムを指定することで、構造体に参照されたデータが有効な間は、値が有効なことを保証することができる。 (10章)&lt;/p&gt;
+&lt;h2 id="println"&gt;println!マクロで構造体を表示する&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;println!&lt;/code&gt; マクロでは、標準では波括弧は &lt;code&gt;std::fmt::Display&lt;/code&gt; がフォーマットとして呼ばれる。基本型では標準で &lt;code&gt;Display&lt;/code&gt; を実装しているが、構造体では &lt;code&gt;println!&lt;/code&gt; のフォーマットが自明ではなくなるため、 &lt;code&gt;Display&lt;/code&gt; の実装は提供されない。 &lt;code&gt;[derive(Debug)]&lt;/code&gt; 注釈をつかうことで、デバッグ用のフォーマッタを構造体で使うことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Rectangle1 {
+    width: u32,
+    height: u32,
+}
+
+[derive(Debug)] // Debugトレイトの
+struct Rectangle2 {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle1 { width: 30, height: 50 };
+    println!("{}", rect1); // NG
+
+    let rect2 = Rectangle2 { width: 30, height: 50 };
+    println!("{:?}", rect2); // OK DebugによるDisplay
+    // #=&amp;gt; Rectangle { width: 30, height: 50 }
+
+    println!("{:#?}", rect2); // OK // Debugによる改行ありのDisplay
+    // #=&amp;gt; Rectangle {
+    //         width: 30,
+    //         height: 50
+    //     }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-8"&gt;メソッドの定義&lt;/h2&gt;
+&lt;p&gt;構造体のメソッドを定義する場合、 &lt;code&gt;impl&lt;/code&gt; ブロック内に &lt;code&gt;fn&lt;/code&gt; キーワードで宣言する。メソッドの最初の引数は必ず &lt;code&gt;self&lt;/code&gt; になる。&lt;/p&gt;
+&lt;p&gt;メソッドは &lt;code&gt;self&lt;/code&gt; の所有権を奪ったり、 不変借用、可変借用ができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&amp;amp;self) -&amp;gt; u32 {
+        self.width * self.height
+    }
+
+    fn can_hold(&amp;amp;self, other: &amp;amp;Rectangle) -&amp;gt; bool {
+        self.width &amp;gt; other.width &amp;amp;&amp;amp; selft.height &amp;gt; other.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle { width: 30, height: 50 };
+    println!("{}", rect1.area());
+    // #=&amp;gt; 1500
+
+    let rect2 = Rectangle { width: 10, height: 40 };
+    let rect3 = Rectangle { width: 60, height: 45 };
+    println!("{}" rect1.can_hold(&amp;amp;rect2));
+    // #=&amp;gt; true
+    println!("{}" rect1.can_hold(&amp;amp;rect3));
+    // #=&amp;gt; false
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-9"&gt;関連関数&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; ブロック内に &lt;code&gt;self&lt;/code&gt; を引数に取らない関数を&lt;strong&gt;関連関数&lt;/strong&gt;と呼ぶ。
+関連関数は関数であり、メソッドではない。 &lt;code&gt;String::from&lt;/code&gt; も関連関数の一つ。&lt;/p&gt;
+&lt;p&gt;構造体の新規インスタンスを返すコンストラクタによく使用される。
+関連関数を呼び出すには &lt;code&gt;::&lt;/code&gt; 記法を使用する。 &lt;code&gt;::&lt;/code&gt; 記法は関連関数とモジュールによって作り出される名前空間の両方に使用される。(7章)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl Rectangle {
+    fn square(size: u32) -&amp;gt; Rectangle {
+        Rectangle { width: size, height: size }
+    }
+}
+
+fn main() {
+    let square = Rectangle::square(3);
+    println!("{:?}", square);
+    // #=&amp;gt; Rectangle { width: 3, height: 3 }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="enum"&gt;Enumとパターンマッチング&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;enum&lt;/code&gt; (列挙型) は取りうる値を列挙することで、型を定義できる。
+例としてIPアドレスのバージョン4とバージョン6を挙げる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddrKind {
+    V4,
+    V6,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;インスタンスの生成は &lt;code&gt;::&lt;/code&gt; 記号で生成できる。
+enumの列挙子は識別子のもとに名前空間分けされている。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let ip4 = IpAddrKind::V4;
+let ip6 = IpAddrKind::V6;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;関数の引数として渡すこともできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn route(ip_type: IpAddrKind) { }
+
+route(IpAddrKind::V4);
+route(IpAddrKind::V6);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上記の例だと、実際のIPアドレスのデータを保持する方法がないため、構造体にenumを持たせる対処法がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddrKind {
+    V4,
+    V6,
+}
+
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+
+let home = IpAddr {
+    kind: IpAddrKind::V4,
+    address: String:from("127.0.0.1"),
+};
+
+let lookback = IpAddr {
+    kind: IpAddrKind::V6,
+    address: String:from("::1"),
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rustのenumでは、enum自体にデータを持たせることができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddr {
+    V4(String),
+    V6(String),
+}
+
+let home = IpAddr::V4(String:from("127.0.0.1"));
+let lookback = IpAddr::V6(String:from("::1"));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、各列挙子に紐付けるデータの型と量は異なってもよい。この例では、 &lt;code&gt;V4&lt;/code&gt; のアドレスには4つの &lt;code&gt;u8&lt;/code&gt; 型の値と格納し、&lt;code&gt;V6&lt;/code&gt; のアドレスには &lt;code&gt;String&lt;/code&gt; 型の値で格納することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+let home = IpAddr::V4(127, 0, 0, 1);
+let lookback = IpAddr::V6(String:from("::1"));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;標準ライブラリの &lt;code&gt;IpAddr&lt;/code&gt; 定義では、アドレスデータを二つの異なる構造体の形でenumに埋め込んでいる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Ipv4Addr {
+    // 省略
+}
+
+struct Ipv6Addr {
+    // 省略
+}
+
+enum IpAddr {
+    V4(Ipv4Addr),
+    V6(Ipv6Addr),
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;異なる型の列挙子が4つあるenumでは次のようになる。structでそれぞれ定義するよりも完結に定義できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Message {
+    Quit, // 紐づけられたデータなし
+    Move { x: i32, y: i32 }, // 匿名構造体
+    Write(String), // String
+    ChangeColor(i32, i32, i32), // 3つのi32
+}
+
+// structで実装すると...
+struct QuitMessage; // ユニット構造体
+struct MoveMessage { x: i32, y: i32 };
+struct WriteMessage(String); // タプル構造体
+struct ChangeColorMessage(i32, i32, i32); // タプル構造体
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;enumは、 &lt;code&gt;impl&lt;/code&gt; キーワードを使ってメソッドを定義することもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl Message {
+    fn call(&amp;amp;self) {
+        // 省略
+    }
+}
+
+let wm = Message::Write(String::from("hello"));
+wm.call();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="option-enumnull"&gt;Option enumとNull値に勝る利点&lt;/h2&gt;
+&lt;p&gt;RustにはNull値がない代わりに、値が存在するか、不在かという概念をコード化するenumとして &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; がある。&lt;code&gt;&amp;lt;T&amp;gt;&lt;/code&gt; はジェネリック。 (10章)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// 標準ライブラリの定義
+enum Option&amp;lt;T&amp;gt; {
+    Some(T),
+    None,
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; は明示的スコープに導入する必要がないため、 &lt;code&gt;Some&lt;/code&gt; と &lt;code&gt;None&lt;/code&gt; は &lt;code&gt;Option::&lt;/code&gt; の接頭辞なしに直接使うことができる。
+&lt;code&gt;None&lt;/code&gt; の場合は &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の型を明示しなければならない。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let some_number = Some(5);
+let some_string = Some("a string");
+let absent_numer: Option&amp;lt;i32&amp;gt; = None;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; がNullより好まれる点として、&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; と &lt;code&gt;T&lt;/code&gt; は異なる型なので、コンパイラは &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の値を確実に有効な値として使用しない。 &lt;code&gt;T&lt;/code&gt; 型の処理を行う前には &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; を &lt;code&gt;T&lt;/code&gt; に変換する必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: i8 = 5;
+let y: Option&amp;lt;i8&amp;gt; = Some(5);
+let sum = x + y; // NG
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="match"&gt;matchフロー制御演算子&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;match&lt;/code&gt; 式は全てのパターンがどのような処理を行うかを簡潔に記述できる。
+&lt;code&gt;match&lt;/code&gt; 式が実行されると、結果の値を各 &lt;code&gt;match&lt;/code&gt; アームのパターンと順番に比較し、マッチした場合、紐づけられた式の結果が &lt;code&gt;match&lt;/code&gt; 式全体の戻り値となる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -&amp;gt; u32 {
+    match coin {
+        Coin::Penny =&amp;gt; { // 式なのでOK
+            println!("penny!");
+            1
+        },
+        Coin::Nickel =&amp;gt; 5,
+        Coin::Dime =&amp;gt; 10,
+        Coin::Quarter =&amp;gt; 25,
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-10"&gt;値に束縛されるパターン&lt;/h3&gt;
+&lt;p&gt;値を持つ列挙子の場合、 &lt;code&gt;match&lt;/code&gt; 式のアーム内で変数として使用できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+    // ...
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -&amp;gt; u32 {
+    match coin {
+        Coin::Penny =&amp;gt; 1,
+        Coin::Nickel =&amp;gt; 5,
+        Coin::Dime =&amp;gt; 10,
+        Coin::Quarter(state) =&amp;gt; { // Quarterが渡された場合、stateにデータが束縛される。
+            println!("{:?}", state);
+            25
+        },
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="option"&gt;Option&lt;t&gt;とのマッチ&lt;/t&gt;&lt;/h3&gt;
+&lt;p&gt;上記のコインの場合と同様に &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の場合も &lt;code&gt;match&lt;/code&gt; 式を使うことで処理を簡潔に記述できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn plus_one(x: Option&amp;lt;i32&amp;gt;) -&amp;gt; Option&amp;lt;i32&amp;gt; {
+    match x {
+        None =&amp;gt; None,
+        Some(i) =&amp;gt; Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-11"&gt;マッチは包括的&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;match&lt;/code&gt; 式は全ての可能性を網羅していなければコンパイルエラーになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// Noneがないためコンパイルエラー
+fn plus_one(x: Option&amp;lt;i32&amp;gt;) -&amp;gt; Option&amp;lt;i32&amp;gt; {
+    match x {
+        Some(i) =&amp;gt; Some(i + 1),
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-12"&gt;プレースホルダー&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;_&lt;/code&gt; プレースホルダーを使うことで、どのような値にもマッチさせることができる。関心以外の値に使用する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 0u8;
+match x {
+    1 =&amp;gt; println!("one"),
+    3 =&amp;gt; println!("three"),
+    5 =&amp;gt; println!("five"),
+    7 =&amp;gt; println!("seven"),
+    _ =&amp;gt; (),
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="if-let"&gt;if let記法&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;if let&lt;/code&gt; 記法で &lt;code&gt;if&lt;/code&gt; と &lt;code&gt;let&lt;/code&gt; をより冗長性の少ない記法で組み合わせ、残りを無視しつつ、一つのパターンにマッチする値を扱うことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = Some(0u8);
+
+match x {
+    Some(3) =&amp;gt; println!("three"),
+    _ =&amp;gt; (),
+}
+
+if let Some(3) = x { println!("three"); } // 上と同じ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;if let&lt;/code&gt; では &lt;code&gt;else&lt;/code&gt; を含むことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut count = 0;
+
+match coin {
+    Coin::Quarter(state) =&amp;gt; println!("{}", state),
+    _ =&amp;gt; count += 1;
+}
+
+if let Coin::Quarter(stete) = coint {
+    println!("{}", state);
+} else {
+    count += 1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210128hellorust2</id>
 		<title>Rustのお勉強メモ2 (4)</title>
@@ -15,7 +412,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ2 (ここ)&lt;/li&gt;
-&lt;li&gt;メモ3 (まだ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
@@ -309,6 +706,7 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 &lt;ul&gt;
 &lt;li&gt;メモ1 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -2330,167 +2728,5 @@ jobs:
 &lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20200819wyamblog</id>
-		<title>Wyamを使った静的サイトの生成とGitHub Actionsを使ったGitHub Pagesへのデプロイ</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20200819wyamblog" />
-		<updated>2020-08-19T00:00:00Z</updated>
-		<content>&lt;h1 id="is"&gt;これ is 何&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;
-&lt;h1 id="section"&gt;実行環境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows 10 1909&lt;/li&gt;
-&lt;li&gt;Microsoft.NETCore.App 2.1.21&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id="wyam"&gt;Wyam&lt;/h1&gt;
-&lt;h2 id="wyam-is"&gt;Wyam is 何&lt;/h2&gt;
-&lt;p&gt;.NET Core製の静的サイトジェネレータで、ブログやドキュメント等を markdown と Razor ファイルで作ることができます。&lt;/p&gt;
-&lt;p&gt;見た目はテンプレートが6種類あり、カスタマイズ可能で、.NET Core および C# で機能の拡張をすることもできます。&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Easy! Flexible! Powerful!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id="section-1"&gt;ダウンロードとインストール&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://dotnet.microsoft.com/"&gt;.NET SDK&lt;/a&gt; をインストールしていない場合はインストールします。2020年8月19日現在、最新の .NET Core Runtime は3.1ですが、 Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします。&lt;/p&gt;
-&lt;p&gt;.NET Core SDK,および Runtime がインストールされたら、.NET Core ツールを用いて Wyam をインストールします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet tool -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-2"&gt;プロジェクトの作成&lt;/h2&gt;
-&lt;p&gt;プロジェクトを作成したいディレクトリに移動し、ブログテンプレートを&lt;code&gt;--recipe&lt;/code&gt; または &lt;code&gt;-r&lt;/code&gt; オプションで生成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テンプレートが生成されたら、次のコマンドでビルドします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、ビルドの際には &lt;code&gt;--theme&lt;/code&gt; または &lt;code&gt;-t&lt;/code&gt; オプションでテーマを指定することができます。テーマについては&lt;a href="https://wyam.io/recipes/blog/themes/"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ビルドが終わったら、ローカル環境で実行してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/hello_wyam.webp" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
-&lt;p&gt;あっという間にブログが出来上がりました👏&lt;/p&gt;
-&lt;h2 id="section-3"&gt;記事の編集&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;./input/&lt;/code&gt; 内に &lt;code&gt;about.md&lt;/code&gt; が、また &lt;code&gt;./input/posts/&lt;/code&gt; 内に &lt;code&gt;first-post.md&lt;/code&gt; が生成されています。これらのように markdown ファイルを追加および編集することで、記事の編集および追加をすることができます。&lt;/p&gt;
-&lt;h2 id="front-matter"&gt;Front Matter の設定&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;first-post.md&lt;/code&gt; ファイルの先頭に以下のようなものが書かれています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: First Post
-Published: 1/1/2016
-Tags: Introduction
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これらは &lt;code&gt;Front Matter&lt;/code&gt; といい、YAML や JSON フォーマットで使うことができる固有の変数です。これを使って記事にメタデータを付与することができます。Wyam では、&lt;a href="https://hexo.io/docs/front-matter.html"&gt;Hexo&lt;/a&gt; や &lt;a href="https://gohugo.io/content-management/front-matter/"&gt;Hugo&lt;/a&gt; のような別の静的サイトジェネレータと同じ変数を使うことができるそうです。&lt;/p&gt;
-&lt;p&gt;Published の日付を未来にするとその日になるまで表示されないようなので注意。
-日本時間の深夜に記事を作成して、ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)。&lt;/p&gt;
-&lt;h1 id="section-4"&gt;ブログを公開する&lt;/h1&gt;
-&lt;p&gt;Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い、Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド、およびGitHub Pagesにホスティングを行います。&lt;/p&gt;
-&lt;h2 id="github-pages-is"&gt;GitHub Pages is 何&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです。
-詳しくは&lt;a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;リポジトリ名が &lt;code&gt;ユーザ名.github.io&lt;/code&gt; の場合はユーザのページに、それ以外の場合はプロジェクトのページとして扱うことができます。&lt;/p&gt;
-&lt;h2 id="github-actions-is"&gt;Github Actions is 何&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリから、プロジェクトをビルド、テスト、デプロイすることができるサービスです。CI/CDです。
-詳しくは&lt;a href="https://github.co.jp/features/actions"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;リポジトリが Public なら無料、Private なら従量課金らしいです。&lt;/p&gt;
-&lt;h2 id="section-5"&gt;プロジェクトの設定を変更する&lt;/h2&gt;
-&lt;p&gt;GitHubにリポジトリを作成し、Wyam で作成したプロジェクトを Commit / Push します。この際 &lt;code&gt;.gitignore&lt;/code&gt; には以下の設定を指定しておくといいでしょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;# Wyam files
-output/
-config.wyam.dll
-config.wyam.hash
-config.wyam.packages.xml
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次に、&lt;code&gt;config.wyam&lt;/code&gt; を編集してプロジェクトの設定を行います。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;BlogKeys.Title&lt;/code&gt; でWeb サイトのタイトルを、&lt;code&gt;BlogKeys.Description&lt;/code&gt; でWeb サイトのトップに表示される簡単な説明を指定できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[BlogKeys.Title] = "This is title";
-Settings[BlogKeys.Description] = "Welcome!";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Web サイトを &lt;code&gt;https&lt;/code&gt; に指定する場合は以下のオプションを有効にします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.LinksUseHttps] = true;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Web サイトで表示するカルチャ情報を設定する場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; と &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; を変更します。
-&lt;code&gt;2020年8月19日&lt;/code&gt; のように表示したい場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。
-日本時間を表示したい場合も同様に &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.DateTimeDisplayCulture] = "ja-JP";
-Settings[Keys.DateTimeInputCulture] = "ja-JP";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;プロジェクトのルーティングでは、GitHub のリポジトリがユーザページ用のリポジトリの場合 (&lt;code&gt;ユーザ名.github.io&lt;/code&gt;) と、それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります。&lt;/p&gt;
-&lt;h3 id="section-6"&gt;1 ユーザページの場合&lt;/h3&gt;
-&lt;p&gt;例として、GitHubユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; の場合は以下のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;2 プロジェクトページの場合&lt;/h3&gt;
-&lt;p&gt;プロジェクトページで作成する場合、&lt;code&gt;Keys.LinkRoot&lt;/code&gt; にリポジトリ名を設定する必要があります。例として、リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は以下のようになります。&lt;strong&gt;大文字と小文字の区別があるようなので注意が必要です。&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
-Settings[Keys.LinkRoot] = "Blog";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この設定を変更した場合、&lt;code&gt;wyam preview&lt;/code&gt; を使ってローカルでプレビューをしようとしても、Path が &lt;code&gt;localhost:5080/&lt;/code&gt; のままで、正しくプレビューすることができません。そのため、&lt;code&gt;--virtual-dir&lt;/code&gt; オプションを指定することで正しくプレビューすることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview --virtual-dir Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;@echo off
-wyam -r Blog
-wyam preview --virtual-dir Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="github-actions"&gt;GitHub Actions の設定&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリページに移動し、&lt;code&gt;Actions&lt;/code&gt; タブで新しいワークフローを作成します。
-&lt;code&gt;Simple workflow&lt;/code&gt; を作成すると、新規の YAML ファイルがリポジトリの &lt;code&gt;.github/workflows&lt;/code&gt; に作成されます。そして、作成された YAMLファイルを &lt;code&gt;gh-pages.yml&lt;/code&gt; に変更し、次のような内容に変更します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: Wyam
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1.6.0
-      with:
-        dotnet-version: 2.1
-    
-    - name: Install Wyam
-      run: dotnet tool install --tool-path . Wyam.Tool
-    
-    - name: Build static site
-      run: ./wyam -r blog
-      
-    - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.6.4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./output
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この &lt;code&gt;Wyam&lt;/code&gt; というワークフローは &lt;code&gt;master&lt;/code&gt; ブランチに Push または Pull Request が送られたときに、Ubuntu 環境で &lt;code&gt;.NET Core SDK / Runtime&lt;/code&gt; のインストール、&lt;code&gt;Wyam&lt;/code&gt; のインストール、プロジェクトのビルド、GitHub Pages へのデプロイが行われます。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意点&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;.NET Core SDK は Wyamの対応している2.1を使用する。&lt;/li&gt;
-&lt;li&gt;Wyam のインストールで &lt;code&gt;--tool-path .&lt;/code&gt; オプションを指定して Wyam ツールをビルド環境のローカルに作成する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;作成した YAML ファイルを Commit すると、GitHub Actions が有効になり、master ブランチが更新されるため、ワークフローが実行されます。そして、ワークフローのステータスが &lt;code&gt;completed job&lt;/code&gt; になれば成功です。&lt;/p&gt;
-&lt;h2 id="github-pages"&gt;GitHub Pages の設定&lt;/h2&gt;
-&lt;p&gt;リポジトリが GitHub Pages の条件に満たしていれば、&lt;code&gt;Settings&lt;/code&gt; タブに移動すると、&lt;code&gt;GitHub Pages&lt;/code&gt; の項目が表示されます。そこで &lt;code&gt;Source&lt;/code&gt; 欄の &lt;code&gt;Branch&lt;/code&gt; を &lt;code&gt;gh-pages&lt;/code&gt; に、ディレクトリを &lt;code&gt;/(root)&lt;/code&gt; に変更して &lt;code&gt;Save&lt;/code&gt; することで、GitHub Pagesが有効化されます。&lt;/p&gt;
-&lt;p&gt;GitHub Pagesの条件は Public リポジトリであるか、Pro 以上のライセンスであれば Private リポジトリであれば有効です。&lt;/p&gt;
-&lt;p&gt;正しく設定ができれば、ユーザページならば &lt;code&gt;ユーザ名.github.io&lt;/code&gt; に、プロジェクトページならば &lt;code&gt;ユーザ名.github.io/リポジトリ名&lt;/code&gt; にプロジェクトがホスティングされます。&lt;/p&gt;
-&lt;p&gt;例として、ユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; で リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は &lt;code&gt;aconcavy.github.io/Blog&lt;/code&gt; にホスティングされます。&lt;/p&gt;
-&lt;h1 id="section-8"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;Wyam で 作成した静的 Web サイト (本ブログ) を、GitHub Actions を使って更新を自動化し、GitHub Pages でホスティングする方法をまとめました。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Wyam のプロジェクトを作成する。&lt;/li&gt;
-&lt;li&gt;Wyam のプロジェクト設定を変更する。&lt;/li&gt;
-&lt;li&gt;GitHub Actions の YAML を編集する。&lt;/li&gt;
-&lt;li&gt;GitHub Pages の設定を有効化する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大きく分けて4つの手順で、GitHub Pages に Wyam プロジェクトをホスティングすることができます。&lt;/p&gt;
-&lt;h1 id="section-9"&gt;あとがき&lt;/h1&gt;
-&lt;p&gt;とりあえず本ブログ初の投稿として、本ブログ作成までの手順の記事を簡単に書きました。今後も触った技術や何か変なものをまとめて記事にしたいと思います。&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;</summary>
 	</entry>
 </feed>

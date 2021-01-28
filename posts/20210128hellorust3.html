@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/Blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Blog/css/style.css" type="text/css">
+
+    <title>acon.log - Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;3 (5-6)</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;3 (5-6)">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.webp">
+<meta property="og:url" content="/Blog/posts/20210128hellorust3">
+
+    <script src="/Blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">Rust&#x306E;&#x304A;&#x52C9;&#x5F37;&#x30E1;&#x30E2;3 (5-6)</h1>
+
+            <div class="card-text post-meta">Published on Thursday, 28 January 2021</div>
+            <div class="card-text post-meta">Updated on Thursday, 28 January 2021</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/rust" class="badge badge-light"> Rust</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p><a href="https://doc.rust-jp.rs/book-ja/">The Rust Programming Language 日本語版</a> で学んだことのメモ3です。</p>
+<ul>
+<li><a href="20210128hellorust1">メモ1</a></li>
+<li><a href="20210128hellorust2">メモ2</a></li>
+<li>メモ3 (ここ)</li>
+<li>メモ4 (まだ)</li>
+<li>...</li>
+</ul>
+<h1 id="section-1">構造体</h1>
+<h2 id="section-2">定義とインスタンス化</h2>
+<p>Rustの構造体の定義は <code>struct</code> キーワードを使用し、<code>key: value</code> ペアでフィールドを宣言できる。</p>
+<pre><code class="language-rust line-numbers">struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+</code></pre>
+<p>インスタンスの生成では、 <code>key: value</code> ペアでフィールドを指定することで、宣言通りの順番ではなくてもフィールドに値を代入できる。</p>
+<pre><code class="language-rust line-numbers">let user = User {
+    email: String::from(&quot;foo&#64;exmaple.com&quot;),
+    username: String::from(&quot;foo&quot;),
+    active: true,
+    sign_in_count: 1,
+}
+</code></pre>
+<p>構造体のフィールドはドット記法を使うことでアクセスできる。</p>
+<pre><code class="language-rust line-numbers">let mut user = User {
+    username: String::from(&quot;foo&quot;),
+    email: String::from(&quot;foo&#64;exmaple.com&quot;),
+    sign_in_count: 1,
+    active: true,
+}
+
+user.email = String::from(&quot;bar&#64;example.com&quot;);
+</code></pre>
+<p>Rustでは、インスタンス全体が可変でなければならず、一部のフィールドのみを可変にすることはできない。</p>
+<h3 id="section-3">フィールド初期化省略記法</h3>
+<p>変数名と構造体のフィールド名が同じ場合、フィールド名を省略できる。</p>
+<pre><code class="language-rust line-numbers">fn build_user_1(email: String, username: String) -&gt; User {
+    User {
+        email: email,
+        username: username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+fn build_user_2(email: String, username: String) -&gt; User {
+    User {
+        email, // フィールド名省略
+        username, // フィールド名省略
+        active: true,
+        sign_in_count: 1,
+    }
+}
+</code></pre>
+<h3 id="section-4">構造体更新記法</h3>
+<p>他の構造体インスタンスと同じ値を使用して、一部のフィールドを変えてインスタンスを生成できる。</p>
+<pre><code class="language-rust line-numbers">let user1 = User {
+    username: String::from(&quot;foo&quot;),
+    email: String::from(&quot;foo&#64;exmaple.com&quot;),
+    sign_in_count: 1,
+    active: true,
+}
+
+let user2 = User {
+    username: String::from(&quot;bar&quot;),
+    email: String::from(&quot;bar&#64;exmaple.com&quot;),
+    ..user1 // sign_in_countとactiveはuser1と同じ値になる。
+}
+</code></pre>
+<h3 id="section-5">タプル構造体</h3>
+<p>フィールドに紐づけられた名前がない構造体を<strong>タプル構造体と</strong>呼ぶ。
+次の <code>Color</code> と <code>Point</code> は異なる型となる。フィールドへのアクセスは添え字を使う。</p>
+<pre><code class="language-rust line-numbers">struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+let black = Color(0, 0, 0);
+let origin = Point(0, 0, 0);
+
+println!(&quot;({}, {}, {})&quot;, black.0, black.1, black.2);
+// #=&gt; (0, 0, 0)
+</code></pre>
+<h3 id="section-6">ユニット様構造体</h3>
+<p>フィールドのない構造体を<strong>ユニット様構造体</strong>と呼ぶ。トレイトの実装はするが、型自体に保持させるデータはない場合に使う。</p>
+<h3 id="section-7">構造体データの所有権</h3>
+<p>構造体全体が有効な間はずっと有効である必要があるため、<code>&amp;str</code> 文字列スライス型ではなく、所有権のある <code>String</code> 型を利用する。ライフタイムを指定することで、構造体に参照されたデータが有効な間は、値が有効なことを保証することができる。 (10章)</p>
+<h2 id="println">println!マクロで構造体を表示する</h2>
+<p><code>println!</code> マクロでは、標準では波括弧は <code>std::fmt::Display</code> がフォーマットとして呼ばれる。基本型では標準で <code>Display</code> を実装しているが、構造体では <code>println!</code> のフォーマットが自明ではなくなるため、 <code>Display</code> の実装は提供されない。 <code>[derive(Debug)]</code> 注釈をつかうことで、デバッグ用のフォーマッタを構造体で使うことができる。</p>
+<pre><code class="language-rust line-numbers">struct Rectangle1 {
+    width: u32,
+    height: u32,
+}
+
+[derive(Debug)] // Debugトレイトの
+struct Rectangle2 {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle1 { width: 30, height: 50 };
+    println!(&quot;{}&quot;, rect1); // NG
+
+    let rect2 = Rectangle2 { width: 30, height: 50 };
+    println!(&quot;{:?}&quot;, rect2); // OK DebugによるDisplay
+    // #=&gt; Rectangle { width: 30, height: 50 }
+
+    println!(&quot;{:#?}&quot;, rect2); // OK // Debugによる改行ありのDisplay
+    // #=&gt; Rectangle {
+    //         width: 30,
+    //         height: 50
+    //     }
+}
+</code></pre>
+<h2 id="section-8">メソッドの定義</h2>
+<p>構造体のメソッドを定義する場合、 <code>impl</code> ブロック内に <code>fn</code> キーワードで宣言する。メソッドの最初の引数は必ず <code>self</code> になる。</p>
+<p>メソッドは <code>self</code> の所有権を奪ったり、 不変借用、可変借用ができる。</p>
+<pre><code class="language-rust line-numbers">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&amp;self) -&gt; u32 {
+        self.width * self.height
+    }
+
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        self.width &gt; other.width &amp;&amp; selft.height &gt; other.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle { width: 30, height: 50 };
+    println!(&quot;{}&quot;, rect1.area());
+    // #=&gt; 1500
+
+    let rect2 = Rectangle { width: 10, height: 40 };
+    let rect3 = Rectangle { width: 60, height: 45 };
+    println!(&quot;{}&quot; rect1.can_hold(&amp;rect2));
+    // #=&gt; true
+    println!(&quot;{}&quot; rect1.can_hold(&amp;rect3));
+    // #=&gt; false
+}
+</code></pre>
+<h3 id="section-9">関連関数</h3>
+<p><code>impl</code> ブロック内に <code>self</code> を引数に取らない関数を<strong>関連関数</strong>と呼ぶ。
+関連関数は関数であり、メソッドではない。 <code>String::from</code> も関連関数の一つ。</p>
+<p>構造体の新規インスタンスを返すコンストラクタによく使用される。
+関連関数を呼び出すには <code>::</code> 記法を使用する。 <code>::</code> 記法は関連関数とモジュールによって作り出される名前空間の両方に使用される。(7章)</p>
+<pre><code class="language-rust line-numbers">impl Rectangle {
+    fn square(size: u32) -&gt; Rectangle {
+        Rectangle { width: size, height: size }
+    }
+}
+
+fn main() {
+    let square = Rectangle::square(3);
+    println!(&quot;{:?}&quot;, square);
+    // #=&gt; Rectangle { width: 3, height: 3 }
+}
+</code></pre>
+<h1 id="enum">Enumとパターンマッチング</h1>
+<p><code>enum</code> (列挙型) は取りうる値を列挙することで、型を定義できる。
+例としてIPアドレスのバージョン4とバージョン6を挙げる。</p>
+<pre><code class="language-rust line-numbers">enum IpAddrKind {
+    V4,
+    V6,
+}
+</code></pre>
+<p>インスタンスの生成は <code>::</code> 記号で生成できる。
+enumの列挙子は識別子のもとに名前空間分けされている。</p>
+<pre><code class="language-rust line-numbers">let ip4 = IpAddrKind::V4;
+let ip6 = IpAddrKind::V6;
+</code></pre>
+<p>関数の引数として渡すこともできる。</p>
+<pre><code class="language-rust line-numbers">fn route(ip_type: IpAddrKind) { }
+
+route(IpAddrKind::V4);
+route(IpAddrKind::V6);
+</code></pre>
+<p>上記の例だと、実際のIPアドレスのデータを保持する方法がないため、構造体にenumを持たせる対処法がある。</p>
+<pre><code class="language-rust line-numbers">enum IpAddrKind {
+    V4,
+    V6,
+}
+
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+
+let home = IpAddr {
+    kind: IpAddrKind::V4,
+    address: String:from(&quot;127.0.0.1&quot;),
+};
+
+let lookback = IpAddr {
+    kind: IpAddrKind::V6,
+    address: String:from(&quot;::1&quot;),
+};
+</code></pre>
+<p>Rustのenumでは、enum自体にデータを持たせることができる。</p>
+<pre><code class="language-rust line-numbers">enum IpAddr {
+    V4(String),
+    V6(String),
+}
+
+let home = IpAddr::V4(String:from(&quot;127.0.0.1&quot;));
+let lookback = IpAddr::V6(String:from(&quot;::1&quot;));
+</code></pre>
+<p>また、各列挙子に紐付けるデータの型と量は異なってもよい。この例では、 <code>V4</code> のアドレスには4つの <code>u8</code> 型の値と格納し、<code>V6</code> のアドレスには <code>String</code> 型の値で格納することができる。</p>
+<pre><code class="language-rust line-numbers">enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+let home = IpAddr::V4(127, 0, 0, 1);
+let lookback = IpAddr::V6(String:from(&quot;::1&quot;));
+</code></pre>
+<p>標準ライブラリの <code>IpAddr</code> 定義では、アドレスデータを二つの異なる構造体の形でenumに埋め込んでいる。</p>
+<pre><code class="language-rust line-numbers">struct Ipv4Addr {
+    // 省略
+}
+
+struct Ipv6Addr {
+    // 省略
+}
+
+enum IpAddr {
+    V4(Ipv4Addr),
+    V6(Ipv6Addr),
+}
+</code></pre>
+<p>異なる型の列挙子が4つあるenumでは次のようになる。structでそれぞれ定義するよりも完結に定義できる。</p>
+<pre><code class="language-rust line-numbers">enum Message {
+    Quit, // 紐づけられたデータなし
+    Move { x: i32, y: i32 }, // 匿名構造体
+    Write(String), // String
+    ChangeColor(i32, i32, i32), // 3つのi32
+}
+
+// structで実装すると...
+struct QuitMessage; // ユニット構造体
+struct MoveMessage { x: i32, y: i32 };
+struct WriteMessage(String); // タプル構造体
+struct ChangeColorMessage(i32, i32, i32); // タプル構造体
+</code></pre>
+<p>enumは、 <code>impl</code> キーワードを使ってメソッドを定義することもできる。</p>
+<pre><code class="language-rust line-numbers">impl Message {
+    fn call(&amp;self) {
+        // 省略
+    }
+}
+
+let wm = Message::Write(String::from(&quot;hello&quot;));
+wm.call();
+</code></pre>
+<h2 id="option-enumnull">Option enumとNull値に勝る利点</h2>
+<p>RustにはNull値がない代わりに、値が存在するか、不在かという概念をコード化するenumとして <code>Option&lt;T&gt;</code> がある。<code>&lt;T&gt;</code> はジェネリック。 (10章)</p>
+<pre><code class="language-rust line-numbers">// 標準ライブラリの定義
+enum Option&lt;T&gt; {
+    Some(T),
+    None,
+}
+</code></pre>
+<p><code>Option&lt;T&gt;</code> は明示的スコープに導入する必要がないため、 <code>Some</code> と <code>None</code> は <code>Option::</code> の接頭辞なしに直接使うことができる。
+<code>None</code> の場合は <code>Option&lt;T&gt;</code> の型を明示しなければならない。</p>
+<pre><code class="language-rust line-numbers">let some_number = Some(5);
+let some_string = Some(&quot;a string&quot;);
+let absent_numer: Option&lt;i32&gt; = None;
+</code></pre>
+<p><code>Option&lt;T&gt;</code> がNullより好まれる点として、<code>Option&lt;T&gt;</code> と <code>T</code> は異なる型なので、コンパイラは <code>Option&lt;T&gt;</code> の値を確実に有効な値として使用しない。 <code>T</code> 型の処理を行う前には <code>Option&lt;T&gt;</code> を <code>T</code> に変換する必要がある。</p>
+<pre><code class="language-rust line-numbers">let x: i8 = 5;
+let y: Option&lt;i8&gt; = Some(5);
+let sum = x + y; // NG
+</code></pre>
+<h2 id="match">matchフロー制御演算子</h2>
+<p><code>match</code> 式は全てのパターンがどのような処理を行うかを簡潔に記述できる。
+<code>match</code> 式が実行されると、結果の値を各 <code>match</code> アームのパターンと順番に比較し、マッチした場合、紐づけられた式の結果が <code>match</code> 式全体の戻り値となる。</p>
+<pre><code class="language-rust line-numbers">enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -&gt; u32 {
+    match coin {
+        Coin::Penny =&gt; { // 式なのでOK
+            println!(&quot;penny!&quot;);
+            1
+        },
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter =&gt; 25,
+    }
+}
+</code></pre>
+<h3 id="section-10">値に束縛されるパターン</h3>
+<p>値を持つ列挙子の場合、 <code>match</code> 式のアーム内で変数として使用できる。</p>
+<pre><code class="language-rust line-numbers">#[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+    // ...
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -&gt; u32 {
+    match coin {
+        Coin::Penny =&gt; 1,
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter(state) =&gt; { // Quarterが渡された場合、stateにデータが束縛される。
+            println!(&quot;{:?}&quot;, state);
+            25
+        },
+    }
+}
+</code></pre>
+<h3 id="option">Option<T>とのマッチ</h3>
+<p>上記のコインの場合と同様に <code>Option&lt;T&gt;</code> の場合も <code>match</code> 式を使うことで処理を簡潔に記述できる。</p>
+<pre><code class="language-rust line-numbers">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        None =&gt; None,
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+</code></pre>
+<h3 id="section-11">マッチは包括的</h3>
+<p><code>match</code> 式は全ての可能性を網羅していなければコンパイルエラーになる。</p>
+<pre><code class="language-rust line-numbers">// Noneがないためコンパイルエラー
+fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+</code></pre>
+<h3 id="section-12">プレースホルダー</h3>
+<p><code>_</code> プレースホルダーを使うことで、どのような値にもマッチさせることができる。関心以外の値に使用する。</p>
+<pre><code class="language-rust line-numbers">let x = 0u8;
+match x {
+    1 =&gt; println!(&quot;one&quot;),
+    3 =&gt; println!(&quot;three&quot;),
+    5 =&gt; println!(&quot;five&quot;),
+    7 =&gt; println!(&quot;seven&quot;),
+    _ =&gt; (),
+}
+</code></pre>
+<h2 id="if-let">if let記法</h2>
+<p><code>if let</code> 記法で <code>if</code> と <code>let</code> をより冗長性の少ない記法で組み合わせ、残りを無視しつつ、一つのパターンにマッチする値を扱うことができる。</p>
+<pre><code class="language-rust line-numbers">let x = Some(0u8);
+
+match x {
+    Some(3) =&gt; println!(&quot;three&quot;),
+    _ =&gt; (),
+}
+
+if let Some(3) = x { println!(&quot;three&quot;); } // 上と同じ
+</code></pre>
+<p><code>if let</code> では <code>else</code> を含むことができる。</p>
+<pre><code class="language-rust line-numbers">let mut count = 0;
+
+match coin {
+    Coin::Quarter(state) =&gt; println!(&quot;{}&quot;, state),
+    _ =&gt; count += 1;
+}
+
+if let Coin::Quarter(stete) = coint {
+    println!(&quot;{}&quot;, state);
+} else {
+    count += 1;
+}
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20210128hellorust3" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright © 2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/Blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>
