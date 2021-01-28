@@ -5,21 +5,298 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Thu, 28 Jan 2021 15:00:10 GMT</pubDate>
-		<lastBuildDate>Thu, 28 Jan 2021 15:00:10 GMT</lastBuildDate>
+		<pubDate>Thu, 28 Jan 2021 18:43:49 GMT</pubDate>
+		<lastBuildDate>Thu, 28 Jan 2021 18:43:49 GMT</lastBuildDate>
 		<item>
-			<title>Rustのお勉強メモ3 (5-6)</title>
+			<title>Rustのお勉強メモ4 (プロジェクトの管理)</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210129hellorust4</link>
+			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210129hellorust4</guid>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;メモ4 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ5 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
+&lt;p&gt;モジュールシステム&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;スコープ&lt;/th&gt;
+&lt;th&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;パッケージ&lt;/td&gt;
+&lt;td&gt;クレートをビルドし、テストし、共有することができるCargoの機能。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;クレート&lt;/td&gt;
+&lt;td&gt;ライブラリが実行可能ファイルを生成する、木構造をしたモジュール群。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;モジュール&lt;/td&gt;
+&lt;td&gt;パスの構成、スコープ、公開するか否かを決定できる。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;パス&lt;/td&gt;
+&lt;td&gt;要素 (例えば、構造体、関数、モジュール) に名前を付ける方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id="section-2"&gt;パッケージとクレート&lt;/h2&gt;
+&lt;p&gt;Rustコンパイラの開始点となり、クレートのルートモジュールを作るソースファイルを&lt;strong&gt;クレートルート&lt;/strong&gt;と呼ぶ。
+ある機能群を提供する1つ以上のクレートのことを&lt;strong&gt;パッケージ&lt;/strong&gt;と呼ぶ。
+パッケージは &lt;code&gt;Cargo.toml&lt;/code&gt; というクレートをどのようにビルドするかの説明するファイルを持つ。パッケージは0個か1個のライブラリクレートを持っていなければならない。バイナリクレートはいくつでもよい。&lt;/p&gt;
+&lt;p&gt;Cargoは、 &lt;code&gt;src/main.rs&lt;/code&gt; をパッケージと同名のバイナリクレート、 &lt;code&gt;src/lib.rs&lt;/code&gt; をパッケージと同名のライブラリクレートと判断する。
+また、ファイルを &lt;code&gt;src/bin/&lt;/code&gt; に配置することで、複数のバイナリクレートを持つことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;sample/
+|- src/
+   |- main.rs // sampleというバイナリクレート
+   |- lib.rs // sampleというライブラリクレート
+   |
+   |- bin/
+      |- foo.rs // fooというバイナリクレート
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;クレートは、関連した機能を一つのスコープにまとめることで、その機能が複数のプロジェクト間で共有しやすくする。&lt;/p&gt;
+&lt;h2 id="section-3"&gt;モジュール&lt;/h2&gt;
+&lt;p&gt;モジュールは、クレート内のコードをグループ化し、可読性と再利用性を向上させる。また、&lt;strong&gt;プライバシー&lt;/strong&gt;として、要素がコードの外側で使えるか (public) 、または内部の実装の詳細であり外部では使えないか (private) を制御できる。&lt;/p&gt;
+&lt;p&gt;例として、レストランの機能を提供するライブラリクレートを作成する。
+&lt;code&gt;lib.rs&lt;/code&gt;にモジュールと関数のシグネチャを定義する。
+&lt;code&gt;mod&lt;/code&gt; キーワードでモジュールを定義でき、モジュールの中にモジュールを定義することもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+        fn serve_order() {}
+        fn take_payment() {}
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上のモジュール構造は次のようなモジュールツリーになる。モジュール全体が &lt;code&gt;crate&lt;/code&gt; というモジュールの下に存在することになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;crate
+|- front_of_house
+   |- hosting
+   |  |- add_to_waitlist
+   |  |- seat_at_table
+   |
+   |- serving
+      |- take_order
+      |- serve_order
+      |- take_payment
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-4"&gt;モジュールツリーの要素を示すためのパス&lt;/h2&gt;
+&lt;p&gt;要素を参照するために、パスは2つの形を取ることができる。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;絶対パス: クレートの名前か、 &lt;code&gt;crate&lt;/code&gt; という文字列を使うことで、クレートルートから辿ることができる。&lt;/li&gt;
+&lt;li&gt;相対パス: &lt;code&gt;self&lt;/code&gt; 、 &lt;code&gt;super&lt;/code&gt; 、 または現在のモジュール内の識別子を使うことで現在のモジュールから辿ることができる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+    }
+}
+
+pub fn eat_at_restaurant() {
+    // Absolute
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // Relative
+    front_of_house::hosting::add_to_waitlist();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上記のコードでは、 &lt;code&gt;hosting&lt;/code&gt; は非公開なため、パスは正しいが、非公開関数へのアクセスは許可されていないため、コンパイルエラーが発生する。&lt;/p&gt;
+&lt;p&gt;モジュールはRustのプライバシー境界を定義することで、外部のコードへの依存の詳細をカプセル化できる。&lt;/p&gt;
+&lt;p&gt;Rustにおけるプライバシーは "あらゆる要素 (関数、メソッド、構造体、enum、モジュールおよび定数) は標準では非公開" になっている。
+親モジュールの要素は小モジュールの非公開要素は使えないが、小モジュールの要素は親モジュールの要素を使うことができる。&lt;/p&gt;
+&lt;h3 id="section-5"&gt;パスの公開&lt;/h3&gt;
+&lt;p&gt;モジュールに &lt;code&gt;pub&lt;/code&gt; キーワードをつけることでモジュールを公開することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
+    pub mod hosting { // 公開
+        fn add_to_waitlist1() {} // 非公開
+        pub fn add_to_waitlist2() {} // 公開
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="super"&gt;相対パスをsuperで始める&lt;/h3&gt;
+&lt;p&gt;親モジュールから始まる相対パスは、 &lt;code&gt;super&lt;/code&gt; から辿ることができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn serve_oreder() {}
+
+mod back_of_house() {
+    fn fix_incorrect_order() {
+        cook_order();
+        super::serve_order();
+    }
+
+    fn cook_order() {}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="enum"&gt;構造体とenumを公開する&lt;/h3&gt;
+&lt;p&gt;構造体やenumも &lt;code&gt;pub&lt;/code&gt; キーワードで公開できる。
+ただし、構造体定義で &lt;code&gt;pub&lt;/code&gt; を使うと、構造体自体は公開されるが、フィールドは非公開のままなので、個別にプライバシーを設定する必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod back_of_house {
+    pub struct Breakfast {
+        pub toast: String, // 公開
+        seasonal_fruit: String, // 非公開
+    }
+
+    impl Breakfast {
+        pub fn summer(&amp;amp;toast: &amp;amp;str) -&amp;gt; Breakfast { // 公開
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from("peaches"),
+            }
+        }
+    }
+}
+
+pub fn eat_at_restaurant() {
+    let mut meal = back_of_house::Breakfast::summer("Rye");
+    meal.toast = String::from("Wheat");
+    println!("{}", meal.toast); // OK
+    // println!("{}", meal.seasonal_fruit); // NG
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一方で、enumを公開すると、全ての列挙子は公開される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod back_of_house {
+    pub enum Appetizer { // 公開
+        Soup, // 公開
+        Salad, // 公開
+    }
+}
+
+pub fn eat_at_restaurant() {
+    let order1 = back_of_house::Appetizer::Soup; // OK
+    let order2 = back_of_house::Appetizer::Salad; // OK
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="use"&gt;useキーワードでパスをスコープに持ち込む&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;use&lt;/code&gt; キーワードを使ってパスをスコープに持ち込むことで、そのクレートより上のスコープの記述を省略することができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+use crate::front_of_house::hosting; // Absolute
+// use self::front_of_house::hosting; // Relative
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="use-1"&gt;慣例に従ったuseパス&lt;/h3&gt;
+&lt;p&gt;関数自体を &lt;code&gt;use&lt;/code&gt; で持ち込むことも可能だが、関数の親モジュールを持ち込むことで、関数がローカルで定義されていないことを明らかにできる。
+一方、構造体やenum、その他の要素を持ち込む場合は、フルパスを使う。&lt;/p&gt;
+&lt;p&gt;同じ名前の複数の要素を &lt;code&gt;use&lt;/code&gt; でスコープに持ち込むことはできないので、その場合は明示的に親モジュールを記述することで、名前の衝突を回避できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt;
+use std::io;
+
+fn funcion_1 () -&amp;gt; fmt::Result {
+    // 省略
+}
+
+fn funcion_2 () -&amp;gt; io::Result&amp;lt;()&amp;gt; {
+    // 省略
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="as"&gt;asキーワード&lt;/h4&gt;
+&lt;p&gt;同じ名前の複数の型をスコープに持ち込む場合、 &lt;code&gt;as&lt;/code&gt; キーワードを使ってエイリアスを与えてることで、名前の衝突を回避できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt;
+use std::io as IoResult;
+
+fn funcion_1 () -&amp;gt; Result {
+    // 省略
+}
+
+fn funcion_2 () -&amp;gt; IoResult&amp;lt;()&amp;gt; {
+    // 省略
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="pub-use"&gt;pub useを使って名前を再公開する&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;use&lt;/code&gt; キーワードで名前をスコープに持ち込んだ時、新しいスコープで使用できるその名前は非公開なため、 &lt;code&gt;use&lt;/code&gt; を &lt;code&gt;pub use&lt;/code&gt; にすることで&lt;strong&gt;再公開&lt;/strong&gt;することができる。例では、再公開にすると、このクレートを使う外部コードが &lt;code&gt;hostring::add_to_waitlist&lt;/code&gt; から &lt;code&gt;add_to_waitlist&lt;/code&gt; 関数を呼ぶことができるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+pub use crate::front_of_house::hosting;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-6"&gt;外部のパッケージを使う&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Cargo.toml&lt;/code&gt; に依存を追加すると、パッケージとそのすべての依存をダウンロードし、プロジェクト内で使うことができるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-toml line-numbers"&gt;[dependencies]
+rand = "0.5.5"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use rand::Rng;
+
+fn main() {
+    let secret_number = rand::thread_rng().gen_range(1, 101);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;標準ライブラリ (&lt;code&gt;std&lt;/code&gt;) は外部にあるクレートだが、Rust言語に同梱されているため、Cargo.tomlに追記は不要だが、 &lt;code&gt;use&lt;/code&gt; で参照する必要がある。&lt;/p&gt;
+&lt;h3 id="use-2"&gt;巨大なuseのリストをネストしたパスを使って整理する&lt;/h3&gt;
+&lt;p&gt;同じクレートか同じモジュールで定義された複数の要素を使う場合は、ネストしたパスを使うことで、同じ一連の要素を纏めてスコープに持ち込める。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// use std::cmp::Orderingl;
+// use std::io;
+use std::{cmp::Ordering, io};
+
+// use std::io;
+// use std::io::Write;
+use std::io::{self, Write};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="glob"&gt;glob演算子&lt;/h4&gt;
+&lt;p&gt;glob演算子 &lt;code&gt;*&lt;/code&gt; を使うことで、パスにおいて定義されているすべての公開要素をスコープに持ち込むことができる。globをすると名前がどこで定義されたかわかりづらくなるので注意。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::*;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-7"&gt;モジュールを複数のファイルに分割する&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;front_of_house&lt;/code&gt; モジュールを &lt;code&gt;src/front_of_house.rs&lt;/code&gt; ファイルに移動し、 &lt;code&gt;src/lib.rs&lt;/code&gt; ファイルに &lt;code&gt;mod front_of_house;&lt;/code&gt; を呼ぶことで、別ファイルから読み込むことができる。入れ子のモジュールの場合は、対応したディレクトリを作ることでモジュールを読み込むことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house;
+
+pub use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;restaurant/
+|- src/
+   |- main.rs
+   |- lib.rs
+   |
+   |- front_of_house.rs
+   |- front_of_house/
+      |- hosting.rs
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Rustのお勉強メモ3 (構造体 | 列挙型)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust3</link>
 			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/Blog/posts/20210128hellorust3</guid>
-			<pubDate>Thu, 28 Jan 2021 00:00:00 GMT</pubDate>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ3 (ここ)&lt;/li&gt;
-&lt;li&gt;メモ4 (まだ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
@@ -406,17 +683,18 @@ if let Coin::Quarter(stete) = coint {
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
 		<item>
-			<title>Rustのお勉強メモ2 (4)</title>
+			<title>Rustのお勉強メモ2 (所有権)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust2</link>
 			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/Blog/posts/20210128hellorust2</guid>
-			<pubDate>Thu, 28 Jan 2021 00:00:00 GMT</pubDate>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ2 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
@@ -701,17 +979,18 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
 		<item>
-			<title>Rustのお勉強メモ1 (1-3)</title>
+			<title>Rustのお勉強メモ1 (ツール | プログラミングの概念)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210128hellorust1</link>
 			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/Blog/posts/20210128hellorust1</guid>
-			<pubDate>Thu, 28 Jan 2021 00:00:00 GMT</pubDate>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;メモ1 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -2641,103 +2920,6 @@ namespace BenchmarkSharp
 &lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
 &lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ブログのレイアウト変更とStatiqを使った静的サイトの生成</title>
-			<link>https://aconcavy.github.io/Blog/posts/20201108statiqblog</link>
-			<description>&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/Blog/posts/20201108statiqblog</guid>
-			<pubDate>Sun, 08 Nov 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;
-&lt;h1 id="statiq"&gt;Statiq&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://statiq.dev/"&gt;Statiq&lt;/a&gt; は &lt;a href="https://aconcavy.github.io/Blog/20200819wyamblog"&gt;前回の記事&lt;/a&gt; で紹介した &lt;code&gt;Wyam&lt;/code&gt; をリブランディングし、機能の追加に柔軟性を持たせたフレームワークだそうです。
-大きく3つのフレームワークに分かれており、基礎となる &lt;code&gt;Statiq.Framework&lt;/code&gt;、一般的なWebサイト生成のための &lt;code&gt;Statiq.Web&lt;/code&gt;、ドキュメントサイト生成のための &lt;code&gt;Statiq.Doc&lt;/code&gt; に分かれています。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Statiq.Framework&lt;/code&gt; はMITライセンスで公開されている一方、&lt;code&gt;Statiq.Web&lt;/code&gt; と &lt;code&gt;Statiq.Doc&lt;/code&gt; は &lt;a href="https://licensezero.com/licenses/prosperity"&gt;License Zero Prosperity Public License&lt;/a&gt; (Public License) と &lt;a href="https://licensezero.com/licenses/private"&gt;License Zero Private License&lt;/a&gt; (Private License)` のデュアルライセンスを取ります。
-そのため、商用利用の場合は、はじめ30日間の無料体験期間のあと、開発者一人当たり50ドルのPrivate Licenseを取得する必要があります。
-非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます。
-詳しくは&lt;a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md"&gt;こちら&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="section-1"&gt;使い方&lt;/h2&gt;
-&lt;p&gt;Wyamは.NET上にツールをインストールして実行するのに対して、Statiqの場合はコンソールアプリケーションとして実行します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console --name Blog
-dotnet add package Statiq.Web --version x.y.z
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そして、エントリポイントの &lt;code&gt;Program.cs&lt;/code&gt; にBootStrapeprを追記します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
-using Statiq.App;
-using Statiq.Web;
-
-namespace Blog
-{
-    public static class Program
-    {
-        public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
-            await Bootstrapper.Factory
-                .CreateWeb(args)
-                .RunAsync();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次に、&lt;code&gt;./input/&lt;/code&gt; ディレクトリ内に &lt;code&gt;index.md&lt;/code&gt; を作成し、適当な内容を書いて保存します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: Hello Statiq
----
-Hello world!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Wyamと同様に、ファイル上部にFront Matterを記述することで、記事タイトルやタグといったメタ情報を付与することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet run -- preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そして、プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます。(デフォルトでは &lt;code&gt;localhost:5080&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;素の状態では、テーマは存在しないので、&lt;code&gt;./theme/input/&lt;/code&gt; にWebサイトのテーマを用意する必要があります。&lt;/p&gt;
-&lt;p&gt;サンプルとして、公式テーマの&lt;a href="https://github.com/statiqdev/CleanBlog"&gt;CleanBlog&lt;/a&gt;を &lt;code&gt;./theme/&lt;/code&gt; ディレクトリ内に配置してプロジェクトを実行することで、WyamのCleanBlogテーマと同様のWebサイトを生成することができます。&lt;/p&gt;
-&lt;h2 id="github-pages"&gt;Github Pagesへの展開&lt;/h2&gt;
-&lt;p&gt;Statiq.Webでは、公式でGithub Pagesへのデプロイ方法が用意されています。&lt;/p&gt;
-&lt;p&gt;Wyamの時と同様に、設定ファイル(今回は &lt;code&gt;settings.yml&lt;/code&gt;)に設定を追記する必要があります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Host: aconcavy.github.io // github pagesのホスト
-LinkRoot: /Blog // バーチャルパス
-LinksUseHttps: true
-
-GitHubOwner: AconCavy // ユーザ名
-GitHubName: Blog // リポジトリ名
-GitHubToken: =&amp;gt; Config.FromSetting&amp;lt;string&amp;gt;("GITHUB_TOKEN") // これはこのまま
-GitHubBranch: gh-pages // 生成先ブランチ
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Github Actionでは次のようなワークフローを指定します。
-この時に、&lt;code&gt;GitHubBranch&lt;/code&gt;で指定したブランチは、存在しない場合はエラーが吐かれるので、先にブランチを作成しておきましょう(5敗)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: deploy
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1
-    - name: Deploy
-      run: dotnet run -p Blog -- deploy
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ワークフローが成功すると、指定したブランチにファイルが生成されるので、リポジトリの設定からGithub Pagesのブランチを指定します。
-すべて成功すると、&lt;code&gt;{user}.github.io/{repository}&lt;/code&gt; (今回は&lt;a href="https://aconcavy.github.io/Blog/"&gt;aconcavy.github.io/Blog&lt;/a&gt;`)にサイトが表示されます。&lt;/p&gt;
-&lt;p&gt;サイトのテーマがうまく適用されない場合は、設定ファイルの &lt;code&gt;Host&lt;/code&gt; や &lt;code&gt;LinkRoot&lt;/code&gt; を見直すといいでしょう。&lt;/p&gt;
-&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;Statiqで作成した静的Webサイトを、GitHub ActionsとGitHub Pagesデプロイする方法をまとめました。&lt;/p&gt;
-&lt;p&gt;Wyamと比べてカスタマイズの自由度が高いみたいだけど、ドキュメントを調べても調べたいことにいまいち辿り着かないので、ドキュメントが豊富になればもっと使いやすくなりそうです。APIリファレンスとかも欲しい。
-まだプレビュー段階なので今後に期待しています。&lt;/p&gt;
-&lt;h1 id="section-3"&gt;あとがき&lt;/h1&gt;
-&lt;p&gt;Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。&lt;/p&gt;
-&lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
