@@ -5,8 +5,364 @@
 		<link>https://aconcavy.github.io/Blog</link>
 		<description />
 		<copyright>2021</copyright>
-		<pubDate>Thu, 28 Jan 2021 23:00:39 GMT</pubDate>
-		<lastBuildDate>Thu, 28 Jan 2021 23:00:39 GMT</lastBuildDate>
+		<pubDate>Fri, 29 Jan 2021 18:42:21 GMT</pubDate>
+		<lastBuildDate>Fri, 29 Jan 2021 18:42:21 GMT</lastBuildDate>
+		<item>
+			<title>Rustのお勉強メモ6 (ジェネリクス)</title>
+			<link>https://aconcavy.github.io/Blog/posts/20210130hellorust6</link>
+			<description>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/Blog/posts/20210130hellorust6</guid>
+			<pubDate>Fri, 29 Jan 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;メモ6 (ここ)&lt;/li&gt;
+&lt;li&gt;メモ7 (まだ)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="section-1"&gt;ジェネリクス&lt;/h1&gt;
+&lt;p&gt;具体型や他のプロパティの抽象的な代役&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ジェネリック&lt;/li&gt;
+&lt;li&gt;トレイト&lt;/li&gt;
+&lt;li&gt;ライフタイム&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-2"&gt;ジェネリックなデータ型&lt;/h2&gt;
+&lt;p&gt;関数シグネチャや構造体などの要素の定義を生成に使用できる。&lt;/p&gt;
+&lt;h3 id="section-3"&gt;関数定義&lt;/h3&gt;
+&lt;p&gt;ジェネリックな関数を定義するには、関数名の後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけ、内部にジェネリック型 (例では &lt;code&gt;T&lt;/code&gt;) を定義することで、ジェネリック型として扱うことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn generic_function&amp;lt;T&amp;gt; (arg: &amp;amp;T) - &amp;gt; T { /* 省略 */ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="enum"&gt;構造体とenum定義&lt;/h3&gt;
+&lt;p&gt;構造体とenumも同様に、名前の後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけて宣言する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct GenericStruct&amp;lt;T&amp;gt; {
+    field_1: T,
+    field_2: T,
+}
+
+enum GenericEnum&amp;lt;T&amp;gt; {
+    Value1(T),
+    Value2(T),
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;複数の型を受け入れる場合は、ジェネリック型を増やすことで対処できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct GenericStruct&amp;lt;T, U&amp;gt; {
+    field_1: T,
+    field_2: U,
+}
+
+enum GenericEnum&amp;lt;T, U&amp;gt; {
+    Value1(T),
+    Value2(U),
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-4"&gt;メソッド定義&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; の直後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけて宣言する。
+次の例では、 &lt;code&gt;impl&lt;/code&gt; の後に &lt;code&gt;T&lt;/code&gt; をジェネリックな方として宣言することで、コンパイラは &lt;code&gt;Point&lt;/code&gt; の &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; 内がジェネリックな型であることを認識する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Point&amp;lt;T&amp;gt; {
+    x: T,
+    y: T,
+}
+
+impl&amp;lt;T&amp;gt; Point&amp;lt;T&amp;gt; {
+    fn x(&amp;amp;self) -&amp;gt; &amp;amp;T {
+        &amp;amp;self.x
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-5"&gt;ジェネリクスを使用したコードのパフォーマンス&lt;/h3&gt;
+&lt;p&gt;Rustでは、ジェネリクスの型の使用時のパフォーマンスは、具体的な型の使用時のパフォーマンスと変わらない。&lt;/p&gt;
+&lt;p&gt;ジェネリクスを使用しているコードの&lt;strong&gt;単相化&lt;/strong&gt; (コンパイル時に使用されている具体的な型を入れること) をコンパイル時に行うことで、達成している。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; enumの例では、 &lt;code&gt;i32&lt;/code&gt; と &lt;code&gt;f64&lt;/code&gt; が使われている場合、それぞれの型の &lt;code&gt;Option&lt;/code&gt; が生成される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let integer = Some(5);
+    let float = Some(5.0);
+}
+
+// ---
+
+enum Option_i32 {
+    Some(i32),
+    None,
+}
+
+enum Option_f64 {
+    Some(i32),
+    None,
+}
+
+fn main() {
+    let integer = Option_i32::Some(5);
+    let float = Option_f64::Some(5.0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-6"&gt;トレイト&lt;/h2&gt;
+&lt;p&gt;特定の型に存在し、他の型と共有できる機能について知らせることができる。トレイトを使用することで、共有のふるまいを抽象的に定義できる。別の言語ではインターフェースとも呼ばれる。&lt;/p&gt;
+&lt;h3 id="section-7"&gt;トレイト定義&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;trait&lt;/code&gt; キーワードを使用してトレイトを定義する。トレイトを実装する型はそれぞれ、メソッドの本体に独自のふるまいを提供しなければならない。
+次の例では、 &lt;code&gt;Summary&lt;/code&gt; トレイトの定義であり、このトレイトを実装している型は、 &lt;code&gt;summarize&lt;/code&gt; メソッドを定義することを強制される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub trait Summary {
+    fn summarize(&amp;amp;self) -&amp;gt; String;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-8"&gt;トレイトを型に実装する&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; の後に実装したいトレイト名と &lt;code&gt;for&lt;/code&gt; キーワード、トレイトの実装対象の型名を記述し、トレイトが定義しているメソッドシグネチャを実装する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&amp;amp;self) -&amp;gt; String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+impl Summary for Tweet {
+    fn summarize(&amp;amp;self) -&amp;gt; String {
+        format!("{}: {}", self.username, self.content)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意として、トレイトか対象の型が自分のクレートに固有であるときのみ、型に対してトレイトを実装でき、外部のトレイトを外部の型に対して実装することはできない。&lt;/p&gt;
+&lt;h3 id="section-9"&gt;デフォルト実装&lt;/h3&gt;
+&lt;p&gt;全ての型の全メソッドに対して実装を要求せずに、デフォルトの振る舞いを定義することができる。その場合、メソッドシグネチャを記述しないことで、デフォルト実装が利用されるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub trait Summary {
+    fn summarize(&amp;amp;self) -&amp;gt; String {
+        String::from("(Read more...)")
+    }
+}
+
+impl Summary for NewsArticle { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-10"&gt;引数としてのトレイト&lt;/h3&gt;
+&lt;p&gt;引数の &lt;code&gt;item&lt;/code&gt; に、&lt;code&gt;impl&lt;/code&gt; キーワードとトレイト名を指定する (&lt;code&gt;impl Trait&lt;/code&gt; 構文) ことで、トレイトを実装している型を受け入れることができるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item: &amp;amp;impl Summary) {
+    println!("{}", item.summarize());
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-11"&gt;トレイト境界構文&lt;/h4&gt;
+&lt;p&gt;ジェネリクスを利用してトレイトを引数として受けることもできる。型引数の後ろにコロンを挟んでトレイト名を記述することで、トレイトを実装している型のみ引数として渡すことができる、&lt;strong&gt;トレイト境界&lt;/strong&gt;を置くことができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify&amp;lt;T: Summary&amp;gt;(item: &amp;amp;T) {
+    println!("{}", item.summarize());
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;impl Trait&lt;/code&gt; 構文で複数の引数を受ける場合、それぞれトレイトを実装しているが、異なる型を受けることが可能になる。一方、複数の引数を全て同じ型として受けたい場合は、トレイト境界を使うことで実現できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item1: &amp;amp;impl Summary, item2: &amp;amp;impl Summary) { /* 省略 */ } // 異なる型の可能性
+
+pub fn notify&amp;lt;T: Summary&amp;gt;(item1: &amp;amp;T, item2: &amp;amp;T) { /* 省略 */ } // 同じ型
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="section-12"&gt;複数のトレイト境界&lt;/h4&gt;
+&lt;p&gt;複数のトレイト境界を指定する場合には、 &lt;code&gt;+&lt;/code&gt; 構文を使う。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item: &amp;amp;(impl Summary + Display) { /* 省略 */ }
+
+pub fn notify&amp;lt;T: Summary + Display&amp;gt;(item: &amp;amp;T) { /* 省略 */ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="where"&gt;where句&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;where&lt;/code&gt; 句を使うことで、複数のトレイト境界を簡潔に記述することもできる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn some_function&amp;lt;T: Display + Clone, U: Clone + Debug&amp;gt;(t: &amp;amp;T, u: &amp;amp;U) -&amp;gt; i32 { /* 省略 */ }
+
+fn some_function&amp;lt;T, U&amp;gt;(t: &amp;amp;T, u: &amp;amp;U) -&amp;gt; i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{ /* 省略 */ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-13"&gt;トレイトを実装している型を返す&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;impl Trait&lt;/code&gt; 構文を戻り値に指定することで、トレイトを実装する型を返すことができる。 ただし、 &lt;code&gt;impl Trait&lt;/code&gt; 構文では、一種類の型を返す場合のみ有効。複数の型を返す可能性があるコードはエラーになる。トレイトオブジェクトで異なる型の値を許容する場合は、別の手段となる。 (17章)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn returns_summarizable() impl Summary { // OK
+    Tweet { /* 省略 */ }
+}
+
+fn returns_summarizable(flag: bool) impl Summary { // NG
+    if flag {
+        Tweet { /* 省略 */ }
+    } else {
+        NewsArticle { /* 省略 */ }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-14"&gt;トレイト境界を使用してメソッド実装を条件する&lt;/h3&gt;
+&lt;p&gt;特定のトレイトを実装する型のみメソッド実装を強制することもできる。
+次の例では、 &lt;code&gt;new&lt;/code&gt; メソッドは &lt;code&gt;T&lt;/code&gt; がどの型であっても実装されるが、 &lt;code&gt;cmp_display&lt;/code&gt; メソッドは &lt;code&gt;T&lt;/code&gt; が &lt;code&gt;Display&lt;/code&gt; と &lt;code&gt;PartialOrd&lt;/code&gt; トレイトを実装した型のみ実装される。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt::Display;
+
+struct Pair&amp;lt;T&amp;gt; {
+    x: T,
+    y: T,
+}
+
+impl&amp;lt;T&amp;gt; Pair&amp;lt;T&amp;gt; {
+    fn new(x: T, y: T) -&amp;gt; Self {
+        Self { x, y }
+    }
+}
+
+impl&amp;lt;T: Display + PartialOrd&amp;gt; Pair&amp;lt;T&amp;gt; {
+    fn cmp_display(&amp;amp;self) {
+        if(self.x &amp;gt;= self.y) {
+            println!("x = {}", self.x);
+        } else {
+            println!("y = {}", self.y);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;別のトレイトを実装するあらゆる型に対するトレイト実装を条件分けすることもできる。トレイト境界を満たすあらゆる型にトレイトを実装することは、&lt;strong&gt;ブランケット実装&lt;/strong&gt;
+とよばれる。&lt;/p&gt;
+&lt;p&gt;例として、標準ライブラリの &lt;code&gt;Display&lt;/code&gt; トレイトは、トレイトを実装するあらゆる型に &lt;code&gt;ToString&lt;/code&gt; トレイトを実装する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl&amp;lt;T: Display&amp;gt; ToString for T { /* 省略 */ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-15"&gt;ライフタイムで参照を検証する&lt;/h2&gt;
+&lt;p&gt;Rustにおいて、参照はすべてライフタイム (参照が有効になるスコープ) を保持する。&lt;/p&gt;
+&lt;h3 id="section-16"&gt;ライフタイムでダングリング参照を回避する&lt;/h3&gt;
+&lt;p&gt;ライフタイムの主な目的は、ダングリング参照を回避すること。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
+    let r; // rが有効になる。
+
+    {
+        let x = 5; // xが有効になる。
+        r = &amp;amp;x; // rにxの参照を渡す。
+    } // xが無効になる。
+
+    println!("r: {}", r); // rはxの参照を持ち、xはすでに無効なのでエラー。
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-17"&gt;借用チェッカー&lt;/h3&gt;
+&lt;p&gt;Rustのコンパイラは、全ての借用に対して注釈付けを行い、ライフタイムを管理する。&lt;/p&gt;
+&lt;p&gt;例では &lt;code&gt;'a&lt;/code&gt; と &lt;code&gt;'b&lt;/code&gt; が注釈付けられ、 &lt;code&gt;'a&lt;/code&gt; のライフタイムを持つ &lt;code&gt;r&lt;/code&gt; が、&lt;code&gt;'b&lt;/code&gt; のライフタイムより後に参照しようとしているので、エラーになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {}", r); //          |
+}                         // ---------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-18"&gt;関数のジェネリックなライフタイム&lt;/h3&gt;
+&lt;p&gt;関数の引数が参照の場合、それぞれの引数にライフタイムが設定される。戻り値として返す参照が自明でない場合、エラーになる。関数に渡される具体的な参照のライフタイムがわからないため、借用チェッカーが解析できるようにライフタイムの注釈をつける必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn longest(x: &amp;amp;str, y: &amp;amp;str) -&amp;gt; &amp;amp;str { // xとyのライフタイムが分からず、戻り値
+    if x.len() &amp;gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-19"&gt;ライフタイム注釈記法&lt;/h3&gt;
+&lt;p&gt;ライフタイム注釈は、ライフタイム引数の名前を &lt;code&gt;'&lt;/code&gt; で始める必要がある。
+通常全部小文字で、ジェネリック型のように扱う。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;&amp;amp;i32 // 参照
+&amp;amp;'a i32 // 明示的なライフタイム付きの不変参照
+&amp;amp;'a mut i32 // 明示的なライフタイム付きの可変参照
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-20"&gt;関数シグネチャにおけるライフタイム注釈&lt;/h3&gt;
+&lt;p&gt;上記の &lt;code&gt;longest&lt;/code&gt; 関数では、引数と戻り値に明示的にライフタイム注釈を付けることで、全ての引数の参照と戻り値が同じライフタイムになる。
+&lt;code&gt;longest&lt;/code&gt; 関数は、正確に &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; の生存期間を知ることはなく、&lt;code&gt;'a&lt;/code&gt; のライフタイムが代わりとして扱われ、関数シグネチャ内のライフタイムを満足するものになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn longest&amp;lt;'a&amp;gt;(x: &amp;amp;'a str, y: &amp;amp;'a str) -&amp;gt; &amp;amp;'a str { // xとyのライフタイムが分からず、戻り値
+    if x.len() &amp;gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;具体的な参照を &lt;code&gt;longest&lt;/code&gt; に渡すと、 &lt;code&gt;'a&lt;/code&gt; を代替するライフタイムは、&lt;code&gt;y&lt;/code&gt; のスコープと重なる &lt;code&gt;x&lt;/code&gt; のスコープの一部となる。ジェネリックなライフタイム &lt;code&gt;'a&lt;/code&gt; は、 &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; のライフタイムのうち、短い方に等しいライフタイムになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
+    let string1 = String::from("long string is long");
+
+    {
+        let string2 = String::from("xyz");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("{}", result); // 有効
+    }
+}
+
+// --
+
+fn main() {
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("{}", result); // 無効
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-21"&gt;構造体定義のライフタイム注釈&lt;/h3&gt;
+&lt;p&gt;構造体に参照を保持させる場合、構造体定義の全参照にライフタイム注釈をつける必要がある。
+次の例では、 &lt;code&gt;ImportantExcerpt&lt;/code&gt; のインスタンスが、 &lt;code&gt;part&lt;/code&gt; フィールドに保持している参照よりも長生きしないことを意味する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct ImportantExcerpt&amp;lt;'a&amp;gt; {
+    part: &amp;amp;'a str,
+}
+
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.')
+        .next()
+        .expect("Could not find a '.'");
+    let i = ImportantExcerpt { part: first_sentence };
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-22"&gt;ライフタイム省略&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;ライフタイム省略規則&lt;/strong&gt;を基に、借用チェッカーがライフタイムを推論できる場合は、明示的な注釈を必要としない。&lt;/p&gt;
+&lt;p&gt;関数やメソッドの引数ライフタイムは、入力ライフタイムと呼ばれ、戻り値のライフタイムは出力ライフタイムと呼ばれる。&lt;/p&gt;
+&lt;h4 id="section-23"&gt;ライフタイム省略規則&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;参照である各引数は、独自のライフタイムを得る。&lt;/li&gt;
+&lt;li&gt;入力ライフタイム引数が1つだけの場合、そのライフタイムがすべての出力ライフタイム引数に代入される。&lt;/li&gt;
+&lt;li&gt;メソッドの場合、&lt;code&gt;self&lt;/code&gt; のライフタイムが全ての出力ライフタイム引数に代入される。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="section-24"&gt;メソッド定義におけるライフタイム注釈&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; キーワードの後にライフタイム注釈を宣言する必要がある。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl&amp;lt;'a&amp;gt; ImportantExcerpt&amp;lt;'a&amp;gt; {
+    fn level(&amp;amp;self) -&amp;gt; i32 {
+        3
+    }
+
+    fn announce_and_return_part(&amp;amp;self, announcement: &amp;amp;str) -&amp;gt; &amp;amp;str {  // ライフタイム省略規則により省略できる。
+        println!("Attention please: {}", announcement);
+        self.part
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-25"&gt;静的ライフタイム&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;'static&lt;/code&gt; ライフタイムは、プログラム全体の期間を示す特殊なライフタイム。
+文字リテラルは全て &lt;code&gt;'static&lt;/code&gt; ライフタイムになる。&lt;/p&gt;
+&lt;h2 id="section-26"&gt;ジェネリックな型引数、トレイト境界、ライフタイムをまとめて&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt::Display;
+
+fn longest_with_an_announcement&amp;lt;'a, T&amp;gt;(x: &amp;amp;'a str, y: &amp;amp;'a str, announcement: T) -&amp;gt; &amp;amp;'a str
+    where T: Display
+{
+    println!("{}", announcement);
+    if x.len() &amp;gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>Rustのお勉強メモ5 (コレクション | エラー処理)</title>
 			<link>https://aconcavy.github.io/Blog/posts/20210129hellorust5</link>
@@ -21,7 +377,7 @@
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ5 (ここ)&lt;/li&gt;
-&lt;li&gt;メモ6 (まだ)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;コレクション&lt;/h1&gt;
@@ -467,6 +823,7 @@ fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ4 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
@@ -744,6 +1101,7 @@ pub fn eat_at_restaurant() {
 &lt;li&gt;メモ3 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
@@ -1143,6 +1501,7 @@ if let Coin::Quarter(stete) = coint {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
@@ -1440,6 +1799,7 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -2929,79 +3289,6 @@ Template.Tests/
 &lt;li&gt;テンプレートのルートに&lt;code&gt;.template.config&lt;/code&gt;ディレクトリを作成し、内に&lt;code&gt;template.json&lt;/code&gt;を作成する。&lt;/li&gt;
 &lt;li&gt;テンプレートが複数ある場合は1つのディレクトリにまとめ、&lt;code&gt;dotnet pack&lt;/code&gt;コマンドでパッケージ化する。&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>Statiqがmarkdownから生成するhtmlのカスタマイズ</title>
-			<link>https://aconcavy.github.io/Blog/posts/20201119statiqextension</link>
-			<description>&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/Blog/posts/20201119statiqextension</guid>
-			<pubDate>Thu, 19 Nov 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;
-&lt;h1 id="section-1"&gt;方法&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Bootstrapper&lt;/code&gt;において、&lt;code&gt;Statiq.Web&lt;/code&gt;でWebサイトを生成するメソッドである&lt;code&gt;CreateWeb()&lt;/code&gt;では、markdownに関わるModuleの&lt;code&gt;RenderMarkdown&lt;/code&gt;を&lt;code&gt;Templates&lt;/code&gt;内で設定している。
-そのため、&lt;code&gt;ConfigureTemplates()&lt;/code&gt;を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
-Statiqでは、markdownを生成するために&lt;a href="https://github.com/lunet-io/markdig"&gt;markdig&lt;/a&gt;を使っているようなので、markdownの設定を追加するには&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを&lt;code&gt;Rendermarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に渡す必要がある。&lt;/p&gt;
-&lt;p&gt;今回は、&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグをレスポンシブ対応と、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグにクラスを追加するために、markdigの&lt;code&gt;BootstrapExtension&lt;/code&gt;を設定に追加する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
-    await Bootstrapper.Factory
-        .CreateWeb(args)
-        .ConfigureTemplates(templates =&amp;gt;
-        {
-            // 新しい設定のModuleを作成
-            // デフォルトはUseExtensionsのみ
-            var markdownModule = new RenderMarkdown()
-                .UseExtensions()
-                .UseExtension&amp;lt;BootstrapExtension&amp;gt;() // bootstrap
-                .UseExtension&amp;lt;PrismJsExtension&amp;gt;(); // オリジナル
-            if (templates.ContainsKey(MediaTypes.Markdown)) 
-                templates[MediaTypes.Markdown].Module = markdownModule; // 既にあるならば書き換え
-            else 
-                templates.Add(MediaTypes.Markdown,
-                    new Template(ContentType.Content, Phase.Process, markdownModule)); // 無ければ追加
-        })
-        .RunAsync();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、&lt;code&gt;prism.js&lt;/code&gt;のコードブロックに行数を表示するクラスの&lt;code&gt;line-number&lt;/code&gt;を追加するために、新しく&lt;code&gt;PrismJsExtension.cs&lt;/code&gt;を作成し、&lt;code&gt;BootstrapExtension&lt;/code&gt;に倣い、&lt;code&gt;MarkdownObject&lt;/code&gt;が&lt;code&gt;CodeBlock&lt;/code&gt;であれば&lt;code&gt;line-numbers&lt;/code&gt;をクラスに追加するメソッドの&lt;code&gt;PipelineOnDocumentProcessed()&lt;/code&gt;markdigの生成パイプラインにデリゲートを追加する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;// PrismJsExtension.cs
-using Markdig;
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
-
-namespace Blog.Extensions
-{
-    public class PrismJsExtension : IMarkdownExtension
-    {
-        public void Setup(MarkdownPipelineBuilder pipeline)
-        {
-            pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
-            pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
-        }
-
-        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-        {
-        }
-
-        private static void PipelineOnDocumentProcessed(MarkdownDocument document)
-        {
-            foreach (var node in document.Descendants())
-            {
-                if (node is CodeBlock)
-                {
-                    node.GetAttributes().AddClass(&amp;quot;line-numbers&amp;quot;); // 行数表示のクラスを追加
-                }
-            }
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以上の2つの設定を追加してビルドすることで、bootstrapによる&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグのレスポンシブ対応、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。&lt;/p&gt;
-&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
