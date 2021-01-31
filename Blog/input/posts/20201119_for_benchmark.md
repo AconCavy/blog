@@ -1,3 +1,4 @@
+---
 Title: .NET Core 3.1と.NET 5のfor-loopの速度比較
 Published: 11/19/2020
 Updated: 11/19/2020

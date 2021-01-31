@@ -1,3 +1,4 @@
+---
 Title: ブログのレイアウト変更とStatiqを使った静的サイトの生成
 Published: 11/8/2020
 Updated: 11/8/2020
