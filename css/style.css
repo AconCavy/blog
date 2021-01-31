@@ -82,9 +82,7 @@ h4 { font-size: 1.25rem; }
 
 h5, h6 { font-size: 1rem; }
 
-p { font-weight: 300; }
-
-p { line-height: 1.5; margin: 30px 0; }
+p { font-weight: 300; line-height: 1.5; margin: 2rem 0; }
 
 p a { text-decoration: underline; }
 
@@ -137,7 +135,7 @@ a.badge.select { background-color: #212121; color: #80CBC4; }
 
 .post-body { margin-top: -1rem; }
 
-.post-body h1, .post-body h2, .post-body h3 { margin-top: 3rem; }
+.post-body h1, .post-body h2, .post-body h3 { margin-top: 2rem; }
 
 .post-footer { margin-top: 2rem; }
 
@@ -181,7 +179,7 @@ footer p { color: #BABABA; }
 
 .card { background-color: #1a1a1a; margin-bottom: 1.5rem; }
 
-code, pre, code[class*="language-"], pre[class*="language-"] { background: #2A2D37; font-family: "source-code-pro", monospace; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; overflow-wrap: normal; }
+code, pre, code[class*="language-"], pre[class*="language-"] { background: #2A2D37; font-family: "source-code-pro", monospace; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; overflow-wrap: normal; margin: 1.5rem 0; }
 
 pre { padding: 1rem; }
 
