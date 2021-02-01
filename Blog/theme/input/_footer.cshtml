@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <p>Copyright © @DateTime.Now.Year AconCavy</p>
+                <p>@Document.GetString(WebKeys.Copyright)</p>
                 <ul class="list-inline text-center small">
                     @{
                         var rssFeed = Outputs["**/*.rss"].FirstOrDefault();
