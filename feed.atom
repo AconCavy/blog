@@ -3,8 +3,8 @@
 	<id>https://aconcavy.github.io/Blog</id>
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
-	<rights>2021</rights>
-	<updated>2021-02-01T20:27:41Z</updated>
+	<rights>Copyright © 2020-2021 AconCavy</rights>
+	<updated>2021-02-01T21:24:25Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust7</id>
 		<title>Rustのお勉強メモ7 (テスト)</title>
