@@ -1,7 +1,7 @@
 ---
 Title: MagicOnionに入門した
 Published: 01/03/2021
-Updated: 01/03/2021
+Updated: 02/24/2021
 Tags: [Unity, MagicOnion, MessagePack] 
 ---
 
@@ -9,7 +9,7 @@ Tags: [Unity, MagicOnion, MessagePack]
 
 友人がC#のgRPCライブラリの`MagicOnion`の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。
 
-リポジトリは[こちら](https://github.com/AconCavy/MagicOnionSample)
+リポジトリは[こちら](https://github.com/AconCavy/practice-magiconion)
 
 # MagicOnion
 
