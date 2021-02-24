@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-02-21T18:48:50Z</updated>
+	<updated>2021-02-24T14:56:35Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust7</id>
 		<title>Rustのお勉強メモ7 (テスト)</title>
@@ -2562,10 +2562,10 @@ jobs:
 		<id>https://aconcavy.github.io/Blog/posts/20210103magiconion</id>
 		<title>MagicOnionに入門した</title>
 		<link href="https://aconcavy.github.io/Blog/posts/20210103magiconion" />
-		<updated>2021-01-03T00:00:00Z</updated>
+		<updated>2021-02-24T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;
-&lt;p&gt;リポジトリは&lt;a href="https://github.com/AconCavy/MagicOnionSample"&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;リポジトリは&lt;a href="https://github.com/AconCavy/practice-magiconion"&gt;こちら&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id="magiconion"&gt;MagicOnion&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://github.com/Cysharp/MagicOnion"&gt;MagicOnion&lt;/a&gt;は、共通のインターフェースを介してクライアントとサーバーで手続きを呼び合う技術の&lt;a href="https://github.com/grpc/grpc"&gt;gRPC&lt;/a&gt;をC#用に最適化した、リアルタイム通信ライブラリです。&lt;/p&gt;
 &lt;p&gt;ASP.NET CoreにもgRPCのテンプレートは存在しますが、そちらは&lt;code&gt;proto&lt;/code&gt;ファイルを作成し、そのファイルにインターフェースを定義を行います。一方MagicOnionの場合は、C#の&lt;code&gt;interface&lt;/code&gt;を定義すればめんどくさいことはMagicOnion側でいろいろやってくれるため、クライアントとサーバーでどちらもC#を利用する場合には一つのソースを使いまわすことができたりと嬉しいことが多いです。そのため、クライアントはUnity、サーバーはASP.NET Coreを使うモバイルゲームなどのプロジェクトでよく使われるそうです。&lt;/p&gt;
