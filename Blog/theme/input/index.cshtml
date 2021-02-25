@@ -1,12 +1,14 @@
+---
 Order: 0
 ArchiveSources: => GetString("PostSources")
 ArchiveDestination: >
-  => GetInt("Index") < 2 ? $"index.html" : $"page/{GetInt("Index")}.html"
+  => GetInt("Index") < 2 ? "index.html" : $"page/{GetInt("Index")}.html"
 ArchivePageSize: 3
 ArchiveOrderKey: Published
 ArchiveOrderDescending: true
 ArchiveTitle: => GetString("Title")
 ---
+
 <div class="container-sm-height">
     <div class="row row-sm-height">
         <div class="col-md-8 col-sm-height">

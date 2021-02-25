@@ -1,14 +1,16 @@
+---
 ArchiveSources: => GetString("PostSources")
 ArchiveKey: Tags
 ArchiveKeyComparer: => StringComparer.OrdinalIgnoreCase.ToConvertingEqualityComparer()
 ArchiveDestination: >
-  => GetInt("Index") < 2 ? $"tags/{NormalizedPath.OptimizeFileName(GetString("GroupKey"))}/index.html" : $"tags/{NormalizedPath.OptimizeFileName(GetString("GroupKey"))}/{GetInt("Index")}.html"
+  => $"tags/{NormalizedPath.OptimizeFileName(GetString("GroupKey"))}/{(GetInt("Index") < 2 ? "index" : GetInt("Index").ToString())}.html"
 ArchivePageSize: 10
 ArchiveOrderKey: Published
 ArchiveOrderDescending: true
 Title: Tags
 ArchiveTitle: => GetString("GroupKey")
 ---
+
 @if (Document.ContainsKey(Keys.GroupKey))
 {
     <div class="container-sm-height">
