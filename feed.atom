@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-03-01T19:39:37Z</updated>
+	<updated>2021-03-01T20:51:38Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors</id>
 		<title>じゃんけん</title>
@@ -12,10 +12,10 @@
 		<updated>2021-03-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
-じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。
-&lt;code&gt;switch式&lt;/code&gt; であって &lt;code&gt;if文&lt;/code&gt; ではないのでヨシ!&lt;/p&gt;
+じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;
 &lt;p&gt;先駆者様&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815"&gt;https://qiita.com/tadsan/items/65d91ba6b50535fc8815&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://qiita.com/libraplanet/items/bcf17c22143dc77f875b"&gt;https://qiita.com/libraplanet/items/bcf17c22143dc77f875b&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f"&gt;Qiita&lt;/a&gt;とのクロスポストです。&lt;/p&gt;
 &lt;h1 id="section-1"&gt;勝敗判定&lt;/h1&gt;
 &lt;p&gt;じゃんけんのルールとして、&lt;code&gt;-&amp;gt;&lt;/code&gt; の右側が強いものとすると、 &lt;code&gt;Rock&lt;/code&gt; -&amp;gt; &lt;code&gt;Paper&lt;/code&gt; -&amp;gt; &lt;code&gt;Scissors&lt;/code&gt; -&amp;gt; &lt;code&gt;Rock&lt;/code&gt; の関係性が成り立ち、3つの手を周期として勝敗が決まります。
@@ -57,18 +57,23 @@
     public static void Main()
     {
         const string draw = "あいこ";
-        const string win = "あなたの勝ち";
         const string lose = "あなたの負け";
+        const string win = "あなたの勝ち";
 
         var map = new Dictionary&amp;lt;Rps.Hand, string&amp;gt;
         {
             [Rps.Hand.Rock] = "✊", [Rps.Hand.Paper] = "🖐", [Rps.Hand.Scissors] = "✌"
         };
-        var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+
+        // var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+        var hands = Enum.GetValues(typeof(Rps.Hand)).Cast&amp;lt;Rps.Hand&amp;gt;().ToArray();
 
         foreach (var own in hands)
         foreach (var opponent in hands)
         {
+            // Draw, Lose, Winのままなら
+            // var result = Rps.Battle(own, opponent).ToString();
+            
             var result = Rps.Battle(own, opponent) switch
             {
                 Rps.Result.Draw =&amp;gt; draw,
@@ -83,11 +88,10 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="section-3"&gt;実行結果&lt;/h1&gt;
 &lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OulAIYC2ApgM4AOZAxldgMplQAmARgPYAe6AN7psY3AgDMo8SLTiFEhDMXY5q1Y15QawXEhycwZAO7YAvNgBEgIQZAIgyBlBivF5GhVp168OEwEsoFtY2gFYMgPoMgHYMgLtKgIYMzipu2B66+jgANrw0LJa2YeGABTGAigxxaPFuAG5kYNgUZHSBUFRmACK+jMC+2pUAngA8AEp0NAB0ABIcnAA0KQB8pRrqCaoA2gPDY1xDfbyMANYAuoFWgFDkVlMrg6PjQwAKtVRgB9mAvBuACbun2OdrV6yMvjQ0vDANEe1kAMORWOaqAC+LkWYgqVQAFuMaPVGksDkJsKtLhstrspjj1pwbncwISLsShj8/gCgdgYSRXIsAGaAqhMRHYAAUCOwvBMAX82GRXBoAEpIYo2WAOYwubzKvy6HRtFQoHphaLOBKpQoFnDxHzZTQIKk9JYcQAhMjAYCpKjcgVQKa8FVqjXi7A0PzAeV6+YBxY4vq0M3AIZNYxmczTbBGUwTIMJENh81DAAyGSycfSmSTzMNilTpvTAHVhbHsH4Xcm3AB9Cxx4CIsAC7ANMwAQTAAHMINQNQB5CDAIcsvocXtUACi/GYdHa2m5ksLhsZa7heAAnNyACRWIQ1OhLZ17KHYMqoo+1U/uhoa88gNQm8NQqzi2FwqFSn+Fv/xHAkj6AAbBI2KDPEBqKEB2DqgO2DElK0FuPiOwFoatx0PcGFwjS/yAjQv5Mm4sHwRQ2JpsAyHJlGibJlm+bJhWUDESUm5iLBeBgaGpZ6DadoOtyxL8oKUwiW6qoPsAq5uChGjGlRgTcty/gyZJHp6AAtDyanis62AANTYJIXoAKQmV+ixwAA7DyvHhuKr7mlZih/gof5QkAA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
-じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。
-&lt;code&gt;switch式&lt;/code&gt; であって &lt;code&gt;if文&lt;/code&gt; ではないのでヨシ!&lt;/p&gt;</summary>
+じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust7</id>
