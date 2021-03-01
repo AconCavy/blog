@@ -9,11 +9,12 @@ Tags: [C#]
 
 `if` を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の [switch式](https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression) を使って受け取ります。
-`switch式` であって `if文` ではないのでヨシ!
 
 先駆者様
 
 https://qiita.com/tadsan/items/65d91ba6b50535fc8815
+
+https://qiita.com/libraplanet/items/bcf17c22143dc77f875b
 
 [Qiita](https://qiita.com/AconCavy/items/b86b9e835a362795d33f)とのクロスポストです。
 
@@ -69,18 +70,23 @@ public static class Program
     public static void Main()
     {
         const string draw = "あいこ";
-        const string win = "あなたの勝ち";
         const string lose = "あなたの負け";
+        const string win = "あなたの勝ち";
 
         var map = new Dictionary<Rps.Hand, string>
         {
             [Rps.Hand.Rock] = "✊", [Rps.Hand.Paper] = "🖐", [Rps.Hand.Scissors] = "✌"
         };
-        var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+
+        // var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+        var hands = Enum.GetValues(typeof(Rps.Hand)).Cast<Rps.Hand>().ToArray();
 
         foreach (var own in hands)
         foreach (var opponent in hands)
         {
+            // Draw, Lose, Winのままなら
+            // var result = Rps.Battle(own, opponent).ToString();
+            
             var result = Rps.Battle(own, opponent) switch
             {
                 Rps.Result.Draw => draw,
@@ -98,4 +104,4 @@ public static class Program
 
 ![rps.png](assets/images/rps.webp)
 
-[sharplabでの実行結果](https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OulAIYC2ApgM4AOZAxldgMplQAmARgPYAe6AN7psY3AgDMo8SLTiFEhDMXY5q1Y15QawXEhycwZAO7YAvNgBEgIQZAIgyBlBivF5GhVp168OEwEsoFtY2gFYMgPoMgHYMgLtKgIYMzipu2B66+jgANrw0LJa2YeGABTGAigxxaPFuAG5kYNgUZHSBUFRmACK+jMC+2pUAngA8AEp0NAB0ABIcnAA0KQB8pRrqCaoA2gPDY1xDfbyMANYAuoFWgFDkVlMrg6PjQwAKtVRgB9mAvBuACbun2OdrV6yMvjQ0vDANEe1kAMORWOaqAC+LkWYgqVQAFuMaPVGksDkJsKtLhstrspjj1pwbncwISLsShj8/gCgdgYSRXIsAGaAqhMRHYAAUCOwvBMAX82GRXBoAEpIYo2WAOYwubzKvy6HRtFQoHphaLOBKpQoFnDxHzZTQIKk9JYcQAhMjAYCpKjcgVQKa8FVqjXi7A0PzAeV6+YBxY4vq0M3AIZNYxmczTbBGUwTIMJENh81DAAyGSycfSmSTzMNilTpvTAHVhbHsH4Xcm3AB9Cxx4CIsAC7ANMwAQTAAHMINQNQB5CDAIcsvocXtUACi/GYdHa2m5ksLhsZa7heAAnNyACRWIQ1OhLZ17KHYMqoo+1U/uhoa88gNQm8NQqzi2FwqFSn+Fv/xHAkj6AAbBI2KDPEBqKEB2DqgO2DElK0FuPiOwFoatx0PcGFwjS/yAjQv5Mm4sHwRQ2JpsAyHJlGibJlm+bJhWUDESUm5iLBeBgaGpZ6DadoOtyxL8oKUwiW6qoPsAq5uChGjGlRgTcty/gyZJHp6AAtDyanis62AANTYJIXoAKQmV+ixwAA7DyvHhuKr7mlZih/gof5QkAA===)
+[sharplabでの実行結果](https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA===)
