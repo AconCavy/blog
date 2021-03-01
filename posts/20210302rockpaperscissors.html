@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/Blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Blog/css/style.css" type="text/css">
+
+    <title>acon.log - &#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/Blog/assets/icon.webp">
+<meta property="og:url" content="/Blog/posts/20210302rockpaperscissors">
+
+    <script src="/Blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/Blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/Blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</h1>
+
+            <div class="card-text post-meta">Published on Tuesday, 02 March 2021</div>
+            <div class="card-text post-meta">Updated on Tuesday, 02 March 2021</div>
+
+                <div class="mt-3">
+                        <a href="/Blog/tags/c" class="badge badge-light"> C#</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p><code>if</code> を使わずにじゃんけんします。
+じゃんけんの結果はC#8の機能の <a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression">switch式</a> を使って受け取ります。
+<code>switch式</code> であって <code>if文</code> ではないのでヨシ!</p>
+<p>先駆者様</p>
+<p><a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815">https://qiita.com/tadsan/items/65d91ba6b50535fc8815</a></p>
+<p><a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f">Qiita</a>とのクロスポストです。</p>
+<h1 id="section-1">勝敗判定</h1>
+<p>じゃんけんのルールとして、<code>-&gt;</code> の右側が強いものとすると、 <code>Rock</code> -&gt; <code>Paper</code> -&gt; <code>Scissors</code> -&gt; <code>Rock</code> の関係性が成り立ち、3つの手を周期として勝敗が決まっています。
+ここで、<code>Rock</code> を0、<code>Paper</code> を1、<code>Scissors</code> を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。</p>
+<p><img src="assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png" /></p>
+<p>このことから、<code>相手の手 - 自分の手</code> を計算することで距離を求めることができます。
+しかし、自分の手が2で、相手の手が0だった場合、<code>0 - 2 == -2</code>のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、<code>(相手の手 - 自分の手 + 3) % 3</code> とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。</p>
+<h1 id="section-2">実装</h1>
+<p><code>Rps</code> (Rock-Paper-Scissors) クラスに <code>Hand</code> (グー、チョキ、パー) と <code>Result</code> (引き分け、負け、勝ち) の <code>enum</code> を定義することで、<code>Battle</code> 関数の引数と戻り値にそれぞれ意味を持たせます。</p>
+<p>C#の <code>enum</code> は、既定値として <code>int</code> の0をとり、要素が増えるにつれて1増えます。そのため、この場合は、 <code>Rock (0)</code>、 <code>Paper (1)</code>、 <code>Scissors (2)</code> のようにそれぞれ値を持つことができます。</p>
+<p><code>Battle</code> 関数は、自分の手と相手の手を渡すことで、<code>Result.Draw</code>、 <code>Result.Lose</code>、 <code>Result.Win</code> のいずれかを返します。</p>
+<pre><code class="language-csharp line-numbers">public static class Rps
+{
+    public enum Hand
+    {
+        Rock,
+        Paper,
+        Scissors
+    }
+
+    public enum Result
+    {
+        Draw,
+        Lose,
+        Win
+    }
+
+    public static Result Battle(Hand own, Hand opponent)
+    {
+        var result = ((int)opponent - (int)own + 3) % 3;
+        return (Result)result;
+    }
+}
+</code></pre>
+<p>呼び出し側では、例に倣ってそれぞれの絵文字を割り当てます。
+<code>switch式</code> を使うことで、<code>Battle</code> が返す可能性のあるパターンに、 <code>あいこ</code>、<code>あなたの負け</code>、<code>あなたの勝ち</code> を割り当て、一致した要素を <code>result</code> として受け、自分の手、相手の手と一緒に表示します。 <code>_ =&gt; throw new ArgumentOutOfRangeException()</code> では、対象となる値以外の値として判定された際に該当するアームになります。</p>
+<pre><code class="language-csharp line-numbers">public static class Program
+{
+    public static void Main()
+    {
+        const string draw = &quot;あいこ&quot;;
+        const string win = &quot;あなたの勝ち&quot;;
+        const string lose = &quot;あなたの負け&quot;;
+
+        var map = new Dictionary&lt;Rps.Hand, string&gt;
+        {
+            [Rps.Hand.Rock] = &quot;✊&quot;, [Rps.Hand.Paper] = &quot;🖐&quot;, [Rps.Hand.Scissors] = &quot;✌&quot;
+        };
+        var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+
+        foreach (var own in hands)
+        foreach (var opponent in hands)
+        {
+            var result = Rps.Battle(own, opponent) switch
+            {
+                Rps.Result.Draw =&gt; draw,
+                Rps.Result.Lose =&gt; lose,
+                Rps.Result.Win =&gt; win,
+                _ =&gt; throw new ArgumentOutOfRangeException()
+            };
+            Console.WriteLine($&quot;{map[own]} vs {map[opponent]}: {result}&quot;);
+        }
+    }
+}
+</code></pre>
+<h1 id="section-3">実行結果</h1>
+<p><img src="assets/images/rps.webp" class="img-fluid" alt="rps.png" /></p>
+<p><a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OulAIYC2ApgM4AOZAxldgMplQAmARgPYAe6AN7psY3AgDMo8SLTiFEhDMXY5q1Y15QawXEhycwZAO7YAvNgBEgIQZAIgyBlBivF5GhVp168OEwEsoFtY2gFYMgPoMgHYMgLtKgIYMzipu2B66+jgANrw0LJa2YeGABTGAigxxaPFuAG5kYNgUZHSBUFRmACK+jMC+2pUAngA8AEp0NAB0ABIcnAA0KQB8pRrqCaoA2gPDY1xDfbyMANYAuoFWgFDkVlMrg6PjQwAKtVRgB9mAvBuACbun2OdrV6yMvjQ0vDANEe1kAMORWOaqAC+LkWYgqVQAFuMaPVGksDkJsKtLhstrspjj1pwbncwISLsShj8/gCgdgYSRXIsAGaAqhMRHYAAUCOwvBMAX82GRXBoAEpIYo2WAOYwubzKvy6HRtFQoHphaLOBKpQoFnDxHzZTQIKk9JYcQAhMjAYCpKjcgVQKa8FVqjXi7A0PzAeV6+YBxY4vq0M3AIZNYxmczTbBGUwTIMJENh81DAAyGSycfSmSTzMNilTpvTAHVhbHsH4Xcm3AB9Cxx4CIsAC7ANMwAQTAAHMINQNQB5CDAIcsvocXtUACi/GYdHa2m5ksLhsZa7heAAnNyACRWIQ1OhLZ17KHYMqoo+1U/uhoa88gNQm8NQqzi2FwqFSn+Fv/xHAkj6AAbBI2KDPEBqKEB2DqgO2DElK0FuPiOwFoatx0PcGFwjS/yAjQv5Mm4sHwRQ2JpsAyHJlGibJlm+bJhWUDESUm5iLBeBgaGpZ6DadoOtyxL8oKUwiW6qoPsAq5uChGjGlRgTcty/gyZJHp6AAtDyanis62AANTYJIXoAKQmV+ixwAA7DyvHhuKr7mlZih/gof5QkAA===">sharplabでの実行結果</a></p>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/Blog/posts/20210302rockpaperscissors" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/Blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/Blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/Blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>

@@ -4,7 +4,91 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-02-25T20:28:12Z</updated>
+	<updated>2021-03-01T19:34:19Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors</id>
+		<title>じゃんけん</title>
+		<link href="https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors" />
+		<updated>2021-03-02T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
+じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。
+&lt;code&gt;switch式&lt;/code&gt; であって &lt;code&gt;if文&lt;/code&gt; ではないのでヨシ!&lt;/p&gt;
+&lt;p&gt;先駆者様&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815"&gt;https://qiita.com/tadsan/items/65d91ba6b50535fc8815&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f"&gt;Qiita&lt;/a&gt;とのクロスポストです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;勝敗判定&lt;/h1&gt;
+&lt;p&gt;じゃんけんのルールとして、&lt;code&gt;-&amp;gt;&lt;/code&gt; の右側が強いものとすると、 &lt;code&gt;Rock&lt;/code&gt; -&amp;gt; &lt;code&gt;Paper&lt;/code&gt; -&amp;gt; &lt;code&gt;Scissors&lt;/code&gt; -&amp;gt; &lt;code&gt;Rock&lt;/code&gt; の関係性が成り立ち、3つの手を周期として勝敗が決まっています。
+ここで、&lt;code&gt;Rock&lt;/code&gt; を0、&lt;code&gt;Paper&lt;/code&gt; を1、&lt;code&gt;Scissors&lt;/code&gt; を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"&gt;&lt;/p&gt;
+&lt;p&gt;このことから、&lt;code&gt;相手の手 - 自分の手&lt;/code&gt; を計算することで距離を求めることができます。
+しかし、自分の手が2で、相手の手が0だった場合、&lt;code&gt;0 - 2 == -2&lt;/code&gt;のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、&lt;code&gt;(相手の手 - 自分の手 + 3) % 3&lt;/code&gt; とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。&lt;/p&gt;
+&lt;h1 id="section-2"&gt;実装&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Rps&lt;/code&gt; (Rock-Paper-Scissors) クラスに &lt;code&gt;Hand&lt;/code&gt; (グー、チョキ、パー) と &lt;code&gt;Result&lt;/code&gt; (引き分け、負け、勝ち) の &lt;code&gt;enum&lt;/code&gt; を定義することで、&lt;code&gt;Battle&lt;/code&gt; 関数の引数と戻り値にそれぞれ意味を持たせます。&lt;/p&gt;
+&lt;p&gt;C#の &lt;code&gt;enum&lt;/code&gt; は、既定値として &lt;code&gt;int&lt;/code&gt; の0をとり、要素が増えるにつれて1増えます。そのため、この場合は、 &lt;code&gt;Rock (0)&lt;/code&gt;、 &lt;code&gt;Paper (1)&lt;/code&gt;、 &lt;code&gt;Scissors (2)&lt;/code&gt; のようにそれぞれ値を持つことができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Battle&lt;/code&gt; 関数は、自分の手と相手の手を渡すことで、&lt;code&gt;Result.Draw&lt;/code&gt;、 &lt;code&gt;Result.Lose&lt;/code&gt;、 &lt;code&gt;Result.Win&lt;/code&gt; のいずれかを返します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Rps
+{
+    public enum Hand
+    {
+        Rock,
+        Paper,
+        Scissors
+    }
+
+    public enum Result
+    {
+        Draw,
+        Lose,
+        Win
+    }
+
+    public static Result Battle(Hand own, Hand opponent)
+    {
+        var result = ((int)opponent - (int)own + 3) % 3;
+        return (Result)result;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;呼び出し側では、例に倣ってそれぞれの絵文字を割り当てます。
+&lt;code&gt;switch式&lt;/code&gt; を使うことで、&lt;code&gt;Battle&lt;/code&gt; が返す可能性のあるパターンに、 &lt;code&gt;あいこ&lt;/code&gt;、&lt;code&gt;あなたの負け&lt;/code&gt;、&lt;code&gt;あなたの勝ち&lt;/code&gt; を割り当て、一致した要素を &lt;code&gt;result&lt;/code&gt; として受け、自分の手、相手の手と一緒に表示します。 &lt;code&gt;_ =&amp;gt; throw new ArgumentOutOfRangeException()&lt;/code&gt; では、対象となる値以外の値として判定された際に該当するアームになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Program
+{
+    public static void Main()
+    {
+        const string draw = "あいこ";
+        const string win = "あなたの勝ち";
+        const string lose = "あなたの負け";
+
+        var map = new Dictionary&amp;lt;Rps.Hand, string&amp;gt;
+        {
+            [Rps.Hand.Rock] = "✊", [Rps.Hand.Paper] = "🖐", [Rps.Hand.Scissors] = "✌"
+        };
+        var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
+
+        foreach (var own in hands)
+        foreach (var opponent in hands)
+        {
+            var result = Rps.Battle(own, opponent) switch
+            {
+                Rps.Result.Draw =&amp;gt; draw,
+                Rps.Result.Lose =&amp;gt; lose,
+                Rps.Result.Win =&amp;gt; win,
+                _ =&amp;gt; throw new ArgumentOutOfRangeException()
+            };
+            Console.WriteLine($"{map[own]} vs {map[opponent]}: {result}");
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-3"&gt;実行結果&lt;/h1&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OulAIYC2ApgM4AOZAxldgMplQAmARgPYAe6AN7psY3AgDMo8SLTiFEhDMXY5q1Y15QawXEhycwZAO7YAvNgBEgIQZAIgyBlBivF5GhVp168OEwEsoFtY2gFYMgPoMgHYMgLtKgIYMzipu2B66+jgANrw0LJa2YeGABTGAigxxaPFuAG5kYNgUZHSBUFRmACK+jMC+2pUAngA8AEp0NAB0ABIcnAA0KQB8pRrqCaoA2gPDY1xDfbyMANYAuoFWgFDkVlMrg6PjQwAKtVRgB9mAvBuACbun2OdrV6yMvjQ0vDANEe1kAMORWOaqAC+LkWYgqVQAFuMaPVGksDkJsKtLhstrspjj1pwbncwISLsShj8/gCgdgYSRXIsAGaAqhMRHYAAUCOwvBMAX82GRXBoAEpIYo2WAOYwubzKvy6HRtFQoHphaLOBKpQoFnDxHzZTQIKk9JYcQAhMjAYCpKjcgVQKa8FVqjXi7A0PzAeV6+YBxY4vq0M3AIZNYxmczTbBGUwTIMJENh81DAAyGSycfSmSTzMNilTpvTAHVhbHsH4Xcm3AB9Cxx4CIsAC7ANMwAQTAAHMINQNQB5CDAIcsvocXtUACi/GYdHa2m5ksLhsZa7heAAnNyACRWIQ1OhLZ17KHYMqoo+1U/uhoa88gNQm8NQqzi2FwqFSn+Fv/xHAkj6AAbBI2KDPEBqKEB2DqgO2DElK0FuPiOwFoatx0PcGFwjS/yAjQv5Mm4sHwRQ2JpsAyHJlGibJlm+bJhWUDESUm5iLBeBgaGpZ6DadoOtyxL8oKUwiW6qoPsAq5uChGjGlRgTcty/gyZJHp6AAtDyanis62AANTYJIXoAKQmV+ixwAA7DyvHhuKr7mlZih/gof5QkAA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
+じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。
+&lt;code&gt;switch式&lt;/code&gt; であって &lt;code&gt;if文&lt;/code&gt; ではないのでヨシ!&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust7</id>
 		<title>Rustのお勉強メモ7 (テスト)</title>
@@ -2975,181 +3059,5 @@ namespace MagicOnionSample.Server.Hubs
 &lt;p&gt;マルチプレイのゲームを作るときには有効活用したいです。&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20201212createrepository</id>
-		<title>リポジトリを作成したときにやっておきたいこと</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20201212createrepository" />
-		<updated>2020-12-13T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;これ何&lt;/h1&gt;
-&lt;p&gt;リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;開発環境ごとの差異をなくすために&lt;/h1&gt;
-&lt;p&gt;開発者によってOSやエディタ等の開発環境が異なるのでルールを決めます。&lt;/p&gt;
-&lt;h2 id="git-config"&gt;git config&lt;/h2&gt;
-&lt;p&gt;WindowsとMacOS / LinuxではOSにより行の終端が異なるため、何も変更していないつもりでも、OSが異なるとdiffが発生してしまう場合があります。それを避けるために、Gitの設定でbranchをcheckoutしたときに、ファイルをどの形式で認識するかを設定します。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;true&lt;/code&gt;にすると、ファイル形式が&lt;code&gt;CRLF&lt;/code&gt;と&lt;code&gt;LF&lt;/code&gt;のどちらであってもcheckout時に&lt;code&gt;CRLF&lt;/code&gt;に変換され、commit時には自動的に&lt;code&gt;LF&lt;/code&gt;へと変換されます。
-また、&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;input&lt;/code&gt;にすると、&lt;code&gt;LF&lt;/code&gt;のままcheckoutとcommitが行われます。
-そのため、Windowsでは&lt;code&gt;true&lt;/code&gt;、MacOS / Linuxでは&lt;code&gt;input&lt;/code&gt;を指定しておくといいでしょう。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.autocrlf true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;Mac OS / Linux&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.autocrlf input
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="gitattributes"&gt;.gitattributes&lt;/h2&gt;
-&lt;p&gt;リポジトリ単位で行の終端処理を行う場合は、&lt;code&gt;.gitattributes&lt;/code&gt;をリポジトリのルートに作成して設定を行うことで、&lt;code&gt;core.autocrlf&lt;/code&gt;を設定していない開発者がいてもGitが自動的にファイルの終端を変更してくれます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;* text=auto
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;.gitattributes&lt;/code&gt;には&lt;a href="https://git-lfs.github.com/"&gt;GitLFS&lt;/a&gt;の設定をすることもできるので、音声や画像、データセットなどの容量が大きなファイルはLFSの設定をするといいかもしれません。&lt;/p&gt;
-&lt;p&gt;その他詳しくは&lt;a href="https://docs.github.com/ja/free-pro-team@latest/github/using-git/configuring-git-to-handle-line-endings"&gt;こちら (GitHub Docs, 行終端を処理するようGitを設定する)&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="gitignore"&gt;.gitignore&lt;/h2&gt;
-&lt;p&gt;プロジェクトの生成物やエディタが生成するファイルなど、プロジェクトに関わりのないファイルやディレクトリを指定しましょう。&lt;/p&gt;
-&lt;p&gt;エディタの設定ファイルに関しては、リポジトリに開発者ごとのエディタ設定を無視させるのではなく、開発者自身が&lt;code&gt;.gitignore_global&lt;/code&gt;を設定した方がいいかもしれません。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.excludesfile core.excludesfile path/to/.gitignore_global
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;MacOS / Linux&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.excludesfile core.excludesfile ~/.gitignore_global
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="editorconfig"&gt;.editorconfig&lt;/h2&gt;
-&lt;p&gt;エディタによってインデントのサイズやコードスタイルなどのフォーマットの設定が変わります。ファイルごとにバラバラなフォーマットが適用されてしまうことを避けるために&lt;a href="https://editorconfig.org/"&gt;EditorConfig&lt;/a&gt;を利用して、フォーマットスタイルを統一させます。EditorConfigはJetbrainsのIDEやVisualStudio等のIDEでは標準で搭載しており、Visual Studio Codeなどのエディタでもプラグインをインストールすることで利用することができるようになります。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;.editorconfig&lt;/code&gt;を作成し、エディタのフォーマット機能やEditorConfig対応のcliを利用することで、そのリポジトリのファイルを決まったルールでフォーマットすることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;root = true
-
-# すべてのファイル
-[*]
-end_of_line = lf              # フォーマット時に終端をLFに変換 .gitattributesで指定してるならいらないかも
-charset = utf-8
-insert_final_newline = true   # ファイルの最後に改行
-indent_style = space          # インデントはスペースで
-indent_size = 4               # インデント4
-
-# jsonとymlファイル
-[*.{json, yml}]
-indent_size = 2               # インデント2
-...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="ci-cd"&gt;CI / CD&lt;/h1&gt;
-&lt;p&gt;Unit Testや正しくファイルがフォーマットされているかのチェック、Releaseの作成、デプロイ等を自動化することによって、繰り返しの作業が楽になるので可能ならやっておきたいです。&lt;/p&gt;
-&lt;p&gt;以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合&lt;/p&gt;
-&lt;h2 id="unit-test"&gt;Unit test&lt;/h2&gt;
-&lt;p&gt;GitHub Workflowの&lt;code&gt;.NET Core&lt;/code&gt;を選択すれば必要最低限のWorkflowは実現できます。&lt;/p&gt;
-&lt;p&gt;リポジトリにコミットされた際にテストを実行し、一つでもテストが通らなかった場合は以下のように確認することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Unit Test
-
-on: [push, pull_request]
-
-jobs:
-  test:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_test_fail.webp" class="img-fluid" alt="github action test failed"&gt;&lt;/p&gt;
-&lt;h2 id="code-format"&gt;Code format&lt;/h2&gt;
-&lt;p&gt;EditorConfigを設定しているとdotnet toolの&lt;code&gt;dotnet-format&lt;/code&gt;を使うことでEditorConfigに合ったファイルのフォーマットの確認ができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet tool update -g dotnet-format
-dotnet format --check
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GitHub Workflowの&lt;code&gt;.NET Core&lt;/code&gt;をベースにフォーマットを実行し、1つでもファイルがフォーマットされればWorkflowを失敗させるWorkflowを作成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Lint
-
-on: [push, pull_request]
-
-jobs:
-  format:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Install dotnet-format
-      run: dotnet tool update -g dotnet-format
-    - name: Lint
-      run: dotnet format --check --verbosity diagnostic
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_lint_fail.webp" class="img-fluid" alt="github action lint failed"&gt;&lt;/p&gt;
-&lt;h1 id="release"&gt;Releaseの作成&lt;/h1&gt;
-&lt;p&gt;Releaseでは、Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします。次の例では.dllファイルをアップロードします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Release
-
-on:
-  push:
-    tags: 
-    - 'v[0-9]+.[0-9]+.[0-9]+*' # v0.0.1のようなTagがpushされたとき
-
-jobs:  
-  release:
-    runs-on: ubuntu-latest
-    needs: [test]
-    
-    steps:
-    
-    # Build
-    - uses: actions/checkout@v2
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Build
-      run: dotnet build -c Release
-    
-    # リリースを作成
-    - name: Create Release 
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        # body |
-        # hoge hoge # Releaseコメント
-        draft: false
-        prerelease: false
-
-    # リリースの成果物にHello.dllを追加
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./src/Hello/bin/Release/net5.0/Hello.dll
-        asset_name: Hello.dll
-        asset_content_type: application/octet-stream # .dllファイルのcontent type
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Workflowを実行すると次のようなReleaseが作成されます。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_release.webp" class="img-fluid" alt="github action release"&gt;&lt;/p&gt;
-&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません。
-開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います。&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。&lt;/p&gt;</summary>
 	</entry>
 </feed>
