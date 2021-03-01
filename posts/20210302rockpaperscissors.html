@@ -88,7 +88,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 <p><a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815">https://qiita.com/tadsan/items/65d91ba6b50535fc8815</a></p>
 <p><a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f">Qiita</a>とのクロスポストです。</p>
 <h1 id="section-1">勝敗判定</h1>
-<p>じゃんけんのルールとして、<code>-&gt;</code> の右側が強いものとすると、 <code>Rock</code> -&gt; <code>Paper</code> -&gt; <code>Scissors</code> -&gt; <code>Rock</code> の関係性が成り立ち、3つの手を周期として勝敗が決まっています。
+<p>じゃんけんのルールとして、<code>-&gt;</code> の右側が強いものとすると、 <code>Rock</code> -&gt; <code>Paper</code> -&gt; <code>Scissors</code> -&gt; <code>Rock</code> の関係性が成り立ち、3つの手を周期として勝敗が決まります。
 ここで、<code>Rock</code> を0、<code>Paper</code> を1、<code>Scissors</code> を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。</p>
 <p><img src="assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png" /></p>
 <p>このことから、<code>相手の手 - 自分の手</code> を計算することで距離を求めることができます。
