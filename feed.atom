@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/Blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-03-01T20:51:38Z</updated>
+	<updated>2021-03-02T14:02:50Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors</id>
 		<title>じゃんけん</title>
@@ -109,7 +109,7 @@
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ7 (ここ)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;テスト&lt;/h1&gt;
 &lt;h2 id="section-2"&gt;テストの記述法&lt;/h2&gt;
 &lt;ol&gt;
@@ -325,7 +325,7 @@ fn foo() {
 &lt;li&gt;メモ6 (ここ)&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;ジェネリクス&lt;/h1&gt;
 &lt;p&gt;具体型や他のプロパティの抽象的な代役&lt;/p&gt;
 &lt;ul&gt;
@@ -680,7 +680,7 @@ fn longest_with_an_announcement&amp;lt;'a, T&amp;gt;(x: &amp;amp;'a str, y: &amp
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コレクション&lt;/h1&gt;
 &lt;div class="table-responsive"&gt;
 &lt;table class="table"&gt;
@@ -1126,7 +1126,7 @@ fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
 &lt;p&gt;モジュールシステム&lt;/p&gt;
 &lt;div class="table-responsive"&gt;
@@ -1404,7 +1404,7 @@ pub fn eat_at_restaurant() {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
 &lt;h2 id="section-2"&gt;定義とインスタンス化&lt;/h2&gt;
 &lt;p&gt;Rustの構造体の定義は &lt;code&gt;struct&lt;/code&gt; キーワードを使用し、&lt;code&gt;key: value&lt;/code&gt; ペアでフィールドを宣言できる。&lt;/p&gt;
@@ -1804,7 +1804,7 @@ if let Coin::Quarter(stete) = coint {
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
 &lt;h2 id="section-2"&gt;所有権規則&lt;/h2&gt;
 &lt;ul&gt;
@@ -2102,7 +2102,7 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello_rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
 &lt;h2 id="rustup"&gt;rustup&lt;/h2&gt;
 &lt;p&gt;Rustのバージョンと関連するツールと管理するツール。&lt;/p&gt;
