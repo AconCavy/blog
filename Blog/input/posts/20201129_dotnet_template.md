@@ -2,7 +2,7 @@
 Title: dotnet newのカスタムテンプレート
 Published: 11/29/2020
 Updated: 12/08/2020
-Tags: [.NET] 
+Tags: [dotnet] 
 ---
 
 # はじめに

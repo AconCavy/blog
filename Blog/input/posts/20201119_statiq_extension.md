@@ -2,7 +2,7 @@
 Title: Statiqがmarkdownから生成するhtmlのカスタマイズ
 Published: 11/19/2020
 Updated: 11/19/2020
-Tags: [.NET, Statiq] 
+Tags: [dotnet, Statiq] 
 ---
 
 # はじめに

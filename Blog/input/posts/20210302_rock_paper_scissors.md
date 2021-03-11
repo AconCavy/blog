@@ -2,7 +2,7 @@
 Title: じゃんけん
 Published: 3/02/2021
 Updated: 3/02/2021
-Tags: [C#]
+Tags: [csharp]
 ---
 
 # はじめに
