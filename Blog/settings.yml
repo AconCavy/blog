@@ -10,14 +10,15 @@ PostSources: posts/*
 IsPost: => Outputs.FilterSources(Context.GetString("PostSources")).ContainsById(Document)
 Layout: /_layout.cshtml
 Host: aconcavy.github.io
-LinkRoot: /Blog
+LinkRoot: /blog
 LinksUseHttps: true
+LinkLowercase: true
 UseCache: true
 DateTimeInputCulture: ja-JP
 
 Copyright: => $"Copyright © 2020-{DateTime.Now.Year} AconCavy"
 
 GitHubOwner: AconCavy
-GitHubName: Blog
+GitHubName: blog
 GitHubToken: => Config.FromSetting<string>("GITHUB_TOKEN")
 GitHubBranch: gh-pages
