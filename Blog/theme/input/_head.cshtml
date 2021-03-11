@@ -2,7 +2,7 @@
     var site = Document.GetString("SiteTitle");
     var title = Document.GetString("Title") ?? site;
     var description = Document.GetString("Lead") ?? string.Empty;
-    var image = Context.GetLink() + "/assets/icon.webp";
+    var image = Context.GetLink("/assets/icon.webp");
     var url = Document.GetLink();
 }
 
