@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<id>https://aconcavy.github.io/Blog</id>
+	<id>https://aconcavy.github.io/blog</id>
 	<title />
-	<link rel="self" href="https://aconcavy.github.io/Blog" />
+	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-03-11T15:14:26Z</updated>
+	<updated>2021-03-11T15:39:12Z</updated>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors</id>
+		<id>https://aconcavy.github.io/blog/posts/20210302rockpaperscissors</id>
 		<title>じゃんけん</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210302rockpaperscissors" />
+		<link href="https://aconcavy.github.io/blog/posts/20210302rockpaperscissors" />
 		<updated>2021-03-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
@@ -20,7 +20,7 @@
 &lt;h1 id="section-1"&gt;勝敗判定&lt;/h1&gt;
 &lt;p&gt;じゃんけんのルールとして、&lt;code&gt;-&amp;gt;&lt;/code&gt; の右側が強いものとすると、 &lt;code&gt;Rock&lt;/code&gt; -&amp;gt; &lt;code&gt;Paper&lt;/code&gt; -&amp;gt; &lt;code&gt;Scissors&lt;/code&gt; -&amp;gt; &lt;code&gt;Rock&lt;/code&gt; の関係性が成り立ち、3つの手を周期として勝敗が決まります。
 ここで、&lt;code&gt;Rock&lt;/code&gt; を0、&lt;code&gt;Paper&lt;/code&gt; を1、&lt;code&gt;Scissors&lt;/code&gt; を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"&gt;&lt;/p&gt;
 &lt;p&gt;このことから、&lt;code&gt;相手の手 - 自分の手&lt;/code&gt; を計算することで距離を求めることができます。
 しかし、自分の手が2で、相手の手が0だった場合、&lt;code&gt;0 - 2 == -2&lt;/code&gt;のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、&lt;code&gt;(相手の手 - 自分の手 + 3) % 3&lt;/code&gt; とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。&lt;/p&gt;
 &lt;h1 id="section-2"&gt;実装&lt;/h1&gt;
@@ -87,26 +87,26 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="section-3"&gt;実行結果&lt;/h1&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust7</id>
+		<id>https://aconcavy.github.io/blog/posts/20210130hellorust7</id>
 		<title>Rustのお勉強メモ7 (テスト)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210130hellorust7" />
+		<link href="https://aconcavy.github.io/blog/posts/20210130hellorust7" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ7です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ7 (ここ)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
@@ -310,20 +310,20 @@ fn foo() {
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ7です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210130hellorust6</id>
+		<id>https://aconcavy.github.io/blog/posts/20210130hellorust6</id>
 		<title>Rustのお勉強メモ6 (ジェネリクス)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210130hellorust6" />
+		<link href="https://aconcavy.github.io/blog/posts/20210130hellorust6" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ6 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;ジェネリクス&lt;/h1&gt;
@@ -665,20 +665,20 @@ fn longest_with_an_announcement&amp;lt;'a, T&amp;gt;(x: &amp;amp;'a str, y: &amp
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210129hellorust5</id>
+		<id>https://aconcavy.github.io/blog/posts/20210129hellorust5</id>
 		<title>Rustのお勉強メモ5 (コレクション | エラー処理)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210129hellorust5" />
+		<link href="https://aconcavy.github.io/blog/posts/20210129hellorust5" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ5 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コレクション&lt;/h1&gt;
@@ -1111,20 +1111,20 @@ fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210129hellorust4</id>
+		<id>https://aconcavy.github.io/blog/posts/20210129hellorust4</id>
 		<title>Rustのお勉強メモ4 (プロジェクトの管理)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210129hellorust4" />
+		<link href="https://aconcavy.github.io/blog/posts/20210129hellorust4" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ4 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
@@ -1389,20 +1389,20 @@ pub fn eat_at_restaurant() {
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210128hellorust3</id>
+		<id>https://aconcavy.github.io/blog/posts/20210128hellorust3</id>
 		<title>Rustのお勉強メモ3 (構造体 | 列挙型)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210128hellorust3" />
+		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust3" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ3 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
@@ -1789,20 +1789,20 @@ if let Coin::Quarter(stete) = coint {
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210128hellorust2</id>
+		<id>https://aconcavy.github.io/blog/posts/20210128hellorust2</id>
 		<title>Rustのお勉強メモ2 (所有権)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210128hellorust2" />
+		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust2" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;メモ2 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
@@ -2087,20 +2087,20 @@ let slice = &amp;amp;a[1..3]; // [2, 3];
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210128hellorust1</id>
+		<id>https://aconcavy.github.io/blog/posts/20210128hellorust1</id>
 		<title>Rustのお勉強メモ1 (ツール | プログラミングの概念)</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210128hellorust1" />
+		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust1" />
 		<updated>2021-02-02T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;メモ1 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/Blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
 &lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
@@ -2457,9 +2457,9 @@ for x in (1..4).rev() {
 		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210121uploadnuget</id>
+		<id>https://aconcavy.github.io/blog/posts/20210121uploadnuget</id>
 		<title>GitHub ActionsからNuGetにパッケージをアップロードした</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210121uploadnuget" />
+		<link href="https://aconcavy.github.io/blog/posts/20210121uploadnuget" />
 		<updated>2021-01-21T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;
@@ -2503,7 +2503,7 @@ for x in (1..4).rev() {
 生成に成功すると、&lt;code&gt;Manage&lt;/code&gt;パネルに生成したAPIキーが並ぶので、&lt;code&gt;Copy&lt;/code&gt;でAPIキーをコピーします。一度ページから離れてしまうと、再びコピーできなくなるので、できなくなった場合は&lt;code&gt;Regenerate&lt;/code&gt;から再生成します。&lt;/p&gt;
 &lt;p&gt;コピーしたAPIキーをGitHubリポジトリの&lt;code&gt;Secrets&lt;/code&gt;に登録することで、GitHub Actionsの環境変数としてアクセスできるようになります。リポジトリの&lt;code&gt;Setting -&amp;gt; Secrets -&amp;gt; New repository secret&lt;/code&gt;で新しいシークレットを作成し、名前とAPIキーを登録します。今回は&lt;code&gt;NUGET_API_KEY&lt;/code&gt;として登録しました。&lt;/p&gt;
 &lt;h1 id="workflow"&gt;Workflowの作成&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://aconcavy.github.io/Blog/20201212createrepository"&gt;リポジトリを作成したときにやっておきたいこと&lt;/a&gt;のReleaseの作成をもとにWorkflowを作成します。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://aconcavy.github.io/blog/20201212createrepository"&gt;リポジトリを作成したときにやっておきたいこと&lt;/a&gt;のReleaseの作成をもとにWorkflowを作成します。&lt;/p&gt;
 &lt;p&gt;RelaseのWorkflowを実行するトリガーとして、&lt;code&gt;v1.0.0&lt;/code&gt;や&lt;code&gt;v1.0.0-alpha&lt;/code&gt;のようなGitのタグがpushされたときに限定します。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;on:
   push:
@@ -2633,9 +2633,9 @@ jobs:
 &lt;p&gt;適当にコミットを作成し、&lt;code&gt;v0.0.1-alpha&lt;/code&gt;というタグをつけ、GitHub上にプッシュします。&lt;/p&gt;
 &lt;p&gt;作成したWorkflowが実行され、テスト、ビルド、アップロード、Releaseの作成が行われます。&lt;/p&gt;
 &lt;p&gt;NuGetへアップロード直後は&lt;code&gt;Unlisted Packages&lt;/code&gt;の状態でしたが、しばらくすると&lt;code&gt;Published Packages&lt;/code&gt;になりました。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/Blog/assets/images/nuget_upload.webp" class="img-fluid" alt="succeeded upload to nuget"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/nuget_upload.webp" class="img-fluid" alt="succeeded upload to nuget"&gt;&lt;/p&gt;
 &lt;p&gt;GitHubのリリースのほうは、ちゃんと&lt;code&gt;Pre-Release&lt;/code&gt;で作成されています。
-&lt;img src="https://aconcavy.github.io/Blog/assets/images/gha_prerelease.webp" class="img-fluid" alt="pre-release"&gt;&lt;/p&gt;
+&lt;img src="https://aconcavy.github.io/blog/assets/images/gha_prerelease.webp" class="img-fluid" alt="pre-release"&gt;&lt;/p&gt;
 &lt;h1 id="section-1"&gt;まとめ&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;GitHub ActionsでNuGetパッケージを作成した。&lt;/li&gt;
@@ -2647,9 +2647,9 @@ jobs:
 		<summary>&lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://aconcavy.github.io/Blog/posts/20210103magiconion</id>
+		<id>https://aconcavy.github.io/blog/posts/20210103magiconion</id>
 		<title>MagicOnionに入門した</title>
-		<link href="https://aconcavy.github.io/Blog/posts/20210103magiconion" />
+		<link href="https://aconcavy.github.io/blog/posts/20210103magiconion" />
 		<updated>2021-02-24T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;
