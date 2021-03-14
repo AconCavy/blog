@@ -1,12 +1,12 @@
 html {
   font-size: 16px;
-  font-family: $font-sans-serif;
   word-break: normal;
   overflow-wrap: break-word;
 }
 
 body {
   background-color: $background;
+  font-family: "source-han-sans-japanese", sans-serif;
   color: $primary;
 }
 
