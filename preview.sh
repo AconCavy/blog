@@ -1,2 +1,2 @@
 #!/bin/sh
-dotnet run -p Blog -- preview --virtual-dir blog/
+dotnet run --project Blog -- preview --virtual-dir blog/
