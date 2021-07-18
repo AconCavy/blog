@@ -13,7 +13,7 @@ Host: aconcavy.github.io
 LinkRoot: /blog
 LinksUseHttps: true
 LinkLowercase: true
-UseCache: true
+UseCache: false
 DateTimeInputCulture: ja-JP
 
 Copyright: => $"Copyright © 2020-{DateTime.Now.Year} AconCavy"
