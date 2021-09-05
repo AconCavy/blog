@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-07-18T19:16:24Z</updated>
+	<updated>2021-09-05T17:21:19Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20210302rockpaperscissors</id>
 		<title>じゃんけん</title>
@@ -92,2369 +92,6 @@
 </content>
 		<summary>&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210130hellorust7</id>
-		<title>Rustのお勉強メモ7 (テスト)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210130hellorust7" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ7です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ7 (ここ)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;テスト&lt;/h1&gt;
-&lt;h2 id="section-2"&gt;テストの記述法&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;必要なデータや状態をセットアップする。&lt;/li&gt;
-&lt;li&gt;テスト対象のコードを実行する。&lt;/li&gt;
-&lt;li&gt;結果が想定通りであることを断定する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="section-3"&gt;テスト関数の構成&lt;/h2&gt;
-&lt;p&gt;テスト対象となる関数に &lt;code&gt;test&lt;/code&gt; 属性を付けることで、&lt;code&gt;cargo test&lt;/code&gt; コマンドでテストを実行できる。
-&lt;code&gt;panic!&lt;/code&gt; マクロを使うことで、テストを強制的に失敗させることもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests{
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-
-    #[test]
-    fn fail() {
-        panic!("fail");
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="assert"&gt;assert!マクロ&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;assert!&lt;/code&gt; マクロは標準ライブラリで提供され、テスト内の条件が &lt;code&gt;true&lt;/code&gt; と評価されることを確かめることができる。 テスト内の条件が &lt;code&gt;false&lt;/code&gt; の場合、テストは失敗する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests{
-    #[test]
-    fn success() {
-        assert!(true);
-    }
-
-    #[test]
-    fn fail() {
-        assert!(false);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="assert_eqassert_ne"&gt;assert_eq!とassert_ne!マクロ&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;assert_eq!&lt;/code&gt; マクロは、二つの引数を比べて等しいことを評価し、 &lt;code&gt;assert_ne!&lt;/code&gt; マクロは、二つの引数を比べて等しくないことを評価する。
-内部的にはそれぞれ &lt;code&gt;==&lt;/code&gt; と &lt;code&gt;!=&lt;/code&gt; 演算子を使用している。比較対象の値は &lt;code&gt;PartialEq&lt;/code&gt; と &lt;code&gt;Debug&lt;/code&gt; トレイトを実装していなければならない。 (オリジナルの構造体やenumには&lt;code&gt;#[derive(PartialEq, Debug)]&lt;/code&gt; という注釈を追加することで利用可能。)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests{
-    #[test]
-    fn eq_success() {
-        assert_eq!(2 + 2, 4);
-    }
-
-    #[test]
-    fn eq_fail() {
-        assert_eq!(2 + 3, 4);
-    }
-
-    #[test]
-    fn eq_success() {
-        assert_ne!(2 + 3, 4);
-    }
-
-    #[test]
-    fn eq_fail() {
-        assert_ne!(2 + 2, 4);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-4"&gt;カスタムの失敗メッセージ&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;assert!&lt;/code&gt; 、 &lt;code&gt;assert_eq!&lt;/code&gt; 、 &lt;code&gt;assert_ne!&lt;/code&gt; の追加引数として、カスタムメッセージを指定できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests {
-    #[test]
-    fn custom_message() {
-        let actual = String::from("hello");
-        let expected = String::from("world");
-        assert_eq!(actual, expected, "actual is {}", actual);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="should_panic"&gt;should_panic&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;should_panic&lt;/code&gt; 属性をテスト対象の関数に追加することで、パニックが発生しない場合にはテストを失敗させることができる。
-&lt;code&gt;should_panic&lt;/code&gt; 属性に、 &lt;code&gt;expected&lt;/code&gt; 引数を追加して、失敗メッセージに与えられたテキストが含まれているかを評価することもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests {
-    #[test]
-    #[should_panic]
-    fn expect_panic() {
-        panic!("foo");
-    }
-
-    #[test]
-    #[should_panic(expected = "foo")]
-    fn expect_panic_with_text() {
-        panic!("foo");
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="resultt-e"&gt;Result&amp;lt;T, E&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; を使ったテストを書くこともできる。
-テストが成功すれば &lt;code&gt;Ok&lt;/code&gt; を、 失敗すればパニックの代わりに &lt;code&gt;Err&lt;/code&gt; を返す。
-&lt;code&gt;?&lt;/code&gt; 演算子をテストの中で使えるようになる。
-&lt;code&gt;should_panic&lt;/code&gt; 属性は使えない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests {
-    #[test]
-    fn return_result() -&amp;gt; Result&amp;lt;(), String&amp;gt; {
-        if 2 + 2 == 4 {
-            Ok(())
-        } else {
-            Err(String::from("error"))
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-5"&gt;テストの実行のされ方を制御する&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;cargo test&lt;/code&gt; にオプションを指定することで動作を変更することができる。&lt;/p&gt;
-&lt;h3 id="section-6"&gt;テストを並行または連続して実行する&lt;/h3&gt;
-&lt;p&gt;標準では複数のテストを実行するとスレッドを使用して並列に実行されるが、 &lt;code&gt;--test-threads&lt;/code&gt; オプションを指定することで、実行されるスレッド数を指定できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo test -- --test-threads=1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;関数の出力を表示する&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;println!&lt;/code&gt; の出力は、テストでは表示されないため、 &lt;code&gt;--nocapture&lt;/code&gt; オプションを指定することで、出力を表示できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo test -- --nocapture
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-8"&gt;名前でテストの一部を実行する&lt;/h3&gt;
-&lt;p&gt;テストの関数名を指定することで、テストを個別に実施することができる。
-テスト名の一部を指定できるため、その値に合致するあらゆるテストが実行される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo test some_
-
-running 2 tests
-test tests::some_function_1 ... ok
-test tests::some_function_2 ... ok
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-9"&gt;テストを無視する&lt;/h3&gt;
-&lt;p&gt;テストに &lt;code&gt;ignore&lt;/code&gt; 属性を追加すると、テストを除外することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[cfg(test)]
-mod tests {
-    #[test]
-    #[ignore]
-    fn ignored_function() { // 実行されない
-        assert!(true);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;--ignored&lt;/code&gt; オプションを指定すると、 &lt;code&gt;ignore&lt;/code&gt; 属性が追加されたテストのみが実行される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo test -- --ignored
-
-running 1 tests
-test tests::ignored_function ... ok
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-10"&gt;テストの体系化&lt;/h2&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;テスト&lt;/th&gt;
-&lt;th&gt;説明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;単体テスト&lt;/td&gt;
-&lt;td&gt;個別に1回に1モジュールをテストし、非公開のインターフェースもテストすることがある。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;結合テスト&lt;/td&gt;
-&lt;td&gt;公開インターフェイスのみ使用する。1テストにつき複数のモジュールを用いることもある。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h3 id="section-11"&gt;単体テスト&lt;/h3&gt;
-&lt;p&gt;テスト対象となるコードとともに、 &lt;code&gt;src&lt;/code&gt; ディレクトリの各ファイルに置く。非公開関数もテストできる。
-慣習として、各ファイルに &lt;code&gt;tests&lt;/code&gt; という名前のモジュールを作り、テスト関数を含ませ、そのモジュールを &lt;code&gt;cfg(test)&lt;/code&gt; で注釈する。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cfg(test)&lt;/code&gt; 注釈を付与したモジュールは、 &lt;code&gt;cargo test&lt;/code&gt; コマンド実行時のみコンパイルが実行されるようになる。&lt;/p&gt;
-&lt;h3 id="section-12"&gt;結合テスト&lt;/h3&gt;
-&lt;p&gt;Rustにおける結合テストは、完全にライブラリ外のものである。
-結合テストを作成するには、 &lt;code&gt;tests&lt;/code&gt; ディレクトリを作成する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;sample/
-|- src/
-|  |- main.rs
-|  |- lib.rs
-|
-|- tests/
-   |- foo_test.rs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Cargoは &lt;code&gt;tests&lt;/code&gt; ディレクトリを特別に扱い、 &lt;code&gt;cargo test&lt;/code&gt; コマンド実行時のみディレクトリ内のファイルをコンパイルするため、 &lt;code&gt;#[cfg(test)]&lt;/code&gt; 注釈は必要ない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;extern crate sample;
-
-#[test]
-fn foo() {
-    assert!(sample::foo());
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-13"&gt;結合テスト内のサブモジュール&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;tests&lt;/code&gt; ディレクトリの各ファイルは個別のクレートとしてコンパイルされる。
-また、 &lt;code&gt;tests&lt;/code&gt; ディレクトリのサブディレクトリ内のファイルは個別のクレートとしてコンパイルされたり、テスト出力に区域が表示されることはない。&lt;/p&gt;
-&lt;h4 id="section-14"&gt;バイナリクレート用の結合テスト&lt;/h4&gt;
-&lt;p&gt;ライブラリクレートのみが、他のクレートが使用できる関数をさらすことができるため、 &lt;code&gt;main.rs&lt;/code&gt; ファイルに定義された関数をインポートすることはできない。&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ7です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210130hellorust6</id>
-		<title>Rustのお勉強メモ6 (ジェネリクス)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210130hellorust6" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ6 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;ジェネリクス&lt;/h1&gt;
-&lt;p&gt;具体型や他のプロパティの抽象的な代役&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ジェネリック&lt;/li&gt;
-&lt;li&gt;トレイト&lt;/li&gt;
-&lt;li&gt;ライフタイム&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-2"&gt;ジェネリックなデータ型&lt;/h2&gt;
-&lt;p&gt;関数シグネチャや構造体などの要素の定義を生成に使用できる。&lt;/p&gt;
-&lt;h3 id="section-3"&gt;関数定義&lt;/h3&gt;
-&lt;p&gt;ジェネリックな関数を定義するには、関数名の後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけ、内部にジェネリック型 (例では &lt;code&gt;T&lt;/code&gt;) を定義することで、ジェネリック型として扱うことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn generic_function&amp;lt;T&amp;gt; (arg: &amp;amp;T) - &amp;gt; T { /* 省略 */ }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="enum"&gt;構造体とenum定義&lt;/h3&gt;
-&lt;p&gt;構造体とenumも同様に、名前の後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけて宣言する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct GenericStruct&amp;lt;T&amp;gt; {
-    field_1: T,
-    field_2: T,
-}
-
-enum GenericEnum&amp;lt;T&amp;gt; {
-    Value1(T),
-    Value2(T),
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;複数の型を受け入れる場合は、ジェネリック型を増やすことで対処できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct GenericStruct&amp;lt;T, U&amp;gt; {
-    field_1: T,
-    field_2: U,
-}
-
-enum GenericEnum&amp;lt;T, U&amp;gt; {
-    Value1(T),
-    Value2(U),
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-4"&gt;メソッド定義&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; の直後に &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; をつけて宣言する。
-次の例では、 &lt;code&gt;impl&lt;/code&gt; の後に &lt;code&gt;T&lt;/code&gt; をジェネリックな方として宣言することで、コンパイラは &lt;code&gt;Point&lt;/code&gt; の &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; 内がジェネリックな型であることを認識する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Point&amp;lt;T&amp;gt; {
-    x: T,
-    y: T,
-}
-
-impl&amp;lt;T&amp;gt; Point&amp;lt;T&amp;gt; {
-    fn x(&amp;amp;self) -&amp;gt; &amp;amp;T {
-        &amp;amp;self.x
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-5"&gt;ジェネリクスを使用したコードのパフォーマンス&lt;/h3&gt;
-&lt;p&gt;Rustでは、ジェネリクスの型の使用時のパフォーマンスは、具体的な型の使用時のパフォーマンスと変わらない。&lt;/p&gt;
-&lt;p&gt;ジェネリクスを使用しているコードの&lt;strong&gt;単相化&lt;/strong&gt; (コンパイル時に使用されている具体的な型を入れること) をコンパイル時に行うことで、達成している。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; enumの例では、 &lt;code&gt;i32&lt;/code&gt; と &lt;code&gt;f64&lt;/code&gt; が使われている場合、それぞれの型の &lt;code&gt;Option&lt;/code&gt; が生成される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let integer = Some(5);
-    let float = Some(5.0);
-}
-
-// ---
-
-enum Option_i32 {
-    Some(i32),
-    None,
-}
-
-enum Option_f64 {
-    Some(i32),
-    None,
-}
-
-fn main() {
-    let integer = Option_i32::Some(5);
-    let float = Option_f64::Some(5.0);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-6"&gt;トレイト&lt;/h2&gt;
-&lt;p&gt;特定の型に存在し、他の型と共有できる機能について知らせることができる。トレイトを使用することで、共有のふるまいを抽象的に定義できる。別の言語ではインターフェースとも呼ばれる。&lt;/p&gt;
-&lt;h3 id="section-7"&gt;トレイト定義&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;trait&lt;/code&gt; キーワードを使用してトレイトを定義する。トレイトを実装する型はそれぞれ、メソッドの本体に独自のふるまいを提供しなければならない。
-次の例では、 &lt;code&gt;Summary&lt;/code&gt; トレイトの定義であり、このトレイトを実装している型は、 &lt;code&gt;summarize&lt;/code&gt; メソッドを定義することを強制される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub trait Summary {
-    fn summarize(&amp;amp;self) -&amp;gt; String;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-8"&gt;トレイトを型に実装する&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; の後に実装したいトレイト名と &lt;code&gt;for&lt;/code&gt; キーワード、トレイトの実装対象の型名を記述し、トレイトが定義しているメソッドシグネチャを実装する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
-}
-
-impl Summary for NewsArticle {
-    fn summarize(&amp;amp;self) -&amp;gt; String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
-    }
-}
-
-pub struct Tweet {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub retweet: bool,
-}
-
-impl Summary for Tweet {
-    fn summarize(&amp;amp;self) -&amp;gt; String {
-        format!("{}: {}", self.username, self.content)
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;注意として、トレイトか対象の型が自分のクレートに固有であるときのみ、型に対してトレイトを実装でき、外部のトレイトを外部の型に対して実装することはできない。&lt;/p&gt;
-&lt;h3 id="section-9"&gt;デフォルト実装&lt;/h3&gt;
-&lt;p&gt;全ての型の全メソッドに対して実装を要求せずに、デフォルトの振る舞いを定義することができる。その場合、メソッドシグネチャを記述しないことで、デフォルト実装が利用されるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub trait Summary {
-    fn summarize(&amp;amp;self) -&amp;gt; String {
-        String::from("(Read more...)")
-    }
-}
-
-impl Summary for NewsArticle { }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-10"&gt;引数としてのトレイト&lt;/h3&gt;
-&lt;p&gt;引数の &lt;code&gt;item&lt;/code&gt; に、&lt;code&gt;impl&lt;/code&gt; キーワードとトレイト名を指定する (&lt;code&gt;impl Trait&lt;/code&gt; 構文) ことで、トレイトを実装している型を受け入れることができるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item: &amp;amp;impl Summary) {
-    println!("{}", item.summarize());
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-11"&gt;トレイト境界構文&lt;/h4&gt;
-&lt;p&gt;ジェネリクスを利用してトレイトを引数として受けることもできる。型引数の後ろにコロンを挟んでトレイト名を記述することで、トレイトを実装している型のみ引数として渡すことができる、&lt;strong&gt;トレイト境界&lt;/strong&gt;を置くことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify&amp;lt;T: Summary&amp;gt;(item: &amp;amp;T) {
-    println!("{}", item.summarize());
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;impl Trait&lt;/code&gt; 構文で複数の引数を受ける場合、それぞれトレイトを実装しているが、異なる型を受けることが可能になる。一方、複数の引数を全て同じ型として受けたい場合は、トレイト境界を使うことで実現できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item1: &amp;amp;impl Summary, item2: &amp;amp;impl Summary) { /* 省略 */ } // 異なる型の可能性
-
-pub fn notify&amp;lt;T: Summary&amp;gt;(item1: &amp;amp;T, item2: &amp;amp;T) { /* 省略 */ } // 同じ型
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-12"&gt;複数のトレイト境界&lt;/h4&gt;
-&lt;p&gt;複数のトレイト境界を指定する場合には、 &lt;code&gt;+&lt;/code&gt; 構文を使う。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;pub fn notify(item: &amp;amp;(impl Summary + Display) { /* 省略 */ }
-
-pub fn notify&amp;lt;T: Summary + Display&amp;gt;(item: &amp;amp;T) { /* 省略 */ }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="where"&gt;where句&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;where&lt;/code&gt; 句を使うことで、複数のトレイト境界を簡潔に記述することもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn some_function&amp;lt;T: Display + Clone, U: Clone + Debug&amp;gt;(t: &amp;amp;T, u: &amp;amp;U) -&amp;gt; i32 { /* 省略 */ }
-
-fn some_function&amp;lt;T, U&amp;gt;(t: &amp;amp;T, u: &amp;amp;U) -&amp;gt; i32
-    where T: Display + Clone,
-          U: Clone + Debug
-{ /* 省略 */ }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-13"&gt;トレイトを実装している型を返す&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;impl Trait&lt;/code&gt; 構文を戻り値に指定することで、トレイトを実装する型を返すことができる。 ただし、 &lt;code&gt;impl Trait&lt;/code&gt; 構文では、一種類の型を返す場合のみ有効。複数の型を返す可能性があるコードはエラーになる。トレイトオブジェクトで異なる型の値を許容する場合は、別の手段となる。 (17章)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn returns_summarizable() impl Summary { // OK
-    Tweet { /* 省略 */ }
-}
-
-fn returns_summarizable(flag: bool) impl Summary { // NG
-    if flag {
-        Tweet { /* 省略 */ }
-    } else {
-        NewsArticle { /* 省略 */ }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-14"&gt;トレイト境界を使用してメソッド実装を条件する&lt;/h3&gt;
-&lt;p&gt;特定のトレイトを実装する型のみメソッド実装を強制することもできる。
-次の例では、 &lt;code&gt;new&lt;/code&gt; メソッドは &lt;code&gt;T&lt;/code&gt; がどの型であっても実装されるが、 &lt;code&gt;cmp_display&lt;/code&gt; メソッドは &lt;code&gt;T&lt;/code&gt; が &lt;code&gt;Display&lt;/code&gt; と &lt;code&gt;PartialOrd&lt;/code&gt; トレイトを実装した型のみ実装される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt::Display;
-
-struct Pair&amp;lt;T&amp;gt; {
-    x: T,
-    y: T,
-}
-
-impl&amp;lt;T&amp;gt; Pair&amp;lt;T&amp;gt; {
-    fn new(x: T, y: T) -&amp;gt; Self {
-        Self { x, y }
-    }
-}
-
-impl&amp;lt;T: Display + PartialOrd&amp;gt; Pair&amp;lt;T&amp;gt; {
-    fn cmp_display(&amp;amp;self) {
-        if(self.x &amp;gt;= self.y) {
-            println!("x = {}", self.x);
-        } else {
-            println!("y = {}", self.y);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;別のトレイトを実装するあらゆる型に対するトレイト実装を条件分けすることもできる。トレイト境界を満たすあらゆる型にトレイトを実装することは、&lt;strong&gt;ブランケット実装&lt;/strong&gt;
-とよばれる。&lt;/p&gt;
-&lt;p&gt;例として、標準ライブラリの &lt;code&gt;Display&lt;/code&gt; トレイトは、トレイトを実装するあらゆる型に &lt;code&gt;ToString&lt;/code&gt; トレイトを実装する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl&amp;lt;T: Display&amp;gt; ToString for T { /* 省略 */ }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-15"&gt;ライフタイムで参照を検証する&lt;/h2&gt;
-&lt;p&gt;Rustにおいて、参照はすべてライフタイム (参照が有効になるスコープ) を保持する。&lt;/p&gt;
-&lt;h3 id="section-16"&gt;ライフタイムでダングリング参照を回避する&lt;/h3&gt;
-&lt;p&gt;ライフタイムの主な目的は、ダングリング参照を回避すること。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
-    let r; // rが有効になる。
-
-    {
-        let x = 5; // xが有効になる。
-        r = &amp;amp;x; // rにxの参照を渡す。
-    } // xが無効になる。
-
-    println!("r: {}", r); // rはxの参照を持ち、xはすでに無効なのでエラー。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-17"&gt;借用チェッカー&lt;/h3&gt;
-&lt;p&gt;Rustのコンパイラは、全ての借用に対して注釈付けを行い、ライフタイムを管理する。&lt;/p&gt;
-&lt;p&gt;例では &lt;code&gt;'a&lt;/code&gt; と &lt;code&gt;'b&lt;/code&gt; が注釈付けられ、 &lt;code&gt;'a&lt;/code&gt; のライフタイムを持つ &lt;code&gt;r&lt;/code&gt; が、&lt;code&gt;'b&lt;/code&gt; のライフタイムより後に参照しようとしているので、エラーになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
-    let r;                // ---------+-- 'a
-                          //          |
-    {                     //          |
-        let x = 5;        // -+-- 'b  |
-        r = &amp;amp;x;           //  |       |
-    }                     // -+       |
-                          //          |
-    println!("r: {}", r); //          |
-}                         // ---------+
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-18"&gt;関数のジェネリックなライフタイム&lt;/h3&gt;
-&lt;p&gt;関数の引数が参照の場合、それぞれの引数にライフタイムが設定される。戻り値として返す参照が自明でない場合、エラーになる。関数に渡される具体的な参照のライフタイムがわからないため、借用チェッカーが解析できるようにライフタイムの注釈をつける必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn longest(x: &amp;amp;str, y: &amp;amp;str) -&amp;gt; &amp;amp;str { // xとyのライフタイムが分からず、戻り値
-    if x.len() &amp;gt; y.len() {
-        x
-    } else {
-        y
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-19"&gt;ライフタイム注釈記法&lt;/h3&gt;
-&lt;p&gt;ライフタイム注釈は、ライフタイム引数の名前を &lt;code&gt;'&lt;/code&gt; で始める必要がある。
-通常全部小文字で、ジェネリック型のように扱う。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;&amp;amp;i32 // 参照
-&amp;amp;'a i32 // 明示的なライフタイム付きの不変参照
-&amp;amp;'a mut i32 // 明示的なライフタイム付きの可変参照
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-20"&gt;関数シグネチャにおけるライフタイム注釈&lt;/h3&gt;
-&lt;p&gt;上記の &lt;code&gt;longest&lt;/code&gt; 関数では、引数と戻り値に明示的にライフタイム注釈を付けることで、全ての引数の参照と戻り値が同じライフタイムになる。
-&lt;code&gt;longest&lt;/code&gt; 関数は、正確に &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; の生存期間を知ることはなく、&lt;code&gt;'a&lt;/code&gt; のライフタイムが代わりとして扱われ、関数シグネチャ内のライフタイムを満足するものになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn longest&amp;lt;'a&amp;gt;(x: &amp;amp;'a str, y: &amp;amp;'a str) -&amp;gt; &amp;amp;'a str { // xとyのライフタイムが分からず、戻り値
-    if x.len() &amp;gt; y.len() {
-        x
-    } else {
-        y
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;具体的な参照を &lt;code&gt;longest&lt;/code&gt; に渡すと、 &lt;code&gt;'a&lt;/code&gt; を代替するライフタイムは、&lt;code&gt;y&lt;/code&gt; のスコープと重なる &lt;code&gt;x&lt;/code&gt; のスコープの一部となる。ジェネリックなライフタイム &lt;code&gt;'a&lt;/code&gt; は、 &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; のライフタイムのうち、短い方に等しいライフタイムになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let string1 = String::from("long string is long");
-
-    {
-        let string2 = String::from("xyz");
-        let result = longest(string1.as_str(), string2.as_str());
-        println!("{}", result); // 有効
-    }
-}
-
-// --
-
-fn main() {
-    let string1 = String::from("long string is long");
-    let result;
-    {
-        let string2 = String::from("xyz");
-        result = longest(string1.as_str(), string2.as_str());
-    }
-    println!("{}", result); // 無効
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-21"&gt;構造体定義のライフタイム注釈&lt;/h3&gt;
-&lt;p&gt;構造体に参照を保持させる場合、構造体定義の全参照にライフタイム注釈をつける必要がある。
-次の例では、 &lt;code&gt;ImportantExcerpt&lt;/code&gt; のインスタンスが、 &lt;code&gt;part&lt;/code&gt; フィールドに保持している参照よりも長生きしないことを意味する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct ImportantExcerpt&amp;lt;'a&amp;gt; {
-    part: &amp;amp;'a str,
-}
-
-fn main() {
-    let novel = String::from("Call me Ishmael. Some years ago...");
-    let first_sentence = novel.split('.')
-        .next()
-        .expect("Could not find a '.'");
-    let i = ImportantExcerpt { part: first_sentence };
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-22"&gt;ライフタイム省略&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;ライフタイム省略規則&lt;/strong&gt;を基に、借用チェッカーがライフタイムを推論できる場合は、明示的な注釈を必要としない。&lt;/p&gt;
-&lt;p&gt;関数やメソッドの引数ライフタイムは、入力ライフタイムと呼ばれ、戻り値のライフタイムは出力ライフタイムと呼ばれる。&lt;/p&gt;
-&lt;h4 id="section-23"&gt;ライフタイム省略規則&lt;/h4&gt;
-&lt;ol&gt;
-&lt;li&gt;参照である各引数は、独自のライフタイムを得る。&lt;/li&gt;
-&lt;li&gt;入力ライフタイム引数が1つだけの場合、そのライフタイムがすべての出力ライフタイム引数に代入される。&lt;/li&gt;
-&lt;li&gt;メソッドの場合、&lt;code&gt;self&lt;/code&gt; のライフタイムが全ての出力ライフタイム引数に代入される。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="section-24"&gt;メソッド定義におけるライフタイム注釈&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; キーワードの後にライフタイム注釈を宣言する必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl&amp;lt;'a&amp;gt; ImportantExcerpt&amp;lt;'a&amp;gt; {
-    fn level(&amp;amp;self) -&amp;gt; i32 {
-        3
-    }
-
-    fn announce_and_return_part(&amp;amp;self, announcement: &amp;amp;str) -&amp;gt; &amp;amp;str {  // ライフタイム省略規則により省略できる。
-        println!("Attention please: {}", announcement);
-        self.part
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-25"&gt;静的ライフタイム&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;'static&lt;/code&gt; ライフタイムは、プログラム全体の期間を示す特殊なライフタイム。
-文字リテラルは全て &lt;code&gt;'static&lt;/code&gt; ライフタイムになる。&lt;/p&gt;
-&lt;h2 id="section-26"&gt;ジェネリックな型引数、トレイト境界、ライフタイムをまとめて&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt::Display;
-
-fn longest_with_an_announcement&amp;lt;'a, T&amp;gt;(x: &amp;amp;'a str, y: &amp;amp;'a str, announcement: T) -&amp;gt; &amp;amp;'a str
-    where T: Display
-{
-    println!("{}", announcement);
-    if x.len() &amp;gt; y.len() {
-        x
-    } else {
-        y
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ6です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210129hellorust5</id>
-		<title>Rustのお勉強メモ5 (コレクション | エラー処理)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210129hellorust5" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ5 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コレクション&lt;/h1&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: center;"&gt;コレクション&lt;/th&gt;
-&lt;th&gt;説明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;ベクタ型&lt;/td&gt;
-&lt;td&gt;可変長の値を並べて保持できる。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;文字列&lt;/td&gt;
-&lt;td&gt;文字のコレクション。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;ハッシュマップ&lt;/td&gt;
-&lt;td&gt;値を特定のキーと紐づけられる&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h2 id="section-2"&gt;ベクタ型&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt; はメモリ上に値を隣り合わせに並べる単独のデータ構造である。
-ベクタには同じ型の値しか保持できない。&lt;/p&gt;
-&lt;h3 id="section-3"&gt;新しいベクタの生成&lt;/h3&gt;
-&lt;p&gt;宣言時にベクタに対して何も挿入しない場合、型注釈が必要となる。 &lt;code&gt;vec!&lt;/code&gt; マクロを使うことでもベクタを生成できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v: Vec&amp;lt;i32&amp;gt; = Vec::new();
-let v = vec![1, 2, 3];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-4"&gt;ベクタの更新&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;push&lt;/code&gt; メソッドでベクタに要素を追加することができる。一方、 &lt;code&gt;pop&lt;/code&gt; メソッドでは最後の要素を削除して &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; として返すことができる。
-中に配置する要素はすべて &lt;code&gt;i32&lt;/code&gt; 型で、コンパイラはデータを推論するため、 &lt;code&gt;Vec&amp;lt;i32&amp;gt;&lt;/code&gt; 型注釈は不要になる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = Vec::new();
-v.push(5);
-v.push(6);
-
-let x = v.pop(); // Some(5)
-let x = v.pop(); // Some(6)
-let x = v.pop(); // None
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-5"&gt;ベクタをドロップすると要素もドロップする。&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
-    let v = vec![1, 2, 3, 4];
-} // vとともにvの中身はすべて無効になる。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-6"&gt;ベクタの要素を参照する&lt;/h3&gt;
-&lt;p&gt;ベクタの値は、添え字と &lt;code&gt;&amp;amp;&lt;/code&gt; を使うと参照が得られ、 &lt;code&gt;get&lt;/code&gt; メソッドを使うと &lt;code&gt;Option&amp;lt;&amp;amp;T&amp;gt;&lt;/code&gt; が得られる。&lt;/p&gt;
-&lt;p&gt;配列と同様に添え字が範囲外の場合、プログラムはパニックする。一方、 &lt;code&gt;get&lt;/code&gt; メソッドの場合は &lt;code&gt;None&lt;/code&gt; が返る。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v = vec![1, 2, 3, 4, 5];
-let third: &amp;amp;i32 = &amp;amp;v[2];
-let third: Option&amp;lt;&amp;amp;i32&amp;gt; = v.get(2);
-
-let does_not_exist = &amp;amp;v[100]; // NG
-let does_not_exist = v.get(100); // None
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ベクタに対して有効な参照がある場合、所有権と借用規則を強制し、ベクタの中身への参照や、他のいかなる参照も有効であり続けることが保証される。&lt;/p&gt;
-&lt;p&gt;ベクタは、メモリに確保した領域以上の要素が追加されると、新しい領域に値をコピーを行い、参照先が変わる可能性があるため、次の例はエラーになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = vec![1, 2, 3, 4, 5];
-let first = &amp;amp;v[0]; // 不変借用
-v.push(6); // 可変借用のためエラーになる。
-println!("{}", first);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;ベクタの値を走査する&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;for&lt;/code&gt; ループで各要素の参照を行うことができる。不変な参照を得てそれらを出力する場合は次のようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let v = vec![1, 2, 3];
-for x in &amp;amp;v {
-    println!("{}", x);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;全要素に変更を加える場合は、可変な参照を得て、各要素を変更することもできる。可変参照が参照している値を変更するために、参照外し演算子 (&lt;code&gt;*&lt;/code&gt;) を使用する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut v = vec![1, 2, 3];
-for x in &amp;amp;mut v {
-    *x += 10;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="enum"&gt;Enumを使って複数の型を保持する&lt;/h3&gt;
-&lt;p&gt;enumの場合は、列挙子に異なる型がある場合でもベクタに保持することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum SpreadsheetCell {
-    Int(i32),
-    Float(f64),
-    Text(String),
-}
-
-let row = vec![ // OK
-    SpreadsheetCell::Int(3),
-    SpreadsheetCell::Text(String::from("blue")),
-    SpreadsheetCell::Float(10.12),
-];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-8"&gt;文字列&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型は伸長可能、可変、所有権のあるUTF-8エンコードされた文字列型である。文字列を意味するのは &lt;code&gt;String&lt;/code&gt; と &lt;code&gt;&amp;amp;str&lt;/code&gt; 両方を指すことが多い。&lt;/p&gt;
-&lt;p&gt;Rustの標準ライブラリには、 &lt;code&gt;OsString&lt;/code&gt; 、 &lt;code&gt;OsStr&lt;/code&gt; 、 &lt;code&gt;CString&lt;/code&gt; 、 &lt;code&gt;CStr&lt;/code&gt; などの他の文字列型も存在し、異なるエンコード方法でテキストを格納していたり、メモリ上の表現が異なったりする。&lt;/p&gt;
-&lt;h3 id="section-9"&gt;新規文字列の生成&lt;/h3&gt;
-&lt;p&gt;空の文字列を生成する場合は、 &lt;code&gt;new&lt;/code&gt; 関数を使用する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::new();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、 &lt;code&gt;from&lt;/code&gt; 関数、または &lt;code&gt;to_string&lt;/code&gt; メソッドを使用することで、初期値ありの文字列を生成することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let data = "hello world";
-let s = data.to_string();
-let s = "hello world".to_string();
-let s = String::from(data);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-10"&gt;文字列を更新する&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;/code&gt; に要素を追加したように、メソッドを使うほかに、&lt;code&gt;String&lt;/code&gt; を連結する &lt;code&gt;+&lt;/code&gt; 演算子や、 &lt;code&gt;format!&lt;/code&gt; マクロを利用することで中身を更新できる。&lt;/p&gt;
-&lt;h4 id="push_strpush"&gt;push_strとpush&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;push_str&lt;/code&gt; メソッドでは、文字列スライスを &lt;code&gt;String&lt;/code&gt; に追加することができる。また、所有権を奪わないので、元の文字列スライスを別に使うこともできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s1 = String::from("foo");
-let s2 = "bar";
-s1.push_str(s2);
-println!("{}", s1); // #=&amp;gt; foobar
-println!("{}", s2); // #=&amp;gt; bar
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;push&lt;/code&gt; メソッドでは、1文字を引数として &lt;code&gt;String&lt;/code&gt; に追加することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("lo");
-s.push("l"); // lol
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="format"&gt;+演算子、またはformat!マクロで連結&lt;/h4&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("Hello, ");
-let s2 = String::from("world!");
-let s3 = s1 + &amp;amp;s2; // s1はムーブされ無効になる。s2は有効。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;+&lt;/code&gt; 演算子は、次のような &lt;code&gt;add&lt;/code&gt; メソッドを使用する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn add(self, s: &amp;amp;str) -&amp;gt; String {
-    // 省略
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 値とともに呼び出した場合、 &lt;code&gt;add&lt;/code&gt; 関数に渡された &lt;code&gt;&amp;amp;String&lt;/code&gt; はコンパイラにより &lt;code&gt;&amp;amp;str&lt;/code&gt; に型強制される。コンパイラは、参照外し型強制というものを使用した、 &lt;code&gt;&amp;amp;s2&lt;/code&gt; を &lt;code&gt;&amp;amp;s2[..]&lt;/code&gt; に変換するため、 &lt;code&gt;add&lt;/code&gt; の引数の &lt;code&gt;s&lt;/code&gt; は元の所有権を奪わないため、結合後の &lt;code&gt;s2&lt;/code&gt; は有効なままになる。
-一方、 &lt;code&gt;add&lt;/code&gt; は &lt;code&gt;self&lt;/code&gt; の所有権を奪うため、 &lt;code&gt;s1&lt;/code&gt; は &lt;code&gt;add&lt;/code&gt; にムーブされて、結合後の &lt;code&gt;s1&lt;/code&gt; は無効になる。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;format!&lt;/code&gt; マクロを使用すると、引数の所有権を奪わずに結合後の &lt;code&gt;String&lt;/code&gt; を取得できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("tic");
-let s2 = String::from("tac");
-let s3 = String::from("toe");
-let s = format!("{}-{}-{}", s1, s2, s3); // s1, s2, s3全て有効。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-11"&gt;文字列の添え字アクセス&lt;/h3&gt;
-&lt;p&gt;Rustの文字列は添え字アクセスをサポートしていないため、添え字で &lt;code&gt;String&lt;/code&gt; の一部にアクセスするとエラーが発生する。&lt;/p&gt;
-&lt;p&gt;Rustの文字列はUTF-８エンコードで扱われ、マルチバイト文字が使われると、文字列のバイト添え字は、必ずしも有効なスカラー値になるとは限らないため、エラーになる。&lt;/p&gt;
-&lt;p&gt;文字列のスライスにおいても、無効な添え字にアクセスしてしまうため、エラーが発生することがある。&lt;/p&gt;
-&lt;h3 id="section-12"&gt;文字列を操作するメソッド&lt;/h3&gt;
-&lt;p&gt;Unicodeスカラー値に対して処理を行う場合、 &lt;code&gt;chars&lt;/code&gt; メソッドを利用できる。 また、 &lt;code&gt;bytes&lt;/code&gt; メソッドでは、各バイトをそのまま返す。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;for c in "नमस्ते".chars() {
-    println!("{}", c);
-}
-
-// #=&amp;gt; न
-// #=&amp;gt; म
-// #=&amp;gt; स
-// #=&amp;gt; ्
-// #=&amp;gt; त
-// #=&amp;gt; े
-
-for b in "नमस्ते".bytes() {
-    println!("{}", b);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-13"&gt;ハッシュマップ&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;HashMap&amp;lt;K, V&amp;gt;&lt;/code&gt; 型は、 &lt;code&gt;K&lt;/code&gt; 型のKeyと、 &lt;code&gt;V&lt;/code&gt; 型のValueの対応関係を保持する。別のプログラミング言語では、hash, map, object, hashtable, 連想配列などがある。&lt;/p&gt;
-&lt;h3 id="section-14"&gt;新規ハッシュマップの生成&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;new&lt;/code&gt; 関数で空のハッシュマップを生成し、 &lt;code&gt;insert&lt;/code&gt; メソッドで要素を追加することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ベクタと同様に、ハッシュマップはデータをヒープに保持する。
-Keyは全て同じ型であり、Valueも全て同じ型である必要がある。&lt;/p&gt;
-&lt;p&gt;タプルのベクタに対して &lt;code&gt;collect&lt;/code&gt; メソッドを使用することで、ハッシュマップを生成することもできる。
-二つのベクタを &lt;code&gt;zip&lt;/code&gt; メソッドでタプルのベクタを作ることができ、&lt;code&gt;HashMap&amp;lt;_, _&amp;gt;&lt;/code&gt; という型注釈とともにハッシュマップに変換できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let teams = vec![String::from("Blue"), String::from("Yellow")];
-let scores = vec![10, 50];
-let map: HashMap&amp;lt;_, _&amp;gt; = teams.iter().zip(scores.iter()).collect();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-15"&gt;ハッシュマップと所有権&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Copy&lt;/code&gt; トレイトを実装する型の値はハッシュマップにコピーされ、所有権のある型の値なら値はムーブされる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let field_name = String::from("Favorite color");
-let field_value = String::from("Blue");
-let mut map = HashMap::new();
-map.insert(field_name, field_value);
-// field_nameとfield_valueは無効になる。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-16"&gt;ハッシュマップの値にアクセスする&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;get&lt;/code&gt; メソッドにKeyを与えることでハッシュマップから値を取り出すことができる。結果は &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; のため、Keyが有効であれば &lt;code&gt;Some&lt;/code&gt;が、無効であれば &lt;code&gt;None&lt;/code&gt; が返る。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-scores.insert(String::from("Blue"), 10);
-
-let key = String::from("Blue");
-let score = scores.get(&amp;amp;team_name); // Some(&amp;amp;10)
-let score = scores.Get("Yellow"); // None
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;for&lt;/code&gt; ループでKeyとValueのペアを走査できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
-
-for (key, value) in &amp;amp;scores {
-    println!("{}: {}", key, value);
-    // #=&amp;gt; Yellow: 50
-    // #=&amp;gt; Blue: 10
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-17"&gt;ハッシュマップを更新する&lt;/h3&gt;
-&lt;p&gt;ハッシュマップでは、一つのKeyには一つのValueしか紐づけることができないため、Value更新方法がいくつか存在する。&lt;/p&gt;
-&lt;h4 id="value"&gt;Valueの上書き&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;insert&lt;/code&gt; メソッドを使うとKeyの有無に拘わらず、KeyとValueが更新される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Blue"), 25);
-println!("{:?}", scores);
-// #=&amp;gt; {Blue: 25}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="keyvalue"&gt;Keyに値がない場合にValueを挿入する&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;entry&lt;/code&gt; メソッドを使うと、ハッシュマップにKeyが存在するか否かを示す &lt;code&gt;Entry&lt;/code&gt; enumが返される。
-&lt;code&gt;Entry&lt;/code&gt; の &lt;code&gt;or_insert&lt;/code&gt; メソッドでは、Keyが存在した場合は対象となるValueへの可変参照 (&lt;code&gt;&amp;amp;mut V&lt;/code&gt;) を返し、存在しない場合は新しい値として挿入し、新しい値への可変参照を返す。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-scores.insert(String::from("Blue"), 10);
-scores.entry(String::from("Yellow")).or_insert(50); // 挿入される。
-scores.entry(String::from("Blue")).or_insert(50); // 挿入されない。
-println!("{:?}", scores);
-// #=&amp;gt; {"Yellow": 50, "Blue": 10}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-18"&gt;古い値に基づいて値を更新する&lt;/h4&gt;
-&lt;p&gt;次の例では、文字列に単語が何回出現したかを数え上げる処理をしている。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::HashMap;
-
-let text = "hello world wonderful world";
-let mut map = HashMap::new();
-for word in text.split_whitespace() {
-    let count = map.entry(word).or_insert(0); // ない場合は0を挿入して可変参照を取得する。
-    *count += 1; // 参照外しを行って値を更新する。
-}
-
-println!("{:?}", map);
-// #=&amp;gt; {"world": 2, "hello": 1, "wonderful": 1}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-19"&gt;ハッシュ関数&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;HashMap&lt;/code&gt; は暗号学的に安全なハッシュ関数を使用するため、最速ではないが、異なる&lt;strong&gt;hasher&lt;/strong&gt;を指定することで、別の関数に切り替えることができる。hasherは &lt;code&gt;BuildHasher&lt;/code&gt; トレイトを実装する型である。&lt;/p&gt;
-&lt;h1 id="section-20"&gt;エラー処理&lt;/h1&gt;
-&lt;p&gt;Rustでは、エラーは&lt;strong&gt;回復可能&lt;/strong&gt;と&lt;strong&gt;回復不能&lt;/strong&gt;なエラーが存在する。&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: center;"&gt;エラー&lt;/th&gt;
-&lt;th&gt;説明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;回復可能&lt;/td&gt;
-&lt;td&gt;ファイルが見つからないなどの処理を再試行可能な場合。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;回復不能&lt;/td&gt;
-&lt;td&gt;配列の境界を越えた箇所にアクセスしようとした場合。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;p&gt;Rustには例外が存在せず、回復可能なエラーを示す &lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; 型と、回復不能なエラーの場合実行を中止する &lt;code&gt;panic!&lt;/code&gt; マクロが存在する。&lt;/p&gt;
-&lt;h2 id="panic"&gt;panic!で回避不能なエラー&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;panic!&lt;/code&gt; マクロが実行されると、プログラムは失敗のメッセージを表示して、スタックを巻き戻して、プログラムを終了させる。&lt;/p&gt;
-&lt;p&gt;標準ではパニックが発生するとプログラムは巻き戻しを行うが、 &lt;code&gt;Cargo.toml&lt;/code&gt; ファイルを変更することで、異常終了に切り替えることもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-toml line-numbers"&gt;[profile]
-panic = 'abort'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;panic!&lt;/code&gt; マクロで、パニックを実行できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main()
-{
-    panic!("crash and burn");
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="panic-1"&gt;panic!バックトレースを使用する。&lt;/h3&gt;
-&lt;p&gt;デバッグビルド時のみ、 &lt;code&gt;RUST_BACKTRACE&lt;/code&gt; 環境変数をセットしてエラーを発生させると、バックトレース (呼び出された関数の一覧) が表示される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;$ RUST_BACKTRACE=1 cargo run
-...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="result"&gt;Resultで回避可能なエラー&lt;/h2&gt;
-&lt;p&gt;多くのエラーは、プログラムを完全にストップさせるほど深刻ではなく、エラーに対して別の処理を行うなど、対応する方法が存在する。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Result&lt;/code&gt; enumは &lt;code&gt;Ok&lt;/code&gt; と &lt;code&gt;Err&lt;/code&gt; の列挙子からなり、&lt;code&gt;T&lt;/code&gt; と &lt;code&gt;E&lt;/code&gt; はジェネリックな型を取る。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Result&amp;lt;T, E&amp;gt; {
-    Ok(T),
-    Err(E),
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ファイルを開く例では、 &lt;code&gt;File::open&lt;/code&gt; が &lt;code&gt;Result&lt;/code&gt; を返すと &lt;code&gt;T&lt;/code&gt; には、ファイルハンドルの &lt;code&gt;std::fs::File&lt;/code&gt; が入り、 &lt;code&gt;E&lt;/code&gt; には &lt;code&gt;std::io::Error&lt;/code&gt; が入る。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
-
-fn main() {
-   let f = File::open("hello.txt"); // Result&amp;lt;T, E&amp;gt;が返る。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;Option&lt;/code&gt; enumのように &lt;code&gt;Result&lt;/code&gt; enumも &lt;code&gt;match&lt;/code&gt; 式でハンドリングすることができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt");
-    let f = match f {
-        Ok(file) =&amp;gt; file,
-        Err(error) =&amp;gt; {
-            panic!("{:?}", error)
-        },
-    } 
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-21"&gt;いろいろなエラーにマッチする&lt;/h3&gt;
-&lt;p&gt;上記のコードは &lt;code&gt;File::open&lt;/code&gt; の失敗理由が何であろうと &lt;code&gt;panic!&lt;/code&gt; が実行されるが、他の理由に対してマッチさせて異なる処理を実行できる。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;if error.kind() == ErrorKind::Notfound&lt;/code&gt; 条件式は、&lt;strong&gt;マッチガード&lt;/strong&gt;とよばれ、アームのパターンをさらに絞り込む条件式である。
-パターンの &lt;code&gt;ref&lt;/code&gt; は &lt;code&gt;error&lt;/code&gt; がガード条件式にムーブされないようにしている。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
-use std::io::ErrorKind;
-
-fn main() {
-    let f = File::open("hello.txt");
-    let f = match f {
-        Ok(file) =&amp;gt; file,
-        Err(ref error) if error.kind() == ErrorKind::NotFound =&amp;gt; {
-            match File::create("hello.txt") {
-                Ok(new_file) =&amp;gt; new_file,
-                Err(in_error) =&amp;gt; {
-                    panic!("failed to create new file: {:?}", in_error);
-                }
-            }
-        },
-        Err(error) =&amp;gt; {
-            panic!("could not open file: {:?}", error);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-22"&gt;エラー時にパニックするショートカット&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; のヘルパーメソッドとして、&lt;code&gt;Result&lt;/code&gt; が &lt;code&gt;Err&lt;/code&gt; の場合 &lt;code&gt;panic!&lt;/code&gt; マクロを実行する &lt;code&gt;unwrap&lt;/code&gt; メソッドと &lt;code&gt;expect&lt;/code&gt; メソッドがある。
-&lt;code&gt;expect&lt;/code&gt; メソッドはエラーメッセージを引数として指定することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fs::File;
-
-fn main() {
-    let f = File::open("hello1.txt").unwrap();
-    let f = File::open("hello2.txt").expect("Failed to open");
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-23"&gt;エラーを委譲する&lt;/h3&gt;
-&lt;p&gt;失敗する可能性のある何かを呼び出す実装をした関数を書く際、関数内でエラー処理をする代わりに、戻り値を &lt;code&gt;Result&amp;lt;T, E&amp;gt;&lt;/code&gt; で返すことで、呼び出し元にエラーを委譲することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
-    let f = File::open("hello.txt");
-
-    let mut f = match f {
-        Ok(file) =&amp;gt; file,
-        Err(e) =&amp;gt; return Err(e),
-    };
-
-    let mut s = String::new();
-    match f.read_to_string(&amp;amp;mut s) {
-        Ok(_) =&amp;gt; Ok(s),
-        Err(e) =&amp;gt; Err(e),
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-24"&gt;エラー委譲のショートカット: ?演算子&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;?&lt;/code&gt; 演算子を使用することで、 &lt;code&gt;match&lt;/code&gt; 式とほぼ同じように動作できる。
-&lt;code&gt;Result&lt;/code&gt; の値が &lt;code&gt;Ok&lt;/code&gt; の場合、中身が式から得られ、プログラムは継続し、値が &lt;code&gt;Err&lt;/code&gt; の場合、&lt;code&gt;return&lt;/code&gt; と同様に関数を終了し、呼び出し元に &lt;code&gt;Err&lt;/code&gt; の中身を返す。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
-    let f = File::open("hello.txt")?;
-    let mut s = String::new();
-    f.read_to_string(&amp;amp;mut s)?;
-    Ok(s);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;?&lt;/code&gt; を使ったエラー値は、標準ライブラリの &lt;code&gt;From&lt;/code&gt; トレイトで定義され、エラーの型を別のものに変換する &lt;code&gt;from&lt;/code&gt; 関数を通る。これにより、関数内で発生したエラー型は &lt;code&gt;from&lt;/code&gt; 関数によって、関数の戻り値に定義しているエラー型に自動的に変更される。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;?&lt;/code&gt;メソッドの呼び出しを連結することもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -&amp;gt; Result&amp;lt;String, io::Error&amp;gt; {
-    let mut s = String::new();
-    let f = File::open("hello.txt")?.read_to_string(&amp;amp;mut s)?;
-
-    Ok(s);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、 &lt;code&gt;?&lt;/code&gt; 演算子はResultを返す関数でしか使用できないため、&lt;code&gt;Result&lt;/code&gt; を返さない関数では &lt;code&gt;match&lt;/code&gt; か &lt;code&gt;Result&lt;/code&gt; のメソッドを使う必要がある。&lt;/p&gt;
-&lt;h2 id="panic-2"&gt;panic!すべきか否か&lt;/h2&gt;
-&lt;p&gt;呼び出す側のコードの立場によって &lt;code&gt;panic!&lt;/code&gt; と &lt;code&gt;Result&lt;/code&gt; を使い分ける。&lt;/p&gt;
-&lt;h3 id="section-25"&gt;プロトタイプコード、テスト&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;unwrap&lt;/code&gt; などのパニックする可能性のあるメソッド呼び出しは、アプリケーションにエラーを処理してほしい方法へのプレースホルダーを意味していると理解され、残りのコードがしていることによって異なる可能性がある。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;unwrap&lt;/code&gt; や &lt;code&gt;expect&lt;/code&gt; メソッドはプロトタイプの段階では便利。&lt;/p&gt;
-&lt;p&gt;メソッド呼び出しがテスト内で失敗した場合、 &lt;code&gt;panic!&lt;/code&gt; することでテスト全体を失敗できる。&lt;/p&gt;
-&lt;h3 id="section-26"&gt;コンパイラよりもプログラマがより情報を持っている場合&lt;/h3&gt;
-&lt;p&gt;プログラムのハードコードなど、プログラマの持つ情報としてErr列挙子は存在しないと確認できる場合 &lt;code&gt;unwrap&lt;/code&gt; を使用することもできる。
-一方、失敗する可能性が確かにあるならば、 &lt;code&gt;Result&lt;/code&gt; として処理した方がいい。&lt;/p&gt;
-&lt;h3 id="section-27"&gt;エラー処理のガイドライン&lt;/h3&gt;
-&lt;p&gt;コードが悪い状態に陥る可能性があるときにパニックさせるのは推奨される。
-&lt;strong&gt;悪い状態&lt;/strong&gt;とは、何らかの前提、保証、契約、不変性が破られたことを指し、無効な値、矛盾する値、行方不明な値がコードに渡されること、以下のいずれか一つ以上の状態であることがあげられる。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;悪い状態がときに起こるとは予想されないとき&lt;/li&gt;
-&lt;li&gt;この時点以降、この悪い状態にないことを頼りにコードが書かれているとき&lt;/li&gt;
-&lt;li&gt;使用している方にこの情報をコード化するいい手段がない時&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;不正な値を渡され、修正しようのない無効な状態を使用者に通知するために &lt;code&gt;panic!&lt;/code&gt; は適切だが、 &lt;code&gt;Result&lt;/code&gt; を返すことで悪い状態を委譲して、失敗が予想される可能性があることを示唆するほうが良い場合もある。&lt;/p&gt;
-&lt;p&gt;コードが値に対して処理を行う場合、安全性上の理由から、値が合法でなければパニックが適切。&lt;/p&gt;
-&lt;p&gt;関数には契約が伴い、入力が特定の条件を満たすときのみ振る舞いが保証される。契約が侵されたときにパニックすることは適切。関数の契約は、特に侵害がパニックを引き起こす際には、APIドキュメント内で言及する。&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ5です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210129hellorust4</id>
-		<title>Rustのお勉強メモ4 (プロジェクトの管理)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210129hellorust4" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ4 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;プロジェクトの管理&lt;/h1&gt;
-&lt;p&gt;モジュールシステム&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: center;"&gt;スコープ&lt;/th&gt;
-&lt;th&gt;説明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;パッケージ&lt;/td&gt;
-&lt;td&gt;クレートをビルドし、テストし、共有することができるCargoの機能。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;クレート&lt;/td&gt;
-&lt;td&gt;ライブラリが実行可能ファイルを生成する、木構造をしたモジュール群。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;モジュール&lt;/td&gt;
-&lt;td&gt;パスの構成、スコープ、公開するか否かを決定できる。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;パス&lt;/td&gt;
-&lt;td&gt;要素 (例えば、構造体、関数、モジュール) に名前を付ける方法&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h2 id="section-2"&gt;パッケージとクレート&lt;/h2&gt;
-&lt;p&gt;Rustコンパイラの開始点となり、クレートのルートモジュールを作るソースファイルを&lt;strong&gt;クレートルート&lt;/strong&gt;と呼ぶ。
-ある機能群を提供する1つ以上のクレートのことを&lt;strong&gt;パッケージ&lt;/strong&gt;と呼ぶ。
-パッケージは &lt;code&gt;Cargo.toml&lt;/code&gt; というクレートをどのようにビルドするかの説明するファイルを持つ。パッケージは0個か1個のライブラリクレートを持っていなければならない。バイナリクレートはいくつでもよい。&lt;/p&gt;
-&lt;p&gt;Cargoは、 &lt;code&gt;src/main.rs&lt;/code&gt; をパッケージと同名のバイナリクレート、 &lt;code&gt;src/lib.rs&lt;/code&gt; をパッケージと同名のライブラリクレートと判断する。
-また、ファイルを &lt;code&gt;src/bin/&lt;/code&gt; に配置することで、複数のバイナリクレートを持つことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;sample/
-|- src/
-   |- main.rs // sampleというバイナリクレート
-   |- lib.rs // sampleというライブラリクレート
-   |
-   |- bin/
-      |- foo.rs // fooというバイナリクレート
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;クレートは、関連した機能を一つのスコープにまとめることで、その機能が複数のプロジェクト間で共有しやすくする。&lt;/p&gt;
-&lt;h2 id="section-3"&gt;モジュール&lt;/h2&gt;
-&lt;p&gt;モジュールは、クレート内のコードをグループ化し、可読性と再利用性を向上させる。また、&lt;strong&gt;プライバシー&lt;/strong&gt;として、要素がコードの外側で使えるか (public) 、または内部の実装の詳細であり外部では使えないか (private) を制御できる。&lt;/p&gt;
-&lt;p&gt;例として、レストランの機能を提供するライブラリクレートを作成する。
-&lt;code&gt;lib.rs&lt;/code&gt;にモジュールと関数のシグネチャを定義する。
-&lt;code&gt;mod&lt;/code&gt; キーワードでモジュールを定義でき、モジュールの中にモジュールを定義することもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
-        fn seat_at_table() {}
-    }
-
-    mod serving {
-        fn take_order() {}
-        fn serve_order() {}
-        fn take_payment() {}
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上のモジュール構造は次のようなモジュールツリーになる。モジュール全体が &lt;code&gt;crate&lt;/code&gt; というモジュールの下に存在することになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;crate
-|- front_of_house
-   |- hosting
-   |  |- add_to_waitlist
-   |  |- seat_at_table
-   |
-   |- serving
-      |- take_order
-      |- serve_order
-      |- take_payment
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-4"&gt;モジュールツリーの要素を示すためのパス&lt;/h2&gt;
-&lt;p&gt;要素を参照するために、パスは2つの形を取ることができる。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;絶対パス: クレートの名前か、 &lt;code&gt;crate&lt;/code&gt; という文字列を使うことで、クレートルートから辿ることができる。&lt;/li&gt;
-&lt;li&gt;相対パス: &lt;code&gt;self&lt;/code&gt; 、 &lt;code&gt;super&lt;/code&gt; 、 または現在のモジュール内の識別子を使うことで現在のモジュールから辿ることができる。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
-    }
-}
-
-pub fn eat_at_restaurant() {
-    // Absolute
-    crate::front_of_house::hosting::add_to_waitlist();
-
-    // Relative
-    front_of_house::hosting::add_to_waitlist();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上記のコードでは、 &lt;code&gt;hosting&lt;/code&gt; は非公開なため、パスは正しいが、非公開関数へのアクセスは許可されていないため、コンパイルエラーが発生する。&lt;/p&gt;
-&lt;p&gt;モジュールはRustのプライバシー境界を定義することで、外部のコードへの依存の詳細をカプセル化できる。&lt;/p&gt;
-&lt;p&gt;Rustにおけるプライバシーは "あらゆる要素 (関数、メソッド、構造体、enum、モジュールおよび定数) は標準では非公開" になっている。
-親モジュールの要素は小モジュールの非公開要素は使えないが、小モジュールの要素は親モジュールの要素を使うことができる。&lt;/p&gt;
-&lt;h3 id="section-5"&gt;パスの公開&lt;/h3&gt;
-&lt;p&gt;モジュールに &lt;code&gt;pub&lt;/code&gt; キーワードをつけることでモジュールを公開することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
-    pub mod hosting { // 公開
-        fn add_to_waitlist1() {} // 非公開
-        pub fn add_to_waitlist2() {} // 公開
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="super"&gt;相対パスをsuperで始める&lt;/h3&gt;
-&lt;p&gt;親モジュールから始まる相対パスは、 &lt;code&gt;super&lt;/code&gt; から辿ることができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn serve_oreder() {}
-
-mod back_of_house() {
-    fn fix_incorrect_order() {
-        cook_order();
-        super::serve_order();
-    }
-
-    fn cook_order() {}
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="enum"&gt;構造体とenumを公開する&lt;/h3&gt;
-&lt;p&gt;構造体やenumも &lt;code&gt;pub&lt;/code&gt; キーワードで公開できる。
-ただし、構造体定義で &lt;code&gt;pub&lt;/code&gt; を使うと、構造体自体は公開されるが、フィールドは非公開のままなので、個別にプライバシーを設定する必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod back_of_house {
-    pub struct Breakfast {
-        pub toast: String, // 公開
-        seasonal_fruit: String, // 非公開
-    }
-
-    impl Breakfast {
-        pub fn summer(&amp;amp;toast: &amp;amp;str) -&amp;gt; Breakfast { // 公開
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("peaches"),
-            }
-        }
-    }
-}
-
-pub fn eat_at_restaurant() {
-    let mut meal = back_of_house::Breakfast::summer("Rye");
-    meal.toast = String::from("Wheat");
-    println!("{}", meal.toast); // OK
-    // println!("{}", meal.seasonal_fruit); // NG
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;一方で、enumを公開すると、全ての列挙子は公開される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod back_of_house {
-    pub enum Appetizer { // 公開
-        Soup, // 公開
-        Salad, // 公開
-    }
-}
-
-pub fn eat_at_restaurant() {
-    let order1 = back_of_house::Appetizer::Soup; // OK
-    let order2 = back_of_house::Appetizer::Salad; // OK
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="use"&gt;useキーワードでパスをスコープに持ち込む&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;use&lt;/code&gt; キーワードを使ってパスをスコープに持ち込むことで、そのクレートより上のスコープの記述を省略することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-use crate::front_of_house::hosting; // Absolute
-// use self::front_of_house::hosting; // Relative
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="use-1"&gt;慣例に従ったuseパス&lt;/h3&gt;
-&lt;p&gt;関数自体を &lt;code&gt;use&lt;/code&gt; で持ち込むことも可能だが、関数の親モジュールを持ち込むことで、関数がローカルで定義されていないことを明らかにできる。
-一方、構造体やenum、その他の要素を持ち込む場合は、フルパスを使う。&lt;/p&gt;
-&lt;p&gt;同じ名前の複数の要素を &lt;code&gt;use&lt;/code&gt; でスコープに持ち込むことはできないので、その場合は明示的に親モジュールを記述することで、名前の衝突を回避できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt;
-use std::io;
-
-fn funcion_1 () -&amp;gt; fmt::Result {
-    // 省略
-}
-
-fn funcion_2 () -&amp;gt; io::Result&amp;lt;()&amp;gt; {
-    // 省略
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="as"&gt;asキーワード&lt;/h4&gt;
-&lt;p&gt;同じ名前の複数の型をスコープに持ち込む場合、 &lt;code&gt;as&lt;/code&gt; キーワードを使ってエイリアスを与えてることで、名前の衝突を回避できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::fmt;
-use std::io as IoResult;
-
-fn funcion_1 () -&amp;gt; Result {
-    // 省略
-}
-
-fn funcion_2 () -&amp;gt; IoResult&amp;lt;()&amp;gt; {
-    // 省略
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="pub-use"&gt;pub useを使って名前を再公開する&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;use&lt;/code&gt; キーワードで名前をスコープに持ち込んだ時、新しいスコープで使用できるその名前は非公開なため、 &lt;code&gt;use&lt;/code&gt; を &lt;code&gt;pub use&lt;/code&gt; にすることで&lt;strong&gt;再公開&lt;/strong&gt;することができる。例では、再公開にすると、このクレートを使う外部コードが &lt;code&gt;hostring::add_to_waitlist&lt;/code&gt; から &lt;code&gt;add_to_waitlist&lt;/code&gt; 関数を呼ぶことができるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-pub use crate::front_of_house::hosting;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-6"&gt;外部のパッケージを使う&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Cargo.toml&lt;/code&gt; に依存を追加すると、パッケージとそのすべての依存をダウンロードし、プロジェクト内で使うことができるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-toml line-numbers"&gt;[dependencies]
-rand = "0.5.5"
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use rand::Rng;
-
-fn main() {
-    let secret_number = rand::thread_rng().gen_range(1, 101);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;標準ライブラリ (&lt;code&gt;std&lt;/code&gt;) は外部にあるクレートだが、Rust言語に同梱されているため、Cargo.tomlに追記は不要だが、 &lt;code&gt;use&lt;/code&gt; で参照する必要がある。&lt;/p&gt;
-&lt;h3 id="use-2"&gt;巨大なuseのリストをネストしたパスを使って整理する&lt;/h3&gt;
-&lt;p&gt;同じクレートか同じモジュールで定義された複数の要素を使う場合は、ネストしたパスを使うことで、同じ一連の要素を纏めてスコープに持ち込める。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// use std::cmp::Orderingl;
-// use std::io;
-use std::{cmp::Ordering, io};
-
-// use std::io;
-// use std::io::Write;
-use std::io::{self, Write};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="glob"&gt;glob演算子&lt;/h4&gt;
-&lt;p&gt;glob演算子 &lt;code&gt;*&lt;/code&gt; を使うことで、パスにおいて定義されているすべての公開要素をスコープに持ち込むことができる。globをすると名前がどこで定義されたかわかりづらくなるので注意。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;use std::collections::*;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-7"&gt;モジュールを複数のファイルに分割する&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;front_of_house&lt;/code&gt; モジュールを &lt;code&gt;src/front_of_house.rs&lt;/code&gt; ファイルに移動し、 &lt;code&gt;src/lib.rs&lt;/code&gt; ファイルに &lt;code&gt;mod front_of_house;&lt;/code&gt; を呼ぶことで、別ファイルから読み込むことができる。入れ子のモジュールの場合は、対応したディレクトリを作ることでモジュールを読み込むことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;mod front_of_house;
-
-pub use crate::front_of_house::hosting;
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;restaurant/
-|- src/
-   |- main.rs
-   |- lib.rs
-   |
-   |- front_of_house.rs
-   |- front_of_house/
-      |- hosting.rs
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ4です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210128hellorust3</id>
-		<title>Rustのお勉強メモ3 (構造体 | 列挙型)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust3" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ3 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;構造体&lt;/h1&gt;
-&lt;h2 id="section-2"&gt;定義とインスタンス化&lt;/h2&gt;
-&lt;p&gt;Rustの構造体の定義は &lt;code&gt;struct&lt;/code&gt; キーワードを使用し、&lt;code&gt;key: value&lt;/code&gt; ペアでフィールドを宣言できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct User {
-    username: String,
-    email: String,
-    sign_in_count: u64,
-    active: bool,
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;インスタンスの生成では、 &lt;code&gt;key: value&lt;/code&gt; ペアでフィールドを指定することで、宣言通りの順番ではなくてもフィールドに値を代入できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let user = User {
-    email: String::from("foo@exmaple.com"),
-    username: String::from("foo"),
-    active: true,
-    sign_in_count: 1,
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;構造体のフィールドはドット記法を使うことでアクセスできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut user = User {
-    username: String::from("foo"),
-    email: String::from("foo@exmaple.com"),
-    sign_in_count: 1,
-    active: true,
-}
-
-user.email = String::from("bar@example.com");
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Rustでは、インスタンス全体が可変でなければならず、一部のフィールドのみを可変にすることはできない。&lt;/p&gt;
-&lt;h3 id="section-3"&gt;フィールド初期化省略記法&lt;/h3&gt;
-&lt;p&gt;変数名と構造体のフィールド名が同じ場合、フィールド名を省略できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn build_user_1(email: String, username: String) -&amp;gt; User {
-    User {
-        email: email,
-        username: username,
-        active: true,
-        sign_in_count: 1,
-    }
-}
-
-fn build_user_2(email: String, username: String) -&amp;gt; User {
-    User {
-        email, // フィールド名省略
-        username, // フィールド名省略
-        active: true,
-        sign_in_count: 1,
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-4"&gt;構造体更新記法&lt;/h3&gt;
-&lt;p&gt;他の構造体インスタンスと同じ値を使用して、一部のフィールドを変えてインスタンスを生成できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let user1 = User {
-    username: String::from("foo"),
-    email: String::from("foo@exmaple.com"),
-    sign_in_count: 1,
-    active: true,
-}
-
-let user2 = User {
-    username: String::from("bar"),
-    email: String::from("bar@exmaple.com"),
-    ..user1 // sign_in_countとactiveはuser1と同じ値になる。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-5"&gt;タプル構造体&lt;/h3&gt;
-&lt;p&gt;フィールドに紐づけられた名前がない構造体を&lt;strong&gt;タプル構造体と&lt;/strong&gt;呼ぶ。
-次の &lt;code&gt;Color&lt;/code&gt; と &lt;code&gt;Point&lt;/code&gt; は異なる型となる。フィールドへのアクセスは添え字を使う。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Color(i32, i32, i32);
-struct Point(i32, i32, i32);
-
-let black = Color(0, 0, 0);
-let origin = Point(0, 0, 0);
-
-println!("({}, {}, {})", black.0, black.1, black.2);
-// #=&amp;gt; (0, 0, 0)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-6"&gt;ユニット様構造体&lt;/h3&gt;
-&lt;p&gt;フィールドのない構造体を&lt;strong&gt;ユニット様構造体&lt;/strong&gt;と呼ぶ。トレイトの実装はするが、型自体に保持させるデータはない場合に使う。&lt;/p&gt;
-&lt;h3 id="section-7"&gt;構造体データの所有権&lt;/h3&gt;
-&lt;p&gt;構造体全体が有効な間はずっと有効である必要があるため、&lt;code&gt;&amp;amp;str&lt;/code&gt; 文字列スライス型ではなく、所有権のある &lt;code&gt;String&lt;/code&gt; 型を利用する。ライフタイムを指定することで、構造体に参照されたデータが有効な間は、値が有効なことを保証することができる。 (10章)&lt;/p&gt;
-&lt;h2 id="println"&gt;println!マクロで構造体を表示する&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;println!&lt;/code&gt; マクロでは、標準では波括弧は &lt;code&gt;std::fmt::Display&lt;/code&gt; がフォーマットとして呼ばれる。基本型では標準で &lt;code&gt;Display&lt;/code&gt; を実装しているが、構造体では &lt;code&gt;println!&lt;/code&gt; のフォーマットが自明ではなくなるため、 &lt;code&gt;Display&lt;/code&gt; の実装は提供されない。 &lt;code&gt;[derive(Debug)]&lt;/code&gt; 注釈をつかうことで、デバッグ用のフォーマッタを構造体で使うことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Rectangle1 {
-    width: u32,
-    height: u32,
-}
-
-[derive(Debug)] // Debugトレイトの
-struct Rectangle2 {
-    width: u32,
-    height: u32,
-}
-
-fn main() {
-    let rect1 = Rectangle1 { width: 30, height: 50 };
-    println!("{}", rect1); // NG
-
-    let rect2 = Rectangle2 { width: 30, height: 50 };
-    println!("{:?}", rect2); // OK DebugによるDisplay
-    // #=&amp;gt; Rectangle { width: 30, height: 50 }
-
-    println!("{:#?}", rect2); // OK // Debugによる改行ありのDisplay
-    // #=&amp;gt; Rectangle {
-    //         width: 30,
-    //         height: 50
-    //     }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-8"&gt;メソッドの定義&lt;/h2&gt;
-&lt;p&gt;構造体のメソッドを定義する場合、 &lt;code&gt;impl&lt;/code&gt; ブロック内に &lt;code&gt;fn&lt;/code&gt; キーワードで宣言する。メソッドの最初の引数は必ず &lt;code&gt;self&lt;/code&gt; になる。&lt;/p&gt;
-&lt;p&gt;メソッドは &lt;code&gt;self&lt;/code&gt; の所有権を奪ったり、 不変借用、可変借用ができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn area(&amp;amp;self) -&amp;gt; u32 {
-        self.width * self.height
-    }
-
-    fn can_hold(&amp;amp;self, other: &amp;amp;Rectangle) -&amp;gt; bool {
-        self.width &amp;gt; other.width &amp;amp;&amp;amp; selft.height &amp;gt; other.height
-    }
-}
-
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-    println!("{}", rect1.area());
-    // #=&amp;gt; 1500
-
-    let rect2 = Rectangle { width: 10, height: 40 };
-    let rect3 = Rectangle { width: 60, height: 45 };
-    println!("{}" rect1.can_hold(&amp;amp;rect2));
-    // #=&amp;gt; true
-    println!("{}" rect1.can_hold(&amp;amp;rect3));
-    // #=&amp;gt; false
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-9"&gt;関連関数&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;impl&lt;/code&gt; ブロック内に &lt;code&gt;self&lt;/code&gt; を引数に取らない関数を&lt;strong&gt;関連関数&lt;/strong&gt;と呼ぶ。
-関連関数は関数であり、メソッドではない。 &lt;code&gt;String::from&lt;/code&gt; も関連関数の一つ。&lt;/p&gt;
-&lt;p&gt;構造体の新規インスタンスを返すコンストラクタによく使用される。
-関連関数を呼び出すには &lt;code&gt;::&lt;/code&gt; 記法を使用する。 &lt;code&gt;::&lt;/code&gt; 記法は関連関数とモジュールによって作り出される名前空間の両方に使用される。(7章)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl Rectangle {
-    fn square(size: u32) -&amp;gt; Rectangle {
-        Rectangle { width: size, height: size }
-    }
-}
-
-fn main() {
-    let square = Rectangle::square(3);
-    println!("{:?}", square);
-    // #=&amp;gt; Rectangle { width: 3, height: 3 }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="enum"&gt;Enumとパターンマッチング&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;enum&lt;/code&gt; (列挙型) は取りうる値を列挙することで、型を定義できる。
-例としてIPアドレスのバージョン4とバージョン6を挙げる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddrKind {
-    V4,
-    V6,
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;インスタンスの生成は &lt;code&gt;::&lt;/code&gt; 記号で生成できる。
-enumの列挙子は識別子のもとに名前空間分けされている。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let ip4 = IpAddrKind::V4;
-let ip6 = IpAddrKind::V6;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;関数の引数として渡すこともできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn route(ip_type: IpAddrKind) { }
-
-route(IpAddrKind::V4);
-route(IpAddrKind::V6);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上記の例だと、実際のIPアドレスのデータを保持する方法がないため、構造体にenumを持たせる対処法がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddrKind {
-    V4,
-    V6,
-}
-
-struct IpAddr {
-    kind: IpAddrKind,
-    address: String,
-}
-
-let home = IpAddr {
-    kind: IpAddrKind::V4,
-    address: String:from("127.0.0.1"),
-};
-
-let lookback = IpAddr {
-    kind: IpAddrKind::V6,
-    address: String:from("::1"),
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Rustのenumでは、enum自体にデータを持たせることができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddr {
-    V4(String),
-    V6(String),
-}
-
-let home = IpAddr::V4(String:from("127.0.0.1"));
-let lookback = IpAddr::V6(String:from("::1"));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、各列挙子に紐付けるデータの型と量は異なってもよい。この例では、 &lt;code&gt;V4&lt;/code&gt; のアドレスには4つの &lt;code&gt;u8&lt;/code&gt; 型の値と格納し、&lt;code&gt;V6&lt;/code&gt; のアドレスには &lt;code&gt;String&lt;/code&gt; 型の値で格納することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum IpAddr {
-    V4(u8, u8, u8, u8),
-    V6(String),
-}
-
-let home = IpAddr::V4(127, 0, 0, 1);
-let lookback = IpAddr::V6(String:from("::1"));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;標準ライブラリの &lt;code&gt;IpAddr&lt;/code&gt; 定義では、アドレスデータを二つの異なる構造体の形でenumに埋め込んでいる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;struct Ipv4Addr {
-    // 省略
-}
-
-struct Ipv6Addr {
-    // 省略
-}
-
-enum IpAddr {
-    V4(Ipv4Addr),
-    V6(Ipv6Addr),
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;異なる型の列挙子が4つあるenumでは次のようになる。structでそれぞれ定義するよりも完結に定義できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Message {
-    Quit, // 紐づけられたデータなし
-    Move { x: i32, y: i32 }, // 匿名構造体
-    Write(String), // String
-    ChangeColor(i32, i32, i32), // 3つのi32
-}
-
-// structで実装すると...
-struct QuitMessage; // ユニット構造体
-struct MoveMessage { x: i32, y: i32 };
-struct WriteMessage(String); // タプル構造体
-struct ChangeColorMessage(i32, i32, i32); // タプル構造体
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;enumは、 &lt;code&gt;impl&lt;/code&gt; キーワードを使ってメソッドを定義することもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;impl Message {
-    fn call(&amp;amp;self) {
-        // 省略
-    }
-}
-
-let wm = Message::Write(String::from("hello"));
-wm.call();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="option-enumnull"&gt;Option enumとNull値に勝る利点&lt;/h2&gt;
-&lt;p&gt;RustにはNull値がない代わりに、値が存在するか、不在かという概念をコード化するenumとして &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; がある。&lt;code&gt;&amp;lt;T&amp;gt;&lt;/code&gt; はジェネリック。 (10章)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// 標準ライブラリの定義
-enum Option&amp;lt;T&amp;gt; {
-    Some(T),
-    None,
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; は明示的スコープに導入する必要がないため、 &lt;code&gt;Some&lt;/code&gt; と &lt;code&gt;None&lt;/code&gt; は &lt;code&gt;Option::&lt;/code&gt; の接頭辞なしに直接使うことができる。
-&lt;code&gt;None&lt;/code&gt; の場合は &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の型を明示しなければならない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let some_number = Some(5);
-let some_string = Some("a string");
-let absent_numer: Option&amp;lt;i32&amp;gt; = None;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; がNullより好まれる点として、&lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; と &lt;code&gt;T&lt;/code&gt; は異なる型なので、コンパイラは &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の値を確実に有効な値として使用しない。 &lt;code&gt;T&lt;/code&gt; 型の処理を行う前には &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; を &lt;code&gt;T&lt;/code&gt; に変換する必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: i8 = 5;
-let y: Option&amp;lt;i8&amp;gt; = Some(5);
-let sum = x + y; // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="match"&gt;matchフロー制御演算子&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;match&lt;/code&gt; 式は全てのパターンがどのような処理を行うかを簡潔に記述できる。
-&lt;code&gt;match&lt;/code&gt; 式が実行されると、結果の値を各 &lt;code&gt;match&lt;/code&gt; アームのパターンと順番に比較し、マッチした場合、紐づけられた式の結果が &lt;code&gt;match&lt;/code&gt; 式全体の戻り値となる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter,
-}
-
-fn value_in_cents(coin: Coin) -&amp;gt; u32 {
-    match coin {
-        Coin::Penny =&amp;gt; { // 式なのでOK
-            println!("penny!");
-            1
-        },
-        Coin::Nickel =&amp;gt; 5,
-        Coin::Dime =&amp;gt; 10,
-        Coin::Quarter =&amp;gt; 25,
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-10"&gt;値に束縛されるパターン&lt;/h3&gt;
-&lt;p&gt;値を持つ列挙子の場合、 &lt;code&gt;match&lt;/code&gt; 式のアーム内で変数として使用できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;#[derive(Debug)]
-enum UsState {
-    Alabama,
-    Alaska,
-    // ...
-}
-
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter(UsState),
-}
-
-fn value_in_cents(coin: Coin) -&amp;gt; u32 {
-    match coin {
-        Coin::Penny =&amp;gt; 1,
-        Coin::Nickel =&amp;gt; 5,
-        Coin::Dime =&amp;gt; 10,
-        Coin::Quarter(state) =&amp;gt; { // Quarterが渡された場合、stateにデータが束縛される。
-            println!("{:?}", state);
-            25
-        },
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="option"&gt;Option&lt;t&gt;とのマッチ&lt;/t&gt;&lt;/h3&gt;
-&lt;p&gt;上記のコインの場合と同様に &lt;code&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; の場合も &lt;code&gt;match&lt;/code&gt; 式を使うことで処理を簡潔に記述できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn plus_one(x: Option&amp;lt;i32&amp;gt;) -&amp;gt; Option&amp;lt;i32&amp;gt; {
-    match x {
-        None =&amp;gt; None,
-        Some(i) =&amp;gt; Some(i + 1),
-    }
-}
-
-let five = Some(5);
-let six = plus_one(five);
-let none = plus_one(None);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-11"&gt;マッチは包括的&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;match&lt;/code&gt; 式は全ての可能性を網羅していなければコンパイルエラーになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;// Noneがないためコンパイルエラー
-fn plus_one(x: Option&amp;lt;i32&amp;gt;) -&amp;gt; Option&amp;lt;i32&amp;gt; {
-    match x {
-        Some(i) =&amp;gt; Some(i + 1),
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-12"&gt;プレースホルダー&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;_&lt;/code&gt; プレースホルダーを使うことで、どのような値にもマッチさせることができる。関心以外の値に使用する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 0u8;
-match x {
-    1 =&amp;gt; println!("one"),
-    3 =&amp;gt; println!("three"),
-    5 =&amp;gt; println!("five"),
-    7 =&amp;gt; println!("seven"),
-    _ =&amp;gt; (),
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="if-let"&gt;if let記法&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;if let&lt;/code&gt; 記法で &lt;code&gt;if&lt;/code&gt; と &lt;code&gt;let&lt;/code&gt; をより冗長性の少ない記法で組み合わせ、残りを無視しつつ、一つのパターンにマッチする値を扱うことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = Some(0u8);
-
-match x {
-    Some(3) =&amp;gt; println!("three"),
-    _ =&amp;gt; (),
-}
-
-if let Some(3) = x { println!("three"); } // 上と同じ
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;if let&lt;/code&gt; では &lt;code&gt;else&lt;/code&gt; を含むことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut count = 0;
-
-match coin {
-    Coin::Quarter(state) =&amp;gt; println!("{}", state),
-    _ =&amp;gt; count += 1;
-}
-
-if let Coin::Quarter(stete) = coint {
-    println!("{}", state);
-} else {
-    count += 1;
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ3です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210128hellorust2</id>
-		<title>Rustのお勉強メモ2 (所有権)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust2" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust1"&gt;メモ1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;メモ2 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;所有権&lt;/h1&gt;
-&lt;h2 id="section-2"&gt;所有権規則&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Rustの各値は、&lt;strong&gt;所有者&lt;/strong&gt;と呼ばれる変数と対応している。&lt;/li&gt;
-&lt;li&gt;いかなる時も所有者は一つである。&lt;/li&gt;
-&lt;li&gt;所有者がスコープから外れたら、値は破棄される。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-3"&gt;変数スコープ&lt;/h2&gt;
-&lt;p&gt;要素が有効になるプログラム内の範囲を&lt;strong&gt;スコープ&lt;/strong&gt;という。
-変数は、宣言された地点から現在のスコープの終わりまでが有効となる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{ // 無効
-    let s = "hello"; // 有効
-} // 無効
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="string"&gt;String型&lt;/h3&gt;
-&lt;p&gt;文字列リテラルは不変だが、&lt;code&gt;String&lt;/code&gt; 型はヒープにメモリを確保するので、コンパイル時にはサイズが不明なテキストも保持することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = "hello"; // 文字列リテラル
-let s = String::from("hello"); // String型
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
-s.push_str(", world!"); // push_str()でリテラルを追加
-println!("{}", s);
-// #=&amp;gt; hello, world!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-4"&gt;メモリと確保&lt;/h3&gt;
-&lt;p&gt;文字列リテラルの場合、中身はコンパイル時に判明しているため、バイナリに直接ハードコードされ高速で効率的。
-一方、&lt;code&gt;String&lt;/code&gt; 型では、可変かつ伸長可能なテキスト破片をサポートするために、コンパイル時には不明な量のメモリをヒープメモリに確保する。つまり、メモリの動的確保と解放が必要となる。&lt;/p&gt;
-&lt;p&gt;ガベージコレクタ (GC) 機能付きの言語 (例えばC#) では、GCが使用されないメモリを検知して解放するため、プログラマはメモリの解放を考慮する必要はないが、CやC++等のGCがない言語では、プログラマが解放する責任がある。
-&lt;code&gt;allocate&lt;/code&gt; と &lt;code&gt;free&lt;/code&gt; は一対一対応である必要がある。&lt;/p&gt;
-&lt;p&gt;変数がスコープを抜けるとき、Rustは &lt;code&gt;drop&lt;/code&gt; と呼ばれる特別な関数を自動的に呼んでメモリを解放する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;{
-    let s = String::from("hello"); // 有効
-} // 無効 drop関数が呼ばれる。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-5"&gt;変数とデータの相互作用: ムーブ&lt;/h3&gt;
-&lt;p&gt;Rustでは、複数の変数が同じデータに対して異なる手段で相互作用することができる。&lt;/p&gt;
-&lt;p&gt;次の &lt;code&gt;x&lt;/code&gt; と &lt;code&gt;y&lt;/code&gt; は同じ値を持つが、二つの値はそれぞれスタックに積まれ、別のものとして扱われる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
-let y = x; // 5
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型では、文字列の中身を保持するメモリへのポインタ、長さ、許容量がデータとしてスタックに保持される。&lt;code&gt;s1&lt;/code&gt; を &lt;code&gt;s2&lt;/code&gt; に代入すると &lt;code&gt;String&lt;/code&gt; 型のデータがコピーされ、ヒープ上のデータはコピーされない。
-&lt;code&gt;s1&lt;/code&gt; と &lt;code&gt;s2&lt;/code&gt; ではヒープ上の1つのデータにアクセスすることになり、ヒープ上に2つのデータの実体が生成されるわけではない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello"); // ヒープ上に確保
-let s2 = s1; // s1と同一のデータにアクセスしている。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;変数がスコープを抜けると自動的に&lt;code&gt;drop&lt;/code&gt;関数が呼ばれ、ヒープメモリを解放するが、両方のデータポインタが同じ場所を指しているため、 &lt;code&gt;s1&lt;/code&gt; と &lt;code&gt;s2&lt;/code&gt; がスコープを抜けたら、両方とも同じメモリを解放しようとし (&lt;strong&gt;二重解放エラー&lt;/strong&gt;) 、メモリ安全性上のバグの一つになり、セキュリティ上の脆弱性を生む可能性がある。&lt;/p&gt;
-&lt;p&gt;Rustはメモリ安全性を保証するために、確保されたメモリをコピーしようとする代わりにコンパイラは、古い変数を有効ではないとする。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello");
-let s2 = s1;
-println!("{}", s1) // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;他言語では、&lt;code&gt;shallow copy&lt;/code&gt; (データだけコピー) や &lt;code&gt;deep copy&lt;/code&gt; (ヒープ上のデータ全てコピー) があるが、Rustでは &lt;code&gt;shallow copy&lt;/code&gt; かつ古い変数を無効化するので &lt;strong&gt;ムーブ&lt;/strong&gt;と呼ばれている。
-スタック上でのやりとりなので、実行時性能は悪くない。&lt;/p&gt;
-&lt;h3 id="section-6"&gt;変数とデータの相互作用: クローン&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;String&lt;/code&gt; 型のヒープ上のデータの &lt;code&gt;deep copy&lt;/code&gt; が必要ならば &lt;code&gt;clone&lt;/code&gt; メソッドを使う。
-ただし、ヒープ上のデータをコピーするため、実行コストが高い。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s1 = String::from("hello");
-let s2 = s1.clone();
-println!("{}, {}", s1, s2) // OK
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;スタックのみのデータ: コピー&lt;/h3&gt;
-&lt;p&gt;整数型のようなコンパイル時に既知のサイズを持つ型は、データ自体がスタック上に保持されるため、ムーブが発生しない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
-let y = x;
-println!("{}, {}", x, y) // OK
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Rustには &lt;code&gt;Copy&lt;/code&gt; トレイトと呼ばれる特別な注釈があり、整数型のようなスタックに保持される型に対して実装される。型が &lt;code&gt;Copy&lt;/code&gt; トレイトを実装していれば、代入後も古い変数が使用可能になる。一方、型や &lt;code&gt;Drop&lt;/code&gt; トレイトを実装している場合、 &lt;code&gt;Copy&lt;/code&gt; は実装されない。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Copy&lt;/code&gt; を実装している型&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;整数型&lt;/li&gt;
-&lt;li&gt;論理値型&lt;/li&gt;
-&lt;li&gt;浮動小数点型&lt;/li&gt;
-&lt;li&gt;文字型&lt;/li&gt;
-&lt;li&gt;Copy型だけを含むタプル&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-8"&gt;所有権と関数&lt;/h2&gt;
-&lt;p&gt;関数に値を渡すことと、値を変数に代入することは似ていて、関数に変数を渡すと、代入のようにムーブやコピーが発生する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let s = String::from("hello"); // sが有効になる。
-    takes_ownership(s); // sはムーブされ、無効になる。
-
-    let x = 5; // xが有効になる。
-    makes_copy(x); // xもムーブされるがi32はCopyのためまだ有効。
-
-    println!("{}", s); // NG
-}
-
-fn takes_ownership(some_string: String) { // some_stringが有効になる。
-    println!("{}", some_string);
-} // some_stringが無効になり、dropが呼ばれ、メモリが解放される。
-
-fn makes_copy(some_integer: i32) { // some_integerが有効になる。
-    println!("{}", some_integer);
-} // some_integerが無効になる。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-9"&gt;戻り値とスコープ&lt;/h2&gt;
-&lt;p&gt;値を返すことでも、所有権は移動する。データが別の変数に所有されるようムーブされていない限り、 &lt;code&gt;drop&lt;/code&gt; により解放される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main()
-{
-    let s1 = gives_ownership(); // 関数の戻り値がs1にムーブする。
-    let s2 = String::from("hello"); // s2が有効になる。
-    let s3 = takes_and_gives_back(s2); // s2は関数にムーブされ、関数の戻り値がs3にムーブする。
-} // s3は無効になり、ドロップされる。s2はムーブされているので、何も起きない。s1は無効になり、ドロップされる。
-
-fn gives_ownership() -&amp;gt; String {
-    let some_string = String::from("hello"); // some_stringが有効になる。
-    some_string // some_stringが返され、呼び出し元関数にムーブされる。
-}
-
-fn takes_and_gives_back(some_string: String) -&amp;gt; { // some_stringが有効になる
-    some_string // some_stringが返され、呼び出し元関数にムーブされる。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-10"&gt;参照と借用&lt;/h2&gt;
-&lt;p&gt;所有権をもらう代わりに、&lt;code&gt;&amp;amp;&lt;/code&gt; 記号を使うことで、オブジェクトへの参照を取ることができる。
-例えば、次の &lt;code&gt;calculate_length&lt;/code&gt; 関数は、 &lt;code&gt;String&lt;/code&gt; 型ではなく、 &lt;code&gt;&amp;amp;String&lt;/code&gt; を受け取ることになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let s = String::from("hello");
-    let len = calculate_length(&amp;amp;s);
-    println!("{}:{}", s1, len);
-}
-
-fn calculate_length(s: &amp;amp;String) -&amp;gt; usize { // ｓはStringへの参照
-    s.len();
-} // sはスコープ外になるが、参照しているものの所有権は持っていないので何も起こらない。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;&amp;amp;&lt;/code&gt; による参照の逆は、&lt;strong&gt;参照外し&lt;/strong&gt;であり、&lt;code&gt;*&lt;/code&gt; 記号を使うことで参照外しを行うことができる。&lt;/p&gt;
-&lt;p&gt;関数の引数に参照をとることを&lt;strong&gt;借用&lt;/strong&gt;と呼ぶ。借用した何かを変更するとエラーが発生する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let s = String::from("hello");
-    change(&amp;amp;s);
-}
-
-fn change(some_string: &amp;amp;String) {
-    some_string.push_str(", world"); // NG
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;変数が標準で不変であるのと同様に参照も不変である。&lt;/p&gt;
-&lt;h3 id="section-11"&gt;可変な参照&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;&amp;amp;mut&lt;/code&gt; キーワードを使って可変な参照を生成することで、参照の値を変更することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let mut s = String::from("hello");
-    change(&amp;amp;mut s);
-}
-
-fn change(some_string: &amp;amp;mut String) {
-    some_string.push_str(", world"); // OK
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;可変な参照の制約として、特定のスコープで、ある特定のデータに対しての可変な参照は、1つしか持つことができない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
-let r1 = &amp;amp;mut s; 
-let r2 = &amp;amp;mut s; // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;可変として2回以上借用することができない制約があることで、コンパイル時にデータの競合を防ぐことができる。&lt;/p&gt;
-&lt;p&gt;データ競合は次のような場合発生する。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2つ以上のポインタが同じデータに同時アクセスする。&lt;/li&gt;
-&lt;li&gt;少なくとも1つのポインタがデータに書き込みを行っている。&lt;/li&gt;
-&lt;li&gt;データへのアクセスを同期する機構が使用されていない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;新しいスコープを生成することで、複数の可変な参照を作ることもできる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
-{
-    let r1 = &amp;amp;mut s; // r1が有効になる。
-} // r1が無効になる。
-let r2 = &amp;amp;mut s; // OK
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;可変と不変な参照を組み合わせる場合も似たような規則が存在する。不変で借用されている場合は、可変で借用はできない。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut s = String::from("hello");
-let r1 = &amp;amp;s; // OK
-let r2 = &amp;amp;s; // OK
-let r3 = &amp;amp;mut s; // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-12"&gt;宙に浮いた参照&lt;/h3&gt;
-&lt;p&gt;ポインタのある言語では、ダングリングポインタ (別のところに渡されてしまった可能性のあるメモリを指すポインタであり、ポインタを保持している間にメモリを開放してしまうと発生する) を生成してしまうことがある。
-Rustでは、何らかのデータへの参照がある場合、コンパイラは参照がスコープを抜けるまで、データがスコープを抜けることが無いように確認するため、コンパイラがダングリング参照にならないことを保証している。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let reference_to_nothing = dangle();
-}
-
-fn dangle() -&amp;gt; &amp;amp;String { // Stringへの参照を返す。
-    let s = String::from("hello");
-    &amp;amp;s // Stringの参照を返す。
-} // sが解放されるためエラーになる。
-
-fn no_dangle() -&amp;gt; &amp;amp;String {
-    let s = String::from("hello");
-    s // Stringを返す
-} // 所有権がムーブされているため、何も解放されない。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-13"&gt;参照の規則&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;任意のタイミングで、一つの可変参照か、一つ以上の不変参照のどちらかを行える。&lt;/li&gt;
-&lt;li&gt;参照は常に有効でなければならない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-14"&gt;スライス型&lt;/h2&gt;
-&lt;p&gt;所有権のない別のデータ型を&lt;strong&gt;スライス&lt;/strong&gt;と呼ぶ。コレクションのうちの一部の要素を参照することができる。&lt;/p&gt;
-&lt;p&gt;例えば、文字列を受け取り、その文字列中の最初の単語を返す関数 (&lt;code&gt;first_word&lt;/code&gt;) を作成する。
-単語の終端の添え字を返すことにする。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn first_word(s: &amp;amp;String) -&amp;gt; usize {
-    let bytes = s.as_bytes(); // Stringをバイト配列に変換。
-
-    for (i, &amp;amp;item) in bytes.iter().enumerate() { // コレクション内の各要素を添え字とともに返す。 (添え字, 要素への参照)
-        if item == b' ' {
-            return i;
-        }
-    }
-
-    s.len()
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文字列内の最初の単語の終端の添え字を見つけられるが、 &lt;code&gt;&amp;amp;String&lt;/code&gt; の文脈でのみ意味を持つため、 &lt;code&gt;String&lt;/code&gt; が変更された場合有効である保証がない (=関連性がない)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let mut s = String::from("hello world");
-    let word = first_word(&amp;amp;s); // 5
-    s.clear(); // sを空にする。
-
-    // wordは5だが、有効に使用できる文字列は存在しない。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-15"&gt;文字列スライス&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;String&lt;/code&gt; の一部への参照。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = String::from("hello world");
-let hello = &amp;amp;s[0..5]; // hello
-let world = &amp;amp;s[6..11]; // world
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;範囲記法 &lt;code&gt;..&lt;/code&gt; を指定することで、スライスを生成することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = String::from("hello");
-
-let slice = &amp;amp;s[0..2]; // he
-let slice = &amp;amp;s[..2]; // he
-
-let len = s.len();
-let slice = &amp;amp;s[0..len]; // hello
-let slice = &amp;amp;s[..]; // hello
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文字列スライスの範囲添え字は、有効なUTF-8文字境界に置かなければならない。マルチバイト文字の真ん中でスライスを行うとエラーになる。&lt;/p&gt;
-&lt;p&gt;文字列スライスを使って &lt;code&gt;first_word&lt;/code&gt; を書き直し、文字列スライス (&lt;code&gt;&amp;amp;str&lt;/code&gt;) を返すようにする。
-文字列スライスを返すことで、元のデータに紐づけられた単独の値を得られるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn first_word(s: &amp;amp;String) -&amp;gt; &amp;amp;str {
-    let bytes = s.as_bytes();
-
-    for (i, &amp;amp;item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &amp;amp;s[..i];
-        }
-    }
-
-    &amp;amp;s[..]
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;スライスバージョンの &lt;code&gt;first_word&lt;/code&gt; を使用したあとに、 &lt;code&gt;clear&lt;/code&gt; を呼ぶとコンパイルエラーになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let mut s = String::from("hello world");
-    let word = first_word(&amp;amp;s); // hello への不変借用が発生。
-    s.clear(); // NG 可変借用しようとしているためエラーになる。
-    println!("{}", word); // 不変借用が使われる。
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-16"&gt;文字列リテラルはスライス&lt;/h4&gt;
-&lt;p&gt;文字列リテラルはバイナリのその特定の位置を指すスライスであり、 &lt;code&gt;&amp;amp;str&lt;/code&gt;は不変な参照である。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let s = "Hello, world!"; // &amp;amp;str
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-17"&gt;引数としての文字列スライス&lt;/h4&gt;
-&lt;p&gt;引数を文字列スライスで受けることで、文字列リテラルと &lt;code&gt;String&lt;/code&gt; 全体のスライスを渡すことができるようになる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let my_string = String::from("hello world");
-let word = first_word(&amp;amp;my_string[..]);
-
-let my_string_literal = "hello world";
-let word = first_word(&amp;amp;my_string_literal[..]);
-let word = first_word(my_string_literal);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-18"&gt;他のスライス&lt;/h4&gt;
-&lt;p&gt;配列に対してもスライスを行うことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
-let slice = &amp;amp;a[1..3]; // [2, 3];
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ2です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210128hellorust1</id>
-		<title>Rustのお勉強メモ1 (ツール | プログラミングの概念)</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210128hellorust1" />
-		<updated>2021-02-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;メモ1 (ここ)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust2"&gt;メモ2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210128hellorust3"&gt;メモ3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust4"&gt;メモ4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210129hellorust5"&gt;メモ5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust6"&gt;メモ6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://aconcavy.github.io/blog/20210130hellorust7"&gt;メモ7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href="https://github.com/AconCavy/hello-rust"&gt;リポジトリ&lt;/a&gt; (12章以降)&lt;/p&gt;
-&lt;h1 id="section-1"&gt;ツール&lt;/h1&gt;
-&lt;h2 id="rustup"&gt;rustup&lt;/h2&gt;
-&lt;p&gt;Rustのバージョンと関連するツールと管理するツール。&lt;/p&gt;
-&lt;h3 id="section-2"&gt;更新&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;rustup update
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="rustc"&gt;rustc&lt;/h2&gt;
-&lt;p&gt;コンパイラ。&lt;/p&gt;
-&lt;h3 id="section-3"&gt;個別ファイルのコンパイル&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;rustc main.rs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="rustfmt"&gt;rustfmt&lt;/h2&gt;
-&lt;p&gt;フォーマッタ。&lt;/p&gt;
-&lt;h2 id="cargo"&gt;Cargo&lt;/h2&gt;
-&lt;p&gt;ビルドシステム、パッケージマネージャ。&lt;/p&gt;
-&lt;h3 id="section-4"&gt;プロジェクト作成&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo new hello --bin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="cargo.toml"&gt;Cargo.toml&lt;/h3&gt;
-&lt;p&gt;Cargoの設定フォーマット。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;[package]&lt;/code&gt;: パッケージの設定&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;[dependencies]&lt;/code&gt;: プロジェクトの依存関係&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;src&lt;/code&gt; ディレクトリにコード、 &lt;code&gt;root&lt;/code&gt; に &lt;code&gt;Cargo.toml&lt;/code&gt; 。&lt;/p&gt;
-&lt;h3 id="section-5"&gt;プロジェクトのビルド&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo build
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="cargo.lock"&gt;Cargo.lock&lt;/h3&gt;
-&lt;p&gt;Cargoが生成するファイル。プロジェクト依存関係の正確なバージョンを管理する。手動で変更してはいけない。&lt;/p&gt;
-&lt;h3 id="section-6"&gt;プロジェクトの実行&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo run
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;プロジェクトのビルド (バイナリ生成なし)&lt;/h3&gt;
-&lt;p&gt;バイナリを生成しないので、ビルドの確認を高速化できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo check
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-8"&gt;リリースビルド&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;cargo build --release
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="section-9"&gt;プログラミングの概念&lt;/h1&gt;
-&lt;h2 id="section-10"&gt;変数と可変性&lt;/h2&gt;
-&lt;h3 id="section-11"&gt;変数&lt;/h3&gt;
-&lt;p&gt;Rustでは、&lt;code&gt;let&lt;/code&gt; キーワードで変数を宣言でき、型推論をしてくれるため、型注釈を省略できる。また、変数に &lt;code&gt;mut&lt;/code&gt; キーワードを付けることで、変更可能な変数として扱うことができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5; // 不変変数 (let x: i32 = 5)
-x = 6 // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut x = 5 // 変数
-x = 6 // OK
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-12"&gt;定数&lt;/h3&gt;
-&lt;p&gt;型注釈が必須.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;const MAX: u32 = 1000;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-13"&gt;シャドーイング&lt;/h3&gt;
-&lt;p&gt;前に定義した変数と同じ名前の変数を新しく宣言できる。新しい変数を生成するため、型が異なってもOK。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 5;
-let x = x + 1; // OK 6
-let x = x * 2; // OK 12
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let spaces = "   ";
-let spaces = spaces.len(); // OK
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut spaces = "   ";
-spaces = spaces.len(); // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-14"&gt;データ型&lt;/h2&gt;
-&lt;p&gt;Rustにおける値は全て、何らかのデータ型である。&lt;/p&gt;
-&lt;p&gt;静的型付き言語のため、コンパイル時にすべての変数の型が判明している必要がある。&lt;/p&gt;
-&lt;p&gt;例えば、&lt;code&gt;String&lt;/code&gt;を数値型に変換した場合など、変換先が複数存在する場合は型注釈をつける必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x: u32 = "42".parse().expect("Not a number!");
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-15"&gt;スカラー型&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;整数&lt;/li&gt;
-&lt;li&gt;浮動小数点数&lt;/li&gt;
-&lt;li&gt;論理値&lt;/li&gt;
-&lt;li&gt;文字&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id="section-16"&gt;整数型&lt;/h4&gt;
-&lt;p&gt;サイズごとに符号付きと符号なしの整数値の型が存在する。整数型のデフォルトは &lt;code&gt;i32&lt;/code&gt; 型。
-&lt;code&gt;isize&lt;/code&gt; と &lt;code&gt;usize&lt;/code&gt; はCPUのアーキテクチャによって可変し、64ビットアーキテクチャなら64ビット、32ビットアーキテクチャなら32ビットになる。&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: left;"&gt;サイズ&lt;/th&gt;
-&lt;th style="text-align: left;"&gt;符号付き&lt;/th&gt;
-&lt;th style="text-align: left;"&gt;符号なし&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;8-bit&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;i8&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;u8&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;16-bit&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;i16&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;u16&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;32-bit&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;i32&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;u32&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;64-bit&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;i64&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;u64&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;arch&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;isize&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;usize&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;p&gt;バイトリテラルを覗く数値リテラルすべて、型接尾辞と &lt;code&gt;_&lt;/code&gt; を見た目の区切り記号に付加することができる。&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: left;"&gt;数値リテラル&lt;/th&gt;
-&lt;th style="text-align: left;"&gt;例&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;10進数&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;10_000&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;16進数&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;0xff&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;8進数&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;0o77&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;2進数&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;0b1111_0000&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;バイト&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;&lt;code&gt;b'A'&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h4 id="section-17"&gt;浮動小数点型&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;f32&lt;/code&gt; と &lt;code&gt;f64&lt;/code&gt; が存在する。浮動小数点型のデフォルトは &lt;code&gt;f64&lt;/code&gt; 型。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 2.0; // f64
-let x: f32 = 2.0; // f32
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-18"&gt;整数演算&lt;/h4&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let add = 5 + 10;
-let sub = 95.3 - 4.3;
-let mul = 4 * 30;
-let div = 56.7 / 32.2;
-let rem = 43 % 5; 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-19"&gt;論理値型&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;true&lt;/code&gt; と &lt;code&gt;false&lt;/code&gt; が存在する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let t = true;
-let f: bool = false;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-20"&gt;文字型&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;char&lt;/code&gt; が存在する。ユニコードのスカラー値 (&lt;code&gt;U+0000&lt;/code&gt; から &lt;code&gt;U+D4FF&lt;/code&gt; までと &lt;code&gt;U+E000&lt;/code&gt; から &lt;code&gt;U+10FFFF&lt;/code&gt; まで) を表す。シングルクォートで指定する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let c = 'z';
-let cat = '😻';
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-21"&gt;複合型&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;タプル&lt;/li&gt;
-&lt;li&gt;配列&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id="section-22"&gt;タプル型&lt;/h4&gt;
-&lt;p&gt;複数の型の何らかの値を一つの複合型にまとめ上げられる。
-それぞれに変数名を与えることができたり、添え字にによってタプルの要素を参照できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let tuple: (i32, f64, u8) = (500, 6.4, 1);
-let tuple = (500, 6.4, 1);
-let (x, y, z) = tuple;
-
-println!("{}, {}", x, tuple.0);
-// #=&amp;gt; 500, 500
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="section-23"&gt;配列型&lt;/h4&gt;
-&lt;p&gt;複数の値のコレクションを得ることができる。配列の全要素は同じ型でなければならない。&lt;/p&gt;
-&lt;p&gt;固定長で、一度宣言されたらサイズの変更はできない。可変長のコレクション型を使いたい場合はベクタ型を使用する。&lt;/p&gt;
-&lt;p&gt;添え字によって配列の要素を参照できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
-println!("{}", a[0]); // OK
-println!("{}", a[10]); // NG 範囲外
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-24"&gt;関数&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;fn&lt;/code&gt; キーワードで宣言することができる。&lt;/p&gt;
-&lt;p&gt;関数と変数の命名規則はスネークケース。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    greeting();
-    print_value(1);
-    print_values(1, 2);
-
-    // #=&amp;gt; Hello!
-    // #=&amp;gt; 1
-    // #=&amp;gt; 1, 2
-}
-
-fn greeting() {
-    println!("Hello!");
-}
-
-fn print_value(x: i32) {
-    println!("{}", x);
-}
-
-fn print_values(x: i32, y: i32) {
-    println!("{}, {}", x, y);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-25"&gt;文と式&lt;/h3&gt;
-&lt;p&gt;関数本体は、文が並び、最後に式を置くか分を置くという形で形成される。&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: left;"&gt;&lt;/th&gt;
-&lt;th style="text-align: left;"&gt;特徴&lt;/th&gt;
-&lt;th style="text-align: left;"&gt;終端セミコロン&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;文&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;何らかの動作をして値を返さない命令&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;含む&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: left;"&gt;式&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;結果値に評価される&lt;/td&gt;
-&lt;td style="text-align: left;"&gt;含まない&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn main() {
-    let x = 5; // 文
-    let y = {
-        let x = 3; // 文
-        x + 1 // 式
-    }
-
-    println!("{}, {}", x, y);
-    // #=&amp;gt; 5, 4
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-26"&gt;戻り値のある関数&lt;/h3&gt;
-&lt;p&gt;矢印の後に型を書いて宣言する。関数本体ブロックの最後の式の値と同義である。 &lt;code&gt;return&lt;/code&gt; キーワードで早期リターンも可能。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;fn five() -&amp;gt; i32 {
-    5 // 式なのでセミコロンはなし
-}
-
-fn plus_one_ok(x: i32) -&amp;gt; i32 {
-    x + 1 // OK 文になるのでエラーになる
-}
-
-fn plus_one_ng(x: i32) -&amp;gt; i32 {
-    x + 1; // NG 文になって()が返るのでエラーになる
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-27"&gt;フロー制御&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; 式とループが存在する。&lt;/p&gt;
-&lt;h3 id="if"&gt;if式&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; 式の条件式と紐づけられる一連のコードは、時として&lt;strong&gt;アーム&lt;/strong&gt;と呼ばれることがある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let x = 3;
-
-if x &amp;lt; 5 {
-    println!("true");
-} else {
-    println!("false");
-}
-
-if x { // 数値型ではダメ 論理値型のみ
-    println!("error");
-}
-
-if x % 4 == 0 {
-    println!("x / 4 rem 0");
-} else if x % 3 == 0 {
-    println!("x / 3 rem 0");
-} else if x % 2 == 0 {
-    println!("x / 2 rem 0");
-} else {
-    println!("other");
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;else if&lt;/code&gt; 多用する場合は、&lt;code&gt;match&lt;/code&gt;と呼ばれる枝分かれ文法が使える。&lt;/p&gt;
-&lt;h4 id="letif"&gt;let文内でのif式&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; は式なので、&lt;code&gt;let&lt;/code&gt; 文の右辺に持ってくることができる。全ての条件分岐で同じ型である必要がある。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let cond = true;
-let x = if cond { 5 } else { 6 };
-println!("{}", x);
-// #=&amp;gt; 5
-
-let y = if cond { 5 } else { "six" }; // NG
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-28"&gt;ループでの繰り返し&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;loop&lt;/code&gt; 、 &lt;code&gt;while&lt;/code&gt; 、 &lt;code&gt;for&lt;/code&gt; の3種類のループが存在する。&lt;/p&gt;
-&lt;h4 id="loop"&gt;loop&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;loop&lt;/code&gt; キーワードでは、同じコードを何回も永遠に、明示的に辞めさせるまで実行される。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;loop { // 無限ループ
-    println!("Hello!");
-}
-
-let mut x = 5;
-loop {
-    if x == 0 {
-        break;
-    }
-    x = x - 1;
-    println!("Hello!");
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="while"&gt;while&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;while&lt;/code&gt; キーワードでは、条件を指定できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let mut x = 5;
-while x != 0 {
-    x = x - 1;
-    println!("Hello!");
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="for"&gt;for&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;for&lt;/code&gt; でコレクションの各アイテムに対してコードを実行することができる。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;let a = [1, 2, 3, 4, 5];
-for x in a.iter() {
-    println!("{}", x);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;Range&lt;/code&gt; 型を使うことで、回数ループができる。&lt;code&gt;rev&lt;/code&gt; メソッドで逆順も可能。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-rust line-numbers"&gt;for x in 1..4 {
-    println!("{}", x);
-}
-
-for x in (1..4).rev() {
-    println!("{}", x);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://doc.rust-jp.rs/book-ja/"&gt;The Rust Programming Language 日本語版&lt;/a&gt; で学んだことのメモ1です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20210121uploadnuget</id>
@@ -3063,5 +700,1226 @@ namespace MagicOnionSample.Server.Hubs
 &lt;p&gt;マルチプレイのゲームを作るときには有効活用したいです。&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20201212createrepository</id>
+		<title>リポジトリを作成したときにやっておきたいこと</title>
+		<link href="https://aconcavy.github.io/blog/posts/20201212createrepository" />
+		<updated>2020-12-13T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;これ何&lt;/h1&gt;
+&lt;p&gt;リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;開発環境ごとの差異をなくすために&lt;/h1&gt;
+&lt;p&gt;開発者によってOSやエディタ等の開発環境が異なるのでルールを決めます。&lt;/p&gt;
+&lt;h2 id="git-config"&gt;git config&lt;/h2&gt;
+&lt;p&gt;WindowsとMacOS / LinuxではOSにより行の終端が異なるため、何も変更していないつもりでも、OSが異なるとdiffが発生してしまう場合があります。それを避けるために、Gitの設定でbranchをcheckoutしたときに、ファイルをどの形式で認識するかを設定します。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;true&lt;/code&gt;にすると、ファイル形式が&lt;code&gt;CRLF&lt;/code&gt;と&lt;code&gt;LF&lt;/code&gt;のどちらであってもcheckout時に&lt;code&gt;CRLF&lt;/code&gt;に変換され、commit時には自動的に&lt;code&gt;LF&lt;/code&gt;へと変換されます。
+また、&lt;code&gt;core.autocrlf&lt;/code&gt;を&lt;code&gt;input&lt;/code&gt;にすると、&lt;code&gt;LF&lt;/code&gt;のままcheckoutとcommitが行われます。
+そのため、Windowsでは&lt;code&gt;true&lt;/code&gt;、MacOS / Linuxでは&lt;code&gt;input&lt;/code&gt;を指定しておくといいでしょう。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.autocrlf true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Mac OS / Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.autocrlf input
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="gitattributes"&gt;.gitattributes&lt;/h2&gt;
+&lt;p&gt;リポジトリ単位で行の終端処理を行う場合は、&lt;code&gt;.gitattributes&lt;/code&gt;をリポジトリのルートに作成して設定を行うことで、&lt;code&gt;core.autocrlf&lt;/code&gt;を設定していない開発者がいてもGitが自動的にファイルの終端を変更してくれます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;* text=auto
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;.gitattributes&lt;/code&gt;には&lt;a href="https://git-lfs.github.com/"&gt;GitLFS&lt;/a&gt;の設定をすることもできるので、音声や画像、データセットなどの容量が大きなファイルはLFSの設定をするといいかもしれません。&lt;/p&gt;
+&lt;p&gt;その他詳しくは&lt;a href="https://docs.github.com/ja/free-pro-team@latest/github/using-git/configuring-git-to-handle-line-endings"&gt;こちら (GitHub Docs, 行終端を処理するようGitを設定する)&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="gitignore"&gt;.gitignore&lt;/h2&gt;
+&lt;p&gt;プロジェクトの生成物やエディタが生成するファイルなど、プロジェクトに関わりのないファイルやディレクトリを指定しましょう。&lt;/p&gt;
+&lt;p&gt;エディタの設定ファイルに関しては、リポジトリに開発者ごとのエディタ設定を無視させるのではなく、開発者自身が&lt;code&gt;.gitignore_global&lt;/code&gt;を設定した方がいいかもしれません。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-powershell line-numbers"&gt;git config --global core.excludesfile core.excludesfile path/to/.gitignore_global
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;MacOS / Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;git config --global core.excludesfile core.excludesfile ~/.gitignore_global
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="editorconfig"&gt;.editorconfig&lt;/h2&gt;
+&lt;p&gt;エディタによってインデントのサイズやコードスタイルなどのフォーマットの設定が変わります。ファイルごとにバラバラなフォーマットが適用されてしまうことを避けるために&lt;a href="https://editorconfig.org/"&gt;EditorConfig&lt;/a&gt;を利用して、フォーマットスタイルを統一させます。EditorConfigはJetbrainsのIDEやVisualStudio等のIDEでは標準で搭載しており、Visual Studio Codeなどのエディタでもプラグインをインストールすることで利用することができるようになります。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;.editorconfig&lt;/code&gt;を作成し、エディタのフォーマット機能やEditorConfig対応のcliを利用することで、そのリポジトリのファイルを決まったルールでフォーマットすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;root = true
+
+# すべてのファイル
+[*]
+end_of_line = lf              # フォーマット時に終端をLFに変換 .gitattributesで指定してるならいらないかも
+charset = utf-8
+insert_final_newline = true   # ファイルの最後に改行
+indent_style = space          # インデントはスペースで
+indent_size = 4               # インデント4
+
+# jsonとymlファイル
+[*.{json, yml}]
+indent_size = 2               # インデント2
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="ci-cd"&gt;CI / CD&lt;/h1&gt;
+&lt;p&gt;Unit Testや正しくファイルがフォーマットされているかのチェック、Releaseの作成、デプロイ等を自動化することによって、繰り返しの作業が楽になるので可能ならやっておきたいです。&lt;/p&gt;
+&lt;p&gt;以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合&lt;/p&gt;
+&lt;h2 id="unit-test"&gt;Unit test&lt;/h2&gt;
+&lt;p&gt;GitHub Workflowの&lt;code&gt;.NET Core&lt;/code&gt;を選択すれば必要最低限のWorkflowは実現できます。&lt;/p&gt;
+&lt;p&gt;リポジトリにコミットされた際にテストを実行し、一つでもテストが通らなかった場合は以下のように確認することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Unit Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/gha_test_fail.webp" class="img-fluid" alt="github action test failed"&gt;&lt;/p&gt;
+&lt;h2 id="code-format"&gt;Code format&lt;/h2&gt;
+&lt;p&gt;EditorConfigを設定しているとdotnet toolの&lt;code&gt;dotnet-format&lt;/code&gt;を使うことでEditorConfigに合ったファイルのフォーマットの確認ができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet tool update -g dotnet-format
+dotnet format --check
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GitHub Workflowの&lt;code&gt;.NET Core&lt;/code&gt;をベースにフォーマットを実行し、1つでもファイルがフォーマットされればWorkflowを失敗させるWorkflowを作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  format:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dotnet-format
+      run: dotnet tool update -g dotnet-format
+    - name: Lint
+      run: dotnet format --check --verbosity diagnostic
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/gha_lint_fail.webp" class="img-fluid" alt="github action lint failed"&gt;&lt;/p&gt;
+&lt;h1 id="release"&gt;Releaseの作成&lt;/h1&gt;
+&lt;p&gt;Releaseでは、Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします。次の例では.dllファイルをアップロードします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Release
+
+on:
+  push:
+    tags: 
+    - 'v[0-9]+.[0-9]+.[0-9]+*' # v0.0.1のようなTagがpushされたとき
+
+jobs:  
+  release:
+    runs-on: ubuntu-latest
+    needs: [test]
+    
+    steps:
+    
+    # Build
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build
+      run: dotnet build -c Release
+    
+    # リリースを作成
+    - name: Create Release 
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        # body |
+        # hoge hoge # Releaseコメント
+        draft: false
+        prerelease: false
+
+    # リリースの成果物にHello.dllを追加
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./src/Hello/bin/Release/net5.0/Hello.dll
+        asset_name: Hello.dll
+        asset_content_type: application/octet-stream # .dllファイルのcontent type
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Workflowを実行すると次のようなReleaseが作成されます。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/gha_release.webp" class="img-fluid" alt="github action release"&gt;&lt;/p&gt;
+&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません。
+開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います。&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20201129dotnettemplate</id>
+		<title>dotnet newのカスタムテンプレート</title>
+		<link href="https://aconcavy.github.io/blog/posts/20201129dotnettemplate" />
+		<updated>2020-12-08T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので、&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です。&lt;/p&gt;
+&lt;h1 id="dotnet-new"&gt;dotnet new のカスタムテンプレートとは&lt;/h1&gt;
+&lt;p&gt;公式の情報は&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates"&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;.NETのプロジェクトを作成する際、&lt;code&gt;dotnet&lt;/code&gt;コマンドを利用してプロジェクトを生成します。
+例えば、コンソールアプリケーションを作成する場合、&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console -n Sample
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のようなコマンドを実行することで、&lt;code&gt;Sample&lt;/code&gt;という名称のプロジェクトが作成されます。
+これは、&lt;code&gt;dotnet new&lt;/code&gt;コマンドで、&lt;code&gt;console&lt;/code&gt;というデフォルトテンプレートを使ってプロジェクトを生成するという意味になります。&lt;/p&gt;
+&lt;p&gt;この&lt;code&gt;dotnet new&lt;/code&gt;コマンドに、プロジェクトやスクリプトをカスタムテンプレートとして登録しておくことで、プロジェクトやファイルの作成を使いまわすことができます。&lt;/p&gt;
+&lt;p&gt;既定のテンプレートとして、&lt;code&gt;dotnet new&lt;/code&gt;コマンドに&lt;code&gt;-l|--list&lt;/code&gt;オプションをつけて実行すると、現在インストールされている&lt;code&gt;dotnet new&lt;/code&gt;コマンドで生成できるテンプレートを確認することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -l
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-1"&gt;作ってみる&lt;/h1&gt;
+&lt;p&gt;テンプレートの基本として、テンプレート化したいプロジェクトのディレクトリ下に、&lt;code&gt;.template.config&lt;/code&gt;のディレクトリを作成し、さらにその下に、&lt;code&gt;template.json&lt;/code&gt;を作成します。
+そして、&lt;code&gt;template.json&lt;/code&gt;にプロパティを設定し、&lt;code&gt;dotnet new&lt;/code&gt;コマンドを使ってインストールすることで、テンプレートを使うことができるようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -i path-to-template
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;競技プロ用のプロジェクトテンプレートでは、次の3つをテンプレートとして準備します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;プロジェクト&lt;/li&gt;
+&lt;li&gt;解答用のクラス&lt;/li&gt;
+&lt;li&gt;テスト用のクラス&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-2"&gt;プロジェクトのテンプレート&lt;/h2&gt;
+&lt;p&gt;プロジェクトでは、解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Project/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Template.Project.sln
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;このプロジェクトをベースとして、&lt;code&gt;Project/&lt;/code&gt;下に&lt;code&gt;.template.config/&lt;/code&gt;ディレクトリを作成し、その下に&lt;code&gt;template.json&lt;/code&gt;を作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Project/
+    |
+    |- .template.config
+    |    |
+    |    |- template.json
+    ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;template.json&lt;/code&gt;では、次のメンバを記述します。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;メンバ&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;$schema&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;template.json&lt;/code&gt;のスキーマ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;author&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの作成者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;classfication&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの種類&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートのタグ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;identity&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの識別子&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;name&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレートの名前&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;shortName&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;dotnet new&lt;/code&gt; で指定する際の名前 (例: &lt;code&gt;dotnet new cpproj&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;sourceName&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;テンプレート使用時に置き換える文字列  (&lt;code&gt;dotnet new&lt;/code&gt;コマンドに、&lt;code&gt;-n|--name&lt;/code&gt;オプションで名前を指定することで、指定された文字列を全てその名前に置換することができます)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;preferNameDirectory&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;出力先ディレクトリがない場合テンプレートのディレクトリを作成するか (既定値: false)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;例えば、上記のプロジェクトでは次のような&lt;code&gt;json&lt;/code&gt;を記述します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/template&amp;quot;,
+    &amp;quot;author&amp;quot;: &amp;quot;AconCavy&amp;quot;,
+    &amp;quot;classifications&amp;quot;: [
+        &amp;quot;C#&amp;quot;,
+        &amp;quot;Console&amp;quot;
+    ],
+    &amp;quot;tags&amp;quot;: {
+        &amp;quot;language&amp;quot;: &amp;quot;C#&amp;quot;,
+        &amp;quot;type&amp;quot;: &amp;quot;project&amp;quot;
+    },
+    &amp;quot;name&amp;quot;: &amp;quot;Template Project&amp;quot;,
+    &amp;quot;identity&amp;quot;: &amp;quot;AconCavy.Template.Project&amp;quot;,
+    &amp;quot;shortName&amp;quot;: &amp;quot;cpproj&amp;quot;,
+    &amp;quot;sourceName&amp;quot;: &amp;quot;Template.Project&amp;quot;,
+    &amp;quot;preferNameDirectory&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sourceName&lt;/code&gt;に設定した文字列は、テンプレート以下のすべての対象の文字列が置換されるため、&lt;code&gt;dotnet new cpproj -n Sample&lt;/code&gt;を実行した場合、&lt;code&gt;Template.Project/&lt;/code&gt;ディレクトリ、&lt;code&gt;Template.Project.sln&lt;/code&gt;が&lt;code&gt;Sample/&lt;/code&gt;ディレクトリ、&lt;code&gt;Sample.sln&lt;/code&gt;に置換されて生成されます。ファイル内の文字列も置換されるため注意が必要です。&lt;/p&gt;
+&lt;p&gt;この状態で、&lt;code&gt;dotnet new -i path-to-template&lt;/code&gt;コマンドでインストールし、&lt;code&gt;dotnet new cpproj -n Sample&lt;/code&gt;を実行することで、上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Sample/
+    |
+    |- Tasks/
+    |    |
+    |    |- Tasks.csproj
+    |
+    |- Tests/
+    |    |
+    |    |- Tester.cs
+    |    |- Tests.csproj
+    |
+    |- Sample.sln
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-3"&gt;コマンドの追加オプション&lt;/h3&gt;
+&lt;p&gt;また、&lt;code&gt;Task.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;のターゲットフレームワークをテンプレート生成時に指定できるようにするため、&lt;code&gt;dotnet new cpproj&lt;/code&gt;コマンドにオプションを追加します。&lt;/p&gt;
+&lt;p&gt;まず、&lt;code&gt;.template.config&lt;/code&gt;下に&lt;code&gt;dotnetcli.host.json&lt;/code&gt;を追加します。
+&lt;code&gt;symbolInfo&lt;/code&gt;メンバに、&lt;code&gt;longName&lt;/code&gt;のオプションに&lt;code&gt;framework&lt;/code&gt;を、&lt;code&gt;shortName&lt;/code&gt;に&lt;code&gt;f&lt;/code&gt;をもった&lt;code&gt;Framework&lt;/code&gt;というメンバを追加します。
+追加することで、&lt;code&gt;dotnet new cpproj&lt;/code&gt;にオプションとして、&lt;code&gt;-f|--framework&lt;/code&gt;のオプションを付与することができるようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;http://json.schemastore.org/dotnetcli.host&amp;quot;,
+    &amp;quot;symbolInfo&amp;quot;: {
+        &amp;quot;Framework&amp;quot;: {
+            &amp;quot;longName&amp;quot;: &amp;quot;framework&amp;quot;,
+            &amp;quot;shortName&amp;quot;: &amp;quot;f&amp;quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に&lt;code&gt;template.json&lt;/code&gt;に&lt;code&gt;symbols&lt;/code&gt;というメンバを追加し、ここに先ほど定義した&lt;code&gt;Framework&lt;/code&gt;メンバを追加します。
+ここではオプションの振る舞いを定義します。&lt;/p&gt;
+&lt;p&gt;今回はターゲットフレームワークを&lt;code&gt;.NET 5&lt;/code&gt;と&lt;code&gt;.NET Core 3.1&lt;/code&gt;を選択肢として定義します。
+&lt;code&gt;datatype&lt;/code&gt;を&lt;code&gt;choice&lt;/code&gt;にして、&lt;code&gt;choices&lt;/code&gt;に選択肢を定義します。
+&lt;code&gt;csproj&lt;/code&gt;の&lt;code&gt;TargetFramework&lt;/code&gt;に指定する文字列として、&lt;code&gt;.NET 5&lt;/code&gt;の場合は&lt;code&gt;net5.0&lt;/code&gt;、&lt;code&gt;.NET Core 3.1&lt;/code&gt;の場合は&lt;code&gt;netcoreapp3.1&lt;/code&gt;を&lt;code&gt;choice&lt;/code&gt;に設定します。
+&lt;code&gt;replaces&lt;/code&gt;に置換する文字列を、&lt;code&gt;defaultValue&lt;/code&gt;にオプションを指定しない場合の文字列を設定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;{
+    ...
+    &amp;quot;symbols&amp;quot;: {
+        &amp;quot;Framework&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;parameter&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The target framework for the project.&amp;quot;,
+            &amp;quot;datatype&amp;quot;: &amp;quot;choice&amp;quot;,
+            &amp;quot;choices&amp;quot;: [
+                {
+                    &amp;quot;choice&amp;quot;: &amp;quot;net5.0&amp;quot;,
+                    &amp;quot;description&amp;quot;: &amp;quot;Target net5.0&amp;quot;
+                },
+                {
+                    &amp;quot;choice&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;,
+                    &amp;quot;description&amp;quot;: &amp;quot;Target netcoreapp3.1&amp;quot;
+                }
+            ],
+            &amp;quot;replaces&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;,
+            &amp;quot;defaultValue&amp;quot;: &amp;quot;netcoreapp3.1&amp;quot;
+        }
+    },
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして、&lt;code&gt;Tasks.csproj&lt;/code&gt;と&lt;code&gt;Tests.csproj&lt;/code&gt;の&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;replaces&lt;/code&gt;で設定した文字列を設定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
+
+  &amp;lt;PropertyGroup&amp;gt;
+    ...
+    &amp;lt;TargetFramework&amp;gt;netcoreapp3.1&amp;lt;/TargetFramework&amp;gt;
+    ...
+  &amp;lt;/PropertyGroup&amp;gt;
+  ...
+
+&amp;lt;/Project&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この状態で、&lt;code&gt;dotnet new cpproj -n Sample -f net5.0&lt;/code&gt;を実行することで、&lt;code&gt;TargetFramework&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;が設定されたプロジェクトを生成することができます。&lt;/p&gt;
+&lt;h2 id="section-4"&gt;解答用のクラスとテスト用のクラスのテンプレート&lt;/h2&gt;
+&lt;p&gt;単一のファイルのみ生成するように、テンプレートを構築します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Template.Solver/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.Solver.cs
+
+Template.Tests/
+    |
+    |- .template.config/
+    |    |
+    |    |- template.json
+    |
+    |- Template.TestsTests.cs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プロジェクトのテンプレートの作り方と同様に、&lt;code&gt;template.json&lt;/code&gt;を記述しますが、単一ファイルのみ生成させるため、&lt;code&gt;preferNameDirectory&lt;/code&gt;を削除、または&lt;code&gt;false&lt;/code&gt;にします。&lt;/p&gt;
+&lt;p&gt;解答用の&lt;code&gt;sourceName&lt;/code&gt;を&lt;code&gt;Template.Solver&lt;/code&gt;に、テスト用の&lt;code&gt;sourceName&lt;/code&gt;を&lt;code&gt;Template.Tests&lt;/code&gt;にすることで、&lt;code&gt;dotnet new&lt;/code&gt;コマンドの&lt;code&gt;-n|--name&lt;/code&gt;オプションに&lt;code&gt;Sample&lt;/code&gt;を指定すると、それぞれ&lt;code&gt;Sample.cs&lt;/code&gt;と&lt;code&gt;SampleTests.cs&lt;/code&gt;が生成されます。&lt;/p&gt;
+&lt;h2 id="section-5"&gt;プロジェクトのパッケージ化&lt;/h2&gt;
+&lt;p&gt;テンプレートが3つ用意できましたが、テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります。
+そのため、3つのテンプレートまとめて、1つの&lt;code&gt;nuget&lt;/code&gt;パッケージを生成します。
+3つのディレクトリを一つのディレクトリにまとめ、そのディレクトリと同じ階層に&lt;code&gt;csproj&lt;/code&gt;ファイルを生成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;CPTemplate/
+    |
+    |- content/
+    |    |
+    |    |- Template.Project/
+    |    |- Template.Solver/
+    |    |- Template.Tests/
+    |
+    |- CPTemplate.csproj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ディレクトリを整理したら、&lt;code&gt;CPTemplate.csproj&lt;/code&gt;を編集し、ビルド情報を定義します。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: center;"&gt;メンバ&lt;/th&gt;
+&lt;th style="text-align: left;"&gt;説明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageType&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;&lt;code&gt;nuget&lt;/code&gt;パッケージタイプ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageVersion&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージのバージョン&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageId&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの識別子&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Title&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの名称&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Authors&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの作成者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Description&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージの説明&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageTags&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージのタグ&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;TargetFramework&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージをビルドするためのターゲットフレームワーク&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;PackageProjectUrl&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;プロジェクトURL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;IncludeBuildOutput&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;ビルド時に生成されるファイルをパッケージに含めるか&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;ContentTargetFolders&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージ化するプロジェクトのルートが&lt;code&gt;content&lt;/code&gt;か&lt;code&gt;contentFiles&lt;/code&gt;以外の場合は設定する&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: center;"&gt;&lt;code&gt;Content&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left;"&gt;パッケージに含めるファイルや除くファイルを設定する&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
+
+  &amp;lt;PropertyGroup&amp;gt;
+    &amp;lt;PackageType&amp;gt;Template&amp;lt;/PackageType&amp;gt;
+    &amp;lt;PackageVersion&amp;gt;1.0&amp;lt;/PackageVersion&amp;gt;
+    &amp;lt;PackageId&amp;gt;AconCavy.Templates&amp;lt;/PackageId&amp;gt;
+    &amp;lt;Title&amp;gt;Templates&amp;lt;/Title&amp;gt;
+    &amp;lt;Authors&amp;gt;AconCavy&amp;lt;/Authors&amp;gt;
+    &amp;lt;Description&amp;gt;sample template.&amp;lt;/Description&amp;gt;
+    &amp;lt;PackageTags&amp;gt;dotnet-new;templates;competitive-programming&amp;lt;/PackageTags&amp;gt;
+    &amp;lt;TargetFramework&amp;gt;netcoreapp3.1&amp;lt;/TargetFramework&amp;gt;
+    &amp;lt;PackageProjectUrl&amp;gt;https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp&amp;lt;/PackageProjectUrl&amp;gt;
+
+    &amp;lt;IncludeBuildOutput&amp;gt;false&amp;lt;/IncludeBuildOutput&amp;gt;
+    &amp;lt;ContentTargetFolders&amp;gt;content&amp;lt;/ContentTargetFolders&amp;gt;
+  &amp;lt;/PropertyGroup&amp;gt;
+
+  &amp;lt;ItemGroup&amp;gt;
+    &amp;lt;Content Include=&amp;quot;content/**/*&amp;quot; Exclude=&amp;quot;content/**/bin/**;content/**/obj/**&amp;quot; /&amp;gt;
+    &amp;lt;Compile Remove=&amp;quot;**/*&amp;quot; /&amp;gt;
+  &amp;lt;/ItemGroup&amp;gt;
+
+&amp;lt;/Project&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、それぞれのテンプレートの&lt;code&gt;template.json&lt;/code&gt;に&lt;code&gt;groupIdentity&lt;/code&gt;を追加します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;// Project
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Project&amp;quot;
+
+// Solver
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Solver&amp;quot;
+
+// Tests
+&amp;quot;groupIdentity&amp;quot;: &amp;quot;AconCavy.Templates.Tests&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;dotnet pack&lt;/code&gt;コマンドを実行することで&lt;code&gt;nuget&lt;/code&gt;パッケージを生成することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet pack
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;実行後、&lt;code&gt;bin/Debug/&lt;/code&gt;下に&lt;code&gt;{PackageId}.{PackageVersion}.nupkg&lt;/code&gt;が生成されます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;CPTemplate/
+    |
+    |- bin/
+    |    |
+    |    |- Debug/
+    |    |    |
+    |    |    |- AconCavy.Templates.1.0.0.nupkg
+    ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この&lt;code&gt;nupkg&lt;/code&gt;を&lt;code&gt;dotnet new&lt;/code&gt;コマンドでインストールすることで、3つのテンプレートを1回でインストールすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレートの作り方と、テンプレートのパッケージ化の手順をまとめました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;テンプレートのルートに&lt;code&gt;.template.config&lt;/code&gt;ディレクトリを作成し、内に&lt;code&gt;template.json&lt;/code&gt;を作成する。&lt;/li&gt;
+&lt;li&gt;テンプレートが複数ある場合は1つのディレクトリにまとめ、&lt;code&gt;dotnet pack&lt;/code&gt;コマンドでパッケージ化する。&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので、&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です。&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20201119statiqextension</id>
+		<title>Statiqがmarkdownから生成するhtmlのカスタマイズ</title>
+		<link href="https://aconcavy.github.io/blog/posts/20201119statiqextension" />
+		<updated>2020-11-19T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;
+&lt;h1 id="section-1"&gt;方法&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Bootstrapper&lt;/code&gt;において、&lt;code&gt;Statiq.Web&lt;/code&gt;でWebサイトを生成するメソッドである&lt;code&gt;CreateWeb()&lt;/code&gt;では、markdownに関わるModuleの&lt;code&gt;RenderMarkdown&lt;/code&gt;を&lt;code&gt;Templates&lt;/code&gt;内で設定している。
+そのため、&lt;code&gt;ConfigureTemplates()&lt;/code&gt;を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
+Statiqでは、markdownを生成するために&lt;a href="https://github.com/lunet-io/markdig"&gt;markdig&lt;/a&gt;を使っているようなので、markdownの設定を追加するには&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを&lt;code&gt;Rendermarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に渡す必要がある。&lt;/p&gt;
+&lt;p&gt;今回は、&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグをレスポンシブ対応と、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグにクラスを追加するために、markdigの&lt;code&gt;BootstrapExtension&lt;/code&gt;を設定に追加する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
+    await Bootstrapper.Factory
+        .CreateWeb(args)
+        .ConfigureTemplates(templates =&amp;gt;
+        {
+            // 新しい設定のModuleを作成
+            // デフォルトはUseExtensionsのみ
+            var markdownModule = new RenderMarkdown()
+                .UseExtensions()
+                .UseExtension&amp;lt;BootstrapExtension&amp;gt;() // bootstrap
+                .UseExtension&amp;lt;PrismJsExtension&amp;gt;(); // オリジナル
+            if (templates.ContainsKey(MediaTypes.Markdown)) 
+                templates[MediaTypes.Markdown].Module = markdownModule; // 既にあるならば書き換え
+            else 
+                templates.Add(MediaTypes.Markdown,
+                    new Template(ContentType.Content, Phase.Process, markdownModule)); // 無ければ追加
+        })
+        .RunAsync();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、&lt;code&gt;prism.js&lt;/code&gt;のコードブロックに行数を表示するクラスの&lt;code&gt;line-number&lt;/code&gt;を追加するために、新しく&lt;code&gt;PrismJsExtension.cs&lt;/code&gt;を作成し、&lt;code&gt;BootstrapExtension&lt;/code&gt;に倣い、&lt;code&gt;MarkdownObject&lt;/code&gt;が&lt;code&gt;CodeBlock&lt;/code&gt;であれば&lt;code&gt;line-numbers&lt;/code&gt;をクラスに追加するメソッドの&lt;code&gt;PipelineOnDocumentProcessed()&lt;/code&gt;markdigの生成パイプラインにデリゲートを追加する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;// PrismJsExtension.cs
+using Markdig;
+using Markdig.Renderers;
+using Markdig.Renderers.Html;
+using Markdig.Syntax;
+
+namespace Blog.Extensions
+{
+    public class PrismJsExtension : IMarkdownExtension
+    {
+        public void Setup(MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
+            pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
+        }
+
+        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+        {
+        }
+
+        private static void PipelineOnDocumentProcessed(MarkdownDocument document)
+        {
+            foreach (var node in document.Descendants())
+            {
+                if (node is CodeBlock)
+                {
+                    node.GetAttributes().AddClass(&amp;quot;line-numbers&amp;quot;); // 行数表示のクラスを追加
+                }
+            }
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以上の2つの設定を追加してビルドすることで、bootstrapによる&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグのレスポンシブ対応、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。&lt;/p&gt;
+&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20201119forbenchmark</id>
+		<title>.NET Core 3.1と.NET 5のfor-loopの速度比較</title>
+		<link href="https://aconcavy.github.io/blog/posts/20201119forbenchmark" />
+		<updated>2020-11-19T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;環境&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;OS: Windows 10&lt;/li&gt;
+&lt;li&gt;CPU: AMD Ryzen 5 3600&lt;/li&gt;
+&lt;li&gt;SDK: .NET 5.0&lt;/li&gt;
+&lt;li&gt;BenchmarkDotnet: 0.12.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-2"&gt;計測対象&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Runtimes
+&lt;ul&gt;
+&lt;li&gt;.NET Core 3.1.9&lt;/li&gt;
+&lt;li&gt;.NET 5&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Targets
+&lt;ul&gt;
+&lt;li&gt;1次元配列 (1e6)&lt;/li&gt;
+&lt;li&gt;2次元配列 (1e3 * 1e3)&lt;/li&gt;
+&lt;li&gt;2次元ジャグ配列 (1e3 * 1e3)&lt;/li&gt;
+&lt;li&gt;3次元配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
+&lt;li&gt;3次元ジャグ配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="section-3"&gt;操作&lt;/h2&gt;
+&lt;p&gt;全ての要素に値を代入&lt;/p&gt;
+&lt;h2 id="section-4"&gt;スクリプト&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+
+namespace BenchmarkSharp
+{
+    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [MemoryDiagnoser]
+    public class ForLoopBenchmark
+    {
+        private const int Size1 = (int) 1e6;
+        private const int Size2 = (int) 1e3;
+        private const int Size3 = (int) 1e2;
+        private int[] _dim1;
+        private int[,] _dim2;
+        private int[][] _dim2Jagged;
+        private int[,,] _dim3;
+        private int[][][] _dim3Jagged;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _dim1 = new int[Size1];
+            _dim2 = new int[Size2, Size2];
+            _dim3 = new int[Size3, Size3, Size3];
+            _dim2Jagged = new int[Size2][];
+            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++) _dim2Jagged[i] = new int[Size2];
+            _dim3Jagged = new int[Size3][][];
+            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
+            {
+                _dim3Jagged[i] = new int[Size3][];
+                for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
+                {
+                    _dim3Jagged[i][j] = new int[Size2];
+                }
+            }
+        }
+
+        [Benchmark]
+        public void Dim1()
+        {
+            for (var i = 0; i &amp;lt; _dim1.Length; i++) _dim1[i] = i;
+        }
+
+        [Benchmark]
+        public void Dim2()
+        {
+            for (var i = 0; i &amp;lt; _dim2.GetLength(0); i++)
+            for (var j = 0; j &amp;lt; _dim2.GetLength(1); j++)
+                _dim2[i, j] = j;
+        }
+
+        [Benchmark]
+        public void Dim2Jagged()
+        {
+            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++)
+            for (var j = 0; j &amp;lt; _dim2Jagged[i].Length; j++)
+                _dim2Jagged[i][j] = j;
+        }
+
+        [Benchmark]
+        public void Dim3()
+        {
+            for (var i = 0; i &amp;lt; _dim3.GetLength(0); i++)
+            for (var j = 0; j &amp;lt; _dim3.GetLength(1); j++)
+            for (var k = 0; k &amp;lt; _dim3.GetLength(2); k++)
+                _dim3[i, j, k] = k;
+        }
+
+        [Benchmark]
+        public void Dim3Jagged()
+        {
+            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
+            for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
+            for (var k = 0; k &amp;lt; _dim3Jagged[i][j].Length; k++)
+                _dim3Jagged[i][j][k] = k;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="section-5"&gt;結果&lt;/h1&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Job&lt;/th&gt;
+&lt;th&gt;Runtime&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Mean&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Error&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;StdDev&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Median&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Ratio&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;RatioSD&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 0&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 1&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Gen 2&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Allocated&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;565.1 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3.35 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3.14 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;566.0 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim1&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;525.8 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;10.49 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;24.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;508.9 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.92&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,366.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;47.74 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;44.65 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,357.6 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;111 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,544.6 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;230.75 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;680.38 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,060.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.64&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.13&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,514.8 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;29.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;35.16 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,522.0 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim2Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;2,003.3 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;8.14 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;7.22 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;2,001.9 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.33&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,209.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;45.24 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;40.10 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;5,201.5 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;10 B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;4,525.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;246.02 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;725.38 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;4,114.5 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.90&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.15&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td&gt;.NET Core 3.1&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;18,504.2 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;466.86 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,376.55 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;18,885.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dim3Jagged&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td&gt;.NET Core 5.0&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;17,920.7 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1,043.53 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;3,076.86 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;19,831.3 μs&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.98&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;0.20&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;.NET 5.0は .NET Core 3.1に比べて&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
+&lt;li&gt;2次元配列 -&amp;gt; 35%程度高速&lt;/li&gt;
+&lt;li&gt;2次元ジャグ配列 -&amp;gt; 35%程度低速&lt;/li&gt;
+&lt;li&gt;3次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
+&lt;li&gt;3次元ジャグ配列 -&amp;gt; ほぼ一緒&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;.NET 5.0において多次元配列と多次元ジャグ配列の各次元のサイズが同じ大きさであれば&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
+&lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<summary>&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20201108statiqblog</id>
+		<title>ブログのレイアウト変更とStatiqを使った静的サイトの生成</title>
+		<link href="https://aconcavy.github.io/blog/posts/20201108statiqblog" />
+		<updated>2020-11-08T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;
+&lt;h1 id="statiq"&gt;Statiq&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://statiq.dev/"&gt;Statiq&lt;/a&gt; は &lt;a href="https://aconcavy.github.io/blog/20200819wyamblog"&gt;前回の記事&lt;/a&gt; で紹介した &lt;code&gt;Wyam&lt;/code&gt; をリブランディングし、機能の追加に柔軟性を持たせたフレームワークだそうです。
+大きく3つのフレームワークに分かれており、基礎となる &lt;code&gt;Statiq.Framework&lt;/code&gt;、一般的なWebサイト生成のための &lt;code&gt;Statiq.Web&lt;/code&gt;、ドキュメントサイト生成のための &lt;code&gt;Statiq.Doc&lt;/code&gt; に分かれています。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Statiq.Framework&lt;/code&gt; はMITライセンスで公開されている一方、&lt;code&gt;Statiq.Web&lt;/code&gt; と &lt;code&gt;Statiq.Doc&lt;/code&gt; は &lt;a href="https://licensezero.com/licenses/prosperity"&gt;License Zero Prosperity Public License&lt;/a&gt; (Public License) と &lt;a href="https://licensezero.com/licenses/private"&gt;License Zero Private License&lt;/a&gt; (Private License)` のデュアルライセンスを取ります。
+そのため、商用利用の場合は、はじめ30日間の無料体験期間のあと、開発者一人当たり50ドルのPrivate Licenseを取得する必要があります。
+非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます。
+詳しくは&lt;a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md"&gt;こちら&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="section-1"&gt;使い方&lt;/h2&gt;
+&lt;p&gt;Wyamは.NET上にツールをインストールして実行するのに対して、Statiqの場合はコンソールアプリケーションとして実行します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console --name Blog
+dotnet add package Statiq.Web --version x.y.z
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして、エントリポイントの &lt;code&gt;Program.cs&lt;/code&gt; にBootStrapeprを追記します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
+using Statiq.App;
+using Statiq.Web;
+
+namespace Blog
+{
+    public static class Program
+    {
+        public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
+            await Bootstrapper.Factory
+                .CreateWeb(args)
+                .RunAsync();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に、&lt;code&gt;./input/&lt;/code&gt; ディレクトリ内に &lt;code&gt;index.md&lt;/code&gt; を作成し、適当な内容を書いて保存します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: Hello Statiq
+---
+Hello world!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wyamと同様に、ファイル上部にFront Matterを記述することで、記事タイトルやタグといったメタ情報を付与することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet run -- preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そして、プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます。(デフォルトでは &lt;code&gt;localhost:5080&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;素の状態では、テーマは存在しないので、&lt;code&gt;./theme/input/&lt;/code&gt; にWebサイトのテーマを用意する必要があります。&lt;/p&gt;
+&lt;p&gt;サンプルとして、公式テーマの&lt;a href="https://github.com/statiqdev/CleanBlog"&gt;CleanBlog&lt;/a&gt;を &lt;code&gt;./theme/&lt;/code&gt; ディレクトリ内に配置してプロジェクトを実行することで、WyamのCleanBlogテーマと同様のWebサイトを生成することができます。&lt;/p&gt;
+&lt;h2 id="github-pages"&gt;Github Pagesへの展開&lt;/h2&gt;
+&lt;p&gt;Statiq.Webでは、公式でGithub Pagesへのデプロイ方法が用意されています。&lt;/p&gt;
+&lt;p&gt;Wyamの時と同様に、設定ファイル(今回は &lt;code&gt;settings.yml&lt;/code&gt;)に設定を追記する必要があります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Host: aconcavy.github.io // github pagesのホスト
+LinkRoot: /Blog // バーチャルパス
+LinksUseHttps: true
+
+GitHubOwner: AconCavy // ユーザ名
+GitHubName: Blog // リポジトリ名
+GitHubToken: =&amp;gt; Config.FromSetting&amp;lt;string&amp;gt;("GITHUB_TOKEN") // これはこのまま
+GitHubBranch: gh-pages // 生成先ブランチ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Github Actionでは次のようなワークフローを指定します。
+この時に、&lt;code&gt;GitHubBranch&lt;/code&gt;で指定したブランチは、存在しない場合はエラーが吐かれるので、先にブランチを作成しておきましょう(5敗)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1
+    - name: Deploy
+      run: dotnet run -p Blog -- deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ワークフローが成功すると、指定したブランチにファイルが生成されるので、リポジトリの設定からGithub Pagesのブランチを指定します。
+すべて成功すると、&lt;code&gt;{user}.github.io/{repository}&lt;/code&gt; (今回は&lt;a href="https://aconcavy.github.io/Blog/"&gt;aconcavy.github.io/Blog&lt;/a&gt;`)にサイトが表示されます。&lt;/p&gt;
+&lt;p&gt;サイトのテーマがうまく適用されない場合は、設定ファイルの &lt;code&gt;Host&lt;/code&gt; や &lt;code&gt;LinkRoot&lt;/code&gt; を見直すといいでしょう。&lt;/p&gt;
+&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;Statiqで作成した静的Webサイトを、GitHub ActionsとGitHub Pagesデプロイする方法をまとめました。&lt;/p&gt;
+&lt;p&gt;Wyamと比べてカスタマイズの自由度が高いみたいだけど、ドキュメントを調べても調べたいことにいまいち辿り着かないので、ドキュメントが豊富になればもっと使いやすくなりそうです。APIリファレンスとかも欲しい。
+まだプレビュー段階なので今後に期待しています。&lt;/p&gt;
+&lt;h1 id="section-3"&gt;あとがき&lt;/h1&gt;
+&lt;p&gt;Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。&lt;/p&gt;
+&lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20200819wyamblog</id>
+		<title>Wyamを使った静的サイトの生成とGitHub Actionsを使ったGitHub Pagesへのデプロイ</title>
+		<link href="https://aconcavy.github.io/blog/posts/20200819wyamblog" />
+		<updated>2020-08-19T00:00:00Z</updated>
+		<content>&lt;h1 id="is"&gt;これ is 何&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;
+&lt;h1 id="section"&gt;実行環境&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 10 1909&lt;/li&gt;
+&lt;li&gt;Microsoft.NETCore.App 2.1.21&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="wyam"&gt;Wyam&lt;/h1&gt;
+&lt;h2 id="wyam-is"&gt;Wyam is 何&lt;/h2&gt;
+&lt;p&gt;.NET Core製の静的サイトジェネレータで、ブログやドキュメント等を markdown と Razor ファイルで作ることができます。&lt;/p&gt;
+&lt;p&gt;見た目はテンプレートが6種類あり、カスタマイズ可能で、.NET Core および C# で機能の拡張をすることもできます。&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Easy! Flexible! Powerful!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="section-1"&gt;ダウンロードとインストール&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://dotnet.microsoft.com/"&gt;.NET SDK&lt;/a&gt; をインストールしていない場合はインストールします。2020年8月19日現在、最新の .NET Core Runtime は3.1ですが、 Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします。&lt;/p&gt;
+&lt;p&gt;.NET Core SDK,および Runtime がインストールされたら、.NET Core ツールを用いて Wyam をインストールします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet tool -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="section-2"&gt;プロジェクトの作成&lt;/h2&gt;
+&lt;p&gt;プロジェクトを作成したいディレクトリに移動し、ブログテンプレートを&lt;code&gt;--recipe&lt;/code&gt; または &lt;code&gt;-r&lt;/code&gt; オプションで生成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;テンプレートが生成されたら、次のコマンドでビルドします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;また、ビルドの際には &lt;code&gt;--theme&lt;/code&gt; または &lt;code&gt;-t&lt;/code&gt; オプションでテーマを指定することができます。テーマについては&lt;a href="https://wyam.io/recipes/blog/themes/"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ビルドが終わったら、ローカル環境で実行してみます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/hello_wyam.webp" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
+&lt;p&gt;あっという間にブログが出来上がりました👏&lt;/p&gt;
+&lt;h2 id="section-3"&gt;記事の編集&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;./input/&lt;/code&gt; 内に &lt;code&gt;about.md&lt;/code&gt; が、また &lt;code&gt;./input/posts/&lt;/code&gt; 内に &lt;code&gt;first-post.md&lt;/code&gt; が生成されています。これらのように markdown ファイルを追加および編集することで、記事の編集および追加をすることができます。&lt;/p&gt;
+&lt;h2 id="front-matter"&gt;Front Matter の設定&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;first-post.md&lt;/code&gt; ファイルの先頭に以下のようなものが書かれています。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: First Post
+Published: 1/1/2016
+Tags: Introduction
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これらは &lt;code&gt;Front Matter&lt;/code&gt; といい、YAML や JSON フォーマットで使うことができる固有の変数です。これを使って記事にメタデータを付与することができます。Wyam では、&lt;a href="https://hexo.io/docs/front-matter.html"&gt;Hexo&lt;/a&gt; や &lt;a href="https://gohugo.io/content-management/front-matter/"&gt;Hugo&lt;/a&gt; のような別の静的サイトジェネレータと同じ変数を使うことができるそうです。&lt;/p&gt;
+&lt;p&gt;Published の日付を未来にするとその日になるまで表示されないようなので注意。
+日本時間の深夜に記事を作成して、ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)。&lt;/p&gt;
+&lt;h1 id="section-4"&gt;ブログを公開する&lt;/h1&gt;
+&lt;p&gt;Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い、Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド、およびGitHub Pagesにホスティングを行います。&lt;/p&gt;
+&lt;h2 id="github-pages-is"&gt;GitHub Pages is 何&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです。
+詳しくは&lt;a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;リポジトリ名が &lt;code&gt;ユーザ名.github.io&lt;/code&gt; の場合はユーザのページに、それ以外の場合はプロジェクトのページとして扱うことができます。&lt;/p&gt;
+&lt;h2 id="github-actions-is"&gt;Github Actions is 何&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリから、プロジェクトをビルド、テスト、デプロイすることができるサービスです。CI/CDです。
+詳しくは&lt;a href="https://github.co.jp/features/actions"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;リポジトリが Public なら無料、Private なら従量課金らしいです。&lt;/p&gt;
+&lt;h2 id="section-5"&gt;プロジェクトの設定を変更する&lt;/h2&gt;
+&lt;p&gt;GitHubにリポジトリを作成し、Wyam で作成したプロジェクトを Commit / Push します。この際 &lt;code&gt;.gitignore&lt;/code&gt; には以下の設定を指定しておくといいでしょう。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;# Wyam files
+output/
+config.wyam.dll
+config.wyam.hash
+config.wyam.packages.xml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;次に、&lt;code&gt;config.wyam&lt;/code&gt; を編集してプロジェクトの設定を行います。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;BlogKeys.Title&lt;/code&gt; でWeb サイトのタイトルを、&lt;code&gt;BlogKeys.Description&lt;/code&gt; でWeb サイトのトップに表示される簡単な説明を指定できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[BlogKeys.Title] = "This is title";
+Settings[BlogKeys.Description] = "Welcome!";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Web サイトを &lt;code&gt;https&lt;/code&gt; に指定する場合は以下のオプションを有効にします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.LinksUseHttps] = true;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Web サイトで表示するカルチャ情報を設定する場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; と &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; を変更します。
+&lt;code&gt;2020年8月19日&lt;/code&gt; のように表示したい場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。
+日本時間を表示したい場合も同様に &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.DateTimeDisplayCulture] = "ja-JP";
+Settings[Keys.DateTimeInputCulture] = "ja-JP";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プロジェクトのルーティングでは、GitHub のリポジトリがユーザページ用のリポジトリの場合 (&lt;code&gt;ユーザ名.github.io&lt;/code&gt;) と、それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります。&lt;/p&gt;
+&lt;h3 id="section-6"&gt;1 ユーザページの場合&lt;/h3&gt;
+&lt;p&gt;例として、GitHubユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; の場合は以下のようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="section-7"&gt;2 プロジェクトページの場合&lt;/h3&gt;
+&lt;p&gt;プロジェクトページで作成する場合、&lt;code&gt;Keys.LinkRoot&lt;/code&gt; にリポジトリ名を設定する必要があります。例として、リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は以下のようになります。&lt;strong&gt;大文字と小文字の区別があるようなので注意が必要です。&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
+Settings[Keys.LinkRoot] = "Blog";
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この設定を変更した場合、&lt;code&gt;wyam preview&lt;/code&gt; を使ってローカルでプレビューをしようとしても、Path が &lt;code&gt;localhost:5080/&lt;/code&gt; のままで、正しくプレビューすることができません。そのため、&lt;code&gt;--virtual-dir&lt;/code&gt; オプションを指定することで正しくプレビューすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview --virtual-dir Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="line-numbers"&gt;@echo off
+wyam -r Blog
+wyam preview --virtual-dir Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="github-actions"&gt;GitHub Actions の設定&lt;/h2&gt;
+&lt;p&gt;GitHub のリポジトリページに移動し、&lt;code&gt;Actions&lt;/code&gt; タブで新しいワークフローを作成します。
+&lt;code&gt;Simple workflow&lt;/code&gt; を作成すると、新規の YAML ファイルがリポジトリの &lt;code&gt;.github/workflows&lt;/code&gt; に作成されます。そして、作成された YAMLファイルを &lt;code&gt;gh-pages.yml&lt;/code&gt; に変更し、次のような内容に変更します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: Wyam
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.6.0
+      with:
+        dotnet-version: 2.1
+    
+    - name: Install Wyam
+      run: dotnet tool install --tool-path . Wyam.Tool
+    
+    - name: Build static site
+      run: ./wyam -r blog
+      
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.6.4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;この &lt;code&gt;Wyam&lt;/code&gt; というワークフローは &lt;code&gt;master&lt;/code&gt; ブランチに Push または Pull Request が送られたときに、Ubuntu 環境で &lt;code&gt;.NET Core SDK / Runtime&lt;/code&gt; のインストール、&lt;code&gt;Wyam&lt;/code&gt; のインストール、プロジェクトのビルド、GitHub Pages へのデプロイが行われます。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意点&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;.NET Core SDK は Wyamの対応している2.1を使用する。&lt;/li&gt;
+&lt;li&gt;Wyam のインストールで &lt;code&gt;--tool-path .&lt;/code&gt; オプションを指定して Wyam ツールをビルド環境のローカルに作成する。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;作成した YAML ファイルを Commit すると、GitHub Actions が有効になり、master ブランチが更新されるため、ワークフローが実行されます。そして、ワークフローのステータスが &lt;code&gt;completed job&lt;/code&gt; になれば成功です。&lt;/p&gt;
+&lt;h2 id="github-pages"&gt;GitHub Pages の設定&lt;/h2&gt;
+&lt;p&gt;リポジトリが GitHub Pages の条件に満たしていれば、&lt;code&gt;Settings&lt;/code&gt; タブに移動すると、&lt;code&gt;GitHub Pages&lt;/code&gt; の項目が表示されます。そこで &lt;code&gt;Source&lt;/code&gt; 欄の &lt;code&gt;Branch&lt;/code&gt; を &lt;code&gt;gh-pages&lt;/code&gt; に、ディレクトリを &lt;code&gt;/(root)&lt;/code&gt; に変更して &lt;code&gt;Save&lt;/code&gt; することで、GitHub Pagesが有効化されます。&lt;/p&gt;
+&lt;p&gt;GitHub Pagesの条件は Public リポジトリであるか、Pro 以上のライセンスであれば Private リポジトリであれば有効です。&lt;/p&gt;
+&lt;p&gt;正しく設定ができれば、ユーザページならば &lt;code&gt;ユーザ名.github.io&lt;/code&gt; に、プロジェクトページならば &lt;code&gt;ユーザ名.github.io/リポジトリ名&lt;/code&gt; にプロジェクトがホスティングされます。&lt;/p&gt;
+&lt;p&gt;例として、ユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; で リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は &lt;code&gt;aconcavy.github.io/Blog&lt;/code&gt; にホスティングされます。&lt;/p&gt;
+&lt;h1 id="section-8"&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;Wyam で 作成した静的 Web サイト (本ブログ) を、GitHub Actions を使って更新を自動化し、GitHub Pages でホスティングする方法をまとめました。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Wyam のプロジェクトを作成する。&lt;/li&gt;
+&lt;li&gt;Wyam のプロジェクト設定を変更する。&lt;/li&gt;
+&lt;li&gt;GitHub Actions の YAML を編集する。&lt;/li&gt;
+&lt;li&gt;GitHub Pages の設定を有効化する。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大きく分けて4つの手順で、GitHub Pages に Wyam プロジェクトをホスティングすることができます。&lt;/p&gt;
+&lt;h1 id="section-9"&gt;あとがき&lt;/h1&gt;
+&lt;p&gt;とりあえず本ブログ初の投稿として、本ブログ作成までの手順の記事を簡単に書きました。今後も触った技術や何か変なものをまとめて記事にしたいと思います。&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;</summary>
 	</entry>
 </feed>
