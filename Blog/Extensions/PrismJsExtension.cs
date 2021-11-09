@@ -3,28 +3,27 @@ using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 
-namespace Blog.Extensions
+namespace Blog.Extensions;
+
+public class PrismJsExtension : IMarkdownExtension
 {
-    public class PrismJsExtension : IMarkdownExtension
+    public void Setup(MarkdownPipelineBuilder pipeline)
     {
-        public void Setup(MarkdownPipelineBuilder pipeline)
-        {
-            pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
-            pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
-        }
+        pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
+        pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
+    }
 
-        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-        {
-        }
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+    }
 
-        private static void PipelineOnDocumentProcessed(MarkdownDocument document)
+    private static void PipelineOnDocumentProcessed(MarkdownDocument document)
+    {
+        foreach (var node in document.Descendants())
         {
-            foreach (var node in document.Descendants())
+            if (node is CodeBlock)
             {
-                if (node is CodeBlock)
-                {
-                    node.GetAttributes().AddClass("line-numbers");
-                }
+                node.GetAttributes().AddClass("line-numbers");
             }
         }
     }
