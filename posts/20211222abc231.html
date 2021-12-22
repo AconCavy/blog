@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+    <title>acon.log - ABC231</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC231">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20211222abc231">
+
+    <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">ABC231</h1>
+
+            <div class="card-text post-meta">Published on Wednesday, 22 December 2021</div>
+            <div class="card-text post-meta">Updated on Monday, 01 January 0001</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 231の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc231">https://atcoder.jp/contests/abc231</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27817574">コンテスト提出</a></p>
+<p>入力とって浮動小数点に変換100で割ります。
+誤差は<code>10e-3</code>なので特に気にしなくてもよさそう。</p>
+<pre><code class="language-csharp line-numbers">var D = Scanner.Scan&lt;double&gt;();
+var answer = D / 100;
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27817722">コンテスト提出</a></p>
+<p>ディクショナリで数え上げます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var dict = new Dictionary&lt;string, int&gt;();
+for (var i = 0; i &lt; N; i++)
+{
+    var s = Scanner.Scan&lt;string&gt;();
+    if (!dict.ContainsKey(s)) dict[s] = 0;
+    dict[s]++;
+}
+
+var answer = &quot;&quot;;
+var curr = 0;
+foreach (var (k, v) in dict)
+{
+    if (v &gt;= curr)
+    {
+        curr = v;
+        answer = k;
+    }
+}
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27820376">コンテスト提出</a></p>
+<p>愚直に探索を行うと、時間計算量が<code>O(N^2)</code>となり、TLEになってしまいます。<br />
+そこで、入力された身長をあらかじめソートしておき、クエリごとに二部探索をすることで、クエリあたり時間計算量<code>O(logN)</code>で求めることができ、全体として時間計算量<code>O(NlogN)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+Array.Sort(A);
+ 
+while (Q-- &gt; 0)
+{
+    var x = Scanner.Scan&lt;long&gt;();
+    var answer = N - LowerBound(A, x);
+    Console.WriteLine(answer);
+}
+</code></pre>
+<p><code>LowerBound</code>関数は、ソート済みの配列において与えられた値以上が現れる初めてのインデックスを返します。</p>
+<pre><code class="language-csharp line-numbers">public static int LowerBound(long[] source, long key)
+{
+    var (l, r) = (-1, source.Length);
+    while (r - l &gt; 1)
+    {
+        var m = l + (r - l) / 2;
+        if (source[m] &gt;= key) r = m;
+        else l = m;
+    }
+    return r;
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27829619">コンテスト提出</a></p>
+<p>グラフとして扱うと、一列に並べるということは、隣り合う頂点は2つ以下である必要があります。また、ループがある場合は一列に並べることはできません。<br />
+そのため、各頂点の辺の数とグラフのループ判定を行うことで解くことができます。<br />
+ループ判定はDFSでおこない、既に訪れた頂点があればループがあるという判定を行います。</p>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+var deg = new int[N];
+for (var i = 0; i &lt; M; i++)
+{
+    var (a, b) = Scanner.Scan&lt;int, int&gt;();
+    a--; b--;
+    G[a].Add(b);
+    G[b].Add(a);
+    deg[a]++;
+    deg[b]++;
+}
+
+var used = new bool[N];
+
+bool Dfs(int u, int p)
+{
+    var result = true;
+    foreach (var v in G[u])
+    {
+        if (v == p) continue;
+        if (used[v]) return false;
+        used[v] = true;
+        result &amp;= Dfs(v, u);
+    }
+    return result;
+}
+
+var answer = deg.All(x =&gt; x &lt;= 2);
+for (var i = 0; i &lt; N &amp;&amp; answer; i++)
+{
+    if (used[i] || deg[i] == 0) continue;
+    used[i] = true;
+    answer &amp;= Dfs(i, -1);
+}
+ 
+Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27854595">復習提出</a></p>
+<p>コンテスト中の考察では、</p>
+<ul>
+<li>それぞれの硬貨の選び方は、<code>Ceil(X/A)</code>または<code>Floor(X/A)</code>の2通りを大きな硬貨から選ぶことができる。</li>
+<li>大きな硬貨から値を引いていき、0になるまでの距離として考えることができるので、絶対値で考えられる。</li>
+</ul>
+<pre><code class="language-csharp line-numbers">void Dfs(long curr, long count, int idx)
+{
+    if(curr == 0)
+    {
+        answer = Math.Min(answer, count);
+        return;
+    }
+    if(idx &lt; 0) return;
+    
+    var ceil = (curr + A[idx] - 1) / A[idx];
+    var floor = curr / A[idx];
+    Dfs(Math.Abs(curr - A[idx] * ceil), count + ceil, idx + 1);
+    Dfs(Math.Abs(curr - A[idx] * floor), count + floor, idx + 1);
+}
+</code></pre>
+<p>メモ化がうまくできずF問題に移りました。</p>
+<p>解説を見たところ、考え方はあっていたので、ディクショナリを使ったdpをしました。</p>
+<pre><code class="language-csharp line-numbers">const long inf = (long)1e18;
+var dp1 = new Dictionary&lt;long, long&gt;();
+dp1[X] = 0;
+for (var i = N - 1; i &gt;= 0; i--)
+{
+    var dp2 = new Dictionary&lt;long, long&gt;();
+    foreach (var (x, c) in dp1)
+    {
+        var ceil = (x + A[i] - 1) / A[i];
+        var a = Math.Abs(x - ceil * A[i]);
+        if (!dp2.ContainsKey(a)) dp2[a] = inf;
+        dp2[a] = Math.Min(dp2[a], c + ceil);
+ 
+        var floor = x / A[i];
+        var b = Math.Abs(x - floor * A[i]);
+        if (!dp2.ContainsKey(b)) dp2[b] = inf;
+        dp2[b] = Math.Min(dp2[b], c + floor);
+    }
+ 
+    dp1 = dp2;
+}
+
+var answer = dp1[0];
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="f"><a href="https://atcoder.jp/contests/abc231/tasks/abc231_f">問題F</a></h2>
+<p><a href="https://atcoder.jp/contests/abc231/submissions/27903993">復習提出</a></p>
+<p>コンテスト中の考察では、</p>
+<ul>
+<li>求めるものは<code>A[i] &gt;= A[j] &amp;&amp; B[i] &lt;= B[j]</code>となる<code>i</code>と<code>j</code>の組み合わせの数。</li>
+<li>何かしらのソートの後に<code>FenwickTree</code>でどうにかできそう。</li>
+<li>値が大きいが圧縮すればよさそう。</li>
+</ul>
+<p>頭の中で考えがまとまらず、実装ができずに時間切れになりました。</p>
+<p>復習時の考察では上記に加えて、</p>
+<ul>
+<li>AとBをセットにしたとき、Aの降順かつBの昇順でソート</li>
+<li>AとBの値が同じものが複数あった場合の処理</li>
+</ul>
+<p>AとBを圧縮後、ABをタプルとしてディクショナリで数え上げます。
+Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、<code>FenwickTree</code>でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができる。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになる。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var (ca, _) = Compress(A);
+var (cb, _) = Compress(B);
+var dict = new Dictionary&lt;(int A, int B), int&gt;();
+for (var i = 0; i &lt; N; i++)
+{
+    var ab = (ca[A[i]], cb[B[i]]);
+    if (!dict.ContainsKey(ab)) dict[ab] = 0;
+    dict[ab]++;
+}
+
+var ABC = dict.Select(x =&gt; (A: x.Key.A, B: x.Key.B, C: x.Value)).ToArray();
+Array.Sort(ABC, (x, y) =&gt;
+{
+    var result = y.A.CompareTo(x.A);
+    return result == 0 ? x.B.CompareTo(y.B) : result;
+});
+
+var answer = 0L;
+var ft = new FenwickTree(N);
+foreach (var (a, b, c) in ABC)
+{
+    ft.Add(b, c);
+    answer += ft.Sum(b + 1) * c;
+}
+
+Console.WriteLine(answer);
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20211222abc231" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>

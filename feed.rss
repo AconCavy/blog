@@ -5,14 +5,227 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2021 AconCavy</copyright>
-		<pubDate>Mon, 20 Dec 2021 01:15:56 GMT</pubDate>
-		<lastBuildDate>Mon, 20 Dec 2021 01:15:56 GMT</lastBuildDate>
+		<pubDate>Wed, 22 Dec 2021 16:31:23 GMT</pubDate>
+		<lastBuildDate>Wed, 22 Dec 2021 16:31:23 GMT</lastBuildDate>
+		<item>
+			<title>ABC231</title>
+			<link>https://aconcavy.github.io/blog/posts/20211222abc231</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20211222abc231</guid>
+			<pubDate>Wed, 22 Dec 2021 16:30:48 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231"&gt;https://atcoder.jp/contests/abc231&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27817574"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;入力とって浮動小数点に変換100で割ります。
+誤差は&lt;code&gt;10e-3&lt;/code&gt;なので特に気にしなくてもよさそう。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var D = Scanner.Scan&amp;lt;double&amp;gt;();
+var answer = D / 100;
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27817722"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ディクショナリで数え上げます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var dict = new Dictionary&amp;lt;string, int&amp;gt;();
+for (var i = 0; i &amp;lt; N; i++)
+{
+    var s = Scanner.Scan&amp;lt;string&amp;gt;();
+    if (!dict.ContainsKey(s)) dict[s] = 0;
+    dict[s]++;
+}
+
+var answer = &amp;quot;&amp;quot;;
+var curr = 0;
+foreach (var (k, v) in dict)
+{
+    if (v &amp;gt;= curr)
+    {
+        curr = v;
+        answer = k;
+    }
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27820376"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;愚直に探索を行うと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり、TLEになってしまいます。&lt;br /&gt;
+そこで、入力された身長をあらかじめソートしておき、クエリごとに二部探索をすることで、クエリあたり時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で求めることができ、全体として時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+Array.Sort(A);
+ 
+while (Q-- &amp;gt; 0)
+{
+    var x = Scanner.Scan&amp;lt;long&amp;gt;();
+    var answer = N - LowerBound(A, x);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;LowerBound&lt;/code&gt;関数は、ソート済みの配列において与えられた値以上が現れる初めてのインデックスを返します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static int LowerBound(long[] source, long key)
+{
+    var (l, r) = (-1, source.Length);
+    while (r - l &amp;gt; 1)
+    {
+        var m = l + (r - l) / 2;
+        if (source[m] &amp;gt;= key) r = m;
+        else l = m;
+    }
+    return r;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27829619"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;グラフとして扱うと、一列に並べるということは、隣り合う頂点は2つ以下である必要があります。また、ループがある場合は一列に並べることはできません。&lt;br /&gt;
+そのため、各頂点の辺の数とグラフのループ判定を行うことで解くことができます。&lt;br /&gt;
+ループ判定はDFSでおこない、既に訪れた頂点があればループがあるという判定を行います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+var deg = new int[N];
+for (var i = 0; i &amp;lt; M; i++)
+{
+    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    a--; b--;
+    G[a].Add(b);
+    G[b].Add(a);
+    deg[a]++;
+    deg[b]++;
+}
+
+var used = new bool[N];
+
+bool Dfs(int u, int p)
+{
+    var result = true;
+    foreach (var v in G[u])
+    {
+        if (v == p) continue;
+        if (used[v]) return false;
+        used[v] = true;
+        result &amp;amp;= Dfs(v, u);
+    }
+    return result;
+}
+
+var answer = deg.All(x =&amp;gt; x &amp;lt;= 2);
+for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; answer; i++)
+{
+    if (used[i] || deg[i] == 0) continue;
+    used[i] = true;
+    answer &amp;amp;= Dfs(i, -1);
+}
+ 
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27854595"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察では、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;それぞれの硬貨の選び方は、&lt;code&gt;Ceil(X/A)&lt;/code&gt;または&lt;code&gt;Floor(X/A)&lt;/code&gt;の2通りを大きな硬貨から選ぶことができる。&lt;/li&gt;
+&lt;li&gt;大きな硬貨から値を引いていき、0になるまでの距離として考えることができるので、絶対値で考えられる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;void Dfs(long curr, long count, int idx)
+{
+    if(curr == 0)
+    {
+        answer = Math.Min(answer, count);
+        return;
+    }
+    if(idx &amp;lt; 0) return;
+    
+    var ceil = (curr + A[idx] - 1) / A[idx];
+    var floor = curr / A[idx];
+    Dfs(Math.Abs(curr - A[idx] * ceil), count + ceil, idx + 1);
+    Dfs(Math.Abs(curr - A[idx] * floor), count + floor, idx + 1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;メモ化がうまくできずF問題に移りました。&lt;/p&gt;
+&lt;p&gt;解説を見たところ、考え方はあっていたので、ディクショナリを使ったdpをしました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;const long inf = (long)1e18;
+var dp1 = new Dictionary&amp;lt;long, long&amp;gt;();
+dp1[X] = 0;
+for (var i = N - 1; i &amp;gt;= 0; i--)
+{
+    var dp2 = new Dictionary&amp;lt;long, long&amp;gt;();
+    foreach (var (x, c) in dp1)
+    {
+        var ceil = (x + A[i] - 1) / A[i];
+        var a = Math.Abs(x - ceil * A[i]);
+        if (!dp2.ContainsKey(a)) dp2[a] = inf;
+        dp2[a] = Math.Min(dp2[a], c + ceil);
+ 
+        var floor = x / A[i];
+        var b = Math.Abs(x - floor * A[i]);
+        if (!dp2.ContainsKey(b)) dp2[b] = inf;
+        dp2[b] = Math.Min(dp2[b], c + floor);
+    }
+ 
+    dp1 = dp2;
+}
+
+var answer = dp1[0];
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc231/tasks/abc231_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc231/submissions/27903993"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察では、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;求めるものは&lt;code&gt;A[i] &amp;gt;= A[j] &amp;amp;&amp;amp; B[i] &amp;lt;= B[j]&lt;/code&gt;となる&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;の組み合わせの数。&lt;/li&gt;
+&lt;li&gt;何かしらのソートの後に&lt;code&gt;FenwickTree&lt;/code&gt;でどうにかできそう。&lt;/li&gt;
+&lt;li&gt;値が大きいが圧縮すればよさそう。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;頭の中で考えがまとまらず、実装ができずに時間切れになりました。&lt;/p&gt;
+&lt;p&gt;復習時の考察では上記に加えて、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AとBをセットにしたとき、Aの降順かつBの昇順でソート&lt;/li&gt;
+&lt;li&gt;AとBの値が同じものが複数あった場合の処理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;AとBを圧縮後、ABをタプルとしてディクショナリで数え上げます。
+Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、&lt;code&gt;FenwickTree&lt;/code&gt;でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができる。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var (ca, _) = Compress(A);
+var (cb, _) = Compress(B);
+var dict = new Dictionary&amp;lt;(int A, int B), int&amp;gt;();
+for (var i = 0; i &amp;lt; N; i++)
+{
+    var ab = (ca[A[i]], cb[B[i]]);
+    if (!dict.ContainsKey(ab)) dict[ab] = 0;
+    dict[ab]++;
+}
+
+var ABC = dict.Select(x =&amp;gt; (A: x.Key.A, B: x.Key.B, C: x.Value)).ToArray();
+Array.Sort(ABC, (x, y) =&amp;gt;
+{
+    var result = y.A.CompareTo(x.A);
+    return result == 0 ? x.B.CompareTo(y.B) : result;
+});
+
+var answer = 0L;
+var ft = new FenwickTree(N);
+foreach (var (a, b, c) in ABC)
+{
+    ft.Add(b, c);
+    answer += ft.Sum(b + 1) * c;
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC232</title>
 			<link>https://aconcavy.github.io/blog/posts/20211220abc232</link>
 			<description>&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211220abc232</guid>
-			<pubDate>Mon, 20 Dec 2021 01:15:19 GMT</pubDate>
+			<pubDate>Wed, 22 Dec 2021 16:30:48 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -167,14 +380,6 @@ for (var k = 0; k &amp;lt; K; k++)
     dp[k + 1, 1, 1] = dp[k, 0, 1] * (H - 1) + dp[k, 1, 0] * (W - 1) + dp[k, 1, 1] * (H + W - 4);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="section-2"&gt;振り返り&lt;/h1&gt;
-&lt;ol type="A"&gt;
-&lt;li&gt;早く実装&lt;/li&gt;
-&lt;li&gt;ずらして余りを取って比較&lt;/li&gt;
-&lt;li&gt;順列総当たり&lt;/li&gt;
-&lt;li&gt;dp&lt;/li&gt;
-&lt;li&gt;4つの状態をdp&lt;/li&gt;
-&lt;/ol&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
@@ -1938,169 +2143,6 @@ jobs:
 &lt;h1 id="section-3"&gt;あとがき&lt;/h1&gt;
 &lt;p&gt;Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。&lt;/p&gt;
 &lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>Wyamを使った静的サイトの生成とGitHub Actionsを使ったGitHub Pagesへのデプロイ</title>
-			<link>https://aconcavy.github.io/blog/posts/20200819wyamblog</link>
-			<description>&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20200819wyamblog</guid>
-			<pubDate>Wed, 19 Aug 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="is"&gt;これ is 何&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt; を使ってブログを作成し、Github Pages でホスティング、Github Actions でデプロイさせた手順をまとめたものです。&lt;/p&gt;
-&lt;h1 id="section"&gt;実行環境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows 10 1909&lt;/li&gt;
-&lt;li&gt;Microsoft.NETCore.App 2.1.21&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id="wyam"&gt;Wyam&lt;/h1&gt;
-&lt;h2 id="wyam-is"&gt;Wyam is 何&lt;/h2&gt;
-&lt;p&gt;.NET Core製の静的サイトジェネレータで、ブログやドキュメント等を markdown と Razor ファイルで作ることができます。&lt;/p&gt;
-&lt;p&gt;見た目はテンプレートが6種類あり、カスタマイズ可能で、.NET Core および C# で機能の拡張をすることもできます。&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Easy! Flexible! Powerful!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id="section-1"&gt;ダウンロードとインストール&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://dotnet.microsoft.com/"&gt;.NET SDK&lt;/a&gt; をインストールしていない場合はインストールします。2020年8月19日現在、最新の .NET Core Runtime は3.1ですが、 Wyam をインストールするために2.1の LTS もダウンロードおよびインストールします。&lt;/p&gt;
-&lt;p&gt;.NET Core SDK,および Runtime がインストールされたら、.NET Core ツールを用いて Wyam をインストールします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet tool -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-2"&gt;プロジェクトの作成&lt;/h2&gt;
-&lt;p&gt;プロジェクトを作成したいディレクトリに移動し、ブログテンプレートを&lt;code&gt;--recipe&lt;/code&gt; または &lt;code&gt;-r&lt;/code&gt; オプションで生成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テンプレートが生成されたら、次のコマンドでビルドします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、ビルドの際には &lt;code&gt;--theme&lt;/code&gt; または &lt;code&gt;-t&lt;/code&gt; オプションでテーマを指定することができます。テーマについては&lt;a href="https://wyam.io/recipes/blog/themes/"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ビルドが終わったら、ローカル環境で実行してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/hello_wyam.webp" class="img-fluid" alt="hello_wyam"&gt;&lt;/p&gt;
-&lt;p&gt;あっという間にブログが出来上がりました👏&lt;/p&gt;
-&lt;h2 id="section-3"&gt;記事の編集&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;./input/&lt;/code&gt; 内に &lt;code&gt;about.md&lt;/code&gt; が、また &lt;code&gt;./input/posts/&lt;/code&gt; 内に &lt;code&gt;first-post.md&lt;/code&gt; が生成されています。これらのように markdown ファイルを追加および編集することで、記事の編集および追加をすることができます。&lt;/p&gt;
-&lt;h2 id="front-matter"&gt;Front Matter の設定&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;first-post.md&lt;/code&gt; ファイルの先頭に以下のようなものが書かれています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: First Post
-Published: 1/1/2016
-Tags: Introduction
----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これらは &lt;code&gt;Front Matter&lt;/code&gt; といい、YAML や JSON フォーマットで使うことができる固有の変数です。これを使って記事にメタデータを付与することができます。Wyam では、&lt;a href="https://hexo.io/docs/front-matter.html"&gt;Hexo&lt;/a&gt; や &lt;a href="https://gohugo.io/content-management/front-matter/"&gt;Hugo&lt;/a&gt; のような別の静的サイトジェネレータと同じ変数を使うことができるそうです。&lt;/p&gt;
-&lt;p&gt;Published の日付を未来にするとその日になるまで表示されないようなので注意。
-日本時間の深夜に記事を作成して、ローカルでは表示されるのに GitHub Pages や他のデプロイ先では表示されない場合はここを疑いましょう (1敗)。&lt;/p&gt;
-&lt;h1 id="section-4"&gt;ブログを公開する&lt;/h1&gt;
-&lt;p&gt;Wyam で作成したプロジェクトを GitHub のリポジトリでバージョン管理を行い、Master ブランチが更新されたら GitHub Actions でプロジェクトをビルド、およびGitHub Pagesにホスティングを行います。&lt;/p&gt;
-&lt;h2 id="github-pages-is"&gt;GitHub Pages is 何&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリから Web サイトを直接ホストすることができるサービスです。
-詳しくは&lt;a href="https://docs.github.com/ja/github/working-with-github-pages/about-github-pages"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;リポジトリ名が &lt;code&gt;ユーザ名.github.io&lt;/code&gt; の場合はユーザのページに、それ以外の場合はプロジェクトのページとして扱うことができます。&lt;/p&gt;
-&lt;h2 id="github-actions-is"&gt;Github Actions is 何&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリから、プロジェクトをビルド、テスト、デプロイすることができるサービスです。CI/CDです。
-詳しくは&lt;a href="https://github.co.jp/features/actions"&gt;こちら&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;リポジトリが Public なら無料、Private なら従量課金らしいです。&lt;/p&gt;
-&lt;h2 id="section-5"&gt;プロジェクトの設定を変更する&lt;/h2&gt;
-&lt;p&gt;GitHubにリポジトリを作成し、Wyam で作成したプロジェクトを Commit / Push します。この際 &lt;code&gt;.gitignore&lt;/code&gt; には以下の設定を指定しておくといいでしょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;# Wyam files
-output/
-config.wyam.dll
-config.wyam.hash
-config.wyam.packages.xml
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次に、&lt;code&gt;config.wyam&lt;/code&gt; を編集してプロジェクトの設定を行います。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;BlogKeys.Title&lt;/code&gt; でWeb サイトのタイトルを、&lt;code&gt;BlogKeys.Description&lt;/code&gt; でWeb サイトのトップに表示される簡単な説明を指定できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[BlogKeys.Title] = "This is title";
-Settings[BlogKeys.Description] = "Welcome!";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Web サイトを &lt;code&gt;https&lt;/code&gt; に指定する場合は以下のオプションを有効にします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.LinksUseHttps] = true;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Web サイトで表示するカルチャ情報を設定する場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; と &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; を変更します。
-&lt;code&gt;2020年8月19日&lt;/code&gt; のように表示したい場合は &lt;code&gt;Keys.DateTimeDisplayCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。
-日本時間を表示したい場合も同様に &lt;code&gt;Keys.DateTimeInputCulture&lt;/code&gt; に &lt;code&gt;ja-JP&lt;/code&gt; を指定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.DateTimeDisplayCulture] = "ja-JP";
-Settings[Keys.DateTimeInputCulture] = "ja-JP";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;プロジェクトのルーティングでは、GitHub のリポジトリがユーザページ用のリポジトリの場合 (&lt;code&gt;ユーザ名.github.io&lt;/code&gt;) と、それ以外のリポジトリ(プロジェクトリポジトリ)の場合で指定する設定が異なります。&lt;/p&gt;
-&lt;h3 id="section-6"&gt;1 ユーザページの場合&lt;/h3&gt;
-&lt;p&gt;例として、GitHubユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; の場合は以下のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="section-7"&gt;2 プロジェクトページの場合&lt;/h3&gt;
-&lt;p&gt;プロジェクトページで作成する場合、&lt;code&gt;Keys.LinkRoot&lt;/code&gt; にリポジトリ名を設定する必要があります。例として、リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は以下のようになります。&lt;strong&gt;大文字と小文字の区別があるようなので注意が必要です。&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Settings[Keys.Host] = "aconcavy.github.io";
-Settings[Keys.LinkRoot] = "Blog";
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この設定を変更した場合、&lt;code&gt;wyam preview&lt;/code&gt; を使ってローカルでプレビューをしようとしても、Path が &lt;code&gt;localhost:5080/&lt;/code&gt; のままで、正しくプレビューすることができません。そのため、&lt;code&gt;--virtual-dir&lt;/code&gt; オプションを指定することで正しくプレビューすることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;wyam preview --virtual-dir Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;プレビューのたびに毎回コマンドを打つことがめんどくさくなるので次のような bat ファイルやシェルスクリプトを作成しておくと楽になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;@echo off
-wyam -r Blog
-wyam preview --virtual-dir Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="github-actions"&gt;GitHub Actions の設定&lt;/h2&gt;
-&lt;p&gt;GitHub のリポジトリページに移動し、&lt;code&gt;Actions&lt;/code&gt; タブで新しいワークフローを作成します。
-&lt;code&gt;Simple workflow&lt;/code&gt; を作成すると、新規の YAML ファイルがリポジトリの &lt;code&gt;.github/workflows&lt;/code&gt; に作成されます。そして、作成された YAMLファイルを &lt;code&gt;gh-pages.yml&lt;/code&gt; に変更し、次のような内容に変更します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: Wyam
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v1.6.0
-      with:
-        dotnet-version: 2.1
-    
-    - name: Install Wyam
-      run: dotnet tool install --tool-path . Wyam.Tool
-    
-    - name: Build static site
-      run: ./wyam -r blog
-      
-    - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.6.4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./output
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この &lt;code&gt;Wyam&lt;/code&gt; というワークフローは &lt;code&gt;master&lt;/code&gt; ブランチに Push または Pull Request が送られたときに、Ubuntu 環境で &lt;code&gt;.NET Core SDK / Runtime&lt;/code&gt; のインストール、&lt;code&gt;Wyam&lt;/code&gt; のインストール、プロジェクトのビルド、GitHub Pages へのデプロイが行われます。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意点&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;.NET Core SDK は Wyamの対応している2.1を使用する。&lt;/li&gt;
-&lt;li&gt;Wyam のインストールで &lt;code&gt;--tool-path .&lt;/code&gt; オプションを指定して Wyam ツールをビルド環境のローカルに作成する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;作成した YAML ファイルを Commit すると、GitHub Actions が有効になり、master ブランチが更新されるため、ワークフローが実行されます。そして、ワークフローのステータスが &lt;code&gt;completed job&lt;/code&gt; になれば成功です。&lt;/p&gt;
-&lt;h2 id="github-pages"&gt;GitHub Pages の設定&lt;/h2&gt;
-&lt;p&gt;リポジトリが GitHub Pages の条件に満たしていれば、&lt;code&gt;Settings&lt;/code&gt; タブに移動すると、&lt;code&gt;GitHub Pages&lt;/code&gt; の項目が表示されます。そこで &lt;code&gt;Source&lt;/code&gt; 欄の &lt;code&gt;Branch&lt;/code&gt; を &lt;code&gt;gh-pages&lt;/code&gt; に、ディレクトリを &lt;code&gt;/(root)&lt;/code&gt; に変更して &lt;code&gt;Save&lt;/code&gt; することで、GitHub Pagesが有効化されます。&lt;/p&gt;
-&lt;p&gt;GitHub Pagesの条件は Public リポジトリであるか、Pro 以上のライセンスであれば Private リポジトリであれば有効です。&lt;/p&gt;
-&lt;p&gt;正しく設定ができれば、ユーザページならば &lt;code&gt;ユーザ名.github.io&lt;/code&gt; に、プロジェクトページならば &lt;code&gt;ユーザ名.github.io/リポジトリ名&lt;/code&gt; にプロジェクトがホスティングされます。&lt;/p&gt;
-&lt;p&gt;例として、ユーザ名が &lt;code&gt;AconCavy&lt;/code&gt; で リポジトリ名が &lt;code&gt;Blog&lt;/code&gt; の場合は &lt;code&gt;aconcavy.github.io/Blog&lt;/code&gt; にホスティングされます。&lt;/p&gt;
-&lt;h1 id="section-8"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;Wyam で 作成した静的 Web サイト (本ブログ) を、GitHub Actions を使って更新を自動化し、GitHub Pages でホスティングする方法をまとめました。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Wyam のプロジェクトを作成する。&lt;/li&gt;
-&lt;li&gt;Wyam のプロジェクト設定を変更する。&lt;/li&gt;
-&lt;li&gt;GitHub Actions の YAML を編集する。&lt;/li&gt;
-&lt;li&gt;GitHub Pages の設定を有効化する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大きく分けて4つの手順で、GitHub Pages に Wyam プロジェクトをホスティングすることができます。&lt;/p&gt;
-&lt;h1 id="section-9"&gt;あとがき&lt;/h1&gt;
-&lt;p&gt;とりあえず本ブログ初の投稿として、本ブログ作成までの手順の記事を簡単に書きました。今後も触った技術や何か変なものをまとめて記事にしたいと思います。&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
