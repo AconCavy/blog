@@ -250,11 +250,11 @@ Console.WriteLine(answer);
 <p>頭の中で考えがまとまらず、実装ができずに時間切れになりました。</p>
 <p>復習時の考察では上記に加えて、</p>
 <ul>
-<li>AとBをセットにしたとき、Aの降順かつBの昇順でソート</li>
-<li>AとBの値が同じものが複数あった場合の処理</li>
+<li>AとBをセットにしたとき、Aの降順かつBの昇順でソートすればよさそう。</li>
+<li>AとBの値が同じものが複数あった場合の処理が必要そう。</li>
 </ul>
 <p>AとBを圧縮後、ABをタプルとしてディクショナリで数え上げます。
-Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、<code>FenwickTree</code>でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができる。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになる。</p>
+Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、<code>FenwickTree</code>でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができます。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになります。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
 var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
 var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();

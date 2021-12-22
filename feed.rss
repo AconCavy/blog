@@ -5,14 +5,14 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2021 AconCavy</copyright>
-		<pubDate>Wed, 22 Dec 2021 16:31:23 GMT</pubDate>
-		<lastBuildDate>Wed, 22 Dec 2021 16:31:23 GMT</lastBuildDate>
+		<pubDate>Wed, 22 Dec 2021 16:37:09 GMT</pubDate>
+		<lastBuildDate>Wed, 22 Dec 2021 16:37:09 GMT</lastBuildDate>
 		<item>
 			<title>ABC231</title>
 			<link>https://aconcavy.github.io/blog/posts/20211222abc231</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211222abc231</guid>
-			<pubDate>Wed, 22 Dec 2021 16:30:48 GMT</pubDate>
+			<pubDate>Wed, 22 Dec 2021 16:36:37 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -182,11 +182,11 @@ Console.WriteLine(answer);
 &lt;p&gt;頭の中で考えがまとまらず、実装ができずに時間切れになりました。&lt;/p&gt;
 &lt;p&gt;復習時の考察では上記に加えて、&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;AとBをセットにしたとき、Aの降順かつBの昇順でソート&lt;/li&gt;
-&lt;li&gt;AとBの値が同じものが複数あった場合の処理&lt;/li&gt;
+&lt;li&gt;AとBをセットにしたとき、Aの降順かつBの昇順でソートすればよさそう。&lt;/li&gt;
+&lt;li&gt;AとBの値が同じものが複数あった場合の処理が必要そう。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;AとBを圧縮後、ABをタプルとしてディクショナリで数え上げます。
-Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、&lt;code&gt;FenwickTree&lt;/code&gt;でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができる。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになる。&lt;/p&gt;
+Aの降順かつBの昇順でソートし、順番に見ていくことでそれ以前のAの値は現在のAの値よりも大きく、&lt;code&gt;FenwickTree&lt;/code&gt;でBの個数を管理することで、現在のBの値より小さいBの個数を数え上げることができます。その値にABタプルの個数を掛けることで、同じABの組み合わせが複数あった場合に対処できるようになります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
 var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
 var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
@@ -225,7 +225,7 @@ Console.WriteLine(answer);
 			<link>https://aconcavy.github.io/blog/posts/20211220abc232</link>
 			<description>&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211220abc232</guid>
-			<pubDate>Wed, 22 Dec 2021 16:30:48 GMT</pubDate>
+			<pubDate>Wed, 22 Dec 2021 16:36:37 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
