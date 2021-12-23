@@ -5,14 +5,139 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2021 AconCavy</copyright>
-		<pubDate>Wed, 22 Dec 2021 16:37:09 GMT</pubDate>
-		<lastBuildDate>Wed, 22 Dec 2021 16:37:09 GMT</lastBuildDate>
+		<pubDate>Thu, 23 Dec 2021 19:47:08 GMT</pubDate>
+		<lastBuildDate>Thu, 23 Dec 2021 19:47:08 GMT</lastBuildDate>
+		<item>
+			<title>ABC230</title>
+			<link>https://aconcavy.github.io/blog/posts/20211224abc230</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 230の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20211224abc230</guid>
+			<pubDate>Thu, 23 Dec 2021 19:46:29 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 230の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230"&gt;https://atcoder.jp/contests/abc230&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc230/tasks/abc230_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230/submissions/27643596"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;入力を取り、&lt;code&gt;N&lt;/code&gt;が42以上なら答えをインクリメントします。C#では出力をフォーマットできるので、0埋めフォーマットを行います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+if (N &amp;gt;= 42) N++;
+// var answer = $&amp;quot;AGC{N.ToString(&amp;quot;000&amp;quot;)}&amp;quot;;
+var answer = $&amp;quot;AGC{N:000}&amp;quot;;
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc230/tasks/abc230_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230/submissions/27651060"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc230/submissions/27674559"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;3つ連続した部分文字列において、&lt;code&gt;x&lt;/code&gt;が3つ連続した場合、&lt;code&gt;oxo&lt;/code&gt;のように&lt;code&gt;o&lt;/code&gt;が2つ以上含まれている場合は答えは&lt;code&gt;No&lt;/code&gt;になります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Scanner.Scan&amp;lt;string&amp;gt;();
+var answer = true;
+for (var i = 0; i + 2 &amp;lt; S.Length; i++)
+{
+    answer &amp;amp;= (S[i], S[i + 1], S[i + 2]) != ('x', 'x', 'x');
+    answer &amp;amp;= (S[i], S[i + 1], S[i + 2]) != ('o', 'x', 'o');
+}
+
+for (var i = 0; i + 1 &amp;lt; S.Length; i++)
+{
+    answer &amp;amp;= (S[i], S[i + 1]) != ('o', 'o');
+}
+
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;解説では、&lt;code&gt;Yes&lt;/code&gt;になるテンプレートは高々3つなので、そのテンプレートの順番で&lt;code&gt;o&lt;/code&gt;と&lt;code&gt;x&lt;/code&gt;が出現しているかを判定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Scanner.Scan&amp;lt;string&amp;gt;();
+foreach (var t in new[] { &amp;quot;oxx&amp;quot;, &amp;quot;xox&amp;quot;, &amp;quot;xxo&amp;quot; })
+{
+    var ok = true;
+    for (var i = 0; i &amp;lt; S.Length; i++)
+    {
+        ok &amp;amp;= S[i] == t[i % 3];
+    }
+ 
+    if (ok)
+    {
+        Console.WriteLine(&amp;quot;Yes&amp;quot;);
+        return;
+    }
+}
+ 
+Console.WriteLine(&amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc230/tasks/abc230_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230/submissions/27664018"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc230/submissions/27674563"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;黒く塗りつぶすべきマスは、&lt;code&gt;x&lt;/code&gt;の交点となる&lt;code&gt;(A,B)&lt;/code&gt;からの距離&lt;code&gt;dx&lt;/code&gt;と&lt;code&gt;dy&lt;/code&gt;の絶対値が一致する箇所になります。
+そのため、対象となるマスを見ていくとき、&lt;code&gt;Abs(dx) == Abs(dy)&lt;/code&gt;になるマスを黒く塗れば、求められる出力が得られます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, A, B) = Scanner.Scan&amp;lt;long, long, long&amp;gt;();
+var (P, Q, R, S) = Scanner.Scan&amp;lt;long, long, long, long&amp;gt;();
+
+for (var i = P; i &amp;lt;= Q; i++)
+{
+    for (var j = R; j &amp;lt;= S; j++)
+    {
+        Console.Write(Math.Abs(A - i) == Math.Abs(B - j) ? '#' : '.');
+    }
+    Console.WriteLine();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc230/tasks/abc230_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230/submissions/27665969"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;D&lt;/code&gt;列まとめてダメージを与えられるということは、壁の当たり判定を&lt;code&gt;D-1&lt;/code&gt;伸ばして、パンチを1列にすることと同じことになります。
+そのため、壁の&lt;code&gt;R&lt;/code&gt;に&lt;code&gt;D-1&lt;/code&gt;を追加したときの区間スケジューリング問題として扱うことができます。
+&lt;code&gt;R&lt;/code&gt;で壁を昇順ソートして順にみたとき、&lt;code&gt;L&lt;/code&gt;が有効な場合に壁を叩くことができれば無効を&lt;code&gt;R&lt;/code&gt;に更新することで数え上げることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, D) = Scanner.Scan&amp;lt;int, long&amp;gt;();
+var W = new (long L, long R)[N];
+for (var i = 0; i &amp;lt; N; i++)
+{
+    var (l, r) = Scanner.Scan&amp;lt;long, long&amp;gt;();
+    r += D - 1;
+    W[i] = (l, r);
+}
+
+Array.Sort(W, (x, y) =&amp;gt; x.R.CompareTo(y.R));
+var answer = 0;
+var rr = 0L;
+foreach (var (l, r) in W)
+{
+    if (rr &amp;gt;= l) continue;
+    rr = r;
+    answer++;
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc230/tasks/abc230_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc230/submissions/27675153"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Sqrt(N)&lt;/code&gt;まで見ればよさそう。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Sqrt(N)&lt;/code&gt;以降は&lt;code&gt;i*count&lt;/code&gt;で求められそう&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;count&lt;/code&gt;はどうやって求められるか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;時間切れになりました。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N/i&lt;/code&gt;を&lt;code&gt;k&lt;/code&gt;としたとき、&lt;code&gt;k &amp;lt;= N/i &amp;lt; k+1&lt;/code&gt;となる&lt;code&gt;i&lt;/code&gt;の個数は&lt;code&gt;N/i &amp;gt;= i &amp;gt; N/(K+1)&lt;/code&gt;となるため、&lt;code&gt;N/i - N/(i+1)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;long&amp;gt;();
+var answer = 0L;
+for (var i = 1L; i * i &amp;lt;= N; i++)
+{
+    if (i != N / i) answer += N / i;
+    var count = (N / i) - (N / (i + 1));
+    answer += i * count;
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC231</title>
 			<link>https://aconcavy.github.io/blog/posts/20211222abc231</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211222abc231</guid>
-			<pubDate>Wed, 22 Dec 2021 16:36:37 GMT</pubDate>
+			<pubDate>Thu, 23 Dec 2021 19:46:29 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -225,7 +350,7 @@ Console.WriteLine(answer);
 			<link>https://aconcavy.github.io/blog/posts/20211220abc232</link>
 			<description>&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211220abc232</guid>
-			<pubDate>Wed, 22 Dec 2021 16:36:37 GMT</pubDate>
+			<pubDate>Thu, 23 Dec 2021 19:46:29 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -2046,103 +2171,6 @@ namespace BenchmarkSharp
 &lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
 &lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ブログのレイアウト変更とStatiqを使った静的サイトの生成</title>
-			<link>https://aconcavy.github.io/blog/posts/20201108statiqblog</link>
-			<description>&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20201108statiqblog</guid>
-			<pubDate>Sun, 08 Nov 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;前回のブログから一度も更新せずに3か月経ち、サイト生成を &lt;code&gt;Wyam&lt;/code&gt; から &lt;code&gt;Statiq&lt;/code&gt; に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。&lt;/p&gt;
-&lt;h1 id="statiq"&gt;Statiq&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://statiq.dev/"&gt;Statiq&lt;/a&gt; は &lt;a href="https://aconcavy.github.io/blog/20200819wyamblog"&gt;前回の記事&lt;/a&gt; で紹介した &lt;code&gt;Wyam&lt;/code&gt; をリブランディングし、機能の追加に柔軟性を持たせたフレームワークだそうです。
-大きく3つのフレームワークに分かれており、基礎となる &lt;code&gt;Statiq.Framework&lt;/code&gt;、一般的なWebサイト生成のための &lt;code&gt;Statiq.Web&lt;/code&gt;、ドキュメントサイト生成のための &lt;code&gt;Statiq.Doc&lt;/code&gt; に分かれています。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Statiq.Framework&lt;/code&gt; はMITライセンスで公開されている一方、&lt;code&gt;Statiq.Web&lt;/code&gt; と &lt;code&gt;Statiq.Doc&lt;/code&gt; は &lt;a href="https://licensezero.com/licenses/prosperity"&gt;License Zero Prosperity Public License&lt;/a&gt; (Public License) と &lt;a href="https://licensezero.com/licenses/private"&gt;License Zero Private License&lt;/a&gt; (Private License)` のデュアルライセンスを取ります。
-そのため、商用利用の場合は、はじめ30日間の無料体験期間のあと、開発者一人当たり50ドルのPrivate Licenseを取得する必要があります。
-非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます。
-詳しくは&lt;a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md"&gt;こちら&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="section-1"&gt;使い方&lt;/h2&gt;
-&lt;p&gt;Wyamは.NET上にツールをインストールして実行するのに対して、Statiqの場合はコンソールアプリケーションとして実行します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet new console --name Blog
-dotnet add package Statiq.Web --version x.y.z
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そして、エントリポイントの &lt;code&gt;Program.cs&lt;/code&gt; にBootStrapeprを追記します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
-using Statiq.App;
-using Statiq.Web;
-
-namespace Blog
-{
-    public static class Program
-    {
-        public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
-            await Bootstrapper.Factory
-                .CreateWeb(args)
-                .RunAsync();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次に、&lt;code&gt;./input/&lt;/code&gt; ディレクトリ内に &lt;code&gt;index.md&lt;/code&gt; を作成し、適当な内容を書いて保存します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Title: Hello Statiq
----
-Hello world!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Wyamと同様に、ファイル上部にFront Matterを記述することで、記事タイトルやタグといったメタ情報を付与することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sh line-numbers"&gt;dotnet run -- preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そして、プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます。(デフォルトでは &lt;code&gt;localhost:5080&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;素の状態では、テーマは存在しないので、&lt;code&gt;./theme/input/&lt;/code&gt; にWebサイトのテーマを用意する必要があります。&lt;/p&gt;
-&lt;p&gt;サンプルとして、公式テーマの&lt;a href="https://github.com/statiqdev/CleanBlog"&gt;CleanBlog&lt;/a&gt;を &lt;code&gt;./theme/&lt;/code&gt; ディレクトリ内に配置してプロジェクトを実行することで、WyamのCleanBlogテーマと同様のWebサイトを生成することができます。&lt;/p&gt;
-&lt;h2 id="github-pages"&gt;Github Pagesへの展開&lt;/h2&gt;
-&lt;p&gt;Statiq.Webでは、公式でGithub Pagesへのデプロイ方法が用意されています。&lt;/p&gt;
-&lt;p&gt;Wyamの時と同様に、設定ファイル(今回は &lt;code&gt;settings.yml&lt;/code&gt;)に設定を追記する必要があります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;Host: aconcavy.github.io // github pagesのホスト
-LinkRoot: /Blog // バーチャルパス
-LinksUseHttps: true
-
-GitHubOwner: AconCavy // ユーザ名
-GitHubName: Blog // リポジトリ名
-GitHubToken: =&amp;gt; Config.FromSetting&amp;lt;string&amp;gt;("GITHUB_TOKEN") // これはこのまま
-GitHubBranch: gh-pages // 生成先ブランチ
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Github Actionでは次のようなワークフローを指定します。
-この時に、&lt;code&gt;GitHubBranch&lt;/code&gt;で指定したブランチは、存在しない場合はエラーが吐かれるので、先にブランチを作成しておきましょう(5敗)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yaml line-numbers"&gt;name: deploy
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1
-    - name: Deploy
-      run: dotnet run -p Blog -- deploy
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ワークフローが成功すると、指定したブランチにファイルが生成されるので、リポジトリの設定からGithub Pagesのブランチを指定します。
-すべて成功すると、&lt;code&gt;{user}.github.io/{repository}&lt;/code&gt; (今回は&lt;a href="https://aconcavy.github.io/Blog/"&gt;aconcavy.github.io/Blog&lt;/a&gt;`)にサイトが表示されます。&lt;/p&gt;
-&lt;p&gt;サイトのテーマがうまく適用されない場合は、設定ファイルの &lt;code&gt;Host&lt;/code&gt; や &lt;code&gt;LinkRoot&lt;/code&gt; を見直すといいでしょう。&lt;/p&gt;
-&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;Statiqで作成した静的Webサイトを、GitHub ActionsとGitHub Pagesデプロイする方法をまとめました。&lt;/p&gt;
-&lt;p&gt;Wyamと比べてカスタマイズの自由度が高いみたいだけど、ドキュメントを調べても調べたいことにいまいち辿り着かないので、ドキュメントが豊富になればもっと使いやすくなりそうです。APIリファレンスとかも欲しい。
-まだプレビュー段階なので今後に期待しています。&lt;/p&gt;
-&lt;h1 id="section-3"&gt;あとがき&lt;/h1&gt;
-&lt;p&gt;Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。&lt;/p&gt;
-&lt;p&gt;画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>

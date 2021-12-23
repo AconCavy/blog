@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+    <title>acon.log - ABC230</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC230">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20211224abc230">
+
+    <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">ABC230</h1>
+
+            <div class="card-text post-meta">Published on Thursday, 23 December 2021</div>
+            <div class="card-text post-meta">Updated on Monday, 01 January 0001</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 230の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc230">https://atcoder.jp/contests/abc230</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/27643596">コンテスト提出</a></p>
+<p>入力を取り、<code>N</code>が42以上なら答えをインクリメントします。C#では出力をフォーマットできるので、0埋めフォーマットを行います。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+if (N &gt;= 42) N++;
+// var answer = $&quot;AGC{N.ToString(&quot;000&quot;)}&quot;;
+var answer = $&quot;AGC{N:000}&quot;;
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/27651060">コンテスト提出</a><br />
+<a href="https://atcoder.jp/contests/abc230/submissions/27674559">復習提出</a></p>
+<p>3つ連続した部分文字列において、<code>x</code>が3つ連続した場合、<code>oxo</code>のように<code>o</code>が2つ以上含まれている場合は答えは<code>No</code>になります。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
+var answer = true;
+for (var i = 0; i + 2 &lt; S.Length; i++)
+{
+    answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('x', 'x', 'x');
+    answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('o', 'x', 'o');
+}
+
+for (var i = 0; i + 1 &lt; S.Length; i++)
+{
+    answer &amp;= (S[i], S[i + 1]) != ('o', 'o');
+}
+
+Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+<p>解説では、<code>Yes</code>になるテンプレートは高々3つなので、そのテンプレートの順番で<code>o</code>と<code>x</code>が出現しているかを判定します。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
+foreach (var t in new[] { &quot;oxx&quot;, &quot;xox&quot;, &quot;xxo&quot; })
+{
+    var ok = true;
+    for (var i = 0; i &lt; S.Length; i++)
+    {
+        ok &amp;= S[i] == t[i % 3];
+    }
+ 
+    if (ok)
+    {
+        Console.WriteLine(&quot;Yes&quot;);
+        return;
+    }
+}
+ 
+Console.WriteLine(&quot;No&quot;);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/27664018">コンテスト提出</a><br />
+<a href="https://atcoder.jp/contests/abc230/submissions/27674563">復習提出</a></p>
+<p>黒く塗りつぶすべきマスは、<code>x</code>の交点となる<code>(A,B)</code>からの距離<code>dx</code>と<code>dy</code>の絶対値が一致する箇所になります。
+そのため、対象となるマスを見ていくとき、<code>Abs(dx) == Abs(dy)</code>になるマスを黒く塗れば、求められる出力が得られます。</p>
+<pre><code class="language-csharp line-numbers">var (N, A, B) = Scanner.Scan&lt;long, long, long&gt;();
+var (P, Q, R, S) = Scanner.Scan&lt;long, long, long, long&gt;();
+
+for (var i = P; i &lt;= Q; i++)
+{
+    for (var j = R; j &lt;= S; j++)
+    {
+        Console.Write(Math.Abs(A - i) == Math.Abs(B - j) ? '#' : '.');
+    }
+    Console.WriteLine();
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/27665969">コンテスト提出</a></p>
+<p><code>D</code>列まとめてダメージを与えられるということは、壁の当たり判定を<code>D-1</code>伸ばして、パンチを1列にすることと同じことになります。
+そのため、壁の<code>R</code>に<code>D-1</code>を追加したときの区間スケジューリング問題として扱うことができます。
+<code>R</code>で壁を昇順ソートして順にみたとき、<code>L</code>が有効な場合に壁を叩くことができれば無効を<code>R</code>に更新することで数え上げることができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, D) = Scanner.Scan&lt;int, long&gt;();
+var W = new (long L, long R)[N];
+for (var i = 0; i &lt; N; i++)
+{
+    var (l, r) = Scanner.Scan&lt;long, long&gt;();
+    r += D - 1;
+    W[i] = (l, r);
+}
+
+Array.Sort(W, (x, y) =&gt; x.R.CompareTo(y.R));
+var answer = 0;
+var rr = 0L;
+foreach (var (l, r) in W)
+{
+    if (rr &gt;= l) continue;
+    rr = r;
+    answer++;
+}
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc230/submissions/27675153">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li><code>Sqrt(N)</code>まで見ればよさそう。</li>
+<li><code>Sqrt(N)</code>以降は<code>i*count</code>で求められそう</li>
+<li><code>count</code>はどうやって求められるか</li>
+</ul>
+<p>時間切れになりました。</p>
+<p><code>N/i</code>を<code>k</code>としたとき、<code>k &lt;= N/i &lt; k+1</code>となる<code>i</code>の個数は<code>N/i &gt;= i &gt; N/(K+1)</code>となるため、<code>N/i - N/(i+1)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
+var answer = 0L;
+for (var i = 1L; i * i &lt;= N; i++)
+{
+    if (i != N / i) answer += N / i;
+    var count = (N / i) - (N / (i + 1));
+    answer += i * count;
+}
+
+Console.WriteLine(answer);
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20211224abc230" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2021 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>
