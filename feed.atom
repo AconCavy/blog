@@ -4,12 +4,142 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2021 AconCavy</rights>
-	<updated>2021-12-23T19:47:08Z</updated>
+	<updated>2021-12-25T14:15:38Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20211225abc233</id>
+		<title>abc233</title>
+		<link href="https://aconcavy.github.io/blog/posts/20211225abc233" />
+		<updated>2021-12-25T14:15:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 233の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233"&gt;https://atcoder.jp/contests/abc233&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc233/tasks/abc233_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233/submissions/28110738"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(Y-X)&lt;/code&gt;を10で割ったときの切り上げの値が必要な切手の数となります。
+&lt;code&gt;(Y-X)&lt;/code&gt;が負の場合は既に金額が足りているので、0と&lt;code&gt;Max&lt;/code&gt;を取ることで、&lt;code&gt;if&lt;/code&gt;文なくすことができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (X, Y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var answer = Math.Max(0, ((Y - X) + 9) / 10);
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc233/tasks/abc233_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233/submissions/28113146"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;C#では、&lt;code&gt;Array.Reverse&lt;/code&gt;メソッドを使うことで、配列の指定した範囲を逆順にすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (L, R) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+L--;
+var S = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
+Array.Reverse(S, L, R - L);
+Console.WriteLine(string.Join(&amp;quot;&amp;quot;, S));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc233/tasks/abc233_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233/submissions/28122407"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;総積が&lt;code&gt;X&lt;/code&gt;になるためには、要素となる数が&lt;code&gt;X&lt;/code&gt;の倍数である必要があるため、それ以外を除いたものから、袋からそれぞれ1つずつ選んだ時の組み合わせの数となります。&lt;br /&gt;
+再帰関数を使って&lt;code&gt;idx&lt;/code&gt;となる袋を順にみていくとき、ボールの値が現在の値&lt;code&gt;curr&lt;/code&gt;の倍数であり、&lt;code&gt;curr&lt;/code&gt;が0より大きい場合、次の袋に進むことができます。&lt;br /&gt;
+もしすべての袋から1つずつ拾うことができて、&lt;code&gt;curr&lt;/code&gt;の値が1のときは、それまでに選んだボールの値の総積が&lt;code&gt;X&lt;/code&gt;となるので、その時の数を数え上げることで答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, X) = Scanner.Scan&amp;lt;int, long&amp;gt;();
+var A = new long[N][];
+for (var i = 0; i &amp;lt; N; i++)
+{
+    A[i] = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().Skip(1).Where(x =&amp;gt; X % x == 0).ToArray();
+}
+
+var answer = 0L;
+
+void Dfs(int idx, long curr)
+{
+    if (idx == N)
+    {
+        if (curr == 1) answer++;
+        return;
+    }
+
+    foreach (var a in A[idx])
+    {
+        if (curr % a == 0 &amp;amp;&amp;amp; curr / a != 0)
+        {
+            Dfs(idx + 1, curr / a);
+        }
+    }
+}
+
+Dfs(0, X);
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc233/tasks/abc233_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233/submissions/28148861"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;累積和で範囲を求められそう&lt;/li&gt;
+&lt;li&gt;尺取り法は単調増加ではないから使えなさそう&lt;/li&gt;
+&lt;li&gt;ディクショナリでまとめて数え上げられそう&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;L&lt;/code&gt;を固定したときに&lt;code&gt;R&lt;/code&gt;の数を数え上げましたが、実装が間違っていたのかWAで時間切れとなりました。&lt;/p&gt;
+&lt;p&gt;解説では&lt;code&gt;R&lt;/code&gt;を固定したときに&lt;code&gt;L&lt;/code&gt;の数を数え上げていました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, K) = Scanner.Scan&amp;lt;int, long&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+var cum = new long[N + 1];
+for (var i = 0; i &amp;lt; N; i++)
+{
+    cum[i + 1] = cum[i] + A[i];
+}
+
+var dict = new Dictionary&amp;lt;long, long&amp;gt;();
+var answer = 0L;
+for (var i = 1; i &amp;lt;= N; i++)
+{
+    if (!dict.ContainsKey(cum[i - 1]))
+    {
+        dict[cum[i - 1]] = 0;
+    }
+    dict[cum[i - 1]]++;
+    if (dict.ContainsKey(cum[i] - K))
+    {
+        answer += dict[cum[i] - K];
+    }
+}
+ 
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc233/tasks/abc233_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc233/submissions/28143437"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;大きい桁から累積和を取ると、その桁に最終的に足される数を求めることができます。
+累積和を小さい桁から見たとき、その桁の累積和の1の位の数が桁として確定し、累積和の1の位より大きい値は、その次の桁に繰り上げられるため、次の桁の累積和に足す必要があります。&lt;br /&gt;
+出力では、一番大きい桁が0の場合は除外して表示する必要があります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var X = Scanner.Scan&amp;lt;string&amp;gt;();
+var N = X.Length;
+var cum = new int[N + 1];
+for (var i = 0; i &amp;lt; N; i++)
+{
+    cum[i + 1] = cum[i] + X[i] - '0';
+}
+
+var answer = new int[X.Length + 1];
+for (var i = N; i &amp;gt; 0; i--)
+{
+    answer[i] = cum[i] % 10;
+    cum[i - 1] += cum[i] / 10;
+}
+
+answer[0] += cum[0];
+if (answer[0] == 0)
+{
+    Console.WriteLine(string.Join(&amp;quot;&amp;quot;, answer.Skip(1)));
+}
+else
+{
+    Console.WriteLine(string.Join(&amp;quot;&amp;quot;, answer));
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 233の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20211224abc230</id>
 		<title>ABC230</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211224abc230" />
-		<updated>2021-12-23T19:46:29Z</updated>
+		<updated>2021-12-25T14:15:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 230の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -133,7 +263,7 @@ Console.WriteLine(answer);
 		<id>https://aconcavy.github.io/blog/posts/20211222abc231</id>
 		<title>ABC231</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211222abc231" />
-		<updated>2021-12-23T19:46:29Z</updated>
+		<updated>2021-12-25T14:15:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -345,7 +475,7 @@ Console.WriteLine(answer);
 		<id>https://aconcavy.github.io/blog/posts/20211220abc232</id>
 		<title>ABC232</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211220abc232" />
-		<updated>2021-12-23T19:46:29Z</updated>
+		<updated>2021-12-25T14:15:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -1795,371 +1925,5 @@ namespace Blog.Extensions
 &lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20201119forbenchmark</id>
-		<title>.NET Core 3.1と.NET 5のfor-loopの速度比較</title>
-		<link href="https://aconcavy.github.io/blog/posts/20201119forbenchmark" />
-		<updated>2020-11-19T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;環境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;OS: Windows 10&lt;/li&gt;
-&lt;li&gt;CPU: AMD Ryzen 5 3600&lt;/li&gt;
-&lt;li&gt;SDK: .NET 5.0&lt;/li&gt;
-&lt;li&gt;BenchmarkDotnet: 0.12.1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-2"&gt;計測対象&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Runtimes
-&lt;ul&gt;
-&lt;li&gt;.NET Core 3.1.9&lt;/li&gt;
-&lt;li&gt;.NET 5&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Targets
-&lt;ul&gt;
-&lt;li&gt;1次元配列 (1e6)&lt;/li&gt;
-&lt;li&gt;2次元配列 (1e3 * 1e3)&lt;/li&gt;
-&lt;li&gt;2次元ジャグ配列 (1e3 * 1e3)&lt;/li&gt;
-&lt;li&gt;3次元配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
-&lt;li&gt;3次元ジャグ配列 (1e2 * 1e2 * 1e2)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="section-3"&gt;操作&lt;/h2&gt;
-&lt;p&gt;全ての要素に値を代入&lt;/p&gt;
-&lt;h2 id="section-4"&gt;スクリプト&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
-
-namespace BenchmarkSharp
-{
-    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
-    [MemoryDiagnoser]
-    public class ForLoopBenchmark
-    {
-        private const int Size1 = (int) 1e6;
-        private const int Size2 = (int) 1e3;
-        private const int Size3 = (int) 1e2;
-        private int[] _dim1;
-        private int[,] _dim2;
-        private int[][] _dim2Jagged;
-        private int[,,] _dim3;
-        private int[][][] _dim3Jagged;
-
-        [GlobalSetup]
-        public void Setup()
-        {
-            _dim1 = new int[Size1];
-            _dim2 = new int[Size2, Size2];
-            _dim3 = new int[Size3, Size3, Size3];
-            _dim2Jagged = new int[Size2][];
-            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++) _dim2Jagged[i] = new int[Size2];
-            _dim3Jagged = new int[Size3][][];
-            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
-            {
-                _dim3Jagged[i] = new int[Size3][];
-                for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
-                {
-                    _dim3Jagged[i][j] = new int[Size2];
-                }
-            }
-        }
-
-        [Benchmark]
-        public void Dim1()
-        {
-            for (var i = 0; i &amp;lt; _dim1.Length; i++) _dim1[i] = i;
-        }
-
-        [Benchmark]
-        public void Dim2()
-        {
-            for (var i = 0; i &amp;lt; _dim2.GetLength(0); i++)
-            for (var j = 0; j &amp;lt; _dim2.GetLength(1); j++)
-                _dim2[i, j] = j;
-        }
-
-        [Benchmark]
-        public void Dim2Jagged()
-        {
-            for (var i = 0; i &amp;lt; _dim2Jagged.Length; i++)
-            for (var j = 0; j &amp;lt; _dim2Jagged[i].Length; j++)
-                _dim2Jagged[i][j] = j;
-        }
-
-        [Benchmark]
-        public void Dim3()
-        {
-            for (var i = 0; i &amp;lt; _dim3.GetLength(0); i++)
-            for (var j = 0; j &amp;lt; _dim3.GetLength(1); j++)
-            for (var k = 0; k &amp;lt; _dim3.GetLength(2); k++)
-                _dim3[i, j, k] = k;
-        }
-
-        [Benchmark]
-        public void Dim3Jagged()
-        {
-            for (var i = 0; i &amp;lt; _dim3Jagged.Length; i++)
-            for (var j = 0; j &amp;lt; _dim3Jagged[i].Length; j++)
-            for (var k = 0; k &amp;lt; _dim3Jagged[i][j].Length; k++)
-                _dim3Jagged[i][j][k] = k;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="section-5"&gt;結果&lt;/h1&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Method&lt;/th&gt;
-&lt;th&gt;Job&lt;/th&gt;
-&lt;th&gt;Runtime&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Mean&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Error&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;StdDev&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Median&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Ratio&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;RatioSD&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 0&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 1&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Gen 2&lt;/th&gt;
-&lt;th style="text-align: right;"&gt;Allocated&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;565.1 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3.35 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3.14 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;566.0 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim1&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;525.8 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;10.49 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;24.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;508.9 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.92&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,366.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;47.74 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;44.65 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,357.6 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;111 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,544.6 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;230.75 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;680.38 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,060.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.64&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.13&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,514.8 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;29.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;35.16 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,522.0 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim2Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;2,003.3 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;8.14 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;7.22 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;2,001.9 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.33&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.03&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,209.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;45.24 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;40.10 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;5,201.5 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;10 B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;4,525.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;246.02 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;725.38 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;4,114.5 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.90&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.15&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td&gt;.NET Core 3.1&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;18,504.2 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;466.86 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,376.55 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;18,885.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.00&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Dim3Jagged&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td&gt;.NET Core 5.0&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;17,920.7 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;1,043.53 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;3,076.86 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;19,831.3 μs&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.98&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;0.20&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;td style="text-align: right;"&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;h1 id="section-6"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;.NET 5.0は .NET Core 3.1に比べて&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
-&lt;li&gt;2次元配列 -&amp;gt; 35%程度高速&lt;/li&gt;
-&lt;li&gt;2次元ジャグ配列 -&amp;gt; 35%程度低速&lt;/li&gt;
-&lt;li&gt;3次元配列 -&amp;gt; 10%程度高速&lt;/li&gt;
-&lt;li&gt;3次元ジャグ配列 -&amp;gt; ほぼ一緒&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;.NET 5.0において多次元配列と多次元ジャグ配列の各次元のサイズが同じ大きさであれば&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2次元 -&amp;gt; ジャグ配列のほうが40%程度高速&lt;/li&gt;
-&lt;li&gt;3次元 -&amp;gt; 配列のほうが75%程度高速&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。&lt;/p&gt;</summary>
 	</entry>
 </feed>
