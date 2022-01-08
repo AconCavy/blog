@@ -4,12 +4,198 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-01-08T14:54:24Z</updated>
+	<updated>2022-01-08T14:59:49Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20220108abc234</id>
+		<title>abc234</title>
+		<link href="https://aconcavy.github.io/blog/posts/20220108abc234" />
+		<updated>2022-01-08T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 234の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234"&gt;https://atcoder.jp/contests/abc234&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/28380748"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;F(x)&lt;/code&gt;を定義し、求める式を&lt;code&gt;G(x)&lt;/code&gt;とした時に、&lt;code&gt;G(T)&lt;/code&gt;の値が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var T = Scanner.Scan&amp;lt;int&amp;gt;();
+long F(long x) =&amp;gt; x * x + 2 * x + 3;
+long G(long x) =&amp;gt; F(F(F(x) + x) + F(F(x)));
+var answer = G(T);
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/28384115"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;すべての点の組み合わせを試すことで求めることができます。
+最後に&lt;code&gt;Sqrt&lt;/code&gt;を取ることで誤差を回避しました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var P = new (double X, double Y)[N];
+for (var i = 0; i &amp;lt; N; i++)
+{
+    var (x, y) = Scanner.Scan&amp;lt;double, double&amp;gt;();
+    P[i] = (x, y);
+}
+
+var answer = 0d;
+foreach (var (x1, y1) in P)
+{
+    foreach (var (x2, y2) in P)
+    {
+        var (dx, dy) = (x2 - x1, y2 - y1);
+        answer = Math.Max(answer, dx * dx + dy * dy);
+    }
+}
+
+answer = Math.Sqrt(answer);
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/28387201"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;K&lt;/code&gt;を2進数表記したとき、&lt;code&gt;1&lt;/code&gt;の値を&lt;code&gt;2&lt;/code&gt;にしたものが答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var K = Scanner.Scan&amp;lt;long&amp;gt;();
+var list = new List&amp;lt;long&amp;gt;();
+while (K &amp;gt; 0)
+{
+    list.Add(K &amp;amp; 1);
+    K &amp;gt;&amp;gt;= 1;
+}
+list.Reverse();
+var answer = string.Join(&amp;quot;&amp;quot;, list.Select(x =&amp;gt; x * 2));
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/28404691"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc234/submissions/28418529"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;優先度付きキューを使い、キューのサイズが&lt;code&gt;K&lt;/code&gt;個の時の最小の値がそれぞれの状態の答えとなります。
+最初は、先頭から&lt;code&gt;K&lt;/code&gt;個の値を入れたときの最小の値を表示し、それ以降は追加される値がキューの最小よりも小さい場合はK番目より小さいので無視し、大きい場合はキューを更新することで&lt;code&gt;K&lt;/code&gt;個を維持しつつ最小の値を管理できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var queue = new PriorityQueue&amp;lt;int&amp;gt;();
+for (var i = 0; i &amp;lt; K; i++)
+{
+    queue.Enqueue(P[i]);
+}
+
+Console.WriteLine(queue.Peek());
+
+for (var i = K; i &amp;lt; N; i++)
+{
+    if (queue.Peek() &amp;lt; P[i])
+    {
+        queue.Dequeue();
+        queue.Enqueue(P[i]);
+    }
+
+    var answer = queue.Peek();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/284197124"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;答えとしてあり得る値を考えたとき、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;等差が&lt;code&gt;-9&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt; (19通り)&lt;/li&gt;
+&lt;li&gt;最上位の桁が&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt; (10通り)&lt;/li&gt;
+&lt;li&gt;桁数が17桁 (17通り)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;すべて合わせて&lt;code&gt;3230(19*10*17)&lt;/code&gt;通りのうち、各桁の値が&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt;の条件をもつ値すべてを全探索しすることで、&lt;code&gt;X&lt;/code&gt;以上を最小の値を求めることができる。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var X = Scanner.Scan&amp;lt;long&amp;gt;();
+var hashset = new HashSet&amp;lt;long&amp;gt;(Enumerable.Range(0, 10).Select(x =&amp;gt; (long)x));
+for (var d = -9; d &amp;lt;= 9; d++)
+{
+    for (var i = 0L; i &amp;lt;= 9; i++)
+    {
+        var x = i;
+        for (var t = 1; t &amp;lt; 18; t++)
+        {
+            var mod = x % 10;
+            if (mod + d &amp;lt; 0 || 10 &amp;lt;= mod + d) break;
+            x *= 10;
+            x += mod + d;
+            hashset.Add(x);
+        }
+    }
+}
+
+var answer = hashset.Where(x =&amp;gt; x &amp;gt;= X).Min();
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;del&gt;E問題を解こうとしてたはずなのにF問題やってたのでコンテスト中には解けませんでした。コンテスト後に気づいて解いてみたら解けてたので悔しいです。&lt;/del&gt;&lt;/p&gt;
+&lt;h2 id="e-1"&gt;&lt;a href="https://atcoder.jp/contests/abc234/tasks/abc234_f"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc234/submissions/28417399"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;制約が&lt;code&gt;N&amp;lt;=5000&lt;/code&gt;だからdpと組み合わせ?&lt;/li&gt;
+&lt;li&gt;2^Nから重複を引く?&lt;/li&gt;
+&lt;li&gt;重複組み合わせ?&lt;/li&gt;
+&lt;li&gt;長さが&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;のそれぞれの時に数え上げ?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for(var s = 1; s &amp;lt; S.Length; s++)
+{
+    var sum = 0;
+    for(var i = 0; i &amp;lt; 26; i++)
+    {
+        sum = Math.Min(count[i], s);
+    }
+
+    // ToDo
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;解説では、&lt;code&gt;i&lt;/code&gt;番目までのアルファベットを使った時の文字列の合計が&lt;code&gt;j&lt;/code&gt;である時の組み合わせを数え上げる動的計画法でした。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Scanner.Scan&amp;lt;string&amp;gt;();
+
+var N = S.Length;
+var fact = new mint[N + 1];
+var ifact = new mint[N + 1];
+fact[0] = ifact[0] = 1;
+for (var i = 1; i &amp;lt;= N; i++)
+{
+    fact[i] = fact[i - 1] * i;
+    ifact[i] = 1 / fact[i];
+}
+
+mint Combination(int n, int k)
+{
+    if (n &amp;lt; k || n &amp;lt; 0 || k &amp;lt; 0) return 0;
+    return fact[n] * ifact[k] * ifact[n - k];
+}
+
+var count = new int[26];
+foreach (var c in S)
+{
+    count[c - 'a']++;
+}
+
+var dp = new mint[27, N + 1];
+dp[0, 0] = 1;
+
+for (var i = 0; i &amp;lt; 26; i++)
+{
+    for (var j = 0; j &amp;lt;= N; j++)
+    {
+        for (var k = 0; k &amp;lt;= Math.Min(j, count[i]); k++)
+        {
+            dp[i + 1, j] += dp[i, j - k] * Combination(j, k);
+        }
+    }
+}
+
+mint answer = 0;
+for (var i = 1; i &amp;lt;= N; i++)
+{
+    answer += dp[26, i];
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 234の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20211225abc233</id>
 		<title>abc233</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211225abc233" />
-		<updated>2022-01-08T14:53:50Z</updated>
+		<updated>2021-12-25T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 233の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -139,7 +325,7 @@ else
 		<id>https://aconcavy.github.io/blog/posts/20211224abc230</id>
 		<title>ABC230</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211224abc230" />
-		<updated>2022-01-08T14:53:50Z</updated>
+		<updated>2021-12-24T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 230の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -263,7 +449,7 @@ Console.WriteLine(answer);
 		<id>https://aconcavy.github.io/blog/posts/20211222abc231</id>
 		<title>ABC231</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211222abc231" />
-		<updated>2022-01-08T14:53:50Z</updated>
+		<updated>2021-12-22T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 231の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -475,7 +661,7 @@ Console.WriteLine(answer);
 		<id>https://aconcavy.github.io/blog/posts/20211220abc232</id>
 		<title>ABC232</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211220abc232" />
-		<updated>2022-01-08T14:53:50Z</updated>
+		<updated>2021-12-22T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -1853,77 +2039,5 @@ Template.Tests/
 &lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;&lt;a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp"&gt;競プロ用のプロジェクトテンプレート&lt;/a&gt;を整備したので、&lt;code&gt;dotnet new&lt;/code&gt;のカスタムテンプレート作成の備忘録です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20201119statiqextension</id>
-		<title>Statiqがmarkdownから生成するhtmlのカスタマイズ</title>
-		<link href="https://aconcavy.github.io/blog/posts/20201119statiqextension" />
-		<updated>2020-11-19T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;
-&lt;h1 id="section-1"&gt;方法&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Bootstrapper&lt;/code&gt;において、&lt;code&gt;Statiq.Web&lt;/code&gt;でWebサイトを生成するメソッドである&lt;code&gt;CreateWeb()&lt;/code&gt;では、markdownに関わるModuleの&lt;code&gt;RenderMarkdown&lt;/code&gt;を&lt;code&gt;Templates&lt;/code&gt;内で設定している。
-そのため、&lt;code&gt;ConfigureTemplates()&lt;/code&gt;を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
-Statiqでは、markdownを生成するために&lt;a href="https://github.com/lunet-io/markdig"&gt;markdig&lt;/a&gt;を使っているようなので、markdownの設定を追加するには&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを&lt;code&gt;Rendermarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に渡す必要がある。&lt;/p&gt;
-&lt;p&gt;今回は、&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグをレスポンシブ対応と、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグにクラスを追加するために、markdigの&lt;code&gt;BootstrapExtension&lt;/code&gt;を設定に追加する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static async Task&amp;lt;int&amp;gt; Main(string[] args) =&amp;gt;
-    await Bootstrapper.Factory
-        .CreateWeb(args)
-        .ConfigureTemplates(templates =&amp;gt;
-        {
-            // 新しい設定のModuleを作成
-            // デフォルトはUseExtensionsのみ
-            var markdownModule = new RenderMarkdown()
-                .UseExtensions()
-                .UseExtension&amp;lt;BootstrapExtension&amp;gt;() // bootstrap
-                .UseExtension&amp;lt;PrismJsExtension&amp;gt;(); // オリジナル
-            if (templates.ContainsKey(MediaTypes.Markdown)) 
-                templates[MediaTypes.Markdown].Module = markdownModule; // 既にあるならば書き換え
-            else 
-                templates.Add(MediaTypes.Markdown,
-                    new Template(ContentType.Content, Phase.Process, markdownModule)); // 無ければ追加
-        })
-        .RunAsync();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、&lt;code&gt;prism.js&lt;/code&gt;のコードブロックに行数を表示するクラスの&lt;code&gt;line-number&lt;/code&gt;を追加するために、新しく&lt;code&gt;PrismJsExtension.cs&lt;/code&gt;を作成し、&lt;code&gt;BootstrapExtension&lt;/code&gt;に倣い、&lt;code&gt;MarkdownObject&lt;/code&gt;が&lt;code&gt;CodeBlock&lt;/code&gt;であれば&lt;code&gt;line-numbers&lt;/code&gt;をクラスに追加するメソッドの&lt;code&gt;PipelineOnDocumentProcessed()&lt;/code&gt;markdigの生成パイプラインにデリゲートを追加する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;// PrismJsExtension.cs
-using Markdig;
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
-
-namespace Blog.Extensions
-{
-    public class PrismJsExtension : IMarkdownExtension
-    {
-        public void Setup(MarkdownPipelineBuilder pipeline)
-        {
-            pipeline.DocumentProcessed -= PipelineOnDocumentProcessed;
-            pipeline.DocumentProcessed += PipelineOnDocumentProcessed;
-        }
-
-        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-        {
-        }
-
-        private static void PipelineOnDocumentProcessed(MarkdownDocument document)
-        {
-            foreach (var node in document.Descendants())
-            {
-                if (node is CodeBlock)
-                {
-                    node.GetAttributes().AddClass(&amp;quot;line-numbers&amp;quot;); // 行数表示のクラスを追加
-                }
-            }
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以上の2つの設定を追加してビルドすることで、bootstrapによる&lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;タグのレスポンシブ対応、&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。&lt;/p&gt;
-&lt;h1 id="section-2"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;StatiqのBootstrapperにて&lt;code&gt;ConfigureTemplates()&lt;/code&gt;からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、&lt;code&gt;RenderMarkdown.UseExtension&amp;lt;TExtension&amp;gt;()&lt;/code&gt;に&lt;code&gt;IMarkdownExtension&lt;/code&gt;を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録&lt;/p&gt;</summary>
 	</entry>
 </feed>

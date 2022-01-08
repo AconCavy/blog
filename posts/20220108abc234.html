@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+    <title>acon.log - abc234</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="abc234">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220108abc234">
+
+    <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">abc234</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 08 January 2022</div>
+            <div class="card-text post-meta">Updated on Saturday, 08 January 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 234の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc234">https://atcoder.jp/contests/abc234</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/28380748">コンテスト提出</a></p>
+<p><code>F(x)</code>を定義し、求める式を<code>G(x)</code>とした時に、<code>G(T)</code>の値が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">var T = Scanner.Scan&lt;int&gt;();
+long F(long x) =&gt; x * x + 2 * x + 3;
+long G(long x) =&gt; F(F(F(x) + x) + F(F(x)));
+var answer = G(T);
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/28384115">コンテスト提出</a></p>
+<p>すべての点の組み合わせを試すことで求めることができます。
+最後に<code>Sqrt</code>を取ることで誤差を回避しました。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var P = new (double X, double Y)[N];
+for (var i = 0; i &lt; N; i++)
+{
+    var (x, y) = Scanner.Scan&lt;double, double&gt;();
+    P[i] = (x, y);
+}
+
+var answer = 0d;
+foreach (var (x1, y1) in P)
+{
+    foreach (var (x2, y2) in P)
+    {
+        var (dx, dy) = (x2 - x1, y2 - y1);
+        answer = Math.Max(answer, dx * dx + dy * dy);
+    }
+}
+
+answer = Math.Sqrt(answer);
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/28387201">コンテスト提出</a></p>
+<p><code>K</code>を2進数表記したとき、<code>1</code>の値を<code>2</code>にしたものが答えとなります。</p>
+<pre><code class="language-csharp line-numbers">var K = Scanner.Scan&lt;long&gt;();
+var list = new List&lt;long&gt;();
+while (K &gt; 0)
+{
+    list.Add(K &amp; 1);
+    K &gt;&gt;= 1;
+}
+list.Reverse();
+var answer = string.Join(&quot;&quot;, list.Select(x =&gt; x * 2));
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/28404691">コンテスト提出</a><br />
+<a href="https://atcoder.jp/contests/abc234/submissions/28418529">復習提出</a></p>
+<p>優先度付きキューを使い、キューのサイズが<code>K</code>個の時の最小の値がそれぞれの状態の答えとなります。
+最初は、先頭から<code>K</code>個の値を入れたときの最小の値を表示し、それ以降は追加される値がキューの最小よりも小さい場合はK番目より小さいので無視し、大きい場合はキューを更新することで<code>K</code>個を維持しつつ最小の値を管理できます。</p>
+<pre><code class="language-csharp line-numbers">var (N, K) = Scanner.Scan&lt;int, int&gt;();
+var P = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var queue = new PriorityQueue&lt;int&gt;();
+for (var i = 0; i &lt; K; i++)
+{
+    queue.Enqueue(P[i]);
+}
+
+Console.WriteLine(queue.Peek());
+
+for (var i = K; i &lt; N; i++)
+{
+    if (queue.Peek() &lt; P[i])
+    {
+        queue.Dequeue();
+        queue.Enqueue(P[i]);
+    }
+
+    var answer = queue.Peek();
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/284197124">復習提出</a></p>
+<p>答えとしてあり得る値を考えたとき、</p>
+<ul>
+<li>等差が<code>-9</code>から<code>9</code> (19通り)</li>
+<li>最上位の桁が<code>0</code>から<code>9</code> (10通り)</li>
+<li>桁数が17桁 (17通り)</li>
+</ul>
+<p>すべて合わせて<code>3230(19*10*17)</code>通りのうち、各桁の値が<code>0</code>から<code>9</code>の条件をもつ値すべてを全探索しすることで、<code>X</code>以上を最小の値を求めることができる。</p>
+<pre><code class="language-csharp line-numbers">var X = Scanner.Scan&lt;long&gt;();
+var hashset = new HashSet&lt;long&gt;(Enumerable.Range(0, 10).Select(x =&gt; (long)x));
+for (var d = -9; d &lt;= 9; d++)
+{
+    for (var i = 0L; i &lt;= 9; i++)
+    {
+        var x = i;
+        for (var t = 1; t &lt; 18; t++)
+        {
+            var mod = x % 10;
+            if (mod + d &lt; 0 || 10 &lt;= mod + d) break;
+            x *= 10;
+            x += mod + d;
+            hashset.Add(x);
+        }
+    }
+}
+
+var answer = hashset.Where(x =&gt; x &gt;= X).Min();
+Console.WriteLine(answer);
+</code></pre>
+<p><del>E問題を解こうとしてたはずなのにF問題やってたのでコンテスト中には解けませんでした。コンテスト後に気づいて解いてみたら解けてたので悔しいです。</del></p>
+<h2 id="e-1"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_f">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc234/submissions/28417399">復習提出</a></p>
+<p>コンテスト中の考察</p>
+<ul>
+<li>制約が<code>N&lt;=5000</code>だからdpと組み合わせ?</li>
+<li>2^Nから重複を引く?</li>
+<li>重複組み合わせ?</li>
+<li>長さが<code>1</code>から<code>N</code>のそれぞれの時に数え上げ?</li>
+</ul>
+<pre><code class="language-csharp line-numbers">for(var s = 1; s &lt; S.Length; s++)
+{
+    var sum = 0;
+    for(var i = 0; i &lt; 26; i++)
+    {
+        sum = Math.Min(count[i], s);
+    }
+
+    // ToDo
+}
+</code></pre>
+<p>解説では、<code>i</code>番目までのアルファベットを使った時の文字列の合計が<code>j</code>である時の組み合わせを数え上げる動的計画法でした。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
+
+var N = S.Length;
+var fact = new mint[N + 1];
+var ifact = new mint[N + 1];
+fact[0] = ifact[0] = 1;
+for (var i = 1; i &lt;= N; i++)
+{
+    fact[i] = fact[i - 1] * i;
+    ifact[i] = 1 / fact[i];
+}
+
+mint Combination(int n, int k)
+{
+    if (n &lt; k || n &lt; 0 || k &lt; 0) return 0;
+    return fact[n] * ifact[k] * ifact[n - k];
+}
+
+var count = new int[26];
+foreach (var c in S)
+{
+    count[c - 'a']++;
+}
+
+var dp = new mint[27, N + 1];
+dp[0, 0] = 1;
+
+for (var i = 0; i &lt; 26; i++)
+{
+    for (var j = 0; j &lt;= N; j++)
+    {
+        for (var k = 0; k &lt;= Math.Min(j, count[i]); k++)
+        {
+            dp[i + 1, j] += dp[i, j - k] * Combination(j, k);
+        }
+    }
+}
+
+mint answer = 0;
+for (var i = 1; i &lt;= N; i++)
+{
+    answer += dp[26, i];
+}
+
+Console.WriteLine(answer);
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220108abc234" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>
