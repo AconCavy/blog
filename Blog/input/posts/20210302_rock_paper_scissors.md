@@ -1,7 +1,7 @@
 ---
 Title: じゃんけん
-Published: 3/02/2021
-Updated: 3/02/2021
+Published: 03/02/2021
+Updated: 03/02/2021
 Tags: [csharp]
 ---
 
