@@ -232,6 +232,7 @@ foreach (var e in E1.Concat(E2).OrderBy(x =&gt; x.Cost))
 Console.WriteLine(string.Join(&quot;\n&quot;, answer.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
 </code></pre>
 <h2 id="f"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_f">問題F</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28569936">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>
 <li>桁dp?</li>
@@ -251,6 +252,89 @@ for(var i = 0; i &lt; S.Length; i++)
 }
 </code></pre>
 <p>解説では、総和と個数をそれぞれ別に数え上げるそうです。</p>
+<pre><code class="language-csharp line-numbers">const long Mod = 998244353;
+var V = Console.ReadLine().Trim();
+var N = V.Length;
+var M = Scanner.Scan&lt;int&gt;();
+var C = Console.ReadLine().Trim().Split(' ');
+
+var ok = 0;
+foreach (var c in C)
+{
+    ok |= 1 &lt;&lt; int.Parse(c);
+}
+
+var max = 1 &lt;&lt; 10;
+var count = new long[2][] { new long[max], new long[max] };
+var sum = new long[2][] { new long[max], new long[max] };
+long curr = 0;
+var digit = 0;
+
+var t = 1;
+for (var i = 0; i &lt; N; i++)
+{
+    t ^= 1;
+    var tt = t ^ 1;
+    var c = V[i] - '0';
+    Array.Fill(count[tt], 0);
+    Array.Fill(sum[tt], 0);
+    for (var j = 0; j &lt; max; j++)
+    {
+        for (var d = 0; d &lt; 10; d++)
+        {
+            var next = j | (1 &lt;&lt; d);
+            count[tt][next] += count[t][j];
+            count[tt][next] %= Mod;
+            sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
+            sum[tt][next] %= Mod;
+        }
+    }
+
+    if (i &gt; 0)
+    {
+        for (var d = 1; d &lt; 10; d++)
+        {
+            var next = 1 &lt;&lt; d;
+            count[tt][next]++;
+            count[tt][next] %= Mod;
+            sum[tt][next] += d;
+            sum[tt][next] %= Mod;
+        }
+    }
+
+    for (var d = 0; d &lt; c; d++)
+    {
+        if (i == 0 &amp;&amp; d == 0) continue;
+        var next = digit | (1 &lt;&lt; d);
+        count[tt][next]++;
+        count[tt][next] %= Mod;
+        sum[tt][next] += curr * 10 + d;
+        sum[tt][next] %= Mod;
+    }
+
+    digit |= 1 &lt;&lt; c;
+    curr = (curr * 10 + c) % Mod;
+}
+
+t ^= 1;
+var answer = 0L;
+for (var j = 0; j &lt; max; j++)
+{
+    if ((j &amp; ok) == ok)
+    {
+        answer += sum[t][j];
+        answer %= Mod;
+    }
+}
+
+if ((digit &amp; ok) == ok)
+{
+    answer += curr;
+    answer %= Mod;
+}
+
+Console.WriteLine(answer);
+</code></pre>
 
                         </div>
                         <div class="post-footer mt-5">

@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-01-15T14:33:10Z</updated>
+	<updated>2022-01-15T15:14:30Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220115abc235</id>
 		<title>abc235</title>
@@ -161,6 +161,7 @@ foreach (var e in E1.Concat(E2).OrderBy(x =&amp;gt; x.Cost))
 Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer.Select(x =&amp;gt; x ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;)));
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28569936"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;桁dp?&lt;/li&gt;
@@ -180,6 +181,89 @@ for(var i = 0; i &amp;lt; S.Length; i++)
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;解説では、総和と個数をそれぞれ別に数え上げるそうです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;const long Mod = 998244353;
+var V = Console.ReadLine().Trim();
+var N = V.Length;
+var M = Scanner.Scan&amp;lt;int&amp;gt;();
+var C = Console.ReadLine().Trim().Split(' ');
+
+var ok = 0;
+foreach (var c in C)
+{
+    ok |= 1 &amp;lt;&amp;lt; int.Parse(c);
+}
+
+var max = 1 &amp;lt;&amp;lt; 10;
+var count = new long[2][] { new long[max], new long[max] };
+var sum = new long[2][] { new long[max], new long[max] };
+long curr = 0;
+var digit = 0;
+
+var t = 1;
+for (var i = 0; i &amp;lt; N; i++)
+{
+    t ^= 1;
+    var tt = t ^ 1;
+    var c = V[i] - '0';
+    Array.Fill(count[tt], 0);
+    Array.Fill(sum[tt], 0);
+    for (var j = 0; j &amp;lt; max; j++)
+    {
+        for (var d = 0; d &amp;lt; 10; d++)
+        {
+            var next = j | (1 &amp;lt;&amp;lt; d);
+            count[tt][next] += count[t][j];
+            count[tt][next] %= Mod;
+            sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
+            sum[tt][next] %= Mod;
+        }
+    }
+
+    if (i &amp;gt; 0)
+    {
+        for (var d = 1; d &amp;lt; 10; d++)
+        {
+            var next = 1 &amp;lt;&amp;lt; d;
+            count[tt][next]++;
+            count[tt][next] %= Mod;
+            sum[tt][next] += d;
+            sum[tt][next] %= Mod;
+        }
+    }
+
+    for (var d = 0; d &amp;lt; c; d++)
+    {
+        if (i == 0 &amp;amp;&amp;amp; d == 0) continue;
+        var next = digit | (1 &amp;lt;&amp;lt; d);
+        count[tt][next]++;
+        count[tt][next] %= Mod;
+        sum[tt][next] += curr * 10 + d;
+        sum[tt][next] %= Mod;
+    }
+
+    digit |= 1 &amp;lt;&amp;lt; c;
+    curr = (curr * 10 + c) % Mod;
+}
+
+t ^= 1;
+var answer = 0L;
+for (var j = 0; j &amp;lt; max; j++)
+{
+    if ((j &amp;amp; ok) == ok)
+    {
+        answer += sum[t][j];
+        answer %= Mod;
+    }
+}
+
+if ((digit &amp;amp; ok) == ok)
+{
+    answer += curr;
+    answer %= Mod;
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</summary>
 	</entry>
