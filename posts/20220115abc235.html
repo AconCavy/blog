@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+    <link rel="icon" href="/blog/assets/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+    <title>acon.log - abc235</title>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="abc235">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220115abc235">
+
+    <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">abc235</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 15 January 2022</div>
+            <div class="card-text post-meta">Updated on Saturday, 15 January 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 235の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc235">https://atcoder.jp/contests/abc235</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28530777">コンテスト提出</a></p>
+<p>各桁を移動させて足します。</p>
+<pre><code class="language-csharp line-numbers">var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+var answer = 0;
+answer += V[0] * 100 + V[1] * 10 + V[2];
+answer += V[1] * 100 + V[2] * 10 + V[0];
+answer += V[2] * 100 + V[0] * 10 + V[1];
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28530905">コンテスト提出</a></p>
+<p>順にみて前回より大きい場合は<code>curr</code>を更新し、小さい場合は移動することができないため、<code>curr</code>を表示します。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var H = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+var curr = 0L;
+for (var i = 0; i &lt; N; i++)
+{
+    if (curr &lt; H[i])
+    {
+        curr = H[i];
+    }
+    else
+    {
+        Console.WriteLine(curr);
+        return;
+    }
+}
+
+Console.WriteLine(curr);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28535489">コンテスト提出</a></p>
+<p>クエリのたびにすべてを走査すると<code>O(N*Q)</code>となりTLEになるので、高速化する必要があります。
+あらかじめ値をキーとした出現場所をもつ辞書を作成し、その値が何番目に出現するかを保持しておき、クエリによる<code>x</code>の値が存在して、<code>k</code>の値が辞書内に存在する<code>x</code>の個数以内ならばその出現場所を表示し、それ以外の場合は<code>-1</code>を表示することで、クエリ当たり<code>O(logN)</code>で実行することができるようになります。</p>
+<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+for (var i = 0; i &lt; N; i++)
+{
+    if (!dict.ContainsKey(A[i])) dict[A[i]] = new List&lt;int&gt;();
+    dict[A[i]].Add(i + 1);
+}
+
+while (Q-- &gt; 0)
+{
+    var (x, k) = Scanner.Scan&lt;int, int&gt;();
+    k--;
+    if (dict.ContainsKey(x))
+    {
+        if (k &lt; dict[x].Count)
+        {
+            Console.WriteLine(dict[x][k]);
+        }
+        else
+        {
+            Console.WriteLine(-1);
+        }
+    }
+    else
+    {
+        Console.WriteLine(-1);
+    }
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28546896">コンテスト提出</a></p>
+<p>各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。<br />
+シフト操作によって、<code>N</code>の値より大きい数から<code>N</code>より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。<br />
+<code>Shift</code>メソッドは配列を与えられた値だけシフトする関数です。</p>
+<pre><code class="language-csharp line-numbers">var (A, N) = Scanner.Scan&lt;long, long&gt;();
+var dp = new Dictionary&lt;long, int&gt;();
+dp[1] = 0;
+
+var queue = new Queue&lt;long&gt;();
+queue.Enqueue(1);
+const int inf = (int)1e7;
+
+void Push(long curr, long next)
+{
+    if (next &gt; inf) return;
+    if (dp.ContainsKey(next)) return;
+    dp[next] = dp[curr] + 1;
+    queue.Enqueue(next);
+}
+
+while (queue.Count &gt; 0)
+{
+    var u = queue.Dequeue();
+    if (u &gt;= 10 &amp;&amp; u % 10 != 0)
+    {
+        var v = long.Parse(Shift(u.ToString().AsSpan(), 1));
+        Push(u, v);
+    }
+    Push(u, u * A);
+}
+ 
+if (dp.ContainsKey(N))
+{
+    Console.WriteLine(dp[N]);
+}
+else
+{
+    Console.WriteLine(-1);
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc235/submissions/28551552">コンテスト提出</a></p>
+<p>クエリごとに最小全域木を求めると、ソートに<code>(MlogM)</code>、クラスカル法で最小全域木を求めるために<code>O(Ea(V))</code>となり、TLEになってしまいます。
+クエリに対してグラフはそれぞれ独立なため、あらかじめクエリを先読みしてすべての辺をまとめてソートし、クラスカル法で辺を見てその辺が有効な場合、もしその辺がクエリの辺である場合はそのクエリは有効であり、そうではない場合は最小全域木としてマージしていくことで、計算量を抑えることができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, M, Q) = Scanner.Scan&lt;int, int, int&gt;();
+var E1 = new Edge[M];
+var E2 = new Edge[Q];
+for (var i = 0; i &lt; M; i++)
+{
+    var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
+    a--; b--;
+    E1[i] = new Edge(-1, a, b, c);
+}
+
+for (var i = 0; i &lt; Q; i++)
+{
+    var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
+    a--; b--;
+    E2[i] = new Edge(i, a, b, c);
+}
+
+var answer = new bool[Q];
+var dsu = new DisjointSetUnion(N);
+foreach (var e in E1.Concat(E2).OrderBy(x =&gt; x.Cost))
+{
+    if (dsu.IsSame(e.U, e.V)) continue;
+    if (e.ID == -1)
+    {
+        dsu.Merge(e.U, e.V);
+    }
+    else
+    {
+        answer[e.ID] = true;
+    }
+}
+
+Console.WriteLine(string.Join(&quot;\n&quot;, answer.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
+</code></pre>
+<h2 id="f"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_f">問題F</a></h2>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>桁dp?</li>
+<li><code>1&lt;&lt;10</code>(1024)通りの場合分け?</li>
+<li>総和の数え方がわからない...</li>
+</ul>
+<pre><code class="language-csharp line-numbers">var dp = new mint[N + 1, 1 &lt;&lt; 10];
+for(var i = 0; i &lt; S.Length; i++)
+{
+    for(var j = 0; j &lt; 1 &lt;&lt; 10; j++)
+    {
+        for(var k = 0; k &lt; 10; k++)
+        {
+            // dp[i + 1, j | (1 &lt;&lt; k)] = ?;
+        }
+    }
+}
+</code></pre>
+<p>解説では、総和と個数をそれぞれ別に数え上げるそうです。</p>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220115abc235" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきニート
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</body>
+
+</html>
