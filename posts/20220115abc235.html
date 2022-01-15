@@ -68,7 +68,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
             <h1 class="card-title">abc235</h1>
 
             <div class="card-text post-meta">Published on Saturday, 15 January 2022</div>
-            <div class="card-text post-meta">Updated on Saturday, 15 January 2022</div>
+            <div class="card-text post-meta">Updated on Sunday, 16 January 2022</div>
 
                 <div class="mt-3">
                         <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
@@ -251,31 +251,31 @@ for(var i = 0; i &lt; S.Length; i++)
     }
 }
 </code></pre>
-<p>解説では、総和と個数をそれぞれ別に数え上げるそうです。</p>
-<pre><code class="language-csharp line-numbers">const long Mod = 998244353;
-var V = Console.ReadLine().Trim();
+<p>解説では、総和と個数をそれぞれ別に数え上げるそうです。
+<code>mint</code>は、あまりをとる整数型です。</p>
+<pre><code class="language-csharp line-numbers">var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
 var N = V.Length;
 var M = Scanner.Scan&lt;int&gt;();
-var C = Console.ReadLine().Trim().Split(' ');
+var C = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
 
 var ok = 0;
 foreach (var c in C)
 {
-    ok |= 1 &lt;&lt; int.Parse(c);
+    ok |= 1 &lt;&lt; c;
 }
 
 var max = 1 &lt;&lt; 10;
-var count = new long[2][] { new long[max], new long[max] };
-var sum = new long[2][] { new long[max], new long[max] };
-long curr = 0;
-var digit = 0;
+var count = new mint[2][] { new mint[max], new mint[max] };
+var sum = new mint[2][] { new mint[max], new mint[max] };
+mint curr = 0;
+var digits = 0;
 
 var t = 1;
 for (var i = 0; i &lt; N; i++)
 {
     t ^= 1;
     var tt = t ^ 1;
-    var c = V[i] - '0';
+    var c = V[i];
     Array.Fill(count[tt], 0);
     Array.Fill(sum[tt], 0);
     for (var j = 0; j &lt; max; j++)
@@ -284,9 +284,7 @@ for (var i = 0; i &lt; N; i++)
         {
             var next = j | (1 &lt;&lt; d);
             count[tt][next] += count[t][j];
-            count[tt][next] %= Mod;
             sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
-            sum[tt][next] %= Mod;
         }
     }
 
@@ -296,24 +294,20 @@ for (var i = 0; i &lt; N; i++)
         {
             var next = 1 &lt;&lt; d;
             count[tt][next]++;
-            count[tt][next] %= Mod;
             sum[tt][next] += d;
-            sum[tt][next] %= Mod;
         }
     }
 
     for (var d = 0; d &lt; c; d++)
     {
         if (i == 0 &amp;&amp; d == 0) continue;
-        var next = digit | (1 &lt;&lt; d);
+        var next = digits | (1 &lt;&lt; d);
         count[tt][next]++;
-        count[tt][next] %= Mod;
         sum[tt][next] += curr * 10 + d;
-        sum[tt][next] %= Mod;
     }
 
-    digit |= 1 &lt;&lt; c;
-    curr = (curr * 10 + c) % Mod;
+    digits |= 1 &lt;&lt; c;
+    curr = curr * 10 + c;
 }
 
 t ^= 1;
@@ -323,14 +317,12 @@ for (var j = 0; j &lt; max; j++)
     if ((j &amp; ok) == ok)
     {
         answer += sum[t][j];
-        answer %= Mod;
     }
 }
 
-if ((digit &amp; ok) == ok)
+if ((digits &amp; ok) == ok)
 {
     answer += curr;
-    answer %= Mod;
 }
 
 Console.WriteLine(answer);

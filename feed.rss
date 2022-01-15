@@ -5,14 +5,14 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 15 Jan 2022 15:14:30 GMT</pubDate>
-		<lastBuildDate>Sat, 15 Jan 2022 15:14:30 GMT</lastBuildDate>
+		<pubDate>Sat, 15 Jan 2022 23:39:24 GMT</pubDate>
+		<lastBuildDate>Sat, 15 Jan 2022 23:39:24 GMT</lastBuildDate>
 		<item>
 			<title>abc235</title>
 			<link>https://aconcavy.github.io/blog/posts/20220115abc235</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20220115abc235</guid>
-			<pubDate>Sat, 15 Jan 2022 00:00:00 GMT</pubDate>
+			<pubDate>Sun, 16 Jan 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -183,31 +183,31 @@ for(var i = 0; i &amp;lt; S.Length; i++)
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;解説では、総和と個数をそれぞれ別に数え上げるそうです。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;const long Mod = 998244353;
-var V = Console.ReadLine().Trim();
+&lt;p&gt;解説では、総和と個数をそれぞれ別に数え上げるそうです。
+&lt;code&gt;mint&lt;/code&gt;は、あまりをとる整数型です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var V = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
 var N = V.Length;
 var M = Scanner.Scan&amp;lt;int&amp;gt;();
-var C = Console.ReadLine().Trim().Split(' ');
+var C = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
 
 var ok = 0;
 foreach (var c in C)
 {
-    ok |= 1 &amp;lt;&amp;lt; int.Parse(c);
+    ok |= 1 &amp;lt;&amp;lt; c;
 }
 
 var max = 1 &amp;lt;&amp;lt; 10;
-var count = new long[2][] { new long[max], new long[max] };
-var sum = new long[2][] { new long[max], new long[max] };
-long curr = 0;
-var digit = 0;
+var count = new mint[2][] { new mint[max], new mint[max] };
+var sum = new mint[2][] { new mint[max], new mint[max] };
+mint curr = 0;
+var digits = 0;
 
 var t = 1;
 for (var i = 0; i &amp;lt; N; i++)
 {
     t ^= 1;
     var tt = t ^ 1;
-    var c = V[i] - '0';
+    var c = V[i];
     Array.Fill(count[tt], 0);
     Array.Fill(sum[tt], 0);
     for (var j = 0; j &amp;lt; max; j++)
@@ -216,9 +216,7 @@ for (var i = 0; i &amp;lt; N; i++)
         {
             var next = j | (1 &amp;lt;&amp;lt; d);
             count[tt][next] += count[t][j];
-            count[tt][next] %= Mod;
             sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
-            sum[tt][next] %= Mod;
         }
     }
 
@@ -228,24 +226,20 @@ for (var i = 0; i &amp;lt; N; i++)
         {
             var next = 1 &amp;lt;&amp;lt; d;
             count[tt][next]++;
-            count[tt][next] %= Mod;
             sum[tt][next] += d;
-            sum[tt][next] %= Mod;
         }
     }
 
     for (var d = 0; d &amp;lt; c; d++)
     {
         if (i == 0 &amp;amp;&amp;amp; d == 0) continue;
-        var next = digit | (1 &amp;lt;&amp;lt; d);
+        var next = digits | (1 &amp;lt;&amp;lt; d);
         count[tt][next]++;
-        count[tt][next] %= Mod;
         sum[tt][next] += curr * 10 + d;
-        sum[tt][next] %= Mod;
     }
 
-    digit |= 1 &amp;lt;&amp;lt; c;
-    curr = (curr * 10 + c) % Mod;
+    digits |= 1 &amp;lt;&amp;lt; c;
+    curr = curr * 10 + c;
 }
 
 t ^= 1;
@@ -255,14 +249,12 @@ for (var j = 0; j &amp;lt; max; j++)
     if ((j &amp;amp; ok) == ok)
     {
         answer += sum[t][j];
-        answer %= Mod;
     }
 }
 
-if ((digit &amp;amp; ok) == ok)
+if ((digits &amp;amp; ok) == ok)
 {
     answer += curr;
-    answer %= Mod;
 }
 
 Console.WriteLine(answer);
