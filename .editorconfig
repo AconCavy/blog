@@ -5,12 +5,41 @@
 root = true
 # All files
 [*]
+charset = utf-8
 indent_style = space
+end_of_line = lf
+insert_final_newline = true
+
+# Shell script files
+[*.sh]
+end_of_line = lf
+indent_size = 2
+
+[*.cmd]
+end_of_line = crlf
+indent_size = 2
+
+# Markdown files
+[*.md]
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+# JSON files
+[*.json]
+indent_size = 2
+
 # Code files
 [*.{cs, csx, vb, vbx}]
 indent_size = 4
 insert_final_newline = false
 charset = utf-8-bom
+
+[*.{js, ts, css, scss}]
+indent_size = 2
+
+[*.{html, cshtml}]
+indent_size = 4
+
 ###############################
 # .NET Coding Conventions     #
 ###############################
