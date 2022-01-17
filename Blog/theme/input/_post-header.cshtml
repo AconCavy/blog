@@ -1,6 +1,7 @@
 ﻿@{
     var title = Document.GetString("Title") ?? Document.GetString("SiteTitle");
-    var description = Document.WithoutSettings().GetString("Lead") ?? Document.WithoutSettings().GetString(WebKeys.Description);
+    var description = Document.WithoutSettings().GetString("Lead") ??
+    Document.WithoutSettings().GetString(WebKeys.Description);
 }
 
 <div class="post-header">
@@ -12,15 +13,17 @@
                 <h2 class="card-text">@description</h2>
             }
 
-            <div class="card-text post-meta">Published on @Document.GetDateTime(WebKeys.Published).ToLongDateString()</div>
+            <div class="card-text post-meta">Published on @Document.GetDateTime(WebKeys.Published).ToLongDateString()
+            </div>
             <div class="card-text post-meta">Updated on @Document.GetDateTime(WebKeys.Updated).ToLongDateString()</div>
 
             @if (Document.ContainsKey("Tags"))
             {
                 <div class="mt-3">
                     @foreach (var tag in Document.GetList<string>("Tags")
-                        .Select(x => Outputs["tags.html"].First().GetChildren().FirstOrDefault(y => y.GetTitle().Equals(x, StringComparison.OrdinalIgnoreCase)))
-                        .Where(x => x != null))
+                   .Select(x => Outputs["tags.html"].First().GetChildren().FirstOrDefault(y => y.GetTitle().Equals(x,
+                   StringComparison.OrdinalIgnoreCase)))
+                   .Where(x => x != null))
                     {
                         <a href="@Context.GetLink(tag)" class="badge badge-light"> @tag.GetTitle()</a>
                     }

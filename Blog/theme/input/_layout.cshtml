@@ -4,10 +4,11 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
 img-src 'self' * data: *.w3.org; 
 child-src 'none';
 frame-src 'self' *.twitter.com;
@@ -15,53 +16,54 @@ font-src 'self' *.fontawesome.com *.typekit.net;
 connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
 script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
 
-    <link rel="icon" href="@Context.GetLink("/assets/favicon.ico")"/>
+  <link rel="icon" href="@Context.GetLink("/assets/favicon.ico")" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="@Context.GetLink("/css/style.css")" type="text/css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="@Context.GetLink("/css/style.css")" type="text/css">
 
-    <title>@Document.GetString("PageTitle")</title>
+  <title>@Document.GetString("PageTitle")</title>
 
-    @await Html.PartialAsync("_head.cshtml")
+  @await Html.PartialAsync("_head.cshtml")
 
-    <script src="@Context.GetLink("/js/adobe_fonts.js")"></script>
+  <script src="@Context.GetLink("/js/adobe_fonts.js")"></script>
 
 </head>
 
 <body>
 
-@await Html.PartialAsync("_navigation.cshtml")
+  @await Html.PartialAsync("_navigation.cshtml")
 
-@await Html.PartialAsync("_header.cshtml")
+  @await Html.PartialAsync("_header.cshtml")
 
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div id="content">
+      <div id="content">
 
-            @if (Document.GetBool("IsPost"))
-            {
-                <div class="card shadow-sm">
-                    <div class="card-body p-md-5">
-                        @await Html.PartialAsync("_post-header.cshtml")
-                        <div class="post-body">
-                            @RenderBody()
-                        </div>
-                        @await Html.PartialAsync("_post-footer.cshtml")
-                    </div>
-                </div>
-            }
-            else
-            {
+        @if (Document.GetBool("IsPost"))
+        {
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              @await Html.PartialAsync("_post-header.cshtml")
+              <div class="post-body">
                 @RenderBody()
-            }
+              </div>
+              @await Html.PartialAsync("_post-footer.cshtml")
+            </div>
+          </div>
+        }
+        else
+        {
+          @RenderBody()
+        }
 
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-@await Html.PartialAsync("_footer.cshtml")
+  @await Html.PartialAsync("_footer.cshtml")
 
-@await Html.PartialAsync("_scripts.cshtml")
+  @await Html.PartialAsync("_scripts.cshtml")
 
 </body>
 
