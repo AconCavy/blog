@@ -4,10 +4,10 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-01-23T15:05:28Z</updated>
+	<updated>2022-01-23T16:51:17Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220123abc236</id>
-		<title>abc236</title>
+		<title>ABC236</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220123abc236" />
 		<updated>2022-01-24T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
@@ -185,7 +185,7 @@ Console.WriteLine(Median());
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220115abc235</id>
-		<title>abc235</title>
+		<title>ABC235</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220115abc235" />
 		<updated>2022-01-16T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
@@ -439,7 +439,7 @@ Console.WriteLine(answer);
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220108abc234</id>
-		<title>abc234</title>
+		<title>ABC234</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220108abc234" />
 		<updated>2022-01-08T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
@@ -625,7 +625,7 @@ Console.WriteLine(answer);
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20211225abc233</id>
-		<title>abc233</title>
+		<title>ABC233</title>
 		<link href="https://aconcavy.github.io/blog/posts/20211225abc233" />
 		<updated>2021-12-25T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
@@ -1095,7 +1095,7 @@ Console.WriteLine(answer);
 		<link href="https://aconcavy.github.io/blog/posts/20211220abc232" />
 		<updated>2021-12-22T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232"&gt;https://atcoder.jp/contests/abc232&lt;/a&gt;&lt;/p&gt;
@@ -1249,7 +1249,7 @@ for (var k = 0; k &amp;lt; K; k++)
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20210302rockpaperscissors</id>

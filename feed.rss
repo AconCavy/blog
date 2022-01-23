@@ -5,10 +5,10 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 23 Jan 2022 15:05:28 GMT</pubDate>
-		<lastBuildDate>Sun, 23 Jan 2022 15:05:28 GMT</lastBuildDate>
+		<pubDate>Sun, 23 Jan 2022 16:51:17 GMT</pubDate>
+		<lastBuildDate>Sun, 23 Jan 2022 16:51:17 GMT</lastBuildDate>
 		<item>
-			<title>abc236</title>
+			<title>ABC236</title>
 			<link>https://aconcavy.github.io/blog/posts/20220123abc236</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20220123abc236</guid>
@@ -187,7 +187,7 @@ Console.WriteLine(Median());
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
 		<item>
-			<title>abc235</title>
+			<title>ABC235</title>
 			<link>https://aconcavy.github.io/blog/posts/20220115abc235</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20220115abc235</guid>
@@ -442,7 +442,7 @@ Console.WriteLine(answer);
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
 		<item>
-			<title>abc234</title>
+			<title>ABC234</title>
 			<link>https://aconcavy.github.io/blog/posts/20220108abc234</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 234の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20220108abc234</guid>
@@ -629,7 +629,7 @@ Console.WriteLine(answer);
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
 		<item>
-			<title>abc233</title>
+			<title>ABC233</title>
 			<link>https://aconcavy.github.io/blog/posts/20211225abc233</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 233の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211225abc233</guid>
@@ -1100,11 +1100,11 @@ Console.WriteLine(answer);
 		<item>
 			<title>ABC232</title>
 			<link>https://aconcavy.github.io/blog/posts/20211220abc232</link>
-			<description>&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20211220abc232</guid>
 			<pubDate>Wed, 22 Dec 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;2021年12月20日に行われた、M-SOLUTIONS プロコンオープン2021(AtCoder Beginner Contest 232)の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232"&gt;https://atcoder.jp/contests/abc232&lt;/a&gt;&lt;/p&gt;
