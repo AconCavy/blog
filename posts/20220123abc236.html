@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+  <link rel="icon" href="/blog/assets/favicon.ico" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+  <title>acon.log - abc236</title>
+
+  
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="abc236">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220123abc236">
+
+
+  <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+  <header>
+</header>
+
+
+  <div class="container">
+    <div class="row">
+      <div id="content">
+
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">abc236</h1>
+
+            <div class="card-text post-meta">Published on Sunday, 23 January 2022
+            </div>
+            <div class="card-text post-meta">Updated on Monday, 24 January 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+              <div class="post-body">
+                <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 235の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc236">https://atcoder.jp/contests/abc236</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc236/submissions/28718361">コンテスト提出</a></p>
+<p>文字列を文字の配列としてとり、指定されたインデックスの中身を入れ替えます。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().ToCharArray();
+var (A, B) = Scanner.Scan&lt;int, int&gt;();
+A--; B--;
+(S[A], S[B]) = (S[B], S[A]);
+Console.WriteLine(string.Join(&quot;&quot;, S));
+</code></pre>
+<p>タプルを使うことで、一時変数を使わずに値を入れ替えることができます。</p>
+<pre><code class="language-csharp line-numbers">var tmp = a;
+a = b;
+b = a;
+
+(a, b) = (b, a); // 上と同じ
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc236/submissions/28722017">コンテスト提出</a></p>
+<p>カードはすべて数値なので、<code>4N</code>枚のカードの総和<code>(4 * N * (N+1) / 2)</code>から渡されたカードの束Aの総和を引くことで、抜き取られたカードを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
+var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+var answer = 4L * (N * (N + 1) / 2) - A.Sum();
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc236/submissions/28725764">コンテスト提出</a></p>
+<p>文字列をキーとした辞書を作成し、急行列車が止まる駅をチェックします。時間計算量は<code>O(NlogN)</code>になります。</p>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+var S = Scanner.ScanEnumerable&lt;string&gt;().ToArray();
+var T = Scanner.ScanEnumerable&lt;string&gt;().ToArray();
+var dict = new Dictionary&lt;string, bool&gt;();
+foreach (var s in S)
+{
+    dict[s] = false;
+}
+
+foreach (var t in T)
+{
+    dict[t] = true;
+}
+
+foreach (var s in S)
+{
+    Console.WriteLine(dict[s] ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<p>ほかにも、<code>T</code>は<code>S</code>の部分列であることが制約で保証されているため、<code>S</code>を前から順に見ていったとき、次の<code>T</code>と一致した場合には<code>Yes</code>を表示し、<code>T</code>を次に進めるといった方法でも、時間計算量<code>O(N)</code>で解くことができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+var S = Scanner.ScanEnumerable&lt;string&gt;().ToArray();
+var T = Scanner.ScanEnumerable&lt;string&gt;().ToArray();
+var queue = new Queue&lt;string&gt;(T);
+foreach (var s in S)
+{
+    if (queue.TryPeek(out var t) &amp;&amp; s == t)
+    {
+        queue.Dequeue();
+        Console.WriteLine(&quot;Yes&quot;);
+    }
+    else
+    {
+        Console.WriteLine(&quot;No&quot;);
+    }
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc236/submissions/28749636">コンテスト提出</a></p>
+<p>今見ている人とスコアをもって深さ優先探索を行い、すべての人がペアを組み終わったときのスコアを最大値を求めます。遷移としては、既にペアを組んでいる場合は次の人に進み、組んでいない場合は今見ている人以降のまだペアを組んでいない人とペアを組みます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var A = new int[N * 2, N * 2];
+for (var i = 0; i &lt; N * 2 - 1; i++)
+{
+    var AA = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    for (var j = 0; j &lt; AA.Length; j++)
+    {
+        A[i, j + i + 1] = A[j + i + 1, i] = AA[j];
+    }
+}
+
+var answer = 0;
+var used = new bool[N * 2];
+
+void Dfs(int curr, int xor)
+{
+    if (curr &gt;= N * 2)
+    {
+        if (used.All(x =&gt; x))
+        {
+            answer = Math.Max(answer, xor);
+        }
+        return;
+    }
+
+    if (!used[curr])
+    {
+        for (var next = curr + 1; next &lt; N * 2; next++)
+        {
+            if (!used[next])
+            {
+                used[curr] = used[next] = true;
+                Dfs(curr + 1, xor ^ A[curr, next]);
+                used[curr] = used[next] = false;
+            }
+        }
+    }
+    else
+    {
+        Dfs(curr + 1, xor);
+    }
+}
+
+Dfs(0, 0);
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc236/submissions/28760550">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>二部探索?</li>
+<li>最初に奇数番目と偶数番目をそれぞれ分けて、もし値が増えるならそれぞれ足していくことで平均値はでそう?</li>
+<li>上の方針では、<code>1 2 4 5 7 8</code>のように番目をとるとダメになる可能性がある。</li>
+</ul>
+<p>解説では、平均と中央値ともに二部探索でした。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
+var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+
+long DP(IEnumerable&lt;long&gt; source)
+{
+    var (x, y) = (0L, 0L);
+    foreach (var v in source)
+    {
+        var z = Math.Max(x, y) + v;
+        (x, y) = (y, z);
+    }
+
+    return Math.Max(x, y);
+}
+
+double Average()
+{
+    bool F(long k) =&gt; DP(A.Select(x =&gt; x * 1000 - k)) &gt;= 0;
+    return BinarySearch((long)1e12 + 1, 0, F) / 1000d;
+}
+
+long Median()
+{
+    bool F(long k) =&gt; DP(A.Select(x =&gt; x &gt;= k ? 1L : -1L)) &gt; 0;
+    return BinarySearch((long)1e9 + 1, 0, F);
+}
+
+Console.WriteLine(Average());
+Console.WriteLine(Median());
+</code></pre>
+<p><code>BinarySearch</code>は<code>[ng, ok)</code>の間で、<code>func</code>の判定式を使って二部探索を行う関数です。</p>
+<pre><code class="language-csharp line-numbers">public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+</code></pre>
+
+              </div>
+              <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220123abc236" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきこもり
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+</body>
+
+</html>
