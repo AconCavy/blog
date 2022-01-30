@@ -5,16 +5,251 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 23 Jan 2022 16:51:17 GMT</pubDate>
-		<lastBuildDate>Sun, 23 Jan 2022 16:51:17 GMT</lastBuildDate>
+		<pubDate>Sun, 30 Jan 2022 16:52:56 GMT</pubDate>
+		<lastBuildDate>Sun, 30 Jan 2022 16:52:56 GMT</lastBuildDate>
+		<item>
+			<title>ABC237</title>
+			<link>https://aconcavy.github.io/blog/posts/20220130abc237</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 237の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20220130abc237</guid>
+			<pubDate>Mon, 31 Jan 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 237の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237"&gt;https://atcoder.jp/contests/ABC237&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28899214"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;C#含めほとんどの言語では、&lt;code&gt;1 &amp;lt;&amp;lt; x&lt;/code&gt;のようなビットシフト計算が備わっており、2の&lt;code&gt;x&lt;/code&gt;乗を表現することができます。
+例えば、&lt;code&gt;1 &amp;lt;&amp;lt; 2&lt;/code&gt;は、1を2進数で表すと&lt;code&gt;1&lt;/code&gt;であり、2つ左にシフトすると&lt;code&gt;100&lt;/code&gt;になって、10進数では&lt;code&gt;4&lt;/code&gt;を表現します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;long&amp;gt;();
+const long inf = 1L &amp;lt;&amp;lt; 31;
+Console.WriteLine(-inf &amp;lt;= N &amp;amp;&amp;amp; N &amp;lt; inf ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28909504"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;転置行列は、&lt;code&gt;i&lt;/code&gt;行&lt;code&gt;j&lt;/code&gt;列目を&lt;code&gt;j&lt;/code&gt;行&lt;code&gt;i&lt;/code&gt;列目にしたものなので、そのまま添え字を入れ替えたものを結果として出力します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var A = new int[H, W];
+for (var i = 0; i &amp;lt; H; i++)
+{
+    var AA = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    for (var j = 0; j &amp;lt; W; j++)
+    {
+        A[i, j] = AA[j];
+    }
+}
+
+var B = new int[W, H];
+for (var i = 0; i &amp;lt; H; i++)
+{
+    for (var j = 0; j &amp;lt; W; j++)
+    {
+        B[j, i] = A[i, j];
+    }
+}
+
+Printer.Print2D(B, &amp;quot; &amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28919221"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;あらかじめ、文字列前方と後方の連続する&lt;code&gt;a&lt;/code&gt;を無視した文字列が回文であれば元の文が回文である可能性があります。
+このとき、文字列前方の連続する&lt;code&gt;a&lt;/code&gt;の個数が文字列後方の連続する&lt;code&gt;a&lt;/code&gt;の個数以下場合は、足りない&lt;code&gt;a&lt;/code&gt;を前方に追加することで回文にすることができますが、それ以外(前方&amp;gt;後方)の場合は後方に&lt;code&gt;a&lt;/code&gt;を追加することはできないので、回文にすることはできません。
+例えば、&lt;code&gt;aabcbaaa&lt;/code&gt;では、前方と後方の連続した&lt;code&gt;a&lt;/code&gt;を無視すると&lt;code&gt;bcb&lt;/code&gt;となり回文になり、前方(2)は後方(3)以下なので、回文にすることができます。一方で、
+&lt;code&gt;aaabcbaa&lt;/code&gt;では、同様に無視すると&lt;code&gt;bcb&lt;/code&gt;となり回文になりますが、前方(3)は後方(2)より大きいため、回文にすることはできません。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Scanner.ScanLine();
+var (l, r) = (0, S.Length - 1);
+while (r &amp;gt;= 0 &amp;amp;&amp;amp; S[r] == 'a') r--;
+while (l &amp;lt; r &amp;amp;&amp;amp; S[l] == 'a') l++;
+
+var lc = l;
+var rc = S.Length - r - 1;
+if (lc &amp;gt; rc)
+{
+    Console.WriteLine(&amp;quot;No&amp;quot;);
+    return;
+}
+
+var t = S[l..(r + 1)];
+var answer = t == new string(t.Reverse().ToArray());
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28928816"&gt;コンテスト提出&lt;/a&gt;
+&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28958803"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;数字をノードとしてみたときに、0をルートとするツリーを作成し、深さ優先探索の通りがかり順(左部分木-&amp;gt;自分-&amp;gt;右部分木)で見ていった結果が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var S = Scanner.ScanLine();
+var nodes = new Node[N + 1];
+for (var i = 0; i &amp;lt;= N; i++)
+{
+    nodes[i] = new Node();
+}
+ 
+foreach (var (c, i) in S.Select((x, i) =&amp;gt; (x, i)))
+{
+    if (c == 'L')
+    {
+        nodes[i].Left = i + 1;
+    }
+    else
+    {
+        nodes[i].Right = i + 1;
+    }
+}
+ 
+var answer = new List&amp;lt;int&amp;gt;();
+ 
+void Dfs(int curr)
+{
+    if (curr &amp;lt; 0) return;
+    Dfs(nodes[curr].Left);
+    answer.Add(curr);
+    Dfs(nodes[curr].Right);
+}
+ 
+Dfs(0);
+ 
+Console.WriteLine(string.Join(&amp;quot; &amp;quot;, answer));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Node&lt;/code&gt;は左側と右側を持つクラスです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public class Node
+{
+    public int Left { get; set; } = -1;
+    public int Right { get; set; } = -1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Deque&lt;/code&gt;を使った場合は、文字列を逆順から見て、反対側に追加すればよいです。
+C#には&lt;code&gt;Deque&lt;/code&gt;というクラスはありませんが、&lt;code&gt;LinkedList&amp;lt;T&amp;gt;&lt;/code&gt;という連結リストがあるため、それを使うことで代用することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var S = Scanner.ScanLine();
+var deq = new Deque&amp;lt;int&amp;gt;();
+deq.PushBack(N);
+foreach (var (c, i) in S.Select((x, i) =&amp;gt; (x, i)).Reverse())
+{
+    if (c == 'L') deq.PushBack(i);
+    else deq.PushFront(i);
+}
+ 
+Console.WriteLine(string.Join(&amp;quot; &amp;quot;, deq));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28933145"&gt;コンテスト提出&lt;/a&gt;
+&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28962115"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;頂点&lt;code&gt;U&lt;/code&gt;と頂点&lt;code&gt;V&lt;/code&gt;をつなぐ辺にそれぞれ重みを付けてグラフを作成したときの、拡張ダイクストラ法で解くことを考えます。
+楽しさの変化量を辺の重みとしてみたとき、&lt;code&gt;H&lt;/code&gt;を頂点の高さ、&lt;code&gt;d&lt;/code&gt;を高さの差の絶対値とすると、&lt;code&gt;H[U]&amp;lt;H[V]&lt;/code&gt;であれば&lt;code&gt;U-&amp;gt;V&lt;/code&gt;の辺は&lt;code&gt;d&lt;/code&gt;の重み、&lt;code&gt;H[U]&amp;gt;H[V}&lt;/code&gt;であれば&lt;code&gt;U-&amp;gt;V&lt;/code&gt;の辺は&lt;code&gt;-2d&lt;/code&gt;の重み、&lt;code&gt;H[U]=H[V]&lt;/code&gt;であれば&lt;code&gt;0&lt;/code&gt;の重みをそれぞれの辺につけます。&lt;br /&gt;
+その重み付きグラフを用いて、頂点&lt;code&gt;0&lt;/code&gt;から優先度付きキューを用いて幅優先探索を行い、各頂点のコストを最大化したときの最大の値が答えとなります。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;嘘解放でした。この実装では、&lt;code&gt;after_contest&lt;/code&gt;でTLEになります。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://twitter.com/kyopro_friends/status/1487807336202735617"&gt;競技プログラミングをするフレンズ E問題after_contest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;楽しさの減少を標高差のまま考えたとき、&lt;code&gt;U-&amp;gt;V&lt;/code&gt;に至る経路がどうであれ、楽しさは&lt;code&gt;H[U]-H[V]&lt;/code&gt;を得ることができます。楽しさの減少が標高差の2倍のときは、&lt;code&gt;U-&amp;gt;V&lt;/code&gt;に至る経路のうち&lt;code&gt;H[X]&amp;lt;H[Y]&lt;/code&gt;の移動を行ったときに、楽しさが&lt;code&gt;H[X]-H[Y]&lt;/code&gt;減少します。言い換えれば、減少分を辺のコストとしたときの単一始点最短経路問題として考えることができます。
+そして、各頂点の得られる楽しさから最小化された頂点のコストを引くことで、頂点に対する楽しさの最大化を行うことができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var H = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+var G = new List&amp;lt;(int, long)&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;(int, long)&amp;gt;()).ToArray();
+for (var i = 0; i &amp;lt; M; i++)
+{
+    var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    u--; v--;
+    G[u].Add((v, Math.Max(0, H[v] - H[u])));
+    G[v].Add((u, Math.Max(0, H[u] - H[v])));
+}
+
+var costs = new long[N];
+Array.Fill(costs, long.MaxValue);
+costs[0] = 0;
+var queue = new PriorityQueue&amp;lt;(int U, long Cost)&amp;gt;((x, y) =&amp;gt; x.Cost.CompareTo(y.Cost));
+queue.Enqueue((0, 0));
+
+while (queue.Count &amp;gt; 0)
+{
+    var (u, cu) = queue.Dequeue();
+    if (costs[u] &amp;lt; cu) continue;
+    foreach (var (v, cv) in G[u])
+    {
+        var c = costs[u] + cv;
+        if (costs[v] &amp;lt;= c) continue;
+        costs[v] = c;
+        queue.Enqueue((v, c));
+    }
+}
+
+var answer = 0L;
+for (var i = 0; i &amp;lt; N; i++)
+{
+    answer = Math.Max(answer, H[0] - H[i] - costs[i]);
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2022年1月31日現在のAtCoderの&lt;code&gt;C#(.NET Core 3.1.201)&lt;/code&gt;では&lt;code&gt;PriorityQueue&lt;/code&gt;は標準ライブラリにないため、自作する必要があります。
+&lt;code&gt;C#(.NET 6.0)&lt;/code&gt;以降であれば、&lt;code&gt;PriorityQueue&lt;/code&gt;が標準ライブラリに追加されるので、言語アップデートを待ちましょう。&lt;/p&gt;
+&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC237/submissions/28958599"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NMMMのdp?&lt;/li&gt;
+&lt;li&gt;部分増加列&lt;code&gt;a1&lt;/code&gt;、&lt;code&gt;a2&lt;/code&gt;、&lt;code&gt;a3&lt;/code&gt;を固定したときの&lt;code&gt;a1&lt;/code&gt;と&lt;code&gt;a2&lt;/code&gt;の間の数、&lt;code&gt;a2&lt;/code&gt;と&lt;code&gt;a3&lt;/code&gt;の間の数、&lt;code&gt;a3&lt;/code&gt;以降の数の組み合わせの数え上げ?&lt;/li&gt;
+&lt;li&gt;www(a1)xxx(a2)yyy(a3)zzzのような数列の時、www:1通り、xxx:長さc1、yyy:長さc2、zzz:長さc3で組み合わせ?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for(var a1 = 1; a1 &amp;lt;= M; a1++)
+for(var a2 = a1 + 1; a1 + a2 &amp;lt;= M; a2++)
+for(var a3 = a2 + 1; a1 + a2 + a3 &amp;lt;= M; a3++)
+for(var c1 = 0; c1 &amp;lt;= N; c1++)
+for(var c2 = 0; c1 + c2 &amp;lt;= N; c2++)
+{
+    var c3 = N - 3 - c1 - c2;
+    // 組み合わせ?
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;解説では、部分増加列の最後尾として考えられる最小値の数列の状態数を求めるdpでした。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dp[i][a1][a2][a3]&lt;/code&gt; := 長さが&lt;code&gt;i&lt;/code&gt;で、長さ&lt;code&gt;j&lt;/code&gt;の部分増加列の最後尾として考えられる最小値が&lt;code&gt;aj&lt;/code&gt;であるような数列の状態数&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var dp = new mint[N + 1, M + 2, M + 2, M + 2];
+dp[0, M + 1, M + 1, M + 1] = 1;
+for (var i = 0; i &amp;lt; N; i++)
+{
+    for (var a1 = 0; a1 &amp;lt;= M + 1; a1++)
+    {
+        for (var a2 = 0; a2 &amp;lt;= M + 1; a2++)
+        {
+            for (var a3 = 0; a3 &amp;lt;= M + 1; a3++)
+            {
+                for (var x = 1; x &amp;lt;= M; x++)
+                {
+                    if (x &amp;lt;= a1) dp[i + 1, x, a2, a3] += dp[i, a1, a2, a3];
+                    else if (x &amp;lt;= a2) dp[i + 1, a1, x, a3] += dp[i, a1, a2, a3];
+                    else if (x &amp;lt;= a3) dp[i + 1, a1, a2, x] += dp[i, a1, a2, a3];
+                }
+            }
+        }
+    }
+}
+
+mint answer = 0;
+for (var a1 = 1; a1 &amp;lt;= M; a1++)
+{
+    for (var a2 = a1 + 1; a2 &amp;lt;= M; a2++)
+    {
+        for (var a3 = a2 + 1; a3 &amp;lt;= M; a3++)
+        {
+            answer += dp[N, a1, a2, a3];
+        }
+    }
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC236</title>
 			<link>https://aconcavy.github.io/blog/posts/20220123abc236</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 236の復習記事です。&lt;/p&gt;</description>
 			<guid>https://aconcavy.github.io/blog/posts/20220123abc236</guid>
 			<pubDate>Mon, 24 Jan 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 236の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc236"&gt;https://atcoder.jp/contests/abc236&lt;/a&gt;&lt;/p&gt;
@@ -1537,425 +1772,6 @@ jobs:
 &lt;li&gt;タグからリリース/プレリリースを判断できるようにした。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;NuGetのパッケージ作成は怖くない！&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>MagicOnionに入門した</title>
-			<link>https://aconcavy.github.io/blog/posts/20210103magiconion</link>
-			<description>&lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20210103magiconion</guid>
-			<pubDate>Wed, 24 Feb 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;友人がC#のgRPCライブラリの&lt;code&gt;MagicOnion&lt;/code&gt;の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。&lt;/p&gt;
-&lt;p&gt;リポジトリは&lt;a href="https://github.com/AconCavy/practice-magiconion"&gt;こちら&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="magiconion"&gt;MagicOnion&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Cysharp/MagicOnion"&gt;MagicOnion&lt;/a&gt;は、共通のインターフェースを介してクライアントとサーバーで手続きを呼び合う技術の&lt;a href="https://github.com/grpc/grpc"&gt;gRPC&lt;/a&gt;をC#用に最適化した、リアルタイム通信ライブラリです。&lt;/p&gt;
-&lt;p&gt;ASP.NET CoreにもgRPCのテンプレートは存在しますが、そちらは&lt;code&gt;proto&lt;/code&gt;ファイルを作成し、そのファイルにインターフェースを定義を行います。一方MagicOnionの場合は、C#の&lt;code&gt;interface&lt;/code&gt;を定義すればめんどくさいことはMagicOnion側でいろいろやってくれるため、クライアントとサーバーでどちらもC#を利用する場合には一つのソースを使いまわすことができたりと嬉しいことが多いです。そのため、クライアントはUnity、サーバーはASP.NET Coreを使うモバイルゲームなどのプロジェクトでよく使われるそうです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;環境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Unity 2019.4.17f1&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/Cysharp/MagicOnion/releases/tag/4.0.4"&gt;MagicOnion 4.0.4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85"&gt;MessagePack for C# 2.2.85&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;gRPC (&lt;a href="https://packages.grpc.io/archive/2020/12/d7b70c3ea25c48ffdae7b8bd3c757594d4fff4b6-2be69c7e-9b25-4273-a7d4-3840da2d6723/csharp/grpc_unity_package.2.35.0-dev202012021242.zip"&gt;grpc_unity_package.2.35.0-dev202012021242&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id="section-2"&gt;作ってみる1&lt;/h1&gt;
-&lt;p&gt;MagicOnionを使うにあたって、ASP.NET Coreでのサーバー、Unityでのクライアント、共有Apiの3つのプロジェクトを構成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;MagicOnionSample/
-  |- MagicOnionSample.Server/
-  |- MagicOnionSample.Shared/
-  |- MagicOnionSample.Unity/
-  |
-  |- MagicOnionSample.sln
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;MagicOnionSample.Server&lt;/code&gt;はASP.NET CoreのgRPCテンプレートで作成しました。
-&lt;code&gt;MagicOnionSample.Unity&lt;/code&gt;にはUnityプロジェクトを作成します。
-&lt;code&gt;MagicOnionSample.sln&lt;/code&gt;には&lt;code&gt;MagicOnionSample.Server&lt;/code&gt;と&lt;code&gt;MagicOnionSample.Shared&lt;/code&gt;を追加します。&lt;/p&gt;
-&lt;h2 id="section-3"&gt;クライアント側の準備&lt;/h2&gt;
-&lt;p&gt;プロジェクトを作成したら、はじめに&lt;code&gt;Project Settings&lt;/code&gt;を以下に変更します。&lt;/p&gt;
-&lt;div class="table-responsive"&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="text-align: center;"&gt;Item&lt;/th&gt;
-&lt;th style="text-align: center;"&gt;Value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;Scripting Backend&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;Mono&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;Api Compatibility Level&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;.NET 4.x&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;Allow unsafe code&lt;/code&gt;&lt;/td&gt;
-&lt;td style="text-align: center;"&gt;&lt;code&gt;True&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;p&gt;次に、MagicOnionとMessagePackの&lt;code&gt;unitypackage&lt;/code&gt;をプロジェクトにインポートします。
-また、gRPCのパッケージから、&lt;code&gt;Google.Protobuf&lt;/code&gt;、&lt;code&gt;Grpc.Core&lt;/code&gt;、 &lt;code&gt;Grpc.Core.Api&lt;/code&gt;の3つのフォルダを&lt;code&gt;Assets/Plugins/&lt;/code&gt;にインポートします。&lt;/p&gt;
-&lt;p&gt;MagicOnionとMessagePackのバージョンによってはUnityのコンパイルエラーは発生しませんが、MagicOnion 4.0.4とMessagePack 2.2.85の場合はMagicOnion側でコンパイルエラーが発生してしまいます。MessagePack 2.2.85からMessagePackの属性が含まれている名前空間が&lt;code&gt;MessagePack&lt;/code&gt;から&lt;code&gt;MessagePack.Annotations&lt;/code&gt;に変更されているようなので、&lt;code&gt;Assets/Scripts/MagicOnion.Client/MagicOnion.Client.asmdef&lt;/code&gt;の &lt;code&gt;AssemblyDefinition References&lt;/code&gt;に&lt;code&gt;MessagePack.Annotations&lt;/code&gt;の参照を追加することでコンパイルエラーを解消できます。&lt;/p&gt;
-&lt;h2 id="section-4"&gt;サーバー側の準備&lt;/h2&gt;
-&lt;p&gt;ASP.NET CoreのgRPCテンプレートで作成した場合、以下のような構成でプロジェクトが作成されます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;MagicOnionSample
-  |-MagicOnionSample.Server
-      |- Properties/
-      |    |- launchSettings.json
-      |- Protos/
-      |    |- greet.proto
-      |- Services/
-      |    |- GreeterService.cs
-      |- appsettings.json
-      |- appsettings.development.json
-      |- Program.cs
-      |- Startup.cs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この状態から、&lt;code&gt;Protos&lt;/code&gt;ディレクトリと、&lt;code&gt;GreeterService.cs&lt;/code&gt;を削除します。
-次に&lt;code&gt;Startup.cs&lt;/code&gt;の&lt;code&gt;GenericHost&lt;/code&gt;の構成にMagicOnionを追加します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace MagicOnionSample.Server
-{
-    public class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddGrpc();
-            services.AddMagicOnion(); // Here
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseRouting();
-            app.UseEndpoints(endpoints =&amp;gt;
-            {
-                endpoints.MapMagicOnionService(); // Here
-                endpoints.MapGet(&amp;quot;/&amp;quot;,
-                    async context =&amp;gt;
-                    {
-                        await context.Response.WriteAsync(
-                            &amp;quot;Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909&amp;quot;);
-                    });
-            });
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、今回は&lt;code&gt;localhost&lt;/code&gt;で通信を行うので、&lt;code&gt;appsettings.development.json&lt;/code&gt;に以下の設定を追加します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-json line-numbers"&gt;...
-&amp;quot;Kestrel&amp;quot;: {
-    &amp;quot;Endpoints&amp;quot;: {
-      &amp;quot;Grpc&amp;quot;: {
-        &amp;quot;Url&amp;quot;: &amp;quot;http://localhost:5000&amp;quot;,
-        &amp;quot;Protocols&amp;quot;: &amp;quot;Http2&amp;quot;
-      },
-      &amp;quot;Https&amp;quot;: {
-        &amp;quot;Url&amp;quot;: &amp;quot;https://localhost:5001&amp;quot;,
-        &amp;quot;Protocols&amp;quot;: &amp;quot;Http1AndHttp2&amp;quot;
-      },
-      &amp;quot;Http&amp;quot;: {
-        &amp;quot;Url&amp;quot;: &amp;quot;http://localhost:5002&amp;quot;,
-        &amp;quot;Protocols&amp;quot;: &amp;quot;Http1&amp;quot;
-      }
-    }
-  }
-...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、&lt;code&gt;Program.cs&lt;/code&gt;の&lt;code&gt;CreateHostBuilder&lt;/code&gt;に&lt;code&gt;Kestrel&lt;/code&gt;とHttp2を使うための設定を追加します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Hosting;
-
-namespace MagicOnionSample.Server
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =&amp;gt; webBuilder
-                    .UseKestrel(options =&amp;gt; options.ConfigureEndpointDefaults(endpointOptions =&amp;gt;
-                        endpointOptions.Protocols = HttpProtocols.Http2))
-                    .UseStartup&amp;lt;Startup&amp;gt;());
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Httpsで通信を行う場合は、&lt;a href="https://docs.microsoft.com/ja-jp/aspnet/core/security/enforcing-ssl?view=aspnetcore-5.0&amp;amp;tabs=visual-studio"&gt;こちら&lt;/a&gt;を参照してください。&lt;/p&gt;
-&lt;h2 id="api"&gt;共有Apiの定義&lt;/h2&gt;
-&lt;p&gt;Unityに戻り、MagicOnionで使用する&lt;code&gt;interface&lt;/code&gt;やモデルクラス類を作成します。
-今回は&lt;code&gt;Assets/MagicOnionSample/Scripts/Shared/&lt;/code&gt;に共有Apiを構成します。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Shared&lt;/code&gt;ディレクトリに&lt;code&gt;ISampleService.cs&lt;/code&gt;を作成し,&lt;code&gt;string&lt;/code&gt;の値を渡すと挨拶の&lt;code&gt;string&lt;/code&gt;を返す&lt;code&gt;interface&lt;/code&gt;を定義します。また、この&lt;code&gt;interface&lt;/code&gt;には&lt;code&gt;IService&amp;lt;T&amp;gt;&lt;/code&gt;もあわせて定義します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using MagicOnion;
-
-namespace MagicOnionSample.Shared
-{
-    public interface ISampleService : IService&amp;lt;ISampleService&amp;gt;
-    {
-        UnaryResult&amp;lt;string&amp;gt; GreetAsync(string name);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-5"&gt;クライアント側の実装&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Shared&lt;/code&gt;ディレクトリでは、クライアントとサーバーで共有できるクラスやインターフェースのみを持たせるために、&lt;code&gt;Shared&lt;/code&gt;ディレクトリとは別に、&lt;code&gt;Assets/MagicOnionSample/Scripts/Unity/&lt;/code&gt;を作成し、名前空間と実装を分離します。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Unity&lt;/code&gt;ディレクトリに&lt;code&gt;SampleEntryPoint.cs&lt;/code&gt;を作成し、サーバーにローカルホストでアクセスする実装をします。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;MagicOnionClient&lt;/code&gt;から&lt;code&gt;ISampleService&lt;/code&gt;のエンドポイントに対して、上記で定義した&lt;code&gt;GreetAsync&lt;/code&gt;を&lt;code&gt;interface&lt;/code&gt;経由で呼び、結果を&lt;code&gt;Debug.Log&lt;/code&gt;に表示させます。
-&lt;code&gt;interface&lt;/code&gt;経由で呼ぶことで、クライアント側は実装を気にする必要がありません。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
-using Grpc.Core;
-using MagicOnion.Client;
-using MagicOnionSample.Shared;
-using UnityEngine;
-
-namespace MagicOnionSample.Unity
-{
-    public class SampleEntryPoint : MonoBehaviour
-    {
-        public string host = &amp;quot;localhost&amp;quot;;
-        public int port = 5000;
-
-        public string user = &amp;quot;Foo&amp;quot;;
-        public string room = &amp;quot;Bar&amp;quot;;
-
-        private Channel _channel;
-
-        private async Task Start()
-        {
-            _channel = new Channel(host, port, ChannelCredentials.Insecure);
-
-            var client = MagicOnionClient.Create&amp;lt;ISampleService&amp;gt;(_channel);
-            var greet = await client.GreetAsync(user);
-            Debug.Log(greet);
-        }
-
-        private async Task OnDestroy()
-        {
-            await _channel.ShutdownAsync();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;作成後、UnityのHierarchyに適当なGameObjectを作成し、&lt;code&gt;SampleEntryPoint&lt;/code&gt;を付与します。&lt;/p&gt;
-&lt;h2 id="api-1"&gt;サーバー側における共有Api&lt;/h2&gt;
-&lt;p&gt;Unityがコンパイルできるスクリプトは&lt;code&gt;Assets/&lt;/code&gt;以下にあるものに限るため、サーバー側で共有Api用のプロジェクトを作成すると不整合がおきてしまうかもしれません。そのため、&lt;code&gt;MagicOnionSample.Shared&lt;/code&gt;のプロジェクトでは、中身を実際には持たずに、上記で作成したUnityプロジェクト内の&lt;code&gt;Assets/MagicOnionSample/Scripts/Shared&lt;/code&gt;ディレクトリにあるスクリプトを参照することでサーバー側でも共有Apiとして使えるようにします。&lt;/p&gt;
-&lt;p&gt;そのため、&lt;code&gt;MagicOnionSample.Shared&lt;/code&gt;のディレクトリ構成は以下のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;MagicOnionSample
-  |-MagicOnionSample.Shared
-      |-MagicOnionSample.Shared.csproj
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;nugetから&lt;code&gt;MagicOnion&lt;/code&gt;、&lt;code&gt;MagicOnion.Abstractions&lt;/code&gt;、&lt;code&gt;MessagePack&lt;/code&gt;、&lt;code&gt;MessagePack.UnityShims&lt;/code&gt;をインストールします。
-&lt;code&gt;MessagePack.UnityShims&lt;/code&gt;をインストールすることで、UnityEngineのApiを利用することができるため、&lt;code&gt;Vector3&lt;/code&gt;や&lt;code&gt;Quatarnion&lt;/code&gt;などを使う場合はインストールします。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;Compile Include=&amp;quot;path/to/file&amp;quot;/&amp;gt;&lt;/code&gt;を定義することで、指定したパスのファイルをコンパイルに含めることができます。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;csproj&lt;/code&gt;は以下のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk=&amp;quot;Microsoft.NET.Sdk&amp;quot;&amp;gt;
-
-    &amp;lt;PropertyGroup&amp;gt;
-        &amp;lt;TargetFramework&amp;gt;netcoreapp3.1&amp;lt;/TargetFramework&amp;gt;
-    &amp;lt;/PropertyGroup&amp;gt;
-
-    &amp;lt;ItemGroup&amp;gt;
-        &amp;lt;PackageReference Include=&amp;quot;MagicOnion&amp;quot; Version=&amp;quot;4.0.4&amp;quot; /&amp;gt;
-        &amp;lt;PackageReference Include=&amp;quot;MagicOnion.Abstractions&amp;quot; Version=&amp;quot;4.0.4&amp;quot; /&amp;gt;
-        &amp;lt;PackageReference Include=&amp;quot;MessagePack&amp;quot; Version=&amp;quot;2.2.85&amp;quot; /&amp;gt;
-        &amp;lt;PackageReference Include=&amp;quot;MessagePack.UnityShims&amp;quot; Version=&amp;quot;2.2.85&amp;quot; /&amp;gt;
-    &amp;lt;/ItemGroup&amp;gt;
-
-    &amp;lt;ItemGroup&amp;gt;
-        &amp;lt;Compile Include=&amp;quot;../MagicOnionSample.Unity/Assets/MagicOnionSample/Scripts/Shared/**/*.cs&amp;quot; /&amp;gt;
-    &amp;lt;/ItemGroup&amp;gt;
-
-&amp;lt;/Project&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-6"&gt;サーバー側の実装&lt;/h2&gt;
-&lt;p&gt;上記で準備した共有Apiのプロジェクトをサーバー側のプロジェクトで参照することで、Unity上で定義した&lt;code&gt;ISampleService&lt;/code&gt;を利用することができるようになります。
-&lt;code&gt;SampleService.cs&lt;/code&gt;を作成し、&lt;code&gt;ISampleService&lt;/code&gt;の実装を行います。
-簡単な文字列を返すように実装しました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System;
-using MagicOnion;
-using MagicOnion.Server;
-using MagicOnionSample.Shared;
-
-namespace MagicOnionSample.Server.Services
-{
-    public class SampleService : ServiceBase&amp;lt;ISampleService&amp;gt;, ISampleService
-    {
-        public async UnaryResult&amp;lt;string&amp;gt; GreetAsync(string name)
-        {
-            await Console.Out.WriteLineAsync(name);
-            return $&amp;quot;Welcome {name}!&amp;quot;;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-7"&gt;動作確認&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;dotnet run&lt;/code&gt;コマンド等でサーバーを起動し、&lt;code&gt;SampleEntryPoint&lt;/code&gt;が適当なGameObjectに付与されているのを確認した後にUnityを実行し、UnityのConsoleに&lt;code&gt;Welcome Foo!&lt;/code&gt;と表示されたら成功です。
-以上で、サーバーとクライアントの1対1のApiコールができました。&lt;/p&gt;
-&lt;h1 id="section-8"&gt;作ってみる2&lt;/h1&gt;
-&lt;p&gt;前の項では、サーバーとクライアントの1対1のApiコールを実装しました。次に、サーバーとクライアントの1対多のApiコールを実装します。
-マルチプレイでプレイヤーの座標をリアルタイムで同期させるといったことが用途としてあげられます。&lt;/p&gt;
-&lt;p&gt;今回は、プレイヤーが部屋に参加したかどうかを知らせるApiを実装します。&lt;/p&gt;
-&lt;h2 id="api-2"&gt;共有Apiの定義&lt;/h2&gt;
-&lt;p&gt;初めに、&lt;code&gt;Player&lt;/code&gt;を一つのモデルとして管理するために、&lt;code&gt;Shared&lt;/code&gt;ディレクトリに&lt;code&gt;Player.cs&lt;/code&gt;を作成します。
-&lt;code&gt;MessagePackObject&lt;/code&gt;の属性をクラスや構造体に付与することで、MessagePackがシリアライズできるようになり、&lt;code&gt;Key&lt;/code&gt;によってそれぞれのプロパティを管理します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using MessagePack;
-
-namespace MagicOnionSample.Shared
-{
-    [MessagePackObject]
-    public class Player
-    {
-        [Key(0)] public string Name { get; set; }
-        [Key(1)] public string Room { get; set; }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次に、&lt;code&gt;Shared&lt;/code&gt;ディレクトリに&lt;code&gt;ISampleHubReceiver.cs&lt;/code&gt;を作成します。
-&lt;code&gt;Player&lt;/code&gt;が部屋に参加したことを知らせるコールバークとしての&lt;code&gt;interface&lt;/code&gt;を定義します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;namespace MagicOnionSample.Shared
-{
-    public interface ISampleHubReceiver
-    {
-        void OnJoin(Player player);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、&lt;code&gt;Shared&lt;/code&gt;ディレクトリに&lt;code&gt;ISampleHub.cs&lt;/code&gt;を作成します。
-&lt;code&gt;name&lt;/code&gt;と&lt;code&gt;room&lt;/code&gt;を渡すことで、部屋に参加する&lt;code&gt;interface&lt;/code&gt;を定義します。この&lt;code&gt;interface&lt;/code&gt;には&lt;code&gt;IStreamingHub&amp;lt;T, U&amp;gt;&lt;/code&gt;もあわせて定義します。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ISampleService&lt;/code&gt;と同じようにApiコール用の&lt;code&gt;interface&lt;/code&gt;です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
-using MagicOnion;
-
-namespace MagicOnionSample.Shared
-{
-    public interface ISampleHub : IStreamingHub&amp;lt;ISampleHub, ISampleHubReceiver&amp;gt;
-    {
-        Task JoinAsync(string name, string room);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これらのApiコールのの流れとして、&lt;code&gt;ISampleHub&lt;/code&gt;の&lt;code&gt;JoinAsync&lt;/code&gt;を呼ぶことで、サーバーに名前と部屋名を渡し、サーバー側の処理が完了すると&lt;code&gt;ISampleHubReceiver&lt;/code&gt;の&lt;code&gt;OnJoin&lt;/code&gt;がコールバックとして呼ばれる形になります。&lt;/p&gt;
-&lt;h2 id="section-9"&gt;クライアント側の実装&lt;/h2&gt;
-&lt;p&gt;クライアント側では、&lt;code&gt;ISampleHubReceiver&lt;/code&gt;を実装した&lt;code&gt;SampleHubReceiver&lt;/code&gt;を作成します。
-&lt;code&gt;Unity&lt;/code&gt;ディレクトリに&lt;code&gt;SampleHubReceiver.cs&lt;/code&gt;を作成し、コールバックの内容を実装します。
-&lt;code&gt;Player&lt;/code&gt;が参加したら&lt;code&gt;Player&lt;/code&gt;の&lt;code&gt;Name&lt;/code&gt;と&lt;code&gt;Room&lt;/code&gt;がUnityのConsoleに表示されます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using MagicOnionSample.Shared;
-using UnityEngine;
-
-namespace MagicOnionSample.Unity
-{
-    public class SampleHubReceiver : ISampleHubReceiver
-    {
-        public void OnJoin(Player player)
-        {
-            Debug.Log($&amp;quot;{player.Name}, {player.Room}&amp;quot;);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上記で作成した&lt;code&gt;SampleEntryPoint.cs&lt;/code&gt;を更新します。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Channel&lt;/code&gt;と&lt;code&gt;ISampleReceiver&lt;/code&gt;のインスタンスを&lt;code&gt;StreamingHubClient.Connect&lt;/code&gt;に渡すことで、&lt;code&gt;ISampleHub&lt;/code&gt;を実装したインスタンスを得ることができます。このインスタンスはサーバー側で実装されるので、クライアント側は気にする必要がありません。
-&lt;code&gt;ISampleHub&lt;/code&gt;のインスタンスを使って&lt;code&gt;JoinAsync&lt;/code&gt;を呼ぶことで、サーバー側に&lt;code&gt;name&lt;/code&gt;と&lt;code&gt;room&lt;/code&gt;を渡すことができ、コールバックとして&lt;code&gt;SampleHubReceiver&lt;/code&gt;の&lt;code&gt;OnJoin&lt;/code&gt;に&lt;code&gt;Player&lt;/code&gt;のインスタンスが渡されます。
-また、&lt;code&gt;ISampleHub&lt;/code&gt;は&lt;code&gt;IDisposable&lt;/code&gt;なので、忘れずに&lt;code&gt;Dispose&lt;/code&gt;でリソースを解放します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System.Threading.Tasks;
-using Grpc.Core;
-using MagicOnion.Client;
-using MagicOnionSample.Shared;
-using UnityEngine;
-
-namespace MagicOnionSample.Unity
-{
-    public class SampleEntryPoint : MonoBehaviour
-    {
-        public string host = &amp;quot;localhost&amp;quot;;
-        public int port = 5000;
-
-        public string user = &amp;quot;Foo&amp;quot;;
-        public string room = &amp;quot;Bar&amp;quot;;
-
-        private Channel _channel;
-
-        // Here
-        private ISampleHub _hub;
-        private ISampleHubReceiver _receiver;
-
-        private async Task Start()
-        {
-            _channel = new Channel(host, port, ChannelCredentials.Insecure);
-
-            var client = MagicOnionClient.Create&amp;lt;ISampleService&amp;gt;(_channel);
-            var greet = await client.GreetAsync(user);
-            Debug.Log(greet);
-
-            // Here
-            _receiver = new SampleHubReceiver();
-            _hub = StreamingHubClient.Connect&amp;lt;ISampleHub, ISampleHubReceiver&amp;gt;(_channel, _receiver);
-            await _hub.JoinAsync(user, room);
-        }
-
-        private async Task OnDestroy()
-        {
-            await _hub.DisposeAsync(); // Here
-            await _channel.ShutdownAsync();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-10"&gt;サーバー側の実装&lt;/h2&gt;
-&lt;p&gt;サーバー側では&lt;code&gt;ISampleHub&lt;/code&gt;の実装を行います。
-&lt;code&gt;SampleHub.cs&lt;/code&gt;を作成し、&lt;code&gt;name&lt;/code&gt;と&lt;code&gt;room&lt;/code&gt;が与えられたら&lt;code&gt;Player&lt;/code&gt;を作成して返すといった実装を行います。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Broadcast&lt;/code&gt;に&lt;code&gt;IGroup&lt;/code&gt;のインスタンスを渡すことで、グループ内のすべてのクライアントに対してコールバックを呼ぶことができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;using System;
-using System.Threading.Tasks;
-using MagicOnion.Server.Hubs;
-using MagicOnionSample.Shared;
-
-namespace MagicOnionSample.Server.Hubs
-{
-    public class SampleHub : StreamingHubBase&amp;lt;ISampleHub, ISampleHubReceiver&amp;gt;, ISampleHub
-    {
-        private Player _player;
-        private IGroup _room;
-
-        public async Task JoinAsync(string name, string room)
-        {
-            _player = new Player {Name = name, Room = room};
-            await Console.Out.WriteLineAsync($&amp;quot;Join {_player.Name} to the {_player.Room}&amp;quot;);
-            (_room, _) = await Group.AddAsync(_player.Room, _player);
-            Broadcast(_room).OnJoin(_player);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="section-11"&gt;動作確認&lt;/h2&gt;
-&lt;p&gt;上記の動作確認と同じように、&lt;code&gt;dotnet run&lt;/code&gt;コマンド等でサーバーを起動してUnityを実行すると、UnityのConsoleに&lt;code&gt;Welcome Foo!&lt;/code&gt;と&lt;code&gt;Foo, bar&lt;/code&gt;表示されたら成功です。
-また、サーバー側のConsoleでは&lt;code&gt;Join Foo to the Bar&lt;/code&gt;と表示されます。
-以上で、サーバーとクライアントの1対多のApiコールができました。&lt;/p&gt;
-&lt;h1 id="section-12"&gt;その他注意点&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;List&amp;lt;T&amp;gt;&lt;/code&gt;や&lt;code&gt;Array&amp;lt;T&amp;gt;&lt;/code&gt;などをMessagePackに渡す場合は、シリアライズの時に&lt;code&gt;null&lt;/code&gt;の場合、エラーが発生することがあります。プロパティの初期化子を使って初期化をすることで、シリアライズでエラーを回避することができます。&lt;/p&gt;
-&lt;p&gt;自作クラスのコンストラクタを実装する場合、コンストラクタ引数がないコンストラクタをMessagePackに渡すと、シリアライズ時にエラーが発生するため、引数があるコンストラクタに加えて、引数がないコンストラクタを作成する必要があります。&lt;/p&gt;
-&lt;h1 id="section-13"&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;MagicOnionを使ってリアルタイム通信の世界に入門しました。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;UnityプロジェクトにインストールしたMagicOnionとMessagePackでコンパイルエラーが発生する場合は&lt;code&gt;MagicOnion.Client&lt;/code&gt;に&lt;code&gt;MessagePack.Annotations&lt;/code&gt;を追加する&lt;/li&gt;
-&lt;li&gt;1対1では&lt;code&gt;IService&amp;lt;T&amp;gt;&lt;/code&gt;を使う&lt;/li&gt;
-&lt;li&gt;1対多では&lt;code&gt;IStreamingHub&amp;lt;T, U&amp;gt;&lt;/code&gt;を使う&lt;/li&gt;
-&lt;li&gt;MessagePackでは&lt;code&gt;null&lt;/code&gt;に注意&lt;/li&gt;
-&lt;li&gt;MessagePackではコンストラクタに注意&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;マルチプレイのゲームを作るときには有効活用したいです。&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
