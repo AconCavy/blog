@@ -5,8 +5,130 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 30 Jan 2022 16:52:56 GMT</pubDate>
-		<lastBuildDate>Sun, 30 Jan 2022 16:52:56 GMT</lastBuildDate>
+		<pubDate>Sat, 05 Feb 2022 15:22:43 GMT</pubDate>
+		<lastBuildDate>Sat, 05 Feb 2022 15:22:43 GMT</lastBuildDate>
+		<item>
+			<title>ABC238</title>
+			<link>https://aconcavy.github.io/blog/posts/20220205abc238</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 238の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20220205abc238</guid>
+			<pubDate>Sun, 06 Feb 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 238の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238"&gt;https://atcoder.jp/contests/ABC238&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238/submissions/29069118"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N&lt;/code&gt;が1または5以上の時、答えは&lt;code&gt;Yes&lt;/code&gt;になります。
+また、2の&lt;code&gt;N&lt;/code&gt;乗を計算可能な大きさに丸めてから、実際に計算することでも求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+N = Math.Min(60, N);
+var answer = (1L &amp;lt;&amp;lt; N) &amp;gt; N * N;
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238/submissions/29078455"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;現在のナイフの角度を持ちながら、それぞれの切れ込みの角度を計算します。360度を超える場合はx+360度と同じ角度なので、360で余りを取ります。すべての切れ込みをソートし、各切れ込みの差分の最大値が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var list = new List&amp;lt;int&amp;gt; { 0 };
+var curr = 0;
+foreach (var a in A)
+{
+    list.Add((curr + a) % 360);
+    curr += a;
+    curr %= 360;
+}
+list.Add(360);
+list.Sort();
+var answer = 0;
+for (var i = 0; i + 1 &amp;lt; list.Count; i++)
+{
+    answer = Math.Max(answer, list[i + 1] - list[i]);
+}
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238/submissions/29087110"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;f(x)&lt;/code&gt;を時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求めることができても、Nまで愚直に数え上げると時間計算量&lt;code&gt;O(N)&lt;/code&gt;かかり、制約に間に合いません。
+それぞれの桁数の時の個数の和を求めます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1からnまでの総和は&lt;code&gt;n * (n+1) / 2&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt;桁の数字個数は&lt;code&gt;10^d - 10^(d-1)&lt;/code&gt;個存在する。(2桁の場合は、&lt;code&gt;10^2 - 10^1&lt;/code&gt;で90個)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;N&lt;/code&gt;と同じ桁の場合は&lt;code&gt;N - 10^(d-1) + 1&lt;/code&gt;個存在する。(16の場合は、&lt;code&gt;16 - 10^(2-1) + 1&lt;/code&gt;で7個)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上を踏まえて、&lt;code&gt;N&lt;/code&gt;と同じ桁数まで数え上げることで、時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;long&amp;gt;();
+mint answer = 0;
+mint i2 = mint.Inverse(2);
+mint F(long x) =&amp;gt; (mint)x * (x + 1) * i2;
+var curr = 1L;
+for (var l = 1; l &amp;lt;= 18 &amp;amp;&amp;amp; curr &amp;lt;= N; l++)
+{
+    curr *= 10;
+    if (curr &amp;lt;= N)
+    {
+        var x = curr - curr / 10;
+        answer += F(x);
+    }
+    else
+    {
+        var x = N - curr / 10 + 1;
+        answer += F(x);
+    }
+}
+
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238/submissions/29094375"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ANDにより、&lt;code&gt;x &amp;gt;= a&lt;/code&gt;かつ&lt;code&gt;y &amp;gt;= a&lt;/code&gt;がわかり、&lt;code&gt;x &amp;lt;= y&lt;/code&gt;かつ&lt;code&gt;x = a&lt;/code&gt;としたとき、&lt;code&gt;y = a + b&lt;/code&gt;ということがわかります。
+&lt;code&gt;s = x + y = a + a + b = 2a + b&lt;/code&gt;となり、&lt;code&gt;s - 2a = b&lt;/code&gt;が成り立つ&lt;code&gt;b&lt;/code&gt;の存在によって答えが求まります。
+このとき、&lt;code&gt;y = a + b = a | b&lt;/code&gt;とすると、&lt;code&gt;b&lt;/code&gt;は&lt;code&gt;a&lt;/code&gt;の0のビットをいくつか1にしたものかつ&lt;code&gt;a&lt;/code&gt;の1のビットをすべて0にしたものになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var T = Scanner.Scan&amp;lt;int&amp;gt;();
+while (T-- &amp;gt; 0)
+{
+    var (a, s) = Scanner.Scan&amp;lt;long, long&amp;gt;();
+    var a2 = a + a;
+    var answer = a2 &amp;lt;= s;
+    var r = s - a2;
+    if (r &amp;gt; 0)
+    {
+        for (var i = 0; i &amp;lt; 63; i++)
+        {
+            if ((r &amp;gt;&amp;gt; i &amp;amp; 1) == 1)
+            {
+                answer &amp;amp;= (a &amp;gt;&amp;gt; i &amp;amp; 1) == 0;
+            }
+        }
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC238/submissions/29102881"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;すべてのAの走査回数が奇数? -&amp;gt; 例3で偽&lt;/li&gt;
+&lt;li&gt;クエリを右増左減のソート後に区間最小が0の時に区間を1に更新して最後に区間すべてが1であれば正? -&amp;gt; 例1で偽&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解説では、累積和行列&lt;code&gt;B&lt;/code&gt;を考えたときに、クエリにより&lt;code&gt;l&lt;/code&gt;と&lt;code&gt;r&lt;/code&gt;が与えられた場合&lt;code&gt;B[r] - B[l]&lt;/code&gt;の値から&lt;code&gt;A[l]..A[r]&lt;/code&gt;の総和が求められるものとし、&lt;code&gt;l&lt;/code&gt;と&lt;code&gt;r&lt;/code&gt;をグラフの辺として考えたとき、&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;まで連結であることを考えればいいようです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var dsu = new DisjointSetUnion(N + 1);
+for (var i = 0; i &amp;lt; Q; i++)
+{
+    var (l, r) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    l--;
+    dsu.Merge(l, r);
+}
+var answer = dsu.IsSame(0, N);
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC237</title>
 			<link>https://aconcavy.github.io/blog/posts/20220130abc237</link>
@@ -1581,197 +1703,6 @@ for (var k = 0; k &amp;lt; K; k++)
 &lt;h1 id="section-3"&gt;実行結果&lt;/h1&gt;
 &lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>GitHub ActionsからNuGetにパッケージをアップロードした</title>
-			<link>https://aconcavy.github.io/blog/posts/20210121uploadnuget</link>
-			<description>&lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20210121uploadnuget</guid>
-			<pubDate>Thu, 21 Jan 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。&lt;/p&gt;
-&lt;p&gt;リポジトリは&lt;a href="https://github.com/AconCavy/Mulinq"&gt;こちら&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="tldr"&gt;TL;DR&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub ActionsでNuGetパッケージを作成した。&lt;/li&gt;
-&lt;li&gt;作成したNuGetパッケージをNuGetにアップロードした。&lt;/li&gt;
-&lt;li&gt;タグからリリース/プレリリースを判断できるようにした。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id="net"&gt;対象の.NETプロジェクトの設定&lt;/h1&gt;
-&lt;p&gt;パッケージ化する.NETプロジェクトの&lt;code&gt;.csproj&lt;/code&gt;ファイルを更新します。
-今回はビルド構成として.NET 5と.NET Core 3.1のdllを生成するために、&lt;code&gt;TargetFrameworks&lt;/code&gt;に&lt;code&gt;net5.0&lt;/code&gt;と&lt;code&gt;netcoreapp3.1&lt;/code&gt;を構成します。&lt;/p&gt;
-&lt;p&gt;そして、NuGetの情報を構成します。今回は&lt;code&gt;.csproj&lt;/code&gt;に構成しましたが、&lt;code&gt;.nuspec&lt;/code&gt;ファイルを作成してNuGet情報だけを切り離して構成することも可能なようです。
-&lt;code&gt;PackageVersion&lt;/code&gt;はcsprojをリリースのたびに変更せずに、ビルド時にバージョンを指定できるように、&lt;code&gt;$(Version)&lt;/code&gt;の環境変数を使います。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-xml line-numbers"&gt;&amp;lt;Project Sdk="Microsoft.NET.Sdk"&amp;gt;
-
-    &amp;lt;PropertyGroup&amp;gt;
-        &amp;lt;TargetFrameworks&amp;gt;net5.0;netcoreapp3.1&amp;lt;/TargetFrameworks&amp;gt;
-    &amp;lt;/PropertyGroup&amp;gt;
-    
-    &amp;lt;!-- NuGet --&amp;gt;
-    &amp;lt;PropertyGroup&amp;gt;
-        &amp;lt;PackageId&amp;gt;Mulinq&amp;lt;/PackageId&amp;gt;
-        &amp;lt;PackageVersion&amp;gt;$(Version)&amp;lt;/PackageVersion&amp;gt;
-        &amp;lt;Title&amp;gt;Mulinq&amp;lt;/Title&amp;gt;
-        &amp;lt;Authors&amp;gt;AconCavy&amp;lt;/Authors&amp;gt;
-        &amp;lt;Description&amp;gt;Mulinq is C# LINQ extensions for collections and for multidimensional arrays.&amp;lt;/Description&amp;gt;
-        &amp;lt;PackageProjectUrl&amp;gt;https://github.com/AconCavy/Mulinq&amp;lt;/PackageProjectUrl&amp;gt;
-        &amp;lt;PackageLicenseExpression&amp;gt;MIT&amp;lt;/PackageLicenseExpression&amp;gt;
-        &amp;lt;RepositoryUrl&amp;gt;https://github.com/AconCavy/Mulinq&amp;lt;/RepositoryUrl&amp;gt;
-        &amp;lt;PackageTags&amp;gt;LINQ&amp;lt;/PackageTags&amp;gt;
-    &amp;lt;/PropertyGroup&amp;gt;
-
-&amp;lt;/Project&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="nuget"&gt;NuGetの設定&lt;/h1&gt;
-&lt;p&gt;NuGetアカウントを持っていない場合はアカウントの作成をします。Microsoftアカウントから作成もできるみたいです。&lt;/p&gt;
-&lt;p&gt;NuGetパッケージのアップロードには、NuGetのAPIキーが必要なので、APIキーを生成します。
-画面右上のユーザから、&lt;code&gt;API Keys&lt;/code&gt;のページに移動し、&lt;code&gt;Create&lt;/code&gt;フォームから、&lt;code&gt;Key Name&lt;/code&gt;や&lt;code&gt;Package Owner&lt;/code&gt;等必要な情報を埋め、APIキーを生成します。
-生成に成功すると、&lt;code&gt;Manage&lt;/code&gt;パネルに生成したAPIキーが並ぶので、&lt;code&gt;Copy&lt;/code&gt;でAPIキーをコピーします。一度ページから離れてしまうと、再びコピーできなくなるので、できなくなった場合は&lt;code&gt;Regenerate&lt;/code&gt;から再生成します。&lt;/p&gt;
-&lt;p&gt;コピーしたAPIキーをGitHubリポジトリの&lt;code&gt;Secrets&lt;/code&gt;に登録することで、GitHub Actionsの環境変数としてアクセスできるようになります。リポジトリの&lt;code&gt;Setting -&amp;gt; Secrets -&amp;gt; New repository secret&lt;/code&gt;で新しいシークレットを作成し、名前とAPIキーを登録します。今回は&lt;code&gt;NUGET_API_KEY&lt;/code&gt;として登録しました。&lt;/p&gt;
-&lt;h1 id="workflow"&gt;Workflowの作成&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://aconcavy.github.io/blog/20201212createrepository"&gt;リポジトリを作成したときにやっておきたいこと&lt;/a&gt;のReleaseの作成をもとにWorkflowを作成します。&lt;/p&gt;
-&lt;p&gt;RelaseのWorkflowを実行するトリガーとして、&lt;code&gt;v1.0.0&lt;/code&gt;や&lt;code&gt;v1.0.0-alpha&lt;/code&gt;のようなGitのタグがpushされたときに限定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;on:
-  push:
-    tags: 
-    - 'v[0-9]+.[0-9]+.[0-9]+*'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;最初にテストを実行します。今回はTargetFrameworkが複数あるため、複数の.NET SDKをセットアップします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 3.1.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
-    - name: Setup .NET 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Test
-      run: dotnet test -c Release --verbosity normal
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次にテストが成功した場合のみリリースを実行します。&lt;code&gt;needs: [test]&lt;/code&gt;とすることで、&lt;code&gt;test&lt;/code&gt;のjobが成功した場合のみ実行されるようになります。
-まず、プロジェクトからNuGetパッケージを作成します。このとき、&lt;code&gt;-p:Version&lt;/code&gt;にバージョンを指定します。タグのバージョン情報を取得するために、&lt;code&gt;${GITHUB_REF##*/v}&lt;/code&gt;を指定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="line-numbers"&gt;dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;GITHUB_REF&lt;/code&gt;の環境変数では、ワークフローをトリガーしたタグのrefを取得でき、&lt;code&gt;v1.0.0&lt;/code&gt;のようなタグの場合は&lt;code&gt;refs/heads/v1.0.0&lt;/code&gt;という文字列を取得できます。そこから&lt;code&gt;1.0.0&lt;/code&gt;の部分だけ取得し、&lt;code&gt;Version&lt;/code&gt;の環境変数に指定します。
-ビルドに成功した場合は、&lt;code&gt;./publish&lt;/code&gt;に&lt;code&gt;Mulinq.1.0.0.nupkg&lt;/code&gt;が生成されます。&lt;/p&gt;
-&lt;p&gt;そして、NuGetのAPIを叩き、作成した&lt;code&gt;.nupkg&lt;/code&gt;をアップロードします。&lt;code&gt;secrets.NUGET_API_KEY&lt;/code&gt;から、リポジトリに登録したNuGetのAPIキーを参照します。&lt;code&gt;secrets.&amp;lt;*&amp;gt;&lt;/code&gt;は上記で登録したシークレットの名前になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;release:
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core 3.1.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
-    - name: Setup .NET 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Build
-      run: dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
-    - name: Upload to NuGet
-      run: dotnet nuget push ./publish/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-    
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        draft: false
-        prerelease: ${{ contains(github.ref, '-') }}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、GitHubにReleaseを作成します。
-&lt;code&gt;prerelease&lt;/code&gt;のプロパティに&lt;code&gt;true|false&lt;/code&gt;を指定することで、作成するリリースがプレリリースか否かを指定できます。そのため、タグに&lt;code&gt;-&lt;/code&gt;が含まれているかをチェックする&lt;code&gt;contains&lt;/code&gt;関数を使用して、&lt;code&gt;v1.0.0&lt;/code&gt;のような普通のリリースの場合と、&lt;code&gt;v1.0.0-alpha&lt;/code&gt;のようなプレリリースを区別できるようにしました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;- name: Create Release
-  id: create_release
-  uses: actions/create-release@v1
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  with:
-    tag_name: ${{ github.ref }}
-    release_name: ${{ github.ref }}
-    draft: false
-    prerelease: ${{ contains(github.ref, '-') }}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Workflow全体としては次のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-yml line-numbers"&gt;name: Release
-
-on:
-  push:
-    tags: 
-    - 'v[0-9]+.[0-9]+.[0-9]+*'
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 3.1.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
-    - name: Setup .NET 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Test
-      run: dotnet test -c Release --verbosity normal
-  
-  release:
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core 3.1.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
-    - name: Setup .NET 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Build
-      run: dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
-    - name: Upload to NuGet
-      run: dotnet nuget push ./publish/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-    
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        draft: false
-        prerelease: ${{ contains(github.ref, '-') }}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="workflow-1"&gt;Workflowの実行&lt;/h1&gt;
-&lt;p&gt;適当にコミットを作成し、&lt;code&gt;v0.0.1-alpha&lt;/code&gt;というタグをつけ、GitHub上にプッシュします。&lt;/p&gt;
-&lt;p&gt;作成したWorkflowが実行され、テスト、ビルド、アップロード、Releaseの作成が行われます。&lt;/p&gt;
-&lt;p&gt;NuGetへアップロード直後は&lt;code&gt;Unlisted Packages&lt;/code&gt;の状態でしたが、しばらくすると&lt;code&gt;Published Packages&lt;/code&gt;になりました。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/nuget_upload.webp" class="img-fluid" alt="succeeded upload to nuget"&gt;&lt;/p&gt;
-&lt;p&gt;GitHubのリリースのほうは、ちゃんと&lt;code&gt;Pre-Release&lt;/code&gt;で作成されています。
-&lt;img src="https://aconcavy.github.io/blog/assets/images/gha_prerelease.webp" class="img-fluid" alt="pre-release"&gt;&lt;/p&gt;
-&lt;h1 id="section-1"&gt;まとめ&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub ActionsでNuGetパッケージを作成した。&lt;/li&gt;
-&lt;li&gt;作成したNuGetパッケージをNuGetにアップロードした。&lt;/li&gt;
-&lt;li&gt;タグからリリース/プレリリースを判断できるようにした。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;NuGetのパッケージ作成は怖くない！&lt;/p&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>

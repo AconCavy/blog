@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+  <link rel="icon" href="/blog/assets/favicon.ico" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+  <title>acon.log - ABC238</title>
+
+  
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC238">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220205abc238">
+
+
+  <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+  <header>
+</header>
+
+
+  <div class="container">
+    <div class="row">
+      <div id="content">
+
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">ABC238</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 05 February 2022
+            </div>
+            <div class="card-text post-meta">Updated on Sunday, 06 February 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+              <div class="post-body">
+                <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 238の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/ABC238">https://atcoder.jp/contests/ABC238</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC238/submissions/29069118">コンテスト提出</a></p>
+<p><code>N</code>が1または5以上の時、答えは<code>Yes</code>になります。
+また、2の<code>N</code>乗を計算可能な大きさに丸めてから、実際に計算することでも求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+N = Math.Min(60, N);
+var answer = (1L &lt;&lt; N) &gt; N * N;
+Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC238/submissions/29078455">コンテスト提出</a></p>
+<p>現在のナイフの角度を持ちながら、それぞれの切れ込みの角度を計算します。360度を超える場合はx+360度と同じ角度なので、360で余りを取ります。すべての切れ込みをソートし、各切れ込みの差分の最大値が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var list = new List&lt;int&gt; { 0 };
+var curr = 0;
+foreach (var a in A)
+{
+    list.Add((curr + a) % 360);
+    curr += a;
+    curr %= 360;
+}
+list.Add(360);
+list.Sort();
+var answer = 0;
+for (var i = 0; i + 1 &lt; list.Count; i++)
+{
+    answer = Math.Max(answer, list[i + 1] - list[i]);
+}
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC238/submissions/29087110">コンテスト提出</a></p>
+<p><code>f(x)</code>を時間計算量<code>O(1)</code>で求めることができても、Nまで愚直に数え上げると時間計算量<code>O(N)</code>かかり、制約に間に合いません。
+それぞれの桁数の時の個数の和を求めます。</p>
+<ul>
+<li>1からnまでの総和は<code>n * (n+1) / 2</code>。</li>
+<li><code>d</code>桁の数字個数は<code>10^d - 10^(d-1)</code>個存在する。(2桁の場合は、<code>10^2 - 10^1</code>で90個)</li>
+<li><code>N</code>と同じ桁の場合は<code>N - 10^(d-1) + 1</code>個存在する。(16の場合は、<code>16 - 10^(2-1) + 1</code>で7個)</li>
+</ul>
+<p>以上を踏まえて、<code>N</code>と同じ桁数まで数え上げることで、時間計算量<code>O(logN)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
+mint answer = 0;
+mint i2 = mint.Inverse(2);
+mint F(long x) =&gt; (mint)x * (x + 1) * i2;
+var curr = 1L;
+for (var l = 1; l &lt;= 18 &amp;&amp; curr &lt;= N; l++)
+{
+    curr *= 10;
+    if (curr &lt;= N)
+    {
+        var x = curr - curr / 10;
+        answer += F(x);
+    }
+    else
+    {
+        var x = N - curr / 10 + 1;
+        answer += F(x);
+    }
+}
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC238/submissions/29094375">コンテスト提出</a></p>
+<p>ANDにより、<code>x &gt;= a</code>かつ<code>y &gt;= a</code>がわかり、<code>x &lt;= y</code>かつ<code>x = a</code>としたとき、<code>y = a + b</code>ということがわかります。
+<code>s = x + y = a + a + b = 2a + b</code>となり、<code>s - 2a = b</code>が成り立つ<code>b</code>の存在によって答えが求まります。
+このとき、<code>y = a + b = a | b</code>とすると、<code>b</code>は<code>a</code>の0のビットをいくつか1にしたものかつ<code>a</code>の1のビットをすべて0にしたものになります。</p>
+<pre><code class="language-csharp line-numbers">var T = Scanner.Scan&lt;int&gt;();
+while (T-- &gt; 0)
+{
+    var (a, s) = Scanner.Scan&lt;long, long&gt;();
+    var a2 = a + a;
+    var answer = a2 &lt;= s;
+    var r = s - a2;
+    if (r &gt; 0)
+    {
+        for (var i = 0; i &lt; 63; i++)
+        {
+            if ((r &gt;&gt; i &amp; 1) == 1)
+            {
+                answer &amp;= (a &gt;&gt; i &amp; 1) == 0;
+            }
+        }
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC238/submissions/29102881">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>すべてのAの走査回数が奇数? -&gt; 例3で偽</li>
+<li>クエリを右増左減のソート後に区間最小が0の時に区間を1に更新して最後に区間すべてが1であれば正? -&gt; 例1で偽</li>
+</ul>
+<p>解説では、累積和行列<code>B</code>を考えたときに、クエリにより<code>l</code>と<code>r</code>が与えられた場合<code>B[r] - B[l]</code>の値から<code>A[l]..A[r]</code>の総和が求められるものとし、<code>l</code>と<code>r</code>をグラフの辺として考えたとき、<code>0</code>から<code>N</code>まで連結であることを考えればいいようです。</p>
+<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+var dsu = new DisjointSetUnion(N + 1);
+for (var i = 0; i &lt; Q; i++)
+{
+    var (l, r) = Scanner.Scan&lt;int, int&gt;();
+    l--;
+    dsu.Merge(l, r);
+}
+var answer = dsu.IsSame(0, N);
+Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+
+              </div>
+              <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220205abc238" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきこもり
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+</body>
+
+</html>
