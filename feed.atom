@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-02-19T14:36:58Z</updated>
+	<updated>2022-02-19T15:32:51Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220219abc239</id>
 		<title>ABC239</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220219abc239" />
-		<updated>2022-02-19T00:00:00Z</updated>
+		<updated>2022-02-20T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 239の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -127,6 +127,108 @@ for (var i = 0; i &amp;lt; Q; i++)
     var (v, k) = Scanner.Scan&amp;lt;int, int&amp;gt;();
     v--; k--;
     Console.WriteLine(list[v][k]);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29479750"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;N-1&lt;/code&gt;本の高速道路なら、Dの合計が&lt;code&gt;(N-1)*2&lt;/code&gt;以外は&lt;code&gt;-1&lt;/code&gt;になりそう。&lt;/li&gt;
+&lt;li&gt;連結じゃないところを優先して繋げる?&lt;/li&gt;
+&lt;li&gt;連結成分ごとの&lt;code&gt;D&lt;/code&gt;の合計が多いところを優先して繋げる?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解説でも同様の考え方でした。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;連結させた場合に&lt;code&gt;D&lt;/code&gt;が変化するから&lt;code&gt;PriorityQueue&lt;/code&gt;で&lt;code&gt;D&lt;/code&gt;の合計が多い物を優先する。&lt;/li&gt;
+&lt;li&gt;連結したものは一つの&lt;code&gt;queue&lt;/code&gt;にまとめる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var D = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+if (D.Sum() != (N - 1) * 2)
+{
+    Console.WriteLine(-1);
+    return;
+}
+
+var dsu = new DisjointSetUnion(N);
+var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+for (var i = 0; i &amp;lt; M; i++)
+{
+    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    a--;
+    b--;
+    G[a].Add(b);
+    G[b].Add(a);
+    dsu.Merge(a, b);
+    D[a]--;
+    D[b]--;
+}
+
+var answers = new List&amp;lt;(int, int)&amp;gt;();
+var queue = new PriorityQueue&amp;lt;(Queue&amp;lt;int&amp;gt; U, long M)&amp;gt;((x, y) =&amp;gt; y.M.CompareTo(x.M));
+foreach (var group in dsu.GetGroups())
+{
+    var q = new Queue&amp;lt;int&amp;gt;(group.Where(x =&amp;gt; D[x] &amp;gt; 0));
+    var s = group.Sum(x =&amp;gt; D[x]);
+    if (q.Count == 0)
+    {
+        Console.WriteLine(-1);
+        return;
+    }
+
+    queue.Enqueue((q, s));
+}
+
+while (queue.Count &amp;gt;= 2)
+{
+    var (uq, us) = queue.Dequeue();
+    var (vq, vs) = queue.Dequeue();
+    var u = uq.Dequeue();
+    var v = vq.Dequeue();
+    D[u]--;
+    D[v]--;
+    us--;
+    vs--;
+    dsu.Merge(u, v);
+    answers.Add((u + 1, v + 1));
+    if (D[u] &amp;gt; 0) uq.Enqueue(u);
+    if (D[v] &amp;gt; 0) vq.Enqueue(v);
+
+    if (us &amp;gt;= vs)
+    {
+        while (vq.Count &amp;gt; 0) uq.Enqueue(vq.Dequeue());
+        us += vs;
+        queue.Enqueue((uq, us));
+    }
+    else
+    {
+        while (uq.Count &amp;gt; 0) vq.Enqueue(uq.Dequeue());
+        vs += us;
+        queue.Enqueue((vq, vs));
+    }
+}
+
+for (var i = 0; i &amp;lt; N; i++)
+{
+    for (var j = i + 1; j &amp;lt; N; j++)
+    {
+        if (D[i] == 0) break;
+        if (D[j] == 0) continue;
+        D[i]--;
+        D[j]--;
+        answers.Add((i + 1, j + 1));
+    }
+}
+
+if (D.Any(x =&amp;gt; x != 0))
+{
+    Console.WriteLine(-1);
+    return;
+}
+
+foreach (var (u, v) in answers)
+{
+    Console.WriteLine($&amp;quot;{u} {v}&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>

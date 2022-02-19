@@ -75,7 +75,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
             <div class="card-text post-meta">Published on Saturday, 19 February 2022
             </div>
-            <div class="card-text post-meta">Updated on Saturday, 19 February 2022</div>
+            <div class="card-text post-meta">Updated on Sunday, 20 February 2022</div>
 
                 <div class="mt-3">
                         <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
@@ -205,6 +205,108 @@ for (var i = 0; i &lt; Q; i++)
     var (v, k) = Scanner.Scan&lt;int, int&gt;();
     v--; k--;
     Console.WriteLine(list[v][k]);
+}
+</code></pre>
+<h2 id="f"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_f">問題F</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29479750">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li><code>N-1</code>本の高速道路なら、Dの合計が<code>(N-1)*2</code>以外は<code>-1</code>になりそう。</li>
+<li>連結じゃないところを優先して繋げる?</li>
+<li>連結成分ごとの<code>D</code>の合計が多いところを優先して繋げる?</li>
+</ul>
+<p>解説でも同様の考え方でした。</p>
+<ul>
+<li>連結させた場合に<code>D</code>が変化するから<code>PriorityQueue</code>で<code>D</code>の合計が多い物を優先する。</li>
+<li>連結したものは一つの<code>queue</code>にまとめる。</li>
+</ul>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+var D = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+if (D.Sum() != (N - 1) * 2)
+{
+    Console.WriteLine(-1);
+    return;
+}
+
+var dsu = new DisjointSetUnion(N);
+var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+for (var i = 0; i &lt; M; i++)
+{
+    var (a, b) = Scanner.Scan&lt;int, int&gt;();
+    a--;
+    b--;
+    G[a].Add(b);
+    G[b].Add(a);
+    dsu.Merge(a, b);
+    D[a]--;
+    D[b]--;
+}
+
+var answers = new List&lt;(int, int)&gt;();
+var queue = new PriorityQueue&lt;(Queue&lt;int&gt; U, long M)&gt;((x, y) =&gt; y.M.CompareTo(x.M));
+foreach (var group in dsu.GetGroups())
+{
+    var q = new Queue&lt;int&gt;(group.Where(x =&gt; D[x] &gt; 0));
+    var s = group.Sum(x =&gt; D[x]);
+    if (q.Count == 0)
+    {
+        Console.WriteLine(-1);
+        return;
+    }
+
+    queue.Enqueue((q, s));
+}
+
+while (queue.Count &gt;= 2)
+{
+    var (uq, us) = queue.Dequeue();
+    var (vq, vs) = queue.Dequeue();
+    var u = uq.Dequeue();
+    var v = vq.Dequeue();
+    D[u]--;
+    D[v]--;
+    us--;
+    vs--;
+    dsu.Merge(u, v);
+    answers.Add((u + 1, v + 1));
+    if (D[u] &gt; 0) uq.Enqueue(u);
+    if (D[v] &gt; 0) vq.Enqueue(v);
+
+    if (us &gt;= vs)
+    {
+        while (vq.Count &gt; 0) uq.Enqueue(vq.Dequeue());
+        us += vs;
+        queue.Enqueue((uq, us));
+    }
+    else
+    {
+        while (uq.Count &gt; 0) vq.Enqueue(uq.Dequeue());
+        vs += us;
+        queue.Enqueue((vq, vs));
+    }
+}
+
+for (var i = 0; i &lt; N; i++)
+{
+    for (var j = i + 1; j &lt; N; j++)
+    {
+        if (D[i] == 0) break;
+        if (D[j] == 0) continue;
+        D[i]--;
+        D[j]--;
+        answers.Add((i + 1, j + 1));
+    }
+}
+
+if (D.Any(x =&gt; x != 0))
+{
+    Console.WriteLine(-1);
+    return;
+}
+
+foreach (var (u, v) in answers)
+{
+    Console.WriteLine($&quot;{u} {v}&quot;);
 }
 </code></pre>
 
