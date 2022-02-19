@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+  <link rel="icon" href="/blog/assets/favicon.ico" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+  <title>acon.log - ABC239</title>
+
+  
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC239">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220219abc239">
+
+
+  <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+  <header>
+</header>
+
+
+  <div class="container">
+    <div class="row">
+      <div id="content">
+
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">ABC239</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 19 February 2022
+            </div>
+            <div class="card-text post-meta">Updated on Saturday, 19 February 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+              <div class="post-body">
+                <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 239の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc239">https://atcoder.jp/contests/abc239</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29426523">コンテスト提出</a></p>
+<p>与えられた計算式に入力のHを与えたときの答えを求めます。
+<code>int</code>だと<code>x * (12800000 + x)</code>の計算でオーバーフローしてしまうので、<code>long</code>で取ることに注意します。</p>
+<pre><code class="language-csharp line-numbers">var H = Scanner.Scan&lt;long&gt;();
+double F(long x) =&gt; Math.Sqrt(x * (12800000 + x));
+Console.WriteLine(F(H));
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29432159">コンテスト提出</a></p>
+<p><code>X&gt;=0</code>のときはそのまま<code>X/10</code>で切り捨てを求め、<code>X&lt;0</code>のときは<code>-X/10</code>の切り上げた数の<code>-</code>を考えればいいです。</p>
+<pre><code class="language-csharp line-numbers">var X = Scanner.Scan&lt;long&gt;();
+var answer = X &gt;= 0 ? X / 10 : -(-X + 9) / 10;
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29441499">コンテスト提出</a></p>
+<p>一つの点に対して、<code>abs(dx)+abs(dy)==3</code>となる格子点は8つのみであり、それぞれの点の組み合わせのうち、一致する点があるかを全探索します。</p>
+<pre><code class="language-csharp line-numbers">var (x1, y1, x2, y2) = Scanner.Scan&lt;long, long, long, long&gt;();
+
+var D = new[] { (-2, 1), (-2, -1), (-1, 2), (-1, -2), (1, 2), (1, -2), (2, 1), (2, -1) };
+var answer = false;
+foreach (var (dx1, dy1) in D)
+{
+    var (xx1, yy1) = (x1 + dx1, y1 + dy1);
+    foreach (var (dx2, dy2) in D)
+    {
+        var (xx2, yy2) = (x2 + dx2, y2 + dy2);
+        answer |= xx1 == xx2 &amp;&amp; yy1 == yy2;
+    }
+}
+
+Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29446892">コンテスト提出</a></p>
+<p>200までの素数を作ることができるかを考えると、<code>{200以下の任意の素数}-{高橋君の選んだ素数}</code>となる整数を青木君は選ぶことで素数を作ることができます。そのため、高橋君の整数を固定し、200以下の素数をすべて見たときに青木君が選ぶことのできる整数が存在するかを判定します。もし青木君が素数を作るための整数を1つでも選ぶことができなければ、高橋君の勝利となります。</p>
+<pre><code class="language-csharp line-numbers">var (A, B, C, D) = Scanner.Scan&lt;int, int, int, int&gt;();
+var P = Prime.Sieve(200);
+var answer = false;
+for (var i = A; i &lt;= B; i++)
+{
+    var exist = false;
+    foreach (var p in P)
+    {
+        var j = p - i;
+        exist |= C &lt;= j &amp;&amp; j &lt;= D;
+    }
+
+    answer |= !exist;
+}
+Console.WriteLine(answer ? &quot;Takahashi&quot; : &quot;Aoki&quot;);
+</code></pre>
+<p><code>Prime.Sieve(200)</code>は、与えられた数以下の素数群を返す関数です。</p>
+<pre><code class="language-csharp line-numbers">public static class Prime
+{
+    public static IEnumerable&lt;int&gt; Sieve(int value)
+    {
+        if (value &lt; 2) yield break;
+        yield return 2;
+        var sieve = new bool[(value + 1) / 2];
+        for (var i = 1; i &lt; sieve.Length; i++)
+        {
+            if (sieve[i]) continue;
+            yield return i * 2 + 1;
+            for (var j = i; j &lt; sieve.Length; j += i * 2 + 1) sieve[j] = true;
+        }
+    }
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC239/submissions/29456696">コンテスト提出</a></p>
+<p>クエリごとに部分木を計算すると、計算量が<code>O(N^2)</code>でになってしまうので、あらかじめ部分木のうちで対象となりうる要素を保持しておくことを考えます。
+しかし、部分木のすべての数を保持してしまうと、全体で最悪<code>N*(N-1)/2</code>個の要素が存在し、ソートも考えると計算量が<code>O(N^2log(N^2))</code>でTLEになってしまうので、保持する要素を制限することを考えます。制約の、<code>1 &lt;= Ki &lt;= 20</code>から、各頂点で対象となる数は、最大でも20個ということがわかります。また、木Bが木Aの部分木のとき、木Bの大きいほうから21番目以降の要素は、木Aにおいても21番目以降であるため、21番目以降の要素は無視することができます。このことから、深さ優先探索を行って部分木を見たときに、部分木の要素のうち、降順で最大20個ずつ保持して行くことで、計算量を<code>O(Nlog(N))</code>に抑えることができ、各クエリ当たり<code>O(1)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+var X = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+for (var i = 0; i &lt; N - 1; i++)
+{
+    var (a, b) = Scanner.Scan&lt;int, int&gt;();
+    a--; b--;
+    G[a].Add(b);
+    G[b].Add(a);
+}
+
+var list = new List&lt;int&gt;[N].Select(_ =&gt; new List&lt;int&gt;()).ToArray();
+
+void Dfs(int u, int p)
+{
+    foreach (var v in G[u])
+    {
+        if (v == p) continue;
+        Dfs(v, u);
+        foreach (var x in list[v])
+        {
+            list[u].Add(x);
+        }
+    }
+
+    list[u].Add(X[u]);
+    list[u].Sort();
+    list[u].Reverse();
+    list[u] = list[u].Take(20).ToList();
+}
+
+Dfs(0, -1);
+
+for (var i = 0; i &lt; Q; i++)
+{
+    var (v, k) = Scanner.Scan&lt;int, int&gt;();
+    v--; k--;
+    Console.WriteLine(list[v][k]);
+}
+</code></pre>
+
+              </div>
+              <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220219abc239" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきこもり
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+</body>
+
+</html>

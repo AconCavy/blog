@@ -4,7 +4,134 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-02-05T15:22:43Z</updated>
+	<updated>2022-02-19T14:36:58Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20220219abc239</id>
+		<title>ABC239</title>
+		<link href="https://aconcavy.github.io/blog/posts/20220219abc239" />
+		<updated>2022-02-19T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 239の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc239"&gt;https://atcoder.jp/contests/abc239&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29426523"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;与えられた計算式に入力のHを与えたときの答えを求めます。
+&lt;code&gt;int&lt;/code&gt;だと&lt;code&gt;x * (12800000 + x)&lt;/code&gt;の計算でオーバーフローしてしまうので、&lt;code&gt;long&lt;/code&gt;で取ることに注意します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var H = Scanner.Scan&amp;lt;long&amp;gt;();
+double F(long x) =&amp;gt; Math.Sqrt(x * (12800000 + x));
+Console.WriteLine(F(H));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29432159"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X&amp;gt;=0&lt;/code&gt;のときはそのまま&lt;code&gt;X/10&lt;/code&gt;で切り捨てを求め、&lt;code&gt;X&amp;lt;0&lt;/code&gt;のときは&lt;code&gt;-X/10&lt;/code&gt;の切り上げた数の&lt;code&gt;-&lt;/code&gt;を考えればいいです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var X = Scanner.Scan&amp;lt;long&amp;gt;();
+var answer = X &amp;gt;= 0 ? X / 10 : -(-X + 9) / 10;
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29441499"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一つの点に対して、&lt;code&gt;abs(dx)+abs(dy)==3&lt;/code&gt;となる格子点は8つのみであり、それぞれの点の組み合わせのうち、一致する点があるかを全探索します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (x1, y1, x2, y2) = Scanner.Scan&amp;lt;long, long, long, long&amp;gt;();
+
+var D = new[] { (-2, 1), (-2, -1), (-1, 2), (-1, -2), (1, 2), (1, -2), (2, 1), (2, -1) };
+var answer = false;
+foreach (var (dx1, dy1) in D)
+{
+    var (xx1, yy1) = (x1 + dx1, y1 + dy1);
+    foreach (var (dx2, dy2) in D)
+    {
+        var (xx2, yy2) = (x2 + dx2, y2 + dy2);
+        answer |= xx1 == xx2 &amp;amp;&amp;amp; yy1 == yy2;
+    }
+}
+
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29446892"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;200までの素数を作ることができるかを考えると、&lt;code&gt;{200以下の任意の素数}-{高橋君の選んだ素数}&lt;/code&gt;となる整数を青木君は選ぶことで素数を作ることができます。そのため、高橋君の整数を固定し、200以下の素数をすべて見たときに青木君が選ぶことのできる整数が存在するかを判定します。もし青木君が素数を作るための整数を1つでも選ぶことができなければ、高橋君の勝利となります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (A, B, C, D) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+var P = Prime.Sieve(200);
+var answer = false;
+for (var i = A; i &amp;lt;= B; i++)
+{
+    var exist = false;
+    foreach (var p in P)
+    {
+        var j = p - i;
+        exist |= C &amp;lt;= j &amp;amp;&amp;amp; j &amp;lt;= D;
+    }
+
+    answer |= !exist;
+}
+Console.WriteLine(answer ? &amp;quot;Takahashi&amp;quot; : &amp;quot;Aoki&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Prime.Sieve(200)&lt;/code&gt;は、与えられた数以下の素数群を返す関数です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Prime
+{
+    public static IEnumerable&amp;lt;int&amp;gt; Sieve(int value)
+    {
+        if (value &amp;lt; 2) yield break;
+        yield return 2;
+        var sieve = new bool[(value + 1) / 2];
+        for (var i = 1; i &amp;lt; sieve.Length; i++)
+        {
+            if (sieve[i]) continue;
+            yield return i * 2 + 1;
+            for (var j = i; j &amp;lt; sieve.Length; j += i * 2 + 1) sieve[j] = true;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc239/tasks/abc239_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC239/submissions/29456696"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;クエリごとに部分木を計算すると、計算量が&lt;code&gt;O(N^2)&lt;/code&gt;でになってしまうので、あらかじめ部分木のうちで対象となりうる要素を保持しておくことを考えます。
+しかし、部分木のすべての数を保持してしまうと、全体で最悪&lt;code&gt;N*(N-1)/2&lt;/code&gt;個の要素が存在し、ソートも考えると計算量が&lt;code&gt;O(N^2log(N^2))&lt;/code&gt;でTLEになってしまうので、保持する要素を制限することを考えます。制約の、&lt;code&gt;1 &amp;lt;= Ki &amp;lt;= 20&lt;/code&gt;から、各頂点で対象となる数は、最大でも20個ということがわかります。また、木Bが木Aの部分木のとき、木Bの大きいほうから21番目以降の要素は、木Aにおいても21番目以降であるため、21番目以降の要素は無視することができます。このことから、深さ優先探索を行って部分木を見たときに、部分木の要素のうち、降順で最大20個ずつ保持して行くことで、計算量を&lt;code&gt;O(Nlog(N))&lt;/code&gt;に抑えることができ、各クエリ当たり&lt;code&gt;O(1)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var X = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+for (var i = 0; i &amp;lt; N - 1; i++)
+{
+    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    a--; b--;
+    G[a].Add(b);
+    G[b].Add(a);
+}
+
+var list = new List&amp;lt;int&amp;gt;[N].Select(_ =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+
+void Dfs(int u, int p)
+{
+    foreach (var v in G[u])
+    {
+        if (v == p) continue;
+        Dfs(v, u);
+        foreach (var x in list[v])
+        {
+            list[u].Add(x);
+        }
+    }
+
+    list[u].Add(X[u]);
+    list[u].Sort();
+    list[u].Reverse();
+    list[u] = list[u].Take(20).ToList();
+}
+
+Dfs(0, -1);
+
+for (var i = 0; i &amp;lt; Q; i++)
+{
+    var (v, k) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    v--; k--;
+    Console.WriteLine(list[v][k]);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 239の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220205abc238</id>
 		<title>ABC238</title>
@@ -1605,93 +1732,5 @@ for (var k = 0; k &amp;lt; K; k++)
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20210302rockpaperscissors</id>
-		<title>じゃんけん</title>
-		<link href="https://aconcavy.github.io/blog/posts/20210302rockpaperscissors" />
-		<updated>2021-03-02T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
-じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;
-&lt;p&gt;先駆者様&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815"&gt;https://qiita.com/tadsan/items/65d91ba6b50535fc8815&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://qiita.com/libraplanet/items/bcf17c22143dc77f875b"&gt;https://qiita.com/libraplanet/items/bcf17c22143dc77f875b&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f"&gt;Qiita&lt;/a&gt;とのクロスポストです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;勝敗判定&lt;/h1&gt;
-&lt;p&gt;じゃんけんのルールとして、&lt;code&gt;-&amp;gt;&lt;/code&gt; の右側が強いものとすると、 &lt;code&gt;Rock&lt;/code&gt; -&amp;gt; &lt;code&gt;Paper&lt;/code&gt; -&amp;gt; &lt;code&gt;Scissors&lt;/code&gt; -&amp;gt; &lt;code&gt;Rock&lt;/code&gt; の関係性が成り立ち、3つの手を周期として勝敗が決まります。
-ここで、&lt;code&gt;Rock&lt;/code&gt; を0、&lt;code&gt;Paper&lt;/code&gt; を1、&lt;code&gt;Scissors&lt;/code&gt; を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"&gt;&lt;/p&gt;
-&lt;p&gt;このことから、&lt;code&gt;相手の手 - 自分の手&lt;/code&gt; を計算することで距離を求めることができます。
-しかし、自分の手が2で、相手の手が0だった場合、&lt;code&gt;0 - 2 == -2&lt;/code&gt;のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、&lt;code&gt;(相手の手 - 自分の手 + 3) % 3&lt;/code&gt; とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。&lt;/p&gt;
-&lt;h1 id="section-2"&gt;実装&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Rps&lt;/code&gt; (Rock-Paper-Scissors) クラスに &lt;code&gt;Hand&lt;/code&gt; (グー、チョキ、パー) と &lt;code&gt;Result&lt;/code&gt; (引き分け、負け、勝ち) の &lt;code&gt;enum&lt;/code&gt; を定義することで、&lt;code&gt;Battle&lt;/code&gt; 関数の引数と戻り値にそれぞれ意味を持たせます。&lt;/p&gt;
-&lt;p&gt;C#の &lt;code&gt;enum&lt;/code&gt; は、既定値として &lt;code&gt;int&lt;/code&gt; の0をとり、要素が増えるにつれて1増えます。そのため、この場合は、 &lt;code&gt;Rock (0)&lt;/code&gt;、 &lt;code&gt;Paper (1)&lt;/code&gt;、 &lt;code&gt;Scissors (2)&lt;/code&gt; のようにそれぞれ値を持つことができます。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Battle&lt;/code&gt; 関数は、自分の手と相手の手を渡すことで、&lt;code&gt;Result.Draw&lt;/code&gt;、 &lt;code&gt;Result.Lose&lt;/code&gt;、 &lt;code&gt;Result.Win&lt;/code&gt; のいずれかを返します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Rps
-{
-    public enum Hand
-    {
-        Rock,
-        Paper,
-        Scissors
-    }
-
-    public enum Result
-    {
-        Draw,
-        Lose,
-        Win
-    }
-
-    public static Result Battle(Hand own, Hand opponent)
-    {
-        var result = ((int)opponent - (int)own + 3) % 3;
-        return (Result)result;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;呼び出し側では、例に倣ってそれぞれの絵文字を割り当てます。
-&lt;code&gt;switch式&lt;/code&gt; を使うことで、&lt;code&gt;Battle&lt;/code&gt; が返す可能性のあるパターンに、 &lt;code&gt;あいこ&lt;/code&gt;、&lt;code&gt;あなたの負け&lt;/code&gt;、&lt;code&gt;あなたの勝ち&lt;/code&gt; を割り当て、一致した要素を &lt;code&gt;result&lt;/code&gt; として受け、自分の手、相手の手と一緒に表示します。 &lt;code&gt;_ =&amp;gt; throw new ArgumentOutOfRangeException()&lt;/code&gt; では、対象となる値以外の値として判定された際に該当するアームになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Program
-{
-    public static void Main()
-    {
-        const string draw = "あいこ";
-        const string lose = "あなたの負け";
-        const string win = "あなたの勝ち";
-
-        var map = new Dictionary&amp;lt;Rps.Hand, string&amp;gt;
-        {
-            [Rps.Hand.Rock] = "✊", [Rps.Hand.Paper] = "🖐", [Rps.Hand.Scissors] = "✌"
-        };
-
-        // var hands = new[] { Rps.Hand.Rock, Rps.Hand.Paper, Rps.Hand.Scissors };
-        var hands = Enum.GetValues(typeof(Rps.Hand)).Cast&amp;lt;Rps.Hand&amp;gt;().ToArray();
-
-        foreach (var own in hands)
-        foreach (var opponent in hands)
-        {
-            // Draw, Lose, Winのままなら
-            // var result = Rps.Battle(own, opponent).ToString();
-            
-            var result = Rps.Battle(own, opponent) switch
-            {
-                Rps.Result.Draw =&amp;gt; draw,
-                Rps.Result.Lose =&amp;gt; lose,
-                Rps.Result.Win =&amp;gt; win,
-                _ =&amp;gt; throw new ArgumentOutOfRangeException()
-            };
-            Console.WriteLine($"{map[own]} vs {map[opponent]}: {result}");
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="section-3"&gt;実行結果&lt;/h1&gt;
-&lt;p&gt;&lt;img src="https://aconcavy.github.io/blog/assets/images/rps.webp" class="img-fluid" alt="rps.png"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA==="&gt;sharplabでの実行結果&lt;/a&gt;&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;code&gt;if&lt;/code&gt; を使わずにじゃんけんします。
-じゃんけんの結果はC#8の機能の &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression"&gt;switch式&lt;/a&gt; を使って受け取ります。&lt;/p&gt;</summary>
 	</entry>
 </feed>
