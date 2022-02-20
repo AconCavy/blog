@@ -5,8 +5,160 @@
 		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 19 Feb 2022 15:32:51 GMT</pubDate>
-		<lastBuildDate>Sat, 19 Feb 2022 15:32:51 GMT</lastBuildDate>
+		<pubDate>Sun, 20 Feb 2022 14:36:02 GMT</pubDate>
+		<lastBuildDate>Sun, 20 Feb 2022 14:36:02 GMT</lastBuildDate>
+		<item>
+			<title>abc240</title>
+			<link>https://aconcavy.github.io/blog/posts/20220220abc240</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 240の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20220220abc240</guid>
+			<pubDate>Sun, 20 Feb 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 240の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240"&gt;https://atcoder.jp/contests/abc240&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29503598"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;10で割ったときのあまりの値を比較することで、ループを再現することができます。
+また、隣り合っていることは差が1であればいいので、それを確かめます。
+例えば、&lt;code&gt;a=2, b=3&lt;/code&gt;のときは、&lt;code&gt;2+1==3&lt;/code&gt;となり、&lt;code&gt;a=1,b=10&lt;/code&gt;の時は&lt;code&gt;1==0+1&lt;/code&gt;となります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (A, B) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var answer = (A + 1) % 10 == B % 10 || (B + 1) % 10 == A % 10;
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29506402"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;重複を削除したときの個数が答えとなります。
+C#のLINQには、&lt;code&gt;Distinct&lt;/code&gt;というシーケンス内の重複を除いたシーケンスを返すメソッドがあるため、それを使い個数を数えます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+var answer = A.Distinct().Count();
+Console.WriteLine(answer);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29511865"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;動的計画法で答えを求めます。
+&lt;code&gt;i&lt;/code&gt;番目のジャンプを座標&lt;code&gt;j(0&amp;lt;=j&amp;lt;=X)&lt;/code&gt;から行うと、&lt;code&gt;i+1&lt;/code&gt;番目では、&lt;code&gt;j+a&lt;/code&gt;または&lt;code&gt;j+b&lt;/code&gt;に存在することができます。初期状態の&lt;code&gt;0&lt;/code&gt;を&lt;code&gt;true&lt;/code&gt;としたとき、そこからの遷移を計算し、&lt;code&gt;N&lt;/code&gt;回ジャンプ後の&lt;code&gt;X&lt;/code&gt;の値が&lt;code&gt;true&lt;/code&gt;ならば存在することができると表現できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, X) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+var dp = new bool[N + 1, X + 1];
+dp[0, 0] = true;
+for (var i = 0; i &amp;lt; N; i++)
+{
+    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    for (var j = 0; j &amp;lt;= X; j++)
+    {
+        if (j + a &amp;lt;= X) dp[i + 1, j + a] |= dp[i, j];
+        if (j + b &amp;lt;= X) dp[i + 1, j + b] |= dp[i, j];
+    }
+}
+
+var answer = dp[N, X];
+Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29521922"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;スタックに順番にボールを追加していき、同じ数字がK個連続した場合は削除する操作を行います。このとき一つの数字につき1つの値を入れていると、計算量は&lt;code&gt;O(N^2)&lt;/code&gt;になってしまうので、連続した値は値と個数の一つのオブジェクトとしてまとめ、スタックに入っているボールの個数を管理することで、計算量を&lt;code&gt;O(N)&lt;/code&gt;に抑えることができます。
+具体的には、もしスタックが空またはスタックのトップと異なる値の場合は、値と個数1をタプルとしてまとめてスタックに追加し、もしスタックのトップと同じ値の場合は、スタックのトップの個数を更新します。その後、スタックのトップを順にみていき、値と個数が同じ場合はスタックから取り除き、現在の個数も減少させます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+var curr = 0;
+var stack = new Stack&amp;lt;(int V, int C)&amp;gt;();
+foreach (var a in A)
+{
+    curr++;
+    if (stack.Count == 0)
+    {
+        stack.Push((a, 1));
+        Console.WriteLine(curr);
+        continue;
+    }
+
+    var (v, c) = stack.Pop();
+
+    if (a == v)
+    {
+        c++;
+        stack.Push((v, c));
+    }
+    else
+    {
+        stack.Push((v, c));
+        stack.Push((a, 1));
+    }
+
+    while (stack.Count &amp;gt; 0)
+    {
+        (v, c) = stack.Peek();
+        if (v == c)
+        {
+            stack.Pop();
+            curr -= c;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    Console.WriteLine(curr);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29533033"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;問題文の根付き木について、子を持たない頂点に対してそれぞれ異なる値を与えたときに、部分木&lt;code&gt;i&lt;/code&gt;が持つ値群の最小値と最大値をそれぞれ&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;としたとき、頂点&lt;code&gt;i&lt;/code&gt;は区間&lt;code&gt;[Li, Ri]&lt;/code&gt;を持つと解釈することができます。
+そのため、深さ優先探索を行い、子を持たない頂点の場合はそれまでに出現していない値を&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;に設定し、子を持つ頂点は、子の&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;の中でそれぞれ最小、最大となるものを選択することで、答えとなる区間を求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
+var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+for (var i = 0; i &amp;lt; N - 1; i++)
+{
+    var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    u--; v--;
+    G[u].Add(v);
+    G[v].Add(u);
+}
+
+const int inf = (int)1e9;
+var L = new int[N];
+var R = new int[N];
+var curr = 1;
+(int L, int R) Dfs(int u, int p)
+{
+    var l = inf;
+    var r = -inf;
+    foreach (var v in G[u])
+    {
+        if (v == p) continue;
+        var (ll, rr) = Dfs(v, u);
+        l = Math.Min(l, ll);
+        r = Math.Max(r, rr);
+    }
+
+    if (l == inf)
+    {
+        L[u] = curr;
+        R[u] = curr;
+        curr++;
+    }
+    else
+    {
+        L[u] = l;
+        R[u] = r;
+    }
+
+    return (L[u], R[u]);
+}
+
+Dfs(0, -1);
+
+foreach (var (l, r) in L.Zip(R))
+{
+    Console.WriteLine($&amp;quot;{l} {r}&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC239</title>
 			<link>https://aconcavy.github.io/blog/posts/20220219abc239</link>
@@ -1680,169 +1832,6 @@ foreach (var (a, b, c) in ABC)
 }
 
 Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC232</title>
-			<link>https://aconcavy.github.io/blog/posts/20211220abc232</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20211220abc232</guid>
-			<pubDate>Wed, 22 Dec 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;AtCoder Beginner Contest 232の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232"&gt;https://atcoder.jp/contests/abc232&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc232/tasks/abc232_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232/submissions/27984773"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;x&lt;/code&gt;で文字列を分けてそれぞれ掛けます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Console.ReadLine().Trim().Split('x');
-var answer = long.Parse(S[0]) * long.Parse(S[1]);
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;制約が3文字なので、&lt;code&gt;a&lt;/code&gt;と&lt;code&gt;b&lt;/code&gt;からそれぞれ文字&lt;code&gt;0&lt;/code&gt;を引いて掛けるだけいいと思います。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Console.ReadLine().Trim();
-var answer = (S[0] - '0') * (S[2] - '0');
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc232/tasks/abc232_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232/submissions/27989086"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a-z&lt;/code&gt;を&lt;code&gt;0-25&lt;/code&gt;とし、26通りのずらし方を試すことで、全部のパターンを調べることができます。&lt;br /&gt;
-&lt;code&gt;z&lt;/code&gt;の次は&lt;code&gt;a&lt;/code&gt;なので、&lt;code&gt;26&lt;/code&gt;は&lt;code&gt;a&lt;/code&gt;となるため、&lt;code&gt;26&lt;/code&gt;で余りを取ることで26の周期として扱うことができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var S = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
-var T = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
-for (var k = 0; k &amp;lt; 26; k++)
-{
-    var ok = true;
-    for (var i = 0; i &amp;lt; S.Length; i++)
-    {
-        ok &amp;amp;= (S[i] + k) % 26 == T[i] % 26;
-    }
-
-    if (ok)
-    {
-        Console.WriteLine(&amp;quot;Yes&amp;quot;);
-        return;
-    }
-}
-Console.WriteLine(&amp;quot;No&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc232/tasks/abc232_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232/submissions/27999013"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc232/submissions/28020954"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;2つのグラフ&lt;code&gt;G1&lt;/code&gt;と&lt;code&gt;G2&lt;/code&gt;が同じ形であることは、&lt;code&gt;G2&lt;/code&gt;の頂点番号のみを適切に置き換えたときに、&lt;code&gt;G1&lt;/code&gt;のそれぞれの辺に対応する辺を持つことを示すことで判定することができます。&lt;br /&gt;
-制約も&lt;code&gt;1&amp;lt;=N&amp;lt;=8&lt;/code&gt;と小さいので、&lt;code&gt;G2&lt;/code&gt;のそれぞれの頂点に対応する順列を総当たりし、&lt;code&gt;G2&lt;/code&gt;の辺&lt;code&gt;E2&lt;/code&gt;の頂点を置き換えた辺すべてが、&lt;code&gt;G1&lt;/code&gt;の辺&lt;code&gt;E1&lt;/code&gt;に存在するかを判定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-var E1 = new bool[N, N];
-var E2 = new (int A, int B)[M];
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    a--; b--;
-    E1[a, b] = E1[b, a] = true;
-}
- 
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    a--; b--;
-    E2[i] = (a, b);
-}
- 
-foreach (var order in Enumerable.Range(0, N).Permute())
-{
-    var ok = true;
-    foreach (var (c, d) in E2)
-    {
-        ok &amp;amp;= E1[order[c], order[d]];
-    }
-
-    if (ok)
-    {
-        Console.WriteLine(&amp;quot;Yes&amp;quot;);
-        return;
-    }
-}
-
-Console.WriteLine(&amp;quot;No&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;Permute&lt;/code&gt;メソッドは自作のLINQ拡張メソッドです。&lt;/p&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc232/tasks/abc232_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232/submissions/28004343"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc232/submissions/28021337"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;移動方法が&lt;code&gt;i+1&lt;/code&gt;か&lt;code&gt;j+1&lt;/code&gt;のみなので、左上のマスから行くことができるマスを数え上げます。&lt;br /&gt;
-もし隣り合うマスが&lt;code&gt;.&lt;/code&gt;ならば、そのマスの現在の値と今いるマスの値+1との最大を集計することで、そのマスまで通ったマスの数の最大値をまとめることができます。&lt;br /&gt;
-制約により左上の値が1のため、マスの値が0の場合は、マスが&lt;code&gt;#&lt;/code&gt;、または到達不可能といえるので、判定を無視することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-var C = new char[H][];
-for (var i = 0; i &amp;lt; H; i++)
-{
-    C[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToArray();
-}
-var G = new int[H, W];
-G[0, 0] = 1;
-var answer = 0;
-for (var i = 0; i &amp;lt; H; i++)
-{
-    for (var j = 0; j &amp;lt; W; j++)
-    {
-        if (G[i, j] == 0) continue;
-        answer = Math.Max(answer, G[i, j]);
-        if (i + 1 &amp;lt; H &amp;amp;&amp;amp; C[i + 1][j] == '.')
-        {
-            G[i + 1, j] = Math.Max(G[i + 1, j], G[i, j] + 1);
-        }
-
-        if (j + 1 &amp;lt; W &amp;amp;&amp;amp; C[i][j + 1] == '.')
-        {
-            G[i, j + 1] = Math.Max(G[i, j + 1], G[i, j] + 1);
-        }
-    }
-}
-
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;高橋君がマス (1,1) から歩き始めるとき&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;del&gt;ほかの場所から再開できると勘違いして4WAしました。&lt;/del&gt;&lt;/p&gt;
-&lt;p&gt;解説では、逆順にマスの値を確定させていくことで、左上のマスに最終的な値をまとめているみたいです。&lt;/p&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc232/tasks/abc232_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc232/submissions/28020203"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;K=1&lt;/code&gt;の時は、&lt;code&gt;(x1 == x2 &amp;amp;&amp;amp; y1 != y2) || (x1 != x2 &amp;amp;&amp;amp; y1 == y2)&lt;/code&gt;の場合のみ到達可能&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;K=2&lt;/code&gt;の時は、
-&lt;code&gt;(x1 == x2 &amp;amp;&amp;amp; y1 == y2)&lt;/code&gt;ならば、&lt;code&gt;H-1&lt;/code&gt;または&lt;code&gt;W-1&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;(x1 == x2 &amp;amp;&amp;amp; y1 != y2)&lt;/code&gt;ならば、&lt;code&gt;H-2&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;(x1 != x2 &amp;amp;&amp;amp; y1 == y2)&lt;/code&gt;ならば、&lt;code&gt;W-2&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;(x1 != x2 &amp;amp;&amp;amp; y1 != y2)&lt;/code&gt;ならば、&lt;code&gt;2&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;K&amp;gt;=3&lt;/code&gt;の時は、
-&lt;code&gt;K-2&lt;/code&gt;を数え上げたうえで&lt;code&gt;K=2&lt;/code&gt;の盤面ができれば解くことができないだろうか。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for(var h = 0; h &amp;lt; K - 2; h++)
-{
-    var w = K - 2 - h;
-    // 組み合わせ?
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;時間切れになりました。&lt;/p&gt;
-&lt;p&gt;解説では、4通りの状態のdpでした。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;// dp[k, 0, 0]: k回動いた時の(x1 == x2 &amp;amp;&amp;amp; y1 == y2)の状態
-// dp[k, 0, 1]: k回動いた時の(x1 == x2 &amp;amp;&amp;amp; y1 != y2)の状態
-// dp[k, 1, 0]: k回動いた時の(x1 != x2 &amp;amp;&amp;amp; y1 == y2)の状態
-// dp[k, 1, 1]: k回動いた時の(x1 != x2 &amp;amp;&amp;amp; y1 != y2)の状態
-
-// 初期状態
-dp[0, x1 == x2 ? 0 : 1, y1 == y2 ? 0 : 1] = 1;
-
-for (var k = 0; k &amp;lt; K; k++)
-{
-    dp[k + 1, 0, 0] = dp[k, 0, 1] + dp[k, 1, 0];
-    dp[k + 1, 0, 1] = dp[k, 0, 0] * (W - 1) + dp[k, 0, 1] * (W - 2) + dp[k, 1, 1];
-    dp[k + 1, 1, 0] = dp[k, 0, 0] * (H - 1) + dp[k, 1, 0] * (H - 2) + dp[k, 1, 1];
-    dp[k + 1, 1, 1] = dp[k, 0, 1] * (H - 1) + dp[k, 1, 0] * (W - 1) + dp[k, 1, 1] * (H + W - 4);
-}
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
