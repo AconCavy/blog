@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+  <link rel="icon" href="/blog/assets/favicon.ico" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+  <title>acon.log - abc241</title>
+
+  
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="abc241">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220226abc241">
+
+
+  <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+  <header>
+</header>
+
+
+  <div class="container">
+    <div class="row">
+      <div id="content">
+
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">abc241</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 26 February 2022
+            </div>
+            <div class="card-text post-meta">Updated on Sunday, 27 February 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+              <div class="post-body">
+                <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 241の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc241">https://atcoder.jp/contests/abc241</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc241/submissions/29662070">コンテスト提出</a></p>
+<p>現在の値を<code>curr</code>とし、現在の値を<code>A[curr]</code>で更新します。</p>
+<pre><code class="language-csharp line-numbers">var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var curr = 0;
+for (var i = 0; i &lt; 3; i++)
+{
+    curr = A[curr];
+}
+
+Console.WriteLine(curr);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc241/submissions/29664697">コンテスト提出</a></p>
+<p>あらかじめ麵の長さ<code>A</code>の個数を辞書に持ち、<code>B</code>を順番に見たときに、1個以上ある場合は辞書の<code>B</code>の値をデクリメントし、0個または辞書に存在しない場合は答えは<code>No</code>になります。最終的にすべてを見ることができれば、答えは<code>Yes</code>となります。</p>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var dict = new Dictionary&lt;int, int&gt;();
+foreach (var a in A)
+{
+    if (!dict.ContainsKey(a))
+    {
+        dict[a] = 0;
+    }
+
+    dict[a]++;
+}
+
+foreach (var b in B)
+{
+    if (!dict.ContainsKey(b) || dict[b] == 0)
+    {
+        Console.WriteLine(&quot;No&quot;);
+        return;
+    }
+
+    dict[b]--;
+}
+
+Console.WriteLine(&quot;Yes&quot;);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc241/submissions/29675472">コンテスト提出</a></p>
+<p>マスを順にみて、端を<code>(i,j)</code>に固定したときに連続した区間のうち4つ以上<code>#</code>が存在すれば、答えは<code>Yes</code>となります。
+縦の場合は<code>(i,j)</code>から<code>(i+5,j)</code>まで、横の場合は<code>(i,j)</code>から<code>(i,j+5)</code>まで、斜めの場合は<code>(i,j)</code>から<code>(i+5,j+5)</code>と<code>(i+5,j-5)</code>を確かめます。
+検査時に範囲外に出ないように注意します。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var G = new string[N];
+for (var i = 0; i &lt; N; i++)
+{
+    G[i] = Scanner.ScanLine();
+}
+
+for (var i = 0; i &lt; N; i++)
+{
+    for (var j = 0; j &lt; N; j++)
+    {
+        var ok = false;
+        if (i + 5 &lt; N)
+        {
+            var count = 0;
+            for (var k = 0; k &lt;= 5; k++)
+            {
+                if (G[i + k][j] == '#') count++;
+            }
+
+            ok |= count &gt;= 4;
+        }
+
+        if (j + 5 &lt; N)
+        {
+            var count = 0;
+            for (var k = 0; k &lt;= 5; k++)
+            {
+                if (G[i][j + k] == '#') count++;
+            }
+
+            ok |= count &gt;= 4;
+        }
+
+        if (i + 5 &lt; N &amp;&amp; j + 5 &lt; N)
+        {
+            var count = 0;
+            for (var k = 0; k &lt;= 5; k++)
+            {
+                if (G[i + k][j + k] == '#') count++;
+            }
+
+            ok |= count &gt;= 4;
+        }
+
+        if (i + 5 &lt; N &amp;&amp; j - 5 &gt;= 0)
+        {
+            var count = 0;
+            for (var k = 0; k &lt;= 5; k++)
+            {
+                if (G[i + k][j - k] == '#') count++;
+            }
+
+            ok |= count &gt;= 4;
+        }
+
+        if (ok)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
+
+    }
+}
+
+Console.WriteLine(&quot;No&quot;);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc241/submissions/29715030">復習提出 (FenwickTree)</a>
+<a href="https://atcoder.jp/contests/abc241/submissions/29716771">復習提出 (平衡二分探索木)</a></p>
+<p><code>FenwickTree</code>を使った場合の解き方です。
+<code>x</code>の値が大きいので、あらかじめクエリを先読みし、出現する座標を圧縮します。
+圧縮した<code>x</code>の値を<code>cx</code>としたとき、</p>
+<ul>
+<li><code>t</code>の値が1であれば、<code>FenwickTree</code>の<code>cx</code>に1を追加します。</li>
+<li><code>t</code>の値が2であれば、<code>FenwickTree</code>の区間<code>[idx, cx]</code>の値が<code>k</code>以上の場所を二部探索し、存在するならばその時の<code>idx</code>の対応する値が答えとなります。</li>
+<li><code>t</code>の値が2であれば、<code>FenwickTree</code>の区間<code>[cx, idx]</code>の値が<code>k</code>以上の場所を二部探索し、存在するならばその時の<code>idx</code>の対応する値が答えとなります。</li>
+</ul>
+<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
+var query = new (int, long, int)[Q];
+var set = new HashSet&lt;long&gt;();
+for (var i = 0; i &lt; Q; i++)
+{
+    var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var (t, x) = ((int)line[0], line[1]);
+    var k = t == 1 ? -1 : (int)line[2];
+    query[i] = (t, x, k);
+    set.Add(x);
+}
+ 
+var (map, remap) = Compress(set);
+var N = map.Count;
+var ft = new FenwickTree(N);
+foreach (var (t, x, k) in query)
+{
+    if (t == 1)
+    {
+        ft.Add(map[x], 1);
+    }
+    else if (t == 2)
+    {
+        bool F(int idx) =&gt; ft.Sum(idx, map[x] + 1) &gt;= k;
+        var idx = BinarySearch(map[x] + 1, 0, F);
+        var answer = F(idx) ? remap[idx] : -1;
+        Console.WriteLine(answer);
+    }
+    else
+    {
+        bool F(int idx) =&gt; ft.Sum(map[x], idx + 1) &gt;= k;
+        var idx = BinarySearch(map[x] - 1, N - 1, F);
+        var answer = F(idx) ? remap[idx] : -1;
+        Console.WriteLine(answer);
+    }
+}
+</code></pre>
+<pre><code class="language-csharp line-numbers">public static int BinarySearch(int ng, int ok, Func&lt;int, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+
+    return ok;
+}
+
+public static (Dictionary&lt;T, int&gt; Map, Dictionary&lt;int, T&gt; ReMap) Compress&lt;T&gt;(IEnumerable&lt;T&gt; source)
+{
+    var distinct = source.Distinct().ToArray();
+    Array.Sort(distinct);
+    var map = new Dictionary&lt;T, int&gt;();
+    var remap = new Dictionary&lt;int, T&gt;();
+    foreach (var (x, i) in distinct.Select((x, i) =&gt; (x, i)))
+    {
+        map[x] = i;
+        remap[i] = x;
+    }
+
+    return (map, remap);
+}
+
+public class FenwickTree
+{
+    private readonly long[] _data;
+    private readonly int _length;
+
+    public FenwickTree(int length)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        _length = length;
+        _data = new long[length];
+    }
+
+    public void Add(int index, long item)
+    {
+        if (index &lt; 0 || _length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index++;
+        while (index &lt;= _length)
+        {
+            _data[index - 1] += item;
+            index += index &amp; -index;
+        }
+    }
+
+    public long Sum(int length)
+    {
+        if (length &lt; 0 || _length &lt; length) throw new ArgumentOutOfRangeException(nameof(length));
+        var s = 0L;
+        while (length &gt; 0)
+        {
+            s += _data[length - 1];
+            length -= length &amp; -length;
+        }
+
+        return s;
+    }
+
+    public long Sum(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || _length &lt; right) throw new ArgumentOutOfRangeException();
+        return Sum(right) - Sum(left);
+    }
+
+    public int LowerBound(long item) =&gt; CommonBound(item, LessThanOrEqual);
+    public int UpperBound(long item) =&gt; CommonBound(item, LessThan);
+
+    private int CommonBound(long item, Func&lt;long, long, bool&gt; compare)
+    {
+        if (compare(item, _data[0])) return 0;
+        var x = 0;
+        var r = 1;
+        while (r &lt; _length) r &lt;&lt;= 1;
+        for (var k = r; k &gt; 0; k &gt;&gt;= 1)
+        {
+            if (x + k - 1 &gt;= _length || compare(item, _data[x + k - 1])) continue;
+            item -= _data[x + k - 1];
+            x += k;
+        }
+
+        return x;
+    }
+
+    private static bool LessThanOrEqual(long x, long y) =&gt; x &lt;= y;
+    private static bool LessThan(long x, long y) =&gt; x &lt; y;
+}
+</code></pre>
+<p>平衡二分探索木を使った時の解き方です。
+C#では<code>MultiSet</code>が存在しないので、平衡二分探索木を自作する必要があります。
+降順、昇順の平衡二分探索木を用意し、</p>
+<ul>
+<li><code>t</code>の値が1であれば、両方の平衡二分探索木に<code>x</code>を追加します。</li>
+<li><code>t</code>の値が2であれば、降順の平衡二分探索木において<code>x</code>以上になるインデックス<code>(idx)</code>を取得し、<code>idx+k-1</code>となる値が存在するならば、その値が答えとなります。</li>
+<li><code>t</code>の値が3であれば、昇順の平衡二分探索木において、<code>x</code>以下になるインデックス<code>(idx)</code>を取得し、<code>idx+k-1</code>となる値が存在するならば、その値が答えとなります。</li>
+</ul>
+<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
+var asc = new RandomizedBinarySearchTree&lt;long&gt;();
+var desc = new RandomizedBinarySearchTree&lt;long&gt;((x, y) =&gt; y.CompareTo(x));
+
+while (Q-- &gt; 0)
+{
+    var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var (t, x) = (line[0], line[1]);
+    if (t == 1)
+    {
+        asc.Insert(x);
+        desc.Insert(x);
+    }
+    else
+    {
+        var k = (int)line[2] - 1;
+        var set = t == 2 ? desc : asc;
+        if (set.Count() == 0)
+        {
+            Console.WriteLine(-1);
+            continue;
+        }
+        var lb = set.LowerBound(x);
+        var answer = lb + k &lt; set.Count() ? set.ElementAt(lb + k) : -1;
+        Console.WriteLine(answer);
+    }
+}
+</code></pre>
+<p>次のような平衡二分探索木を使用しました。</p>
+<pre><code class="language-csharp line-numbers">public class RandomizedBinarySearchTree&lt;T&gt; : IEnumerable&lt;T&gt;
+{
+    private readonly Comparison&lt;T&gt; _comparison;
+    private readonly Compare _lowerBound;
+    private readonly Compare _upperBound;
+    private readonly Random _random;
+
+    private Node _root;
+    private int _count;
+
+    public RandomizedBinarySearchTree(int seed = 0) : this(comparer: null, seed) { }
+
+    public RandomizedBinarySearchTree(Comparer&lt;T&gt; comparer, int seed = 0) : this(
+        (comparer ?? Comparer&lt;T&gt;.Default).Compare, seed)
+    {
+    }
+
+    public RandomizedBinarySearchTree(Comparison&lt;T&gt; comparison, int seed = 0)
+    {
+        _comparison = comparison;
+        _lowerBound = (x, y) =&gt; _comparison(x, y) &gt;= 0;
+        _upperBound = (x, y) =&gt; _comparison(x, y) &gt; 0;
+        _random = new Random(seed);
+    }
+
+    public delegate bool Compare(T x, T y);
+
+    public void Insert(T value)
+    {
+        if (_root is null) _root = new Node(value);
+        else InsertAt(LowerBound(value), value);
+    }
+
+    public void InsertAt(int index, T value)
+    {
+        var (l, r) = Split(_root, index);
+        _root = Merge(Merge(l, new Node(value)), r);
+    }
+
+    public void Erase(T value)
+    {
+        EraseAt(LowerBound(value));
+    }
+
+    public void EraseAt(int index)
+    {
+        var (l, r1) = Split(_root, index);
+        var (_, r2) = Split(r1, 1);
+        _root = Merge(l, r2);
+    }
+
+    public T ElementAt(int index)
+    {
+        if (index &lt; 0 || Count(_root) &lt;= index) throw new ArgumentNullException(nameof(index));
+        var node = _root;
+        var idx = Count(node) - Count(node.R) - 1;
+        while (node is { })
+        {
+            if (idx == index) return node.Value;
+            if (idx &gt; index)
+            {
+                node = node.L;
+                idx -= Count(node?.R) + 1;
+            }
+            else
+            {
+                node = node.R;
+                idx += Count(node?.L) + 1;
+            }
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(index));
+    }
+
+    public bool Contains(T value)
+    {
+        return Find(value) is { };
+    }
+
+    public int Count() =&gt; Count(_root);
+
+    public IEnumerator&lt;T&gt; GetEnumerator() =&gt; Enumerate(_root).GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() =&gt; GetEnumerator();
+
+    public int UpperBound(T value) =&gt; CommonBound(value, _upperBound);
+    public int LowerBound(T value) =&gt; CommonBound(value, _lowerBound);
+
+    public int CommonBound(T value, Compare compare)
+    {
+        var node = _root;
+        if (node is null) return -1;
+        var bound = Count(node);
+        var idx = bound - Count(node.R) - 1;
+        while (node is { })
+        {
+            if (compare(node.Value, value))
+            {
+                node = node.L;
+                bound = Math.Min(bound, idx);
+                idx -= Count(node?.R) + 1;
+            }
+            else
+            {
+                node = node.R;
+                idx += Count(node?.L) + 1;
+            }
+        }
+
+        return bound;
+    }
+
+    private double GetProbability() =&gt; _random.NextDouble();
+
+    private Node Merge(Node l, Node r)
+    {
+        if (l is null || r is null) return l ?? r;
+        var (n, m) = (Count(l), Count(r));
+        if ((double)n / (n + m) &gt; GetProbability())
+        {
+            l.R = Merge(l.R, r);
+            return l;
+        }
+        else
+        {
+            r.L = Merge(l, r.L);
+            return r;
+        }
+    }
+
+    private (Node, Node) Split(Node node, int k)
+    {
+        if (node is null) return (null, null);
+
+        if (k &lt;= Count(node.L))
+        {
+            var (l, r) = Split(node.L, k);
+            node.L = r;
+            return (l, node);
+        }
+        else
+        {
+            var (l, r) = Split(node.R, k - Count(node.L) - 1);
+            node.R = l;
+            return (node, r);
+        }
+    }
+
+    private Node Find(T value)
+    {
+        var node = _root;
+        while (node is { })
+        {
+            var cmp = _comparison(node.Value, value);
+            if (cmp &gt; 0) node = node.L;
+            else if (cmp &lt; 0) node = node.R;
+            else break;
+        }
+
+        return node;
+    }
+
+    private static int Count(Node node) =&gt; node?.Count ?? 0;
+
+    private static IEnumerable&lt;T&gt; Enumerate(Node node = null)
+    {
+        if (node is null) yield break;
+        foreach (var value in Enumerate(node.L)) yield return value;
+        yield return node.Value;
+        foreach (var value in Enumerate(node.R)) yield return value;
+    }
+
+    private class Node
+    {
+        public T Value { get; }
+
+        public Node L
+        {
+            get =&gt; _l;
+            set
+            {
+                _l = value;
+                UpdateCount();
+            }
+        }
+
+        public Node R
+        {
+            get =&gt; _r;
+            set
+            {
+                _r = value;
+                UpdateCount();
+            }
+        }
+
+        public int Count { get; private set; }
+
+        private Node _l;
+        private Node _r;
+
+        public Node(T value)
+        {
+            Value = value;
+            Count = 1;
+        }
+
+        private void UpdateCount()
+        {
+            Count = (L?.Count ?? 0) + (R?.Count ?? 0) + 1;
+        }
+    }
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc241/submissions/29701801">コンテスト提出</a></p>
+<p><code>mod</code>の性質上、最大でも<code>N</code>回でループすることがわかります。
+そのため、答えは<code>(1回のループ中の和 * ループ回数) + (ループに入るまでの和 + ループの端数の和)</code>で求めることができます。
+実装としては、<code>idx</code>のときの合計値と、<code>idx</code>の時に<code>A</code>の値を参照したことを保持しながら順にみていきます。
+一度見たことがある<code>A</code>を参照する場合、<code>現在の合計値 - 1度目のidxの合計値</code>から1回のループ中の和がわかり、<code>2度目のidx - 1度目のidx</code>からループの長さが求まり、<code>(K - 1度目のidx) / ループの長さ</code>でループの回数がわかるので、<code>(1回のループ中の和 * ループ回数)</code>を求めることができます。
+また、<code>(K - 1度目のidx) % ループの長さ</code>でループの端数となる残りの<code>idx</code>を求めることができ、<code>一度目のidx + 残りのidx</code>のときの合計値をみることで、<code>(ループに入るまでの和 + ループの端数の和)</code>を求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var (N, K) = Scanner.Scan&lt;int, long&gt;();
+var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+var dict = new Dictionary&lt;int, int&gt;();
+var steps = new List&lt;long&gt;();
+
+int F(long x) =&gt; (int)(x % N);
+var current = 0L;
+for (var i = 0; i &lt; K; i++)
+{
+    var x = F(current);
+    if (dict.ContainsKey(x))
+    {
+        var noloop = dict[x];
+        var loop = i - dict[x];
+        var div = (K - noloop) / loop;
+        current = (current - steps[noloop]) * div;
+        var mod = (int)((K - noloop) % loop);
+        if (mod &lt; 0) mod += loop;
+        current += steps[noloop + mod];
+        break;
+    }
+
+    dict[x] = i;
+    steps.Add(current);
+    current += A[x];
+}
+
+Console.WriteLine(current);
+</code></pre>
+
+              </div>
+              <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220226abc241" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきこもり
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+</body>
+
+</html>
