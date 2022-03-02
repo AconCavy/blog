@@ -4,10 +4,10 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-03-02T07:14:57Z</updated>
+	<updated>2022-03-02T12:14:06Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220226abc241</id>
-		<title>abc241</title>
+		<title>ABC241</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220226abc241" />
 		<updated>2022-02-27T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
@@ -561,7 +561,7 @@ Console.WriteLine(current);
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220220abc240</id>
-		<title>abc240</title>
+		<title>ABC240</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220220abc240" />
 		<updated>2022-02-20T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
