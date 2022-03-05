@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com *.typekit.net;
+connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+
+  <link rel="icon" href="/blog/assets/favicon.ico" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+  <title>acon.log - ABC242</title>
+
+  
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC242">
+<meta property="og:description" content="">
+<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:url" content="/blog/posts/20220305abc242">
+
+
+  <script src="/blog/js/adobe_fonts.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+  <header>
+</header>
+
+
+  <div class="container">
+    <div class="row">
+      <div id="content">
+
+          <div class="card shadow-sm">
+            <div class="card-body p-md-5">
+              
+<div class="post-header">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="card-title">ABC242</h1>
+
+            <div class="card-text post-meta">Published on Saturday, 05 March 2022
+            </div>
+            <div class="card-text post-meta">Updated on Sunday, 06 March 2022</div>
+
+                <div class="mt-3">
+                        <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                        <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+              <div class="post-body">
+                <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 241の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc242">https://atcoder.jp/contests/abc242</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC242/submissions/29883827">コンテスト提出</a></p>
+<p>それぞれどの条件に当てはまるかで確率を求めます。</p>
+<ul>
+<li><code>X &lt;= A</code>ならば確率は<code>1</code></li>
+<li><code>A+1 &lt;= X &lt;= B</code> ならば確率は<code>C/(B-A)</code></li>
+<li><code>B &lt; X</code>ならば確率は<code>0</code></li>
+</ul>
+<pre><code class="language-csharp line-numbers">var (A, B, C, X) = Scanner.Scan&lt;int, int, int, int&gt;();
+var answer = 0d;
+if (X &lt;= A) answer = 1d;
+if (A + 1 &lt;= X &amp;&amp; X &lt;= B) answer = (double)C / (B - A);
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC242/submissions/29869226">コンテスト提出</a></p>
+<p>辞書順最小となる文字列は、文字列<code>S</code>を構成する文字のうち、小さいものを左から順に並べたものになります。
+そのため、文字列<code>S</code>をソートした文字列が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().ToCharArray();
+Array.Sort(S);
+var answer = new string(S);
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC242/submissions/29875962">コンテスト提出</a></p>
+<p>動的計画法で答えとなる個数を数え上げます。
+初期値として、1桁目は<code>1</code>から<code>9</code>である個数をそれぞれ<code>1</code>とします。</p>
+<ul>
+<li><code>i</code>桁目の数値が<code>j</code>のとき、<code>i+1</code>桁目には、<code>j-1</code>、<code>j</code>、<code>j+1</code>に遷移することができます。
+<code>N</code>桁目まで確定したときの、<code>1</code>から<code>9</code>までの個数の和が答えとなります。</li>
+</ul>
+<p>数え上げのときに<code>0</code>と<code>10</code>に遷移できるスペースを確保しておくと、<code>j=0</code>の時の<code>j-1</code>の遷移と<code>j=9</code>のときの<code>j+1</code>で<code>if</code>文が不要になります。
+<code>mint</code>は、<code>Mod</code>として指定した数値で余りをとった整数をもつ構造体です。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var dp = new mint[N + 1, 11];
+for (var i = 1; i &lt; 10; i++)
+{
+    dp[1, i] = 1;
+}
+
+for (var i = 1; i &lt; N; i++)
+{
+    for (var j = 1; j &lt; 10; j++)
+    {
+        dp[i + 1, j - 1] += dp[i, j];
+        dp[i + 1, j] += dp[i, j];
+        dp[i + 1, j + 1] += dp[i, j];
+    }
+}
+
+mint answer = 0;
+for (var i = 1; i &lt; 10; i++)
+{
+    answer += dp[N, i];
+}
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC242/submissions/29901915">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li><code>t=0</code>ならば、<code>S[k]</code></li>
+<li><code>k=0</code>ならば、<code>S[0]+t</code></li>
+<li><code>t&gt;60</code>ならば、<code>S[0]</code>から派生したところになりそう。</li>
+<li><code>t&gt;0</code>かつ<code>k&gt;0</code>のときの周期は?</li>
+</ul>
+<p>解説では、<code>F(t,k)</code>となる文字は、再帰的に求めることができるそうです。</p>
+<ul>
+<li><code>t=0</code>ならば、<code>F(t,k)=S[k]</code></li>
+<li><code>k=0</code>ならば、<code>F(t,k)=S[0]+t</code></li>
+<li>それ以外ならば、<code>F(t,k)</code>=<code>F(t-1,k/2)+k%2+1</code></li>
+</ul>
+<p><code>F</code>は<code>O(logk)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
+var N = S.Length;
+var Q = Scanner.Scan&lt;int&gt;();
+while (Q-- &gt; 0)
+{
+    var (t, k) = Scanner.Scan&lt;long, long&gt;();
+    var answer = F(t, k - 1);
+    Console.WriteLine(answer);
+}
+
+char G(char c, long d)
+{
+    return (char)((c - 'A' + d) % 3 + 'A');
+}
+
+char F(long t, long k)
+{
+    if (t == 0) return S[(int)k];
+    if (k == 0) return G(S[0], t);
+    return G(F(t - 1, k / 2), k % 2 + 1);
+}
+
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC242/submissions/29902510">復習提出</a></p>
+<p>辞書順で文字列<code>S</code>以下の文字列を考えます。
+回文のため、文字列<code>S</code>の前半分の文字列<code>S'</code>において、<code>S'</code>未満の個数を数え上げを行います。
+この数え上げは、<code>S'</code>の文字をそれぞれ<code>0-25</code>の26進数としたときの個数として数え上げることができます。
+また、文字列<code>S</code>の前半分を回文にした文字列を<code>T</code>としたとき、<code>S</code>以下ならば、答えを1増やします。</p>
+<p>例えば、<code>S=ABCDE</code>ならば、<code>S'=ABC</code>なので、前半の数え上げは<code>26^2*0 + 26^1*1 + 26^0*2 = 28</code>となり、<code>T=ABCBA&lt;=S</code>なので答えは<code>29</code>になります。</p>
+<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
+while (Q-- &gt; 0)
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+    var T = S.ToCharArray();
+
+    for (var i = 0; i &lt; (N + 1) / 2; i++)
+    {
+        T[N - 1 - i] = T[i];
+    }
+
+    mint answer = 0;
+    for (var i = 0; i &lt; (N + 1) / 2; i++)
+    {
+        answer *= 26;
+        answer += T[i] - 'A';
+    }
+
+    if (new string(T).CompareTo(S) &lt;= 0) answer++;
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+              </div>
+              <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220305abc242" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center m-3 about">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+        </div>
+        <div class="col-md-3 mt-3">
+            <div class="col">
+                <h5>AconCavy</h5>
+                <div class="profile">
+                    C#が好きなひきこもり
+                </div>
+            </div>
+            <div class="col">
+                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+
+<script src="/blog/prism/prism.js"></script>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+</body>
+
+</html>
