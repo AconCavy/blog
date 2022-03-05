@@ -1,7 +1,7 @@
-@model IDocument
+@inherits StatiqRazorPage<IDocument>
 
 @{
-    var excerpt = Model.GetString(Statiq.Html.HtmlKeys.Excerpt);
+    var excerpt = Model.GetString(Keys.Excerpt);
 }
 
 <div class="card shadow-sm">

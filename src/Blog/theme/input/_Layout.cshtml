@@ -24,7 +24,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
   <title>@Document.GetString("PageTitle")</title>
 
-  @await Html.PartialAsync("_head.cshtml")
+  @await Html.PartialAsync("_Head.cshtml")
 
   <script src="@Context.GetLink("/js/adobe_fonts.js")"></script>
 
@@ -32,9 +32,9 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
 <body>
 
-  @await Html.PartialAsync("_navigation.cshtml")
+  @await Html.PartialAsync("_Navigation.cshtml")
 
-  @await Html.PartialAsync("_header.cshtml")
+  @await Html.PartialAsync("_Header.cshtml")
 
   <div class="container">
     <div class="row">
@@ -44,11 +44,11 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
         {
           <div class="card shadow-sm">
             <div class="card-body p-md-5">
-              @await Html.PartialAsync("_post-header.cshtml")
+              @await Html.PartialAsync("_PostHeader.cshtml")
               <div class="post-body">
                 @RenderBody()
               </div>
-              @await Html.PartialAsync("_post-footer.cshtml")
+              @await Html.PartialAsync("_PostFooter.cshtml")
             </div>
           </div>
         }
@@ -61,9 +61,9 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
     </div>
   </div>
 
-  @await Html.PartialAsync("_footer.cshtml")
+  @await Html.PartialAsync("_Footer.cshtml")
 
-  @await Html.PartialAsync("_scripts.cshtml")
+  @await Html.PartialAsync("_Scripts.cshtml")
 
 </body>
 

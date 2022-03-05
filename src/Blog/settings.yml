@@ -10,7 +10,7 @@ PageTitle: |
 InputPaths: ../../input
 PostSources: posts/*
 IsPost: => Outputs.FilterSources(Context.GetString("PostSources")).ContainsById(Document)
-Layout: /_layout.cshtml
+Layout: /_Layout.cshtml
 
 Host: aconcavy.github.io
 LinkRoot: /blog
