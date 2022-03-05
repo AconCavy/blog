@@ -1,52 +1,47 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="ja"><head>
 
-<html lang="ja">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' 'unsafe-inline';
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
 img-src 'self' * data: *.w3.org; 
 child-src 'none';
 frame-src 'self' *.twitter.com;
 font-src 'self' *.fontawesome.com *.typekit.net;
-connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
-script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline' cdn.jsdelivr.net stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
 
-  <link rel="icon" href="/blog/assets/favicon.ico" />
+    <link rel="icon" href="/blog/assets/images/favicon.ico">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
 
-  <title>acon.log - &#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</title>
+    <title>acon.log - &#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</title>
 
-  
+    
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="acon.log">
-<meta property="og:title" content="&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;">
+<meta property="og:title" content="&amp;#x3058;&amp;#x3083;&amp;#x3093;&amp;#x3051;&amp;#x3093;">
 <meta property="og:description" content="">
-<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:image" content="/blog/assets/images/icon.webp">
 <meta property="og:url" content="/blog/posts/20210302rockpaperscissors">
 
 
-  <script src="/blog/js/adobe_fonts.js"></script>
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
     <li class="nav-item">
         <a class="nav-link" href="/blog/posts">Posts</a>
     </li>
@@ -57,23 +52,24 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 </nav>
 
 
-  <header>
+<header>
 </header>
 
 
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div id="content">
+        <div id="content">
 
-          <div class="card shadow-sm">
-            <div class="card-body p-md-5">
-              
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
 <div class="post-header">
     <div class="row">
         <div class="col-md-12">
             <h1 class="card-title">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</h1>
 
-            <div class="card-text post-meta">Published on Tuesday, 02 March 2021
+            <div class="card-text post-meta">
+                Published on Tuesday, 02 March 2021
             </div>
             <div class="card-text post-meta">Updated on Tuesday, 02 March 2021</div>
 
@@ -86,8 +82,8 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
 <hr>
 
-              <div class="post-body">
-                <h1 id="section">はじめに</h1>
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
 <p><code>if</code> を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の <a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression">switch式</a> を使って受け取ります。</p>
 <p>先駆者様</p>
@@ -97,7 +93,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 <h1 id="section-1">勝敗判定</h1>
 <p>じゃんけんのルールとして、<code>-&gt;</code> の右側が強いものとすると、 <code>Rock</code> -&gt; <code>Paper</code> -&gt; <code>Scissors</code> -&gt; <code>Rock</code> の関係性が成り立ち、3つの手を周期として勝敗が決まります。
 ここで、<code>Rock</code> を0、<code>Paper</code> を1、<code>Scissors</code> を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。</p>
-<p><img src="assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png" /></p>
+<p><img src="assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"></p>
 <p>このことから、<code>相手の手 - 自分の手</code> を計算することで距離を求めることができます。
 しかし、自分の手が2で、相手の手が0だった場合、<code>0 - 2 == -2</code>のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、<code>(相手の手 - 自分の手 + 3) % 3</code> とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。</p>
 <h1 id="section-2">実装</h1>
@@ -164,11 +160,11 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 }
 </code></pre>
 <h1 id="section-3">実行結果</h1>
-<p><img src="assets/images/rps.webp" class="img-fluid" alt="rps.png" /></p>
+<p><img src="assets/images/rps.webp" class="img-fluid" alt="rps.png"></p>
 <p><a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA===">sharplabでの実行結果</a></p>
 
-              </div>
-              <div class="post-footer mt-5">
+                        </div>
+                        <div class="post-footer mt-5">
     <div class="share">
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20210302rockpaperscissors" data-size="large">
             Tweet
@@ -179,7 +175,7 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
     <div class="row justify-content-center m-3 about">
         <div class="col-md-3 mt-3">
-            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+            <img class="rounded-circle" src="/blog/assets/images/icon.webp" alt="icon">
         </div>
         <div class="col-md-3 mt-3">
             <div class="col">
@@ -196,14 +192,14 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
     </div>
 </div>
 
-            </div>
-          </div>
+                    </div>
+                </div>
 
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <footer>
+<footer>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -222,16 +218,16 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 </footer>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
 
-<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+<script src="/blog/assets/vendor/prism/prism.js"></script>
 
-<script src="/blog/prism/prism.js"></script>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-</body>
 
-</html>
+
+
+</body></html>

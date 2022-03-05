@@ -1,52 +1,47 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="ja"><head>
 
-<html lang="ja">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' 'unsafe-inline';
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
 img-src 'self' * data: *.w3.org; 
 child-src 'none';
 frame-src 'self' *.twitter.com;
 font-src 'self' *.fontawesome.com *.typekit.net;
-connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
-script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline' cdn.jsdelivr.net stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
 
-  <link rel="icon" href="/blog/assets/favicon.ico" />
+    <link rel="icon" href="/blog/assets/images/favicon.ico">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
 
-  <title>acon.log - ABC232</title>
+    <title>acon.log - ABC232</title>
 
-  
+    
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="acon.log">
 <meta property="og:title" content="ABC232">
 <meta property="og:description" content="">
-<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:image" content="/blog/assets/images/icon.webp">
 <meta property="og:url" content="/blog/posts/20211220abc232">
 
 
-  <script src="/blog/js/adobe_fonts.js"></script>
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
     <li class="nav-item">
         <a class="nav-link" href="/blog/posts">Posts</a>
     </li>
@@ -57,23 +52,24 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 </nav>
 
 
-  <header>
+<header>
 </header>
 
 
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div id="content">
+        <div id="content">
 
-          <div class="card shadow-sm">
-            <div class="card-body p-md-5">
-              
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
 <div class="post-header">
     <div class="row">
         <div class="col-md-12">
             <h1 class="card-title">ABC232</h1>
 
-            <div class="card-text post-meta">Published on Monday, 20 December 2021
+            <div class="card-text post-meta">
+                Published on Monday, 20 December 2021
             </div>
             <div class="card-text post-meta">Updated on Wednesday, 22 December 2021</div>
 
@@ -87,8 +83,8 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
 <hr>
 
-              <div class="post-body">
-                <h1 id="section">はじめに</h1>
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
 <p>AtCoder Beginner Contest 232の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <h1 id="section-1">コンテスト</h1>
@@ -107,7 +103,7 @@ Console.WriteLine(answer);
 </code></pre>
 <h2 id="b"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_b">問題B</a></h2>
 <p><a href="https://atcoder.jp/contests/abc232/submissions/27989086">コンテスト提出</a></p>
-<p><code>a-z</code>を<code>0-25</code>とし、26通りのずらし方を試すことで、全部のパターンを調べることができます。<br />
+<p><code>a-z</code>を<code>0-25</code>とし、26通りのずらし方を試すことで、全部のパターンを調べることができます。<br>
 <code>z</code>の次は<code>a</code>なので、<code>26</code>は<code>a</code>となるため、<code>26</code>で余りを取ることで26の周期として扱うことができます。</p>
 <pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
 var T = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
@@ -128,9 +124,9 @@ for (var k = 0; k &lt; 26; k++)
 Console.WriteLine(&quot;No&quot;);
 </code></pre>
 <h2 id="c"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_c">問題C</a></h2>
-<p><a href="https://atcoder.jp/contests/abc232/submissions/27999013">コンテスト提出</a><br />
+<p><a href="https://atcoder.jp/contests/abc232/submissions/27999013">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc232/submissions/28020954">復習提出</a></p>
-<p>2つのグラフ<code>G1</code>と<code>G2</code>が同じ形であることは、<code>G2</code>の頂点番号のみを適切に置き換えたときに、<code>G1</code>のそれぞれの辺に対応する辺を持つことを示すことで判定することができます。<br />
+<p>2つのグラフ<code>G1</code>と<code>G2</code>が同じ形であることは、<code>G2</code>の頂点番号のみを適切に置き換えたときに、<code>G1</code>のそれぞれの辺に対応する辺を持つことを示すことで判定することができます。<br>
 制約も<code>1&lt;=N&lt;=8</code>と小さいので、<code>G2</code>のそれぞれの頂点に対応する順列を総当たりし、<code>G2</code>の辺<code>E2</code>の頂点を置き換えた辺すべてが、<code>G1</code>の辺<code>E1</code>に存在するかを判定します。</p>
 <pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
 var E1 = new bool[N, N];
@@ -168,10 +164,10 @@ Console.WriteLine(&quot;No&quot;);
 </code></pre>
 <p><code>Permute</code>メソッドは自作のLINQ拡張メソッドです。</p>
 <h2 id="d"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_d">問題D</a></h2>
-<p><a href="https://atcoder.jp/contests/abc232/submissions/28004343">コンテスト提出</a><br />
+<p><a href="https://atcoder.jp/contests/abc232/submissions/28004343">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc232/submissions/28021337">復習提出</a></p>
-<p>移動方法が<code>i+1</code>か<code>j+1</code>のみなので、左上のマスから行くことができるマスを数え上げます。<br />
-もし隣り合うマスが<code>.</code>ならば、そのマスの現在の値と今いるマスの値+1との最大を集計することで、そのマスまで通ったマスの数の最大値をまとめることができます。<br />
+<p>移動方法が<code>i+1</code>か<code>j+1</code>のみなので、左上のマスから行くことができるマスを数え上げます。<br>
+もし隣り合うマスが<code>.</code>ならば、そのマスの現在の値と今いるマスの値+1との最大を集計することで、そのマスまで通ったマスの数の最大値をまとめることができます。<br>
 制約により左上の値が1のため、マスの値が0の場合は、マスが<code>#</code>、または到達不可能といえるので、判定を無視することができます。</p>
 <pre><code class="language-csharp line-numbers">var (H, W) = Scanner.Scan&lt;int, int&gt;();
 var C = new char[H][];
@@ -212,9 +208,9 @@ Console.WriteLine(answer);
 <p>コンテスト中の考察です。</p>
 <p><code>K=1</code>の時は、<code>(x1 == x2 &amp;&amp; y1 != y2) || (x1 != x2 &amp;&amp; y1 == y2)</code>の場合のみ到達可能</p>
 <p><code>K=2</code>の時は、
-<code>(x1 == x2 &amp;&amp; y1 == y2)</code>ならば、<code>H-1</code>または<code>W-1</code><br />
-<code>(x1 == x2 &amp;&amp; y1 != y2)</code>ならば、<code>H-2</code><br />
-<code>(x1 != x2 &amp;&amp; y1 == y2)</code>ならば、<code>W-2</code><br />
+<code>(x1 == x2 &amp;&amp; y1 == y2)</code>ならば、<code>H-1</code>または<code>W-1</code><br>
+<code>(x1 == x2 &amp;&amp; y1 != y2)</code>ならば、<code>H-2</code><br>
+<code>(x1 != x2 &amp;&amp; y1 == y2)</code>ならば、<code>W-2</code><br>
 <code>(x1 != x2 &amp;&amp; y1 != y2)</code>ならば、<code>2</code></p>
 <p><code>K&gt;=3</code>の時は、
 <code>K-2</code>を数え上げたうえで<code>K=2</code>の盤面ができれば解くことができないだろうか。</p>
@@ -243,8 +239,8 @@ for (var k = 0; k &lt; K; k++)
 }
 </code></pre>
 
-              </div>
-              <div class="post-footer mt-5">
+                        </div>
+                        <div class="post-footer mt-5">
     <div class="share">
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20211220abc232" data-size="large">
             Tweet
@@ -255,7 +251,7 @@ for (var k = 0; k &lt; K; k++)
 
     <div class="row justify-content-center m-3 about">
         <div class="col-md-3 mt-3">
-            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+            <img class="rounded-circle" src="/blog/assets/images/icon.webp" alt="icon">
         </div>
         <div class="col-md-3 mt-3">
             <div class="col">
@@ -272,14 +268,14 @@ for (var k = 0; k &lt; K; k++)
     </div>
 </div>
 
-            </div>
-          </div>
+                    </div>
+                </div>
 
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <footer>
+<footer>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -298,16 +294,16 @@ for (var k = 0; k &lt; K; k++)
 </footer>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
 
-<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+<script src="/blog/assets/vendor/prism/prism.js"></script>
 
-<script src="/blog/prism/prism.js"></script>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-</body>
 
-</html>
+
+
+</body></html>

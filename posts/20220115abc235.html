@@ -1,52 +1,47 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="ja"><head>
 
-<html lang="ja">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' 'unsafe-inline';
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
 img-src 'self' * data: *.w3.org; 
 child-src 'none';
 frame-src 'self' *.twitter.com;
 font-src 'self' *.fontawesome.com *.typekit.net;
-connect-src 'self' *.fontawesome.com *.typekit.net; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com;
-script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline' cdn.jsdelivr.net stackpath.bootstrapcdn.com;
+script-src 'self' 'unsafe-eval' cdn.jsdelivr.net *.fontawesome.com cdnjs.cloudflare.com *.twitter.com *.typekit.net;">
 
-  <link rel="icon" href="/blog/assets/favicon.ico" />
+    <link rel="icon" href="/blog/assets/images/favicon.ico">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
 
-  <title>acon.log - ABC235</title>
+    <title>acon.log - ABC235</title>
 
-  
+    
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="acon.log">
 <meta property="og:title" content="ABC235">
 <meta property="og:description" content="">
-<meta property="og:image" content="/blog/assets/icon.webp">
+<meta property="og:image" content="/blog/assets/images/icon.webp">
 <meta property="og:url" content="/blog/posts/20220115abc235">
 
 
-  <script src="/blog/js/adobe_fonts.js"></script>
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="/blog/">acon.log</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
     <li class="nav-item">
         <a class="nav-link" href="/blog/posts">Posts</a>
     </li>
@@ -57,23 +52,24 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 </nav>
 
 
-  <header>
+<header>
 </header>
 
 
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div id="content">
+        <div id="content">
 
-          <div class="card shadow-sm">
-            <div class="card-body p-md-5">
-              
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
 <div class="post-header">
     <div class="row">
         <div class="col-md-12">
             <h1 class="card-title">ABC235</h1>
 
-            <div class="card-text post-meta">Published on Saturday, 15 January 2022
+            <div class="card-text post-meta">
+                Published on Saturday, 15 January 2022
             </div>
             <div class="card-text post-meta">Updated on Sunday, 16 January 2022</div>
 
@@ -87,8 +83,8 @@ script-src 'self' 'unsafe-eval' cdn.jsdelivr.net stackpath.bootstrapcdn.com *.fo
 
 <hr>
 
-              <div class="post-body">
-                <h1 id="section">はじめに</h1>
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
 <p>AtCoder Beginner Contest 235の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <h1 id="section-1">コンテスト</h1>
@@ -161,8 +157,8 @@ while (Q-- &gt; 0)
 </code></pre>
 <h2 id="d"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_d">問題D</a></h2>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28546896">コンテスト提出</a></p>
-<p>各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。<br />
-シフト操作によって、<code>N</code>の値より大きい数から<code>N</code>より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。<br />
+<p>各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。<br>
+シフト操作によって、<code>N</code>の値より大きい数から<code>N</code>より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。<br>
 <code>Shift</code>メソッドは配列を与えられた値だけシフトする関数です。</p>
 <pre><code class="language-csharp line-numbers">var (A, N) = Scanner.Scan&lt;long, long&gt;();
 var dp = new Dictionary&lt;long, int&gt;();
@@ -335,8 +331,8 @@ if ((digits &amp; ok) == ok)
 Console.WriteLine(answer);
 </code></pre>
 
-              </div>
-              <div class="post-footer mt-5">
+                        </div>
+                        <div class="post-footer mt-5">
     <div class="share">
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220115abc235" data-size="large">
             Tweet
@@ -347,7 +343,7 @@ Console.WriteLine(answer);
 
     <div class="row justify-content-center m-3 about">
         <div class="col-md-3 mt-3">
-            <img class="rounded-circle" src="/blog/assets/icon.webp" alt="icon"/>
+            <img class="rounded-circle" src="/blog/assets/images/icon.webp" alt="icon">
         </div>
         <div class="col-md-3 mt-3">
             <div class="col">
@@ -364,14 +360,14 @@ Console.WriteLine(answer);
     </div>
 </div>
 
-            </div>
-          </div>
+                    </div>
+                </div>
 
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <footer>
+<footer>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -390,16 +386,16 @@ Console.WriteLine(answer);
 </footer>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
 
-<script src="https://kit.fontawesome.com/defa8b99ee.js" crossorigin="anonymous"></script>
+<script src="/blog/assets/vendor/prism/prism.js"></script>
 
-<script src="/blog/prism/prism.js"></script>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-</body>
 
-</html>
+
+
+</body></html>
