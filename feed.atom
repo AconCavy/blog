@@ -4,14 +4,14 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-03-05T15:31:59Z</updated>
+	<updated>2022-03-05T15:50:42Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220305abc242</id>
 		<title>ABC242</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220305abc242" />
 		<updated>2022-03-06T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 242の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc242"&gt;https://atcoder.jp/contests/abc242&lt;/a&gt;&lt;/p&gt;
@@ -143,7 +143,7 @@ while (Q-- &amp;gt; 0)
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 242の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220226abc241</id>
