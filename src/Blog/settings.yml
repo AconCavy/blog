@@ -18,6 +18,7 @@ LinksUseHttps: true
 LinkLowercase: true
 UseCache: false
 DateTimeInputCulture: ja-JP
+MirrorResources: true
 
 Copyright: => $"Copyright © 2020-{DateTime.Now.Year} AconCavy"
 
