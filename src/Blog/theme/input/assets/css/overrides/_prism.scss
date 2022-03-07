@@ -3,6 +3,7 @@ pre,
 code[class*="language-"],
 pre[class*="language-"] {
   background: #2A2D37;
+  color: $primary;
   font-family: "source-code-pro", "source-han-sans-japanese", monospace;
   text-align: left;
   white-space: pre;
@@ -32,4 +33,59 @@ div.code-toolbar > .toolbar span {
   font-size: 1em;
   border-radius: 4px;
   background: rgba(224, 224, 224, 0.2);
+}
+
+.token.comment,
+.token.block-comment,
+.token.cdata,
+.token.doctype,
+.token.prolog {
+  color: $secondary;
+}
+
+.token.operator,
+.token.punctuation {
+  color: $cyan;
+}
+
+.token.function-name,
+.token.function {
+  color: $blue;
+}
+
+.token.boolean {
+  color: $pink;
+}
+
+.token.number {
+  color: $orange;
+}
+
+.token.attr-name,
+.token.namespace,
+.token.class-name,
+.token.constant,
+.token.property,
+.token.symbol,
+.token.deleted,
+.token.tag {
+  color: $yellow;
+}
+
+.token.atrule,
+.token.builtin,
+.token.important,
+.token.keyword,
+.token.selector {
+  color: $purple;
+}
+
+.token.attr-value,
+.token.char,
+.token.regex,
+.token.string,
+.token.variable,
+.token.entity,
+.token.url {
+  color: $green;
 }
