@@ -1,8 +1,7 @@
 code,
 pre,
-code[class*="language-"],
-pre[class*="language-"] {
-  background: #2A2D37;
+code[class*=language-],
+pre[class*=language-] {
   color: $primary;
   font-family: "source-code-pro", "source-han-sans-japanese", monospace;
   text-align: left;
@@ -10,29 +9,44 @@ pre[class*="language-"] {
   word-spacing: normal;
   word-break: normal;
   overflow-wrap: normal;
-  margin: 1.5rem 0;
 }
 
-pre {
+pre,
+pre[class*=language-] {
   padding: 1rem;
+  margin: .5rem 0;
+}
+
+:not(pre) > code,
+pre,
+:not(pre) > code[class*=language-],
+pre[class*=language-] {
+  background: #2A2D37;
 }
 
 :not(pre) > code {
   color: $pink;
+  font-weight: 400;
   margin: 0 .25rem;
   padding: 0 .25rem;
   border-radius: 4px;
   overflow-wrap: break-word;
 }
 
-div.code-toolbar > .toolbar a,
-div.code-toolbar > .toolbar button,
-div.code-toolbar > .toolbar span {
-  color: $accent;
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  color: $secondary;
   background: $backgroundAlt;
-  font-size: 1em;
-  border-radius: 4px;
-  background: rgba(224, 224, 224, 0.2);
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover {
+  color: $accent;
 }
 
 .token.comment,
