@@ -1,0 +1,8 @@
+.fab {
+  color: $blue;
+
+  &:focus,
+  &:hover {
+    color: $accent;
+  }
+}
