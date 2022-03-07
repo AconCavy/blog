@@ -1,26 +1,11 @@
-SiteTitle: acon.log
-PageTitle: |
-  =>
-  {
-    var siteTitle = Context.GetString("SiteTitle");
-    var title = GetString("Title");
-    return string.IsNullOrWhiteSpace(siteTitle) ? title : (string.IsNullOrWhiteSpace(title) ? siteTitle : $"{siteTitle} - {title}");
-  }
-
 InputPaths: ../../input
-PostSources: posts/*
-IsPost: => Outputs.FilterSources(Context.GetString("PostSources")).ContainsById(Document)
-Layout: /_Layout.cshtml
-
 Host: aconcavy.github.io
-LinkRoot: /blog
 LinksUseHttps: true
+LinkRoot: /blog
 LinkLowercase: true
 UseCache: false
 DateTimeInputCulture: ja-JP
 MirrorResources: true
-
-Copyright: => $"Copyright © 2020-{DateTime.Now.Year} AconCavy"
 
 GitHubOwner: AconCavy
 GitHubName: blog
