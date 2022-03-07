@@ -12,7 +12,7 @@
 @if (older != null || newer != null)
 {
     <div class="post-nav">
-        <div class="float-left">
+        <div class="float-start">
             @if (newer != null)
             {
                 <a class="btn btn-primary" href="@Context.GetLink(newer)" role="button">
@@ -21,7 +21,7 @@
                 </a>
             }
         </div>
-        <div class="float-right">
+        <div class="float-end">
             @if (older != null)
             {
                 <a class="btn btn-primary" href="@Context.GetLink(older)" role="button">
