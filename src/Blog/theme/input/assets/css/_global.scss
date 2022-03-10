@@ -3,7 +3,7 @@ body {
   word-break: normal;
   overflow-wrap: break-word;
   background-color: $background;
-  font-family: "source-han-sans-japanese", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "Yu Gothic Medium", sans-serif;
+  font-family: $font-family-sans-serif;
   color: $primary;
 }
 

@@ -3,6 +3,7 @@
 }
 
 .post-body {
+  text-align: left;
   margin-top: -1rem;
 
   h1, h2, h3 {
@@ -11,7 +12,11 @@
 }
 
 .post-footer {
-  margin-top: 2rem;
+  text-align: center;
+  
+  .share {
+    text-align: start;
+  }
 
   img {
     width: 6rem;
@@ -30,7 +35,7 @@
   background-color: $backgroundAlt;
   margin-bottom: 1rem;
 
-  > a {
+  a {
     color: $primary;
 
     &:focus,
@@ -39,19 +44,19 @@
       color: $accent;
     }
 
-    > .post-title {
+    .post-title {
       font-size: 2rem;
     }
 
-    > .post-subtitle {
+    .post-subtitle {
       font-weight: 300;
     }
   }
 
-  > .post-meta {
+  .post-meta {
     color: $secondary;
 
-    > a {
+    a {
       text-decoration: none;
       color: $secondary;
 

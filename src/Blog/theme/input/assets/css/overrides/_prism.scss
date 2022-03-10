@@ -3,7 +3,7 @@ pre,
 code[class*=language-],
 pre[class*=language-] {
   color: $primary;
-  font-family: "source-code-pro", "source-han-sans-japanese", monospace;
+  font-family: $font-family-monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
