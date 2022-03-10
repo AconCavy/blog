@@ -161,6 +161,8 @@ footer p { color: #BABABA; }
 
 .about { text-align: center; }
 
+.about img.card-img-top { width: 10rem; }
+
 .btn { font-size: .8rem; font-weight: 700; text-transform: uppercase; }
 
 .btn:hover, .btn:focus, .btn:active { color: #1a1a1a !important; background-color: #80CBC4 !important; border-color: #80CBC4 !important; }
