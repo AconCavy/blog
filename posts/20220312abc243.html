@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC243</title>
+
+    <link rel="icon" href="/blog/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta property="og:title" content="ABC243">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220312abc243">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title">ABC243</h1>
+
+    <div class="card-text post-meta">
+        Published on Saturday, 12 March 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Saturday, 12 March 2022
+    </div>
+
+        <div class="mt-3">
+                <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 243の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc243">https://atcoder.jp/contests/abc243</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC243/submissions/30026790">コンテスト提出</a></p>
+<p><code>V</code>ミリリットルを使い切る周を考えるために、1周で使う量である<code>A+B+C</code>で余りを取ってから考えます。</p>
+<ul>
+<li>残りの量が<code>A</code>未満ならば、<code>F</code></li>
+<li>残りの量が<code>A+B</code>未満ならば、<code>M</code></li>
+<li>それ以外ならば、<code>T</code></li>
+</ul>
+<p>が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">var (V, A, B, C) = Scanner.Scan&lt;int, int, int, int&gt;();
+V %= A + B + C;
+if (V &lt; A) { Console.WriteLine(&quot;F&quot;); }
+else if (V &lt; A + B) { Console.WriteLine(&quot;M&quot;); }
+else { Console.WriteLine(&quot;T&quot;); }
+
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC243/submissions/30030964">コンテスト提出</a></p>
+<p>あらかじめ<code>A</code>と<code>B</code>の要素をキーとして、位置をそれぞれ別の辞書に保持しておきます。
+そして、<code>A</code>の要素を順番に見ていき、<code>A</code>の要素が<code>B</code>の辞書に存在するとき、位置が一致する場合と一致しない場合をそれぞれ数え上げます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+
+var dictA = new Dictionary&lt;int, int&gt;();
+var dictB = new Dictionary&lt;int, int&gt;();
+for (var i = 0; i &lt; N; i++)
+{
+    dictA[A[i]] = i;
+    dictB[B[i]] = i;
+}
+
+var ans1 = 0;
+var ans2 = 0;
+foreach (var a in A)
+{
+    if (dictB.ContainsKey(a))
+    {
+        if (dictA[a] == dictB[a]) ans1++;
+        else ans2++;
+    }
+}
+
+Console.WriteLine(ans1);
+Console.WriteLine(ans2);
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC243/submissions/30038745">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC243/submissions/30081816">復習提出</a></p>
+<p>愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
+まず、動く方向は左右の2つしかないので、<code>Y</code>の値が同じ人が衝突する可能性があると考えられます。
+そこで、左に動く人たちと右に動く人たちをそれぞれ<code>Y</code>ごとに分けて管理することを考えます。
+そして、左に動く人たちと右に動く人たちの<code>Y</code>が同じとき、<code>右に動く人のうち最も左にいる人 &lt;= 左に動く人のうち最も右にいる人</code>が成り立てば、衝突が発生します。
+このことから、<code>Y</code>の値をキーとして、左に動く人たちの最も右の<code>X</code>と右に動く人たちの最も左の<code>X</code>をそれぞれ辞書を作成し、<code>Y</code>の値につき計算量<code>O(1)</code>で衝突するかの判定をすることができ、全体で計算量<code>O(NlogN)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
+var P = new (int X, int Y)[N];
+for (var i = 0; i &lt; N; i++)
+{
+    P[i] = Scanner.Scan&lt;int, int&gt;();
+}
+
+var S = Scanner.Scan&lt;string&gt;();
+var L = new Dictionary&lt;int, int&gt;();
+var R = new Dictionary&lt;int, int&gt;();
+const int inf = (int)1e9;
+for (var i = 0; i &lt; N; i++)
+{
+    var (x, y) = P[i];
+    if (S[i] == 'L')
+    {
+        if (!L.ContainsKey(y)) L[y] = 0;
+        L[y] = Math.Max(L[y], x);
+    }
+    else
+    {
+        if (!R.ContainsKey(y)) R[y] = inf;
+        R[y] = Math.Min(R[y], x);
+    }
+}
+
+foreach (var (y, x) in R)
+{
+    if (L.ContainsKey(y) &amp;&amp; x &lt;= L[y])
+    {
+        Console.WriteLine(&quot;Yes&quot;);
+        return;
+    }
+}
+
+Console.WriteLine(&quot;No&quot;);
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC243/submissions/30044374">コンテスト提出</a></p>
+<p><code>N</code>回の移動後にいる頂点の番号は<code>10^18</code>以下であることが制約で保証されていますが、愚直にシミュレーションしてしまうと、制約<code>N&lt;=10^6</code>より、シミュレーション中の頂点の値が最大で<code>X*2^(N/2)</code>になり、現在のコンピュータの整数型では正しく計算することができません。
+そこで、子に移動して親に戻るといった、無駄な移動を省くことで、シミュレーション中でも頂点の値が<code>10^18</code>を超えないようにすることを考えます。
+これは、<code>S</code>を順にみていったとき<code>U</code>の直前にが<code>L</code>または<code>R</code>が存在すれば、<code>LU</code>、<code>RU</code>の操作を省くことができます。
+また、<code>S=LRUU</code>の操作ような場合、<code>RU</code>を省くと、<code>LU</code>としてつながり、さらに省くことができます。
+このことから、<code>Stack</code>のようなデータ構造を用いて直前の操作を保持しながら<code>S</code>を順にみていき、<code>U</code>の操作のとき、直前に<code>L</code>または<code>R</code>が存在するならば直前の操作を削除し、そうでなければ直前の操作を更新します。
+そして、<code>Stack</code>に残った操作をシミュレーションすることで、<code>10^18</code>の値を超えないように操作することができるようになります。</p>
+<pre><code class="language-csharp line-numbers">var (N, X) = Scanner.Scan&lt;int, long&gt;();
+var S = Scanner.Scan&lt;string&gt;();
+var stack = new Stack&lt;char&gt;();
+foreach (var c in S)
+{
+    if (stack.Count &gt; 0 &amp;&amp; stack.Peek() != 'U' &amp;&amp; c == 'U')
+    {
+        stack.Pop();
+    }
+    else
+    {
+        stack.Push(c);
+    }
+}
+
+var T = stack.ToArray();
+Array.Reverse(T);
+
+var answer = X;
+foreach (var c in T)
+{
+    if (c == 'U')
+    {
+        answer /= 2;
+    }
+    else if (c == 'L')
+    {
+        answer *= 2;
+    }
+    else
+    {
+        answer *= 2;
+        answer++;
+    }
+}
+
+Console.WriteLine(answer);
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC243/submissions/30080632">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>ワーシャルフロイド法で最短距離を求める?</li>
+<li>最小全域木の頂点ごとの最短距離が元のグラフの頂点ごとの最短距離より大きいならば、一致するような辺を追加する?</li>
+</ul>
+<p><code>TLE</code>と時間切れでした。</p>
+<p>ワーシャルフロイド法で最短距離を求め、辺を見ていったとき、頂点<code>u</code>と頂点<code>v</code>を結ぶ辺のコストが<code>c</code>だった場合、頂点<code>k</code>を中継点とする<code>u-&gt;k-&gt;v</code>となるルートのコストが<code>c</code>以下だった場合、その辺は不要ということがわかります。</p>
+<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
+const long inf = (long)1e18;
+var G = new long[N, N];
+for (var i = 0; i &lt; N; i++)
+{
+    for (var j = 0; j &lt; N; j++)
+    {
+        G[i, j] = inf;
+    }
+}
+
+var E = new (int U, int V, long C)[M];
+for (var i = 0; i &lt; M; i++)
+{
+    var (a, b, c) = Scanner.Scan&lt;int, int, long&gt;();
+    a--; b--;
+    G[a, b] = G[b, a] = c;
+    E[i] = (a, b, c);
+}
+
+for (var k = 0; k &lt; N; k++)
+{
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            G[i, j] = Math.Min(G[i, j], G[i, k] + G[k, j]);
+        }
+    }
+}
+
+var answer = 0;
+foreach (var (i, j, c) in E)
+{
+    var unused = false;
+    for (var k = 0; k &lt; N; k++)
+    {
+        if (i == k || j == k) continue;
+        unused |= G[i, k] + G[k, j] &lt;= c;
+    }
+
+    if (unused) answer++;
+}
+
+Console.WriteLine(answer);
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220312abc243" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/blog/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
