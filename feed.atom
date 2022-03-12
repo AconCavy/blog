@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-03-12T14:59:48Z</updated>
+	<updated>2022-03-12T20:20:35Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220312abc243</id>
 		<title>ABC243</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220312abc243" />
-		<updated>2022-03-12T00:00:00Z</updated>
+		<updated>2022-03-13T00:00:00Z</updated>
 		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -67,7 +67,7 @@ Console.WriteLine(ans2);
 &lt;p&gt;愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
 まず、動く方向は左右の2つしかないので、&lt;code&gt;Y&lt;/code&gt;の値が同じ人が衝突する可能性があると考えられます。
 そこで、左に動く人たちと右に動く人たちをそれぞれ&lt;code&gt;Y&lt;/code&gt;ごとに分けて管理することを考えます。
-そして、左に動く人たちと右に動く人たちの&lt;code&gt;Y&lt;/code&gt;が同じとき、&lt;code&gt;右に動く人のうち最も左にいる人 &amp;lt;= 左に動く人のうち最も右にいる人&lt;/code&gt;が成り立てば、衝突が発生します。
+そして、左に動く人たちと右に動く人たちの&lt;code&gt;Y&lt;/code&gt;が同じとき、右に動く人のうち最も左の位置(&lt;code&gt;RX&lt;/code&gt;)と、左に動く人のうち最も右の位置(&lt;code&gt;LX&lt;/code&gt;)において&lt;code&gt;RX&amp;lt;=LX&lt;/code&gt;が成り立てば、衝突が発生します。
 このことから、&lt;code&gt;Y&lt;/code&gt;の値をキーとして、左に動く人たちの最も右の&lt;code&gt;X&lt;/code&gt;と右に動く人たちの最も左の&lt;code&gt;X&lt;/code&gt;をそれぞれ辞書を作成し、&lt;code&gt;Y&lt;/code&gt;の値につき計算量&lt;code&gt;O(1)&lt;/code&gt;で衝突するかの判定をすることができ、全体で計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
 var P = new (int X, int Y)[N];

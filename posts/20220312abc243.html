@@ -62,16 +62,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                     <div class="card-body p-md-5">
                         
 <div class="post-header mb-5">
-    <h1 class="card-title">ABC243</h1>
+    <h1 class="card-title post-title">ABC243</h1>
 
     <div class="card-text post-meta">
         Published on Saturday, 12 March 2022
     </div>
     <div class="card-text post-meta">
-        Updated on Saturday, 12 March 2022
+        Updated on Sunday, 13 March 2022
     </div>
 
-        <div class="mt-3">
+        <div class="mt-3 mb-4">
                 <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
                 <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
         </div>
@@ -137,7 +137,7 @@ Console.WriteLine(ans2);
 <p>愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
 まず、動く方向は左右の2つしかないので、<code>Y</code>の値が同じ人が衝突する可能性があると考えられます。
 そこで、左に動く人たちと右に動く人たちをそれぞれ<code>Y</code>ごとに分けて管理することを考えます。
-そして、左に動く人たちと右に動く人たちの<code>Y</code>が同じとき、<code>右に動く人のうち最も左にいる人 &lt;= 左に動く人のうち最も右にいる人</code>が成り立てば、衝突が発生します。
+そして、左に動く人たちと右に動く人たちの<code>Y</code>が同じとき、右に動く人のうち最も左の位置(<code>RX</code>)と、左に動く人のうち最も右の位置(<code>LX</code>)において<code>RX&lt;=LX</code>が成り立てば、衝突が発生します。
 このことから、<code>Y</code>の値をキーとして、左に動く人たちの最も右の<code>X</code>と右に動く人たちの最も左の<code>X</code>をそれぞれ辞書を作成し、<code>Y</code>の値につき計算量<code>O(1)</code>で衝突するかの判定をすることができ、全体で計算量<code>O(NlogN)</code>で答えを求めることができます。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
 var P = new (int X, int Y)[N];
