@@ -1,5 +1,9 @@
 ﻿.post-header {
   text-align: center;
+
+  .post-title {
+    font-size: 32px;
+  }
 }
 
 .post-body {
@@ -42,14 +46,6 @@
     &:hover {
       text-decoration: none;
       color: $accent;
-    }
-
-    .post-title {
-      font-size: 2rem;
-    }
-
-    .post-subtitle {
-      font-weight: 300;
     }
   }
 

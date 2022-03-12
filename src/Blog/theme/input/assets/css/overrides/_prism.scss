@@ -6,9 +6,6 @@ pre[class*=language-] {
   font-family: $font-family-monospace;
   text-align: left;
   white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  overflow-wrap: normal;
 }
 
 pre,
@@ -30,7 +27,6 @@ pre[class*=language-] {
   margin: 0 .25rem;
   padding: 0 .25rem;
   border-radius: 4px;
-  overflow-wrap: break-word;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a,
