@@ -5,6 +5,7 @@ LinkRoot: /blog
 LinkLowercase: true
 UseCache: false
 DateTimeInputCulture: ja-JP
+DateTimeDisplayCulture: ja-JP
 MirrorResources: true
 
 GitHubOwner: AconCavy
