@@ -3,7 +3,7 @@
     var site = Document.GetString("SiteTitle");
     var title = Document.GetString("Title") ?? site;
     var description = Document.GetString("Lead") ?? string.Empty;
-    var image = $"{host}{Context.GetLink("/assets/images/icon.webp")}";
+    var image = $"{host}{Context.GetLink("/assets/images/icon.svg")}";
     var url = $"{host}{Document.GetLink()}";
 }
 
