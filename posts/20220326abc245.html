@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC245</title>
+
+    <link rel="icon" href="/blog/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC245">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220326abc245">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title post-title">ABC245</h1>
+
+    <div class="card-text post-meta">
+        Published on Sunday, 27 March 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Sunday, 27 March 2022
+    </div>
+
+        <div class="mt-3 mb-4">
+                <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 245の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc245">https://atcoder.jp/contests/abc245</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30430680">コンテスト提出</a></p>
+<p>時刻が早いといえるのは、<code>A</code>時のほうが<code>C</code>時より早い(<code>A&lt;C</code>)とき、あるいは時が同じとき(<code>A==C</code>)に<code>B</code>分のほうが<code>D</code>分より早い(<code>B&lt;D</code>)ときとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B, C, D) = Scanner.Scan&lt;int, int, int, int&gt;();
+    var answer = A &lt; C;
+    if (A == C) answer |= B &lt;= D;
+
+    Console.WriteLine(answer ? &quot;Takahashi&quot; : &quot;Aoki&quot;);
+}
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30433167">コンテスト提出</a></p>
+<p>小さい順に数字を見ていき、その数字が<code>A</code>に含まれているかを確認することで、<code>O(N^2)</code>で答えを求めることができます。
+また、<code>A</code>に含まれているものをメモしておき、<code>A</code>に含まれていない最小の数値を答えることで、<code>O(N)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var used = new bool[2001];
+    foreach (var a in A)
+    {
+        used[a] = true;
+    }
+
+    for (var i = 0; i &lt;= 2000; i++)
+    {
+        if (!used[i])
+        {
+            Console.WriteLine(i);
+            return;
+        }
+    }
+}
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30442020">コンテスト提出</a></p>
+<p>全ての<code>A</code>と<code>B</code>の要素の組み合わせを考えると、<code>O(2^N)</code>となってしまい、<code>N</code>が大きい場合は実行制限時間内に答えを求めることができません。<br>
+そのため、計算量を抑えて答えを求める方法を考える必要があります。</p>
+<p><code>A</code>と<code>B</code>の<code>i (0&lt;i&lt;N)</code>番目の要素が<code>X</code>の数列として採用されることがあり得るか考えたとき、<code>i-1</code>番目に採用した数と差の絶対値が<code>K</code>未満であれば採用することができます。<br>
+まず始めに、<code>X[0]</code>としてあり得る数を考えたとき、<code>A[0]</code>と<code>B[0]</code>の二つが存在するため、それぞれを<code>X[0]</code>の候補として保持しておきます。<br>
+次に、<code>X[1]</code>を考えたとき、<code>A[1]</code>があり得るためには、<code>A[0]</code>との差が<code>K</code>以下、あるいは<code>B[0]</code>との差が<code>K</code>以下である必要があります。
+どちらか一方でも条件を満たす場合は、<code>X[1]</code>の候補として<code>A[1]</code>を保持し、満たさない場合は<code>A[1]</code>は<code>X[1]</code>の候補としてあり得ないため除外します。
+同様に、<code>B[1]</code>も考えます。
+<code>X[2]</code>以降も同様に、<code>X[i-1]</code>であり得る可能性のある数との差が<code>K</code>以下であるかを確認して候補を保持していきます。
+そして、最後まで見たときに、あり得る数が存在するかどうかが答えとなり、<code>O(N)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dp1 = new HashSet&lt;int&gt; { A[0], B[0] };
+    for (var i = 1; i &lt; N; i++)
+    {
+        var dp2 = new HashSet&lt;int&gt;();
+        var (a, b) = (A[i], B[i]);
+        foreach (var v in dp1)
+        {
+            if (Math.Abs(v - a) &lt;= K) dp2.Add(a);
+            if (Math.Abs(v - b) &lt;= K) dp2.Add(b);
+        }
+
+        dp1 = dp2;
+    }
+
+    var answer = dp1.Count &gt; 0;
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30469582">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/abc245/submissions/30487152">復習提出</a></p>
+<p><code>B=C/A</code>となる数列<code>B</code>を求める問題です。</p>
+<p>まず、<code>C</code>がどんな数列かを考えます。
+C#のコードで書くと以下のようになります。</p>
+<pre><code class="language-csharp line-numbers">for(var ai = 0; ai &lt;= N; ai++)
+{
+    for(var bi = 0; bi &lt;= M; bi++)
+    {
+        C[ai + bi] += A[ai] * B[bi];
+    }
+}
+</code></pre>
+<p><code>A</code>の次元<code>0&lt;=ai&lt;=N</code>と<code>0&lt;=B&lt;=M</code>の次元<code>bi</code>を考えたとき、<code>ai</code>と<code>bi</code>は<code>C[ai+bi]</code>に影響を与えます。<br>
+<code>B</code>の最上位の次元の係数を考えたとき、<code>B[M]</code>は<code>C[N+M]/A[N]</code>で求められることがわかります。<br>
+そして、<code>B</code>の最上位の次元の係数が決定すると、<code>B</code>の最上位の次元と<code>A</code>の各次元が影響を与える<code>C[ai+M]</code>から、<code>A[ai]*B[M]</code>を引くことで、<code>C</code>の各係数から<code>B</code>の最上位の係数が与えた影響をとり除くことができます。</p>
+<p>このことから、<code>B</code>の最上位の次元から順に<code>bi</code>と<code>ai</code>を固定しながら<code>C[ai+bi]</code>の値を更新していくことで、<code>B</code>の次元の係数を確定していくことができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var C = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var B = new long[M + 1];
+
+    for (var bi = M; bi &gt;= 0; bi--)
+    {
+        B[bi] = C[bi + N] / A[N];
+        for (var ai = N; ai &gt;= 0; ai--)
+        {
+            C[ai + bi] -= A[ai] * B[bi];
+        }
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, B));
+}
+
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30487009">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>チョコレートが大きい順に処理したい(縦?横?縦+横?面積?)。</li>
+<li>座標圧縮とFenwickTreeで使える箱があるかどうかは確認できそう。</li>
+</ul>
+<p>解説では、チョコレートと箱をまとめて縦の降順にみていき、ソート可能なセットを使って横の長さを管理する方法が紹介されていました。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var C = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var D = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+
+    var chocos = A.Zip(B).Select(x =&gt; new Element(0, x.First, x.Second));
+    var cases = C.Zip(D).Select(x =&gt; new Element(1, x.First, x.Second));
+    var list = chocos.Concat(cases).ToList();
+    list.Sort((x, y) =&gt;
+    {
+        var result = y.H.CompareTo(x.H);
+        return result != 0 ? result : y.Type.CompareTo(x.Type);
+    });
+
+    var set = new RandomizedBinarySearchTree&lt;int&gt;();
+    foreach (var e in list)
+    {
+        if (e.Type == 0)
+        {
+            var lb = set.LowerBound(e.W);
+            if (lb &lt; 0 || set.Count &lt;= lb)
+            {
+                Console.WriteLine(&quot;No&quot;);
+                return;
+            }
+
+            set.RemoveAt(lb);
+        }
+        else
+        {
+            set.Insert(e.W);
+        }
+    }
+
+    Console.WriteLine(&quot;Yes&quot;);
+}
+</code></pre>
+<h2 id="f"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_f">問題F</a></h2>
+<p><a href="https://atcoder.jp/contests/abc245/submissions/30487303">復習提出</a></p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+    var deg = new int[N];
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        G[v].Add(u);
+        deg[u]++;
+    }
+
+    var queue = new Queue&lt;int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (deg[i] == 0) queue.Enqueue(i);
+    }
+
+    var answer = N;
+    while (queue.Count &gt; 0)
+    {
+        var u = queue.Dequeue();
+        answer--;
+
+        foreach (var v in G[u])
+        {
+            deg[v]--;
+            if (deg[v] == 0) queue.Enqueue(v);
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220326abc245" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/blog/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>

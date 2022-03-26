@@ -4,7 +4,215 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-03-20T16:31:20Z</updated>
+	<updated>2022-03-26T16:33:30Z</updated>
+	<entry>
+		<id>https://aconcavy.github.io/blog/posts/20220326abc245</id>
+		<title>ABC245</title>
+		<link href="https://aconcavy.github.io/blog/posts/20220326abc245" />
+		<updated>2022-03-27T00:00:00Z</updated>
+		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;AtCoder Beginner Contest 245の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245"&gt;https://atcoder.jp/contests/abc245&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30430680"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;時刻が早いといえるのは、&lt;code&gt;A&lt;/code&gt;時のほうが&lt;code&gt;C&lt;/code&gt;時より早い(&lt;code&gt;A&amp;lt;C&lt;/code&gt;)とき、あるいは時が同じとき(&lt;code&gt;A==C&lt;/code&gt;)に&lt;code&gt;B&lt;/code&gt;分のほうが&lt;code&gt;D&lt;/code&gt;分より早い(&lt;code&gt;B&amp;lt;D&lt;/code&gt;)ときとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (A, B, C, D) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+    var answer = A &amp;lt; C;
+    if (A == C) answer |= B &amp;lt;= D;
+
+    Console.WriteLine(answer ? &amp;quot;Takahashi&amp;quot; : &amp;quot;Aoki&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30433167"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;小さい順に数字を見ていき、その数字が&lt;code&gt;A&lt;/code&gt;に含まれているかを確認することで、&lt;code&gt;O(N^2)&lt;/code&gt;で答えを求めることができます。
+また、&lt;code&gt;A&lt;/code&gt;に含まれているものをメモしておき、&lt;code&gt;A&lt;/code&gt;に含まれていない最小の数値を答えることで、&lt;code&gt;O(N)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var used = new bool[2001];
+    foreach (var a in A)
+    {
+        used[a] = true;
+    }
+
+    for (var i = 0; i &amp;lt;= 2000; i++)
+    {
+        if (!used[i])
+        {
+            Console.WriteLine(i);
+            return;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30442020"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;全ての&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の要素の組み合わせを考えると、&lt;code&gt;O(2^N)&lt;/code&gt;となってしまい、&lt;code&gt;N&lt;/code&gt;が大きい場合は実行制限時間内に答えを求めることができません。&lt;br /&gt;
+そのため、計算量を抑えて答えを求める方法を考える必要があります。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の&lt;code&gt;i (0&amp;lt;i&amp;lt;N)&lt;/code&gt;番目の要素が&lt;code&gt;X&lt;/code&gt;の数列として採用されることがあり得るか考えたとき、&lt;code&gt;i-1&lt;/code&gt;番目に採用した数と差の絶対値が&lt;code&gt;K&lt;/code&gt;未満であれば採用することができます。&lt;br /&gt;
+まず始めに、&lt;code&gt;X[0]&lt;/code&gt;としてあり得る数を考えたとき、&lt;code&gt;A[0]&lt;/code&gt;と&lt;code&gt;B[0]&lt;/code&gt;の二つが存在するため、それぞれを&lt;code&gt;X[0]&lt;/code&gt;の候補として保持しておきます。&lt;br /&gt;
+次に、&lt;code&gt;X[1]&lt;/code&gt;を考えたとき、&lt;code&gt;A[1]&lt;/code&gt;があり得るためには、&lt;code&gt;A[0]&lt;/code&gt;との差が&lt;code&gt;K&lt;/code&gt;以下、あるいは&lt;code&gt;B[0]&lt;/code&gt;との差が&lt;code&gt;K&lt;/code&gt;以下である必要があります。
+どちらか一方でも条件を満たす場合は、&lt;code&gt;X[1]&lt;/code&gt;の候補として&lt;code&gt;A[1]&lt;/code&gt;を保持し、満たさない場合は&lt;code&gt;A[1]&lt;/code&gt;は&lt;code&gt;X[1]&lt;/code&gt;の候補としてあり得ないため除外します。
+同様に、&lt;code&gt;B[1]&lt;/code&gt;も考えます。
+&lt;code&gt;X[2]&lt;/code&gt;以降も同様に、&lt;code&gt;X[i-1]&lt;/code&gt;であり得る可能性のある数との差が&lt;code&gt;K&lt;/code&gt;以下であるかを確認して候補を保持していきます。
+そして、最後まで見たときに、あり得る数が存在するかどうかが答えとなり、&lt;code&gt;O(N)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var dp1 = new HashSet&amp;lt;int&amp;gt; { A[0], B[0] };
+    for (var i = 1; i &amp;lt; N; i++)
+    {
+        var dp2 = new HashSet&amp;lt;int&amp;gt;();
+        var (a, b) = (A[i], B[i]);
+        foreach (var v in dp1)
+        {
+            if (Math.Abs(v - a) &amp;lt;= K) dp2.Add(a);
+            if (Math.Abs(v - b) &amp;lt;= K) dp2.Add(b);
+        }
+
+        dp1 = dp2;
+    }
+
+    var answer = dp1.Count &amp;gt; 0;
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30469582"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc245/submissions/30487152"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;B=C/A&lt;/code&gt;となる数列&lt;code&gt;B&lt;/code&gt;を求める問題です。&lt;/p&gt;
+&lt;p&gt;まず、&lt;code&gt;C&lt;/code&gt;がどんな数列かを考えます。
+C#のコードで書くと以下のようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for(var ai = 0; ai &amp;lt;= N; ai++)
+{
+    for(var bi = 0; bi &amp;lt;= M; bi++)
+    {
+        C[ai + bi] += A[ai] * B[bi];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;A&lt;/code&gt;の次元&lt;code&gt;0&amp;lt;=ai&amp;lt;=N&lt;/code&gt;と&lt;code&gt;0&amp;lt;=B&amp;lt;=M&lt;/code&gt;の次元&lt;code&gt;bi&lt;/code&gt;を考えたとき、&lt;code&gt;ai&lt;/code&gt;と&lt;code&gt;bi&lt;/code&gt;は&lt;code&gt;C[ai+bi]&lt;/code&gt;に影響を与えます。&lt;br /&gt;
+&lt;code&gt;B&lt;/code&gt;の最上位の次元の係数を考えたとき、&lt;code&gt;B[M]&lt;/code&gt;は&lt;code&gt;C[N+M]/A[N]&lt;/code&gt;で求められることがわかります。&lt;br /&gt;
+そして、&lt;code&gt;B&lt;/code&gt;の最上位の次元の係数が決定すると、&lt;code&gt;B&lt;/code&gt;の最上位の次元と&lt;code&gt;A&lt;/code&gt;の各次元が影響を与える&lt;code&gt;C[ai+M]&lt;/code&gt;から、&lt;code&gt;A[ai]*B[M]&lt;/code&gt;を引くことで、&lt;code&gt;C&lt;/code&gt;の各係数から&lt;code&gt;B&lt;/code&gt;の最上位の係数が与えた影響をとり除くことができます。&lt;/p&gt;
+&lt;p&gt;このことから、&lt;code&gt;B&lt;/code&gt;の最上位の次元から順に&lt;code&gt;bi&lt;/code&gt;と&lt;code&gt;ai&lt;/code&gt;を固定しながら&lt;code&gt;C[ai+bi]&lt;/code&gt;の値を更新していくことで、&lt;code&gt;B&lt;/code&gt;の次元の係数を確定していくことができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var C = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var B = new long[M + 1];
+
+    for (var bi = M; bi &amp;gt;= 0; bi--)
+    {
+        B[bi] = C[bi + N] / A[N];
+        for (var ai = N; ai &amp;gt;= 0; ai--)
+        {
+            C[ai + bi] -= A[ai] * B[bi];
+        }
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, B));
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30487009"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;チョコレートが大きい順に処理したい(縦?横?縦+横?面積?)。&lt;/li&gt;
+&lt;li&gt;座標圧縮とFenwickTreeで使える箱があるかどうかは確認できそう。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解説では、チョコレートと箱をまとめて縦の降順にみていき、ソート可能なセットを使って横の長さを管理する方法が紹介されていました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var C = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var D = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+
+    var chocos = A.Zip(B).Select(x =&amp;gt; new Element(0, x.First, x.Second));
+    var cases = C.Zip(D).Select(x =&amp;gt; new Element(1, x.First, x.Second));
+    var list = chocos.Concat(cases).ToList();
+    list.Sort((x, y) =&amp;gt;
+    {
+        var result = y.H.CompareTo(x.H);
+        return result != 0 ? result : y.Type.CompareTo(x.Type);
+    });
+
+    var set = new RandomizedBinarySearchTree&amp;lt;int&amp;gt;();
+    foreach (var e in list)
+    {
+        if (e.Type == 0)
+        {
+            var lb = set.LowerBound(e.W);
+            if (lb &amp;lt; 0 || set.Count &amp;lt;= lb)
+            {
+                Console.WriteLine(&amp;quot;No&amp;quot;);
+                return;
+            }
+
+            set.RemoveAt(lb);
+        }
+        else
+        {
+            set.Insert(e.W);
+        }
+    }
+
+    Console.WriteLine(&amp;quot;Yes&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30487303"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    var deg = new int[N];
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        u--; v--;
+        G[v].Add(u);
+        deg[u]++;
+    }
+
+    var queue = new Queue&amp;lt;int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (deg[i] == 0) queue.Enqueue(i);
+    }
+
+    var answer = N;
+    while (queue.Count &amp;gt; 0)
+    {
+        var u = queue.Dequeue();
+        answer--;
+
+        foreach (var v in G[u])
+        {
+            deg[v]--;
+            if (deg[v] == 0) queue.Enqueue(v);
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 245の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220320abc244</id>
 		<title>ABC244</title>
@@ -2020,259 +2228,5 @@ Console.WriteLine(Median());
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 236の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://aconcavy.github.io/blog/posts/20220115abc235</id>
-		<title>ABC235</title>
-		<link href="https://aconcavy.github.io/blog/posts/20220115abc235" />
-		<updated>2022-01-16T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235"&gt;https://atcoder.jp/contests/abc235&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28530777"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各桁を移動させて足します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var V = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
-var answer = 0;
-answer += V[0] * 100 + V[1] * 10 + V[2];
-answer += V[1] * 100 + V[2] * 10 + V[0];
-answer += V[2] * 100 + V[0] * 10 + V[1];
-
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28530905"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;順にみて前回より大きい場合は&lt;code&gt;curr&lt;/code&gt;を更新し、小さい場合は移動することができないため、&lt;code&gt;curr&lt;/code&gt;を表示します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var H = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-var curr = 0L;
-for (var i = 0; i &amp;lt; N; i++)
-{
-    if (curr &amp;lt; H[i])
-    {
-        curr = H[i];
-    }
-    else
-    {
-        Console.WriteLine(curr);
-        return;
-    }
-}
-
-Console.WriteLine(curr);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28535489"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;クエリのたびにすべてを走査すると&lt;code&gt;O(N*Q)&lt;/code&gt;となりTLEになるので、高速化する必要があります。
-あらかじめ値をキーとした出現場所をもつ辞書を作成し、その値が何番目に出現するかを保持しておき、クエリによる&lt;code&gt;x&lt;/code&gt;の値が存在して、&lt;code&gt;k&lt;/code&gt;の値が辞書内に存在する&lt;code&gt;x&lt;/code&gt;の個数以内ならばその出現場所を表示し、それ以外の場合は&lt;code&gt;-1&lt;/code&gt;を表示することで、クエリ当たり&lt;code&gt;O(logN)&lt;/code&gt;で実行することができるようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-var dict = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;();
-for (var i = 0; i &amp;lt; N; i++)
-{
-    if (!dict.ContainsKey(A[i])) dict[A[i]] = new List&amp;lt;int&amp;gt;();
-    dict[A[i]].Add(i + 1);
-}
-
-while (Q-- &amp;gt; 0)
-{
-    var (x, k) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    k--;
-    if (dict.ContainsKey(x))
-    {
-        if (k &amp;lt; dict[x].Count)
-        {
-            Console.WriteLine(dict[x][k]);
-        }
-        else
-        {
-            Console.WriteLine(-1);
-        }
-    }
-    else
-    {
-        Console.WriteLine(-1);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28546896"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。&lt;br /&gt;
-シフト操作によって、&lt;code&gt;N&lt;/code&gt;の値より大きい数から&lt;code&gt;N&lt;/code&gt;より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。&lt;br /&gt;
-&lt;code&gt;Shift&lt;/code&gt;メソッドは配列を与えられた値だけシフトする関数です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (A, N) = Scanner.Scan&amp;lt;long, long&amp;gt;();
-var dp = new Dictionary&amp;lt;long, int&amp;gt;();
-dp[1] = 0;
-
-var queue = new Queue&amp;lt;long&amp;gt;();
-queue.Enqueue(1);
-const int inf = (int)1e7;
-
-void Push(long curr, long next)
-{
-    if (next &amp;gt; inf) return;
-    if (dp.ContainsKey(next)) return;
-    dp[next] = dp[curr] + 1;
-    queue.Enqueue(next);
-}
-
-while (queue.Count &amp;gt; 0)
-{
-    var u = queue.Dequeue();
-    if (u &amp;gt;= 10 &amp;amp;&amp;amp; u % 10 != 0)
-    {
-        var v = long.Parse(Shift(u.ToString().AsSpan(), 1));
-        Push(u, v);
-    }
-    Push(u, u * A);
-}
- 
-if (dp.ContainsKey(N))
-{
-    Console.WriteLine(dp[N]);
-}
-else
-{
-    Console.WriteLine(-1);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28551552"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;クエリごとに最小全域木を求めると、ソートに&lt;code&gt;(MlogM)&lt;/code&gt;、クラスカル法で最小全域木を求めるために&lt;code&gt;O(Ea(V))&lt;/code&gt;となり、TLEになってしまいます。
-クエリに対してグラフはそれぞれ独立なため、あらかじめクエリを先読みしてすべての辺をまとめてソートし、クラスカル法で辺を見てその辺が有効な場合、もしその辺がクエリの辺である場合はそのクエリは有効であり、そうではない場合は最小全域木としてマージしていくことで、計算量を抑えることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M, Q) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-var E1 = new Edge[M];
-var E2 = new Edge[Q];
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (a, b, c) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    a--; b--;
-    E1[i] = new Edge(-1, a, b, c);
-}
-
-for (var i = 0; i &amp;lt; Q; i++)
-{
-    var (a, b, c) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    a--; b--;
-    E2[i] = new Edge(i, a, b, c);
-}
-
-var answer = new bool[Q];
-var dsu = new DisjointSetUnion(N);
-foreach (var e in E1.Concat(E2).OrderBy(x =&amp;gt; x.Cost))
-{
-    if (dsu.IsSame(e.U, e.V)) continue;
-    if (e.ID == -1)
-    {
-        dsu.Merge(e.U, e.V);
-    }
-    else
-    {
-        answer[e.ID] = true;
-    }
-}
-
-Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer.Select(x =&amp;gt; x ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;)));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc235/tasks/abc235_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc235/submissions/28569936"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;桁dp?&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;1&amp;lt;&amp;lt;10&lt;/code&gt;(1024)通りの場合分け?&lt;/li&gt;
-&lt;li&gt;総和の数え方がわからない...&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var dp = new mint[N + 1, 1 &amp;lt;&amp;lt; 10];
-for(var i = 0; i &amp;lt; S.Length; i++)
-{
-    for(var j = 0; j &amp;lt; 1 &amp;lt;&amp;lt; 10; j++)
-    {
-        for(var k = 0; k &amp;lt; 10; k++)
-        {
-            // dp[i + 1, j | (1 &amp;lt;&amp;lt; k)] = ?;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;解説では、総和と個数をそれぞれ別に数え上げるそうです。
-&lt;code&gt;mint&lt;/code&gt;は、あまりをとる整数型です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var V = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
-var N = V.Length;
-var M = Scanner.Scan&amp;lt;int&amp;gt;();
-var C = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-
-var ok = 0;
-foreach (var c in C)
-{
-    ok |= 1 &amp;lt;&amp;lt; c;
-}
-
-var max = 1 &amp;lt;&amp;lt; 10;
-var count = new mint[2][] { new mint[max], new mint[max] };
-var sum = new mint[2][] { new mint[max], new mint[max] };
-mint curr = 0;
-var digits = 0;
-
-var t = 1;
-for (var i = 0; i &amp;lt; N; i++)
-{
-    t ^= 1;
-    var tt = t ^ 1;
-    var c = V[i];
-    Array.Fill(count[tt], 0);
-    Array.Fill(sum[tt], 0);
-    for (var j = 0; j &amp;lt; max; j++)
-    {
-        for (var d = 0; d &amp;lt; 10; d++)
-        {
-            var next = j | (1 &amp;lt;&amp;lt; d);
-            count[tt][next] += count[t][j];
-            sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
-        }
-    }
-
-    if (i &amp;gt; 0)
-    {
-        for (var d = 1; d &amp;lt; 10; d++)
-        {
-            var next = 1 &amp;lt;&amp;lt; d;
-            count[tt][next]++;
-            sum[tt][next] += d;
-        }
-    }
-
-    for (var d = 0; d &amp;lt; c; d++)
-    {
-        if (i == 0 &amp;amp;&amp;amp; d == 0) continue;
-        var next = digits | (1 &amp;lt;&amp;lt; d);
-        count[tt][next]++;
-        sum[tt][next] += curr * 10 + d;
-    }
-
-    digits |= 1 &amp;lt;&amp;lt; c;
-    curr = curr * 10 + c;
-}
-
-t ^= 1;
-var answer = 0L;
-for (var j = 0; j &amp;lt; max; j++)
-{
-    if ((j &amp;amp; ok) == ok)
-    {
-        answer += sum[t][j];
-    }
-}
-
-if ((digits &amp;amp; ok) == ok)
-{
-    answer += curr;
-}
-
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 235の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
