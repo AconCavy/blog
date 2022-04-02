@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-04-02T15:50:15Z</updated>
+	<updated>2022-04-02T16:38:18Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220402abc246</id>
 		<title>ABC246</title>
@@ -134,6 +134,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30677572"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;マスは最大4方向から移動してくる可能性があることに注意し、Dijkstra法で最短経路を求めます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var N = Scanner.Scan&amp;lt;int&amp;gt;();
@@ -170,18 +171,23 @@
     while (queue.Count &amp;gt; 0)
     {
         var (ch, cw) = queue.Dequeue();
-        if (used[ch, cw]) continue;
+        if (used[ch, cw]) continue; // マスをみるのは訪れた最初の1回だけ
         used[ch, cw] = true;
         var cc = G[ch, cw];
 
+        // 各方向に広げていく
         foreach (var (dh, dw) in D4)
         {
             for (var d = 1; d &amp;lt; N; d++)
             {
                 var (nh, nw) = (ch + dh * d, cw + dw * d);
-                if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw) break;
+                // 次のマスが範囲外またはブロックならそれ以上この方向に進むことができないからbreak
+                if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw) break; 
                 if (S[nh][nw] == '#') break;
                 var nc = cc + 1;
+
+                // 少ない移動回数で訪れているなら、この方向は既にqueueに入っているからbreak
+                // 同じ移動回数の場合は、交差する点の可能性があるため、queueにいれる
                 if (G[nh, nw] &amp;lt; nc) break;
                 G[nh, nw] = nc;
                 queue.Enqueue((nh, nw));
