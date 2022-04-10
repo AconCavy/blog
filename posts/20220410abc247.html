@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC247</title>
+
+    <link rel="icon" href="/blog/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC247">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220410abc247">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title post-title">ABC247</h1>
+
+    <div class="card-text post-meta">
+        Published on Sunday, 10 April 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Sunday, 10 April 2022
+    </div>
+
+        <div class="mt-3 mb-4">
+                <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 247の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc247">https://atcoder.jp/contests/abc247</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc247/tasks/abc247_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC247/submissions/30847103">コンテスト提出</a></p>
+<p><code>S[i+1] (0&lt;=i&lt;=2)</code>の値を<code>S[i]</code>に移動し、<code>S[0]</code>は誰もいなくなるので<code>0</code>にしたものが答えとなります。
+つまり、<code>S</code>の先頭に<code>0</code>を追加した先頭4文字が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var T = &quot;0&quot; + S[0..3];
+    Console.WriteLine(T);
+}
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc247/tasks/abc247_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC247/submissions/30858089">コンテスト提出</a></p>
+<p><code>i</code>番目のあだ名<code>ai</code>を付けることができる条件は、あるあだ名が<code>j!=i</code>番目の姓<code>sj</code>と名<code>tj</code>のいずれも一致しないことであり、あだ名に<code>si</code>を使った場合と、<code>ti</code>を使った場合をすべてチェックしてどちらか一方でも使うことができれば、そのあだ名を使うことができます。
+これを全ての人に対して判定を行い、全ての人にあだ名を付けることができるかを判定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var Names = new (string S, string T)[N];
+    var answer = true;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (s, t) = Scanner.Scan&lt;string, string&gt;();
+        Names[i] = (s, t);
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        var s = true;
+        var t = true;
+        for (var j = 0; j &lt; N; j++)
+        {
+            if (i == j) continue;
+            s &amp;= Names[i].S != Names[j].S &amp;&amp; Names[i].S != Names[j].T;
+            t &amp;= Names[i].T != Names[j].S &amp;&amp; Names[i].T != Names[j].T;
+        }
+
+        answer &amp;= s || t;
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc247/tasks/abc247_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC247/submissions/30859642">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC247/submissions/30895077">復習提出</a></p>
+<p>初期値を<code>Si=1 (i=1)</code>とし、<code>2&lt;=i&lt;=N</code>では<code>S(i-1) i S(i-1)</code>を文字列として構築することで答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var answer = &quot;1&quot;;
+    for (var i = 2; i &lt;= N; i++)
+    {
+        answer = $&quot;{answer} {i} {answer}&quot;;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc247/tasks/abc247_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC247/submissions/30865508">コンテスト提出</a></p>
+<p>連結リストなどのデータ構造を使って、データを管理します。<br>
+<code>c</code>の値が大きいため、リストに<code>c</code>個の値を入れてしまうとクエリ当たりの計算量が<code>O(c)</code>、全体で<code>O(Qc)</code>となり、実行時間制限内に処理を終えることができません。
+そこで、<code>x</code>と<code>c</code>をペアとして管理することで、クエリ当たりの計算量が<code>O(1)</code>、全体で<code>O(Q)</code>となり、実行時間制限内に解くことができるようになります。<br>
+クエリが<code>1</code>のときは<code>x</code>と<code>c</code>をペアとしてリストの後方に追加し、クエリが<code>2</code>のときは、<code>c</code>個消費できるまでリストの先頭から消費していきます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var Q = Scanner.Scan&lt;int&gt;();
+    var deq = new Deque&lt;(long X, long C)&gt;();
+    while (Q-- &gt; 0)
+    {
+        var query = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+        if (query[0] == 1)
+        {
+            deq.PushBack((query[1], query[2]));
+        }
+        else
+        {
+            var c = query[1];
+            long sum = 0;
+            while (c &gt; 0)
+            {
+                var top = deq.PopFront();
+                var use = Math.Min(c, top.C);
+                c -= use;
+                sum += top.X * use;
+                if (use &lt; top.C)
+                {
+                    deq.PushFront((top.X, top.C - use));
+                }
+            }
+
+            Console.WriteLine(sum);
+        }
+    }
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc247/tasks/abc247_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/ABC247/submissions/30884870">コンテスト提出</a></p>
+<p><code>Ai&lt;Y &amp;&amp; X&lt;Ai</code>となる値が範囲に存在する場合、その範囲は無視することができるので、<code>Y&lt;=Ai&lt;=X</code>のみで構成される連続部分列に分割し、連続部分列ごとに部分問題として数え上げることができるようになります。
+例えば、<code>X=3, Y=2, A=[4,1,3,2,3,2,1,2]</code>の場合、<code>A=[[3,2,3,2], [2]]</code>と分割できます。<br>
+部分問題では、愚直に全探索してしまうと計算量<code>O(N^3)</code>になりますが、尺取り法を用いることで計算量<code>O(N)</code>で区間の数を数え上げることができます。</p>
+<ol>
+<li>はじめ<code>L=1</code>とする。</li>
+<li><code>1&lt;=R&lt;=N</code>において次のことを行う。
+<ol>
+<li>区間<code>[L,R]</code>に<code>X</code>と<code>Y</code>がそれぞれ1つ以上存在する場合次のことを行う。
+<ol>
+<li>区間<code>[L,R&lt;=r&lt;=N]</code>は全て条件を満たし、この個数は<code>N-R+1</code>(計算量<code>O(1)</code>)で求めることができる。</li>
+<li><code>L</code>を1進める。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>計算量は全体で<code>O(N)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X, Y) = Scanner.Scan&lt;int, int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+
+    bool IsInRange(int v) =&gt; Y &lt;= v &amp;&amp; v &lt;= X;
+
+    var list = new List&lt;List&lt;int&gt;&gt;();
+    var tmp = new List&lt;int&gt;();
+    foreach (var a in A)
+    {
+        if (IsInRange(a))
+        {
+            tmp.Add(a);
+        }
+        else
+        {
+            list.Add(tmp.ToList());
+            tmp = new List&lt;int&gt;();
+        }
+    }
+
+    list.Add(tmp.ToList());
+    list = list.Where(x =&gt; x.Count &gt; 0).ToList();
+    long answer = 0;
+    foreach (var group in list)
+    {
+        var l = 0;
+        var M = group.Count;
+        var used = new int[X + 1];
+        for (var r = 0; r &lt; M; r++)
+        {
+            used[group[r]]++;
+            while (l &lt;= r &amp;&amp; used[X] &gt; 0 &amp;&amp; used[Y] &gt; 0)
+            {
+                answer += M - r;
+                used[group[l]]--;
+                l++;
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220410abc247" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/blog/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
