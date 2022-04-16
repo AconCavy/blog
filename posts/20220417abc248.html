@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC248</title>
+
+    <link rel="icon" href="/blog/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/blog/assets/css/style.css" type="text/css">
+    <script src="/blog/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC248">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220417abc248">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/blog/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title post-title">ABC248</h1>
+
+    <div class="card-text post-meta">
+        Published on Sunday, 17 April 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Monday, 18 April 2022
+    </div>
+
+        <div class="mt-3 mb-4">
+                <a href="/blog/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/blog/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h1 id="section">はじめに</h1>
+<p>AtCoder Beginner Contest 248の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h1 id="section-1">コンテスト</h1>
+<p><a href="https://atcoder.jp/contests/abc248">https://atcoder.jp/contests/abc248</a></p>
+<h2 id="a"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_a">問題A</a></h2>
+<p><a href="https://atcoder.jp/contests/abc248/submissions/31002746">コンテスト提出</a></p>
+<p><code>0</code>から<code>9</code>の合計から登場する数字を全て引いた後の値が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var sum = 9 * 10 / 2;
+    foreach (var c in S)
+    {
+        sum -= c - '0';
+    }
+
+    Console.WriteLine(sum);
+}
+</code></pre>
+<h2 id="b"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_b">問題B</a></h2>
+<p><a href="https://atcoder.jp/contests/abc248/submissions/31006946">コンテスト提出</a></p>
+<p>初期値を<code>A</code>として、<code>B</code>より小さいうちに<code>A</code>を何回<code>K</code>倍することができるかを数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B, K) = Scanner.Scan&lt;long, long, long&gt;();
+    var curr = A;
+    var answer = 0;
+    while (curr &lt; B)
+    {
+        curr *= K;
+        answer++;
+    }
+        
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h2 id="c"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_c">問題C</a></h2>
+<p><a href="https://atcoder.jp/contests/abc248/submissions/31016119">コンテスト提出</a></p>
+<p><code>i</code>番目の値まで決めたときに、それまでの総和が<code>j</code>であるような数列の総数を動的計画法として答えを数え上げます。
+これは、<code>i+1</code>番目の値は、<code>i</code>番目までの総和<code>j</code>に<code>1&lt;=k&lt;=M</code>の何れかを足した数への遷移することができます。
+そのため、<code>dp[0,0]=1 (0番目までの総和は0)</code>を初期値として遷移していき、<code>N</code>番目まで見終わったときの<code>1&lt;=k&lt;=M</code>の合計が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M, K) = Scanner.Scan&lt;int, int, int&gt;();
+    var NM = N * M;
+    var dp = new mint[N + 1, NM + 1];
+    dp[0, 0] = 1;
+                
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt;= NM; j++)
+        {
+            for (var k = 1; k &lt;= M; k++)
+            {
+                if (j + k &lt;= NM) dp[i + 1, j + k] += dp[i, j];
+            }
+        }
+    }
+                
+    mint answer = 0;
+    for (var i = 1; i &lt;= K; i++)
+    {
+        answer += dp[N, i];
+    }
+                
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h2 id="d"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_d">問題D</a></h2>
+<p><a href="https://atcoder.jp/contests/abc248/submissions/31021126">コンテスト提出</a></p>
+<p>クエリごとに指定された範囲を走査してしまうと、クエリごとの計算量が<code>O(N)</code>、全体計算量が<code>O(N^2)</code>となってしまい、実行時間制限内に終えることができないので、クエリごとの計算量を削減する方法を考えます。<br>
+ある値<code>X</code>を考えたとき、<code>[L,R]</code>の出現する場所の個数は<code>Rより大きい場所の番目 - L以上の場所の番目</code>で求めることができます。<br>
+例えば、<code>A=[3,1,4,1,5]、L=1、R=3、X=1</code>のとき、場所<code>idx[1]=[2,4]</code>となり、<code>Rより大きい場所の番目 - L以上の場所の番目</code>は<code>2番目-1番目</code>なり、<code>1個</code>となります。<br>
+そのため、あらかじめ値ごとに出現する場所を保持しておき、<code>L</code>と<code>R</code>の個数をそれぞれ二部探索することで、クエリごとの計算量が<code>O(logN)</code>、全体計算量が<code>O(NlogN)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var a = A[i];
+        if (!dict.ContainsKey(a)) dict[a] = new List&lt;int&gt;();
+        dict[a].Add(i);
+    }
+
+    var Q = Scanner.Scan&lt;int&gt;();
+    while (Q-- &gt; 0)
+    {
+        var (L, R, X) = Scanner.Scan&lt;int, int, int&gt;();
+        L--; R--;
+        if (dict.ContainsKey(X))
+        {
+            var list = dict[X];
+            var l = LowerBound(list, L);
+            var r = UpperBound(list, R);
+            Console.WriteLine(r - l);
+        }
+        else
+        {
+            Console.WriteLine(0);
+        }
+    }
+}
+</code></pre>
+<h2 id="e"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_e">問題E</a></h2>
+<p><a href="https://atcoder.jp/contests/abc248/submissions/31050544">復習提出</a></p>
+<p>コンテスト中の考察です。</p>
+<ul>
+<li>全ての2点間の傾き<code>a</code>と切片<code>b</code>を保持し、直線<code>y=ax+b</code>が成り立つ点が<code>K</code>個以上あればその直線は妥当?</li>
+<li><code>WA</code>が11個でる...</li>
+</ul>
+<p>数え上げの方法が間違えていました。
+ある点を固定したとき、その点からの傾きが同じものどうしで数え上げ、その傾きをとる頂点の個数が<code>K-1</code>個ならば、その傾きの直線が妥当であるといえます。このとき
+<code>K-1</code>以上で数えてしまうと、その傾きを取る頂点の個数が<code>K+1、K、K-1</code>のように重複して数えてしまうことに注意します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    if (K == 1)
+    {
+        Console.WriteLine(&quot;Infinity&quot;);
+        return;
+    }
+
+    var P = new (long X, long Y)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;long, long&gt;();
+        P[i] = (x, y);
+    }
+
+
+    var answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var dict = new Dictionary&lt;Fraction, int&gt;();
+        for (var j = i + 1; j &lt; N; j++)
+        {
+            var (x1, y1) = P[i];
+            var (x2, y2) = P[j];
+            var (dx, dy) = (x2 - x1, y2 - y1);
+            var frac = new Fraction(dy, dx);
+            if (!dict.ContainsKey(frac)) dict[frac] = 0;
+            dict[frac]++;
+        }
+
+        foreach (var count in dict.Values)
+        {
+            if (count == K - 1) answer++;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<pre><code class="language-csharp line-numbers">public readonly struct Fraction : IComparable&lt;Fraction&gt;, IEquatable&lt;Fraction&gt;
+{
+    public long Y { get; }
+    public long X { get; }
+    public Fraction(long y, long x)
+    {
+        static long Gcd(long a, long b) =&gt; b == 0 ? a : Gcd(b, a % b);
+        var g = Gcd(y, x);
+        (Y, X) = (y / g, x / g);
+    }
+    public static bool operator &lt;(Fraction left, Fraction right) =&gt; left.CompareTo(right) &lt; 0;
+    public static bool operator &lt;=(Fraction left, Fraction right) =&gt; left.CompareTo(right) &lt;= 0;
+    public static bool operator &gt;(Fraction left, Fraction right) =&gt; left.CompareTo(right) &gt; 0;
+    public static bool operator &gt;=(Fraction left, Fraction right) =&gt; left.CompareTo(right) &gt;= 0;
+    public static bool operator ==(Fraction left, Fraction right) =&gt; left.Equals(right);
+    public static bool operator !=(Fraction left, Fraction right) =&gt; !left.Equals(right);
+    public int CompareTo(Fraction other) =&gt; (Y * other.X).CompareTo(X * other.Y);
+    public bool Equals(Fraction other) =&gt; Y == other.Y &amp;&amp; X == other.X;
+    public override bool Equals(object obj) =&gt; obj is Fraction other &amp;&amp; Equals(other);
+    public override int GetHashCode() =&gt; HashCode.Combine(Y, X);
+    public override string ToString() =&gt; $&quot;{Y}/{X}&quot;;
+}
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/blog/posts/20220417abc248" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/blog/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/blog/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/blog/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/blog/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/blog/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
