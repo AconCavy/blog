@@ -82,16 +82,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>前回のブログから一度も更新せずに3か月経ち、サイト生成を <code>Wyam</code> から <code>Statiq</code> に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。</p>
-<h1 id="statiq">Statiq</h1>
+<h2 id="statiq">Statiq</h2>
 <p><a href="https://statiq.dev/">Statiq</a> は <a href="20200819wyamblog">前回の記事</a> で紹介した <code>Wyam</code> をリブランディングし、機能の追加に柔軟性を持たせたフレームワークだそうです。
 大きく3つのフレームワークに分かれており、基礎となる <code>Statiq.Framework</code>、一般的なWebサイト生成のための <code>Statiq.Web</code>、ドキュメントサイト生成のための <code>Statiq.Doc</code> に分かれています。</p>
 <p><code>Statiq.Framework</code> はMITライセンスで公開されている一方、<code>Statiq.Web</code> と <code>Statiq.Doc</code> は <a href="https://licensezero.com/licenses/prosperity">License Zero Prosperity Public License</a> (Public License) と <a href="https://licensezero.com/licenses/private">License Zero Private License</a> (Private License)` のデュアルライセンスを取ります。
 そのため、商用利用の場合は、はじめ30日間の無料体験期間のあと、開発者一人当たり50ドルのPrivate Licenseを取得する必要があります。
 非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます。
 詳しくは<a href="https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md">こちら</a>.</p>
-<h2 id="section-1">使い方</h2>
+<h3 id="section-1">使い方</h3>
 <p>Wyamは.NET上にツールをインストールして実行するのに対して、Statiqの場合はコンソールアプリケーションとして実行します。</p>
 <pre><code class="language-sh line-numbers">dotnet new console --name Blog
 dotnet add package Statiq.Web --version x.y.z
@@ -113,7 +113,7 @@ namespace Blog
 }
 </code></pre>
 <p>次に、<code>./input/</code> ディレクトリ内に <code>index.md</code> を作成し、適当な内容を書いて保存します。</p>
-<pre><code class="line-numbers">Title: Hello Statiq
+<pre><code class="language-text line-numbers">Title: Hello Statiq
 ---
 Hello world!
 </code></pre>
@@ -123,17 +123,17 @@ Hello world!
 <p>そして、プロジェクトを実行することでローカルホスト上で静的サイトがホスティングされます。(デフォルトでは <code>localhost:5080</code>)</p>
 <p>素の状態では、テーマは存在しないので、<code>./theme/input/</code> にWebサイトのテーマを用意する必要があります。</p>
 <p>サンプルとして、公式テーマの<a href="https://github.com/statiqdev/CleanBlog">CleanBlog</a>を <code>./theme/</code> ディレクトリ内に配置してプロジェクトを実行することで、WyamのCleanBlogテーマと同様のWebサイトを生成することができます。</p>
-<h2 id="github-pages">Github Pagesへの展開</h2>
+<h3 id="github-pages">Github Pagesへの展開</h3>
 <p>Statiq.Webでは、公式でGithub Pagesへのデプロイ方法が用意されています。</p>
 <p>Wyamの時と同様に、設定ファイル(今回は <code>settings.yml</code>)に設定を追記する必要があります。</p>
-<pre><code class="line-numbers">Host: aconcavy.github.io // github pagesのホスト
-LinkRoot: /Blog // バーチャルパス
+<pre><code class="language-yaml line-numbers">Host: aconcavy.github.io # github pagesのホスト
+LinkRoot: /Blog # バーチャルパス
 LinksUseHttps: true
 
-GitHubOwner: AconCavy // ユーザ名
-GitHubName: Blog // リポジトリ名
-GitHubToken: =&gt; Config.FromSetting&lt;string&gt;(&quot;GITHUB_TOKEN&quot;) // これはこのまま
-GitHubBranch: gh-pages // 生成先ブランチ
+GitHubOwner: AconCavy # ユーザ名
+GitHubName: Blog # リポジトリ名
+GitHubToken: =&gt; Config.FromSetting&lt;string&gt;(&quot;GITHUB_TOKEN&quot;) # これはこのまま
+GitHubBranch: gh-pages # 生成先ブランチ
 </code></pre>
 <p>Github Actionでは次のようなワークフローを指定します。
 この時に、<code>GitHubBranch</code>で指定したブランチは、存在しない場合はエラーが吐かれるので、先にブランチを作成しておきましょう(5敗)。</p>
@@ -163,11 +163,11 @@ jobs:
 <p>ワークフローが成功すると、指定したブランチにファイルが生成されるので、リポジトリの設定からGithub Pagesのブランチを指定します。
 すべて成功すると、<code>{user}.github.io/{repository}</code> (今回は<a href="https://aconcavy.github.io/Blog/">aconcavy.github.io/Blog</a>`)にサイトが表示されます。</p>
 <p>サイトのテーマがうまく適用されない場合は、設定ファイルの <code>Host</code> や <code>LinkRoot</code> を見直すといいでしょう。</p>
-<h1 id="section-2">まとめ</h1>
+<h2 id="section-2">まとめ</h2>
 <p>Statiqで作成した静的Webサイトを、GitHub ActionsとGitHub Pagesデプロイする方法をまとめました。</p>
 <p>Wyamと比べてカスタマイズの自由度が高いみたいだけど、ドキュメントを調べても調べたいことにいまいち辿り着かないので、ドキュメントが豊富になればもっと使いやすくなりそうです。APIリファレンスとかも欲しい。
 まだプレビュー段階なので今後に期待しています。</p>
-<h1 id="section-3">あとがき</h1>
+<h2 id="section-3">あとがき</h2>
 <p>Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。</p>
 <p>画像がレスポンシブ対応してないから前の記事をスマホでみると横に広くなってしまうので修正したいけど、Statiqでmarkdownから生成されるhtmlにタグを追加したいけどどうやるんだろうね。</p>
 

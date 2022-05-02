@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 245の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc245">https://atcoder.jp/contests/abc245</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30430680">コンテスト提出</a></p>
 <p>時刻が早いといえるのは、<code>A</code>時のほうが<code>C</code>時より早い(<code>A&lt;C</code>)とき、あるいは時が同じとき(<code>A==C</code>)に<code>B</code>分のほうが<code>D</code>分より早い(<code>B&lt;D</code>)ときとなります。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
@@ -98,7 +98,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer ? &quot;Takahashi&quot; : &quot;Aoki&quot;);
 }
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30433167">コンテスト提出</a></p>
 <p>小さい順に数字を見ていき、その数字が<code>A</code>に含まれているかを確認することで、<code>O(N^2)</code>で答えを求めることができます。
 また、<code>A</code>に含まれているものをメモしておき、<code>A</code>に含まれていない最小の数値を答えることで、<code>O(N)</code>で答えを求めることができます。</p>
@@ -122,7 +122,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     }
 }
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30442020">コンテスト提出</a></p>
 <p>全ての<code>A</code>と<code>B</code>の要素の組み合わせを考えると、<code>O(2^N)</code>となってしまい、<code>N</code>が大きい場合は実行制限時間内に答えを求めることができません。<br>
 そのため、計算量を抑えて答えを求める方法を考える必要があります。</p>
@@ -157,7 +157,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 }
 
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30469582">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc245/submissions/30487152">復習提出</a></p>
 <p><code>B=C/A</code>となる数列<code>B</code>を求める問題です。</p>
@@ -195,7 +195,7 @@ C#のコードで書くと以下のようになります。</p>
 }
 
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30487009">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>
@@ -243,7 +243,7 @@ C#のコードで書くと以下のようになります。</p>
     Console.WriteLine(&quot;Yes&quot;);
 }
 </code></pre>
-<h2 id="f"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_f">問題F</a></h2>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc245/tasks/abc245_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/abc245/submissions/30487303">復習提出</a></p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {

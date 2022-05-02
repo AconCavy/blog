@@ -80,20 +80,20 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p><code>if</code> を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の <a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression">switch式</a> を使って受け取ります。</p>
 <p>先駆者様</p>
 <p><a href="https://qiita.com/tadsan/items/65d91ba6b50535fc8815">https://qiita.com/tadsan/items/65d91ba6b50535fc8815</a></p>
 <p><a href="https://qiita.com/libraplanet/items/bcf17c22143dc77f875b">https://qiita.com/libraplanet/items/bcf17c22143dc77f875b</a></p>
 <p><a href="https://qiita.com/AconCavy/items/b86b9e835a362795d33f">Qiita</a>とのクロスポストです。</p>
-<h1 id="section-1">勝敗判定</h1>
+<h2 id="section-1">勝敗判定</h2>
 <p>じゃんけんのルールとして、<code>-&gt;</code> の右側が強いものとすると、 <code>Rock</code> -&gt; <code>Paper</code> -&gt; <code>Scissors</code> -&gt; <code>Rock</code> の関係性が成り立ち、3つの手を周期として勝敗が決まります。
 ここで、<code>Rock</code> を0、<code>Paper</code> を1、<code>Scissors</code> を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。</p>
 <p><img src="assets/images/rps_dia.webp" class="img-fluid" alt="rps_dia.png"></p>
 <p>このことから、<code>相手の手 - 自分の手</code> を計算することで距離を求めることができます。
 しかし、自分の手が2で、相手の手が0だった場合、<code>0 - 2 == -2</code>のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、<code>(相手の手 - 自分の手 + 3) % 3</code> とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。</p>
-<h1 id="section-2">実装</h1>
+<h2 id="section-2">実装</h2>
 <p><code>Rps</code> (Rock-Paper-Scissors) クラスに <code>Hand</code> (グー、チョキ、パー) と <code>Result</code> (引き分け、負け、勝ち) の <code>enum</code> を定義することで、<code>Battle</code> 関数の引数と戻り値にそれぞれ意味を持たせます。</p>
 <p>C#の <code>enum</code> は、既定値として <code>int</code> の0をとり、要素が増えるにつれて1増えます。そのため、この場合は、 <code>Rock (0)</code>、 <code>Paper (1)</code>、 <code>Scissors (2)</code> のようにそれぞれ値を持つことができます。</p>
 <p><code>Battle</code> 関数は、自分の手と相手の手を渡すことで、<code>Result.Draw</code>、 <code>Result.Lose</code>、 <code>Result.Win</code> のいずれかを返します。</p>
@@ -156,7 +156,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     }
 }
 </code></pre>
-<h1 id="section-3">実行結果</h1>
+<h2 id="section-3">実行結果</h2>
 <p><img src="assets/images/rps.webp" class="img-fluid" alt="rps.png"></p>
 <p><a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA===">sharplabでの実行結果</a></p>
 

@@ -82,22 +82,22 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>友人がC#のgRPCライブラリの<code>MagicOnion</code>の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。</p>
 <p>リポジトリは<a href="https://github.com/AconCavy/practice-magiconion">こちら</a></p>
-<h1 id="magiconion">MagicOnion</h1>
+<h2 id="magiconion">MagicOnion</h2>
 <p><a href="https://github.com/Cysharp/MagicOnion">MagicOnion</a>は、共通のインターフェースを介してクライアントとサーバーで手続きを呼び合う技術の<a href="https://github.com/grpc/grpc">gRPC</a>をC#用に最適化した、リアルタイム通信ライブラリです。</p>
 <p>ASP.NET CoreにもgRPCのテンプレートは存在しますが、そちらは<code>proto</code>ファイルを作成し、そのファイルにインターフェースを定義を行います。一方MagicOnionの場合は、C#の<code>interface</code>を定義すればめんどくさいことはMagicOnion側でいろいろやってくれるため、クライアントとサーバーでどちらもC#を利用する場合には一つのソースを使いまわすことができたりと嬉しいことが多いです。そのため、クライアントはUnity、サーバーはASP.NET Coreを使うモバイルゲームなどのプロジェクトでよく使われるそうです。</p>
-<h1 id="section-1">環境</h1>
+<h2 id="section-1">環境</h2>
 <ul>
 <li>Unity 2019.4.17f1</li>
 <li><a href="https://github.com/Cysharp/MagicOnion/releases/tag/4.0.4">MagicOnion 4.0.4</a></li>
-<li><a href="https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85">MessagePack for C# 2.2.85</a></li>
+<li><a href="https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85">MessagePack for C## 2.2.85</a></li>
 <li>gRPC (<a href="https://packages.grpc.io/archive/2020/12/d7b70c3ea25c48ffdae7b8bd3c757594d4fff4b6-2be69c7e-9b25-4273-a7d4-3840da2d6723/csharp/grpc_unity_package.2.35.0-dev202012021242.zip">grpc_unity_package.2.35.0-dev202012021242</a>)</li>
 </ul>
-<h1 id="section-2">作ってみる1</h1>
+<h2 id="section-2">作ってみる1</h2>
 <p>MagicOnionを使うにあたって、ASP.NET Coreでのサーバー、Unityでのクライアント、共有Apiの3つのプロジェクトを構成します。</p>
-<pre><code class="line-numbers">MagicOnionSample/
+<pre><code class="language-text line-numbers">MagicOnionSample/
   |- MagicOnionSample.Server/
   |- MagicOnionSample.Shared/
   |- MagicOnionSample.Unity/
@@ -107,7 +107,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p><code>MagicOnionSample.Server</code>はASP.NET CoreのgRPCテンプレートで作成しました。
 <code>MagicOnionSample.Unity</code>にはUnityプロジェクトを作成します。
 <code>MagicOnionSample.sln</code>には<code>MagicOnionSample.Server</code>と<code>MagicOnionSample.Shared</code>を追加します。</p>
-<h2 id="section-3">クライアント側の準備</h2>
+<h3 id="section-3">クライアント側の準備</h3>
 <p>プロジェクトを作成したら、はじめに<code>Project Settings</code>を以下に変更します。</p>
 <div class="table-responsive">
 <table class="table">
@@ -136,9 +136,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p>次に、MagicOnionとMessagePackの<code>unitypackage</code>をプロジェクトにインポートします。
 また、gRPCのパッケージから、<code>Google.Protobuf</code>、<code>Grpc.Core</code>、 <code>Grpc.Core.Api</code>の3つのフォルダを<code>Assets/Plugins/</code>にインポートします。</p>
 <p>MagicOnionとMessagePackのバージョンによってはUnityのコンパイルエラーは発生しませんが、MagicOnion 4.0.4とMessagePack 2.2.85の場合はMagicOnion側でコンパイルエラーが発生してしまいます。MessagePack 2.2.85からMessagePackの属性が含まれている名前空間が<code>MessagePack</code>から<code>MessagePack.Annotations</code>に変更されているようなので、<code>Assets/Scripts/MagicOnion.Client/MagicOnion.Client.asmdef</code>の <code>AssemblyDefinition References</code>に<code>MessagePack.Annotations</code>の参照を追加することでコンパイルエラーを解消できます。</p>
-<h2 id="section-4">サーバー側の準備</h2>
+<h3 id="section-4">サーバー側の準備</h3>
 <p>ASP.NET CoreのgRPCテンプレートで作成した場合、以下のような構成でプロジェクトが作成されます。</p>
-<pre><code class="line-numbers">MagicOnionSample
+<pre><code class="language-text line-numbers">MagicOnionSample
   |-MagicOnionSample.Server
       |- Properties/
       |    |- launchSettings.json
@@ -231,7 +231,7 @@ namespace MagicOnionSample.Server
 }
 </code></pre>
 <p>Httpsで通信を行う場合は、<a href="https://docs.microsoft.com/ja-jp/aspnet/core/security/enforcing-ssl?view=aspnetcore-5.0&amp;amp;tabs=visual-studio">こちら</a>を参照してください。</p>
-<h2 id="api">共有Apiの定義</h2>
+<h3 id="api1">共有Apiの定義1</h3>
 <p>Unityに戻り、MagicOnionで使用する<code>interface</code>やモデルクラス類を作成します。
 今回は<code>Assets/MagicOnionSample/Scripts/Shared/</code>に共有Apiを構成します。</p>
 <p><code>Shared</code>ディレクトリに<code>ISampleService.cs</code>を作成し,<code>string</code>の値を渡すと挨拶の<code>string</code>を返す<code>interface</code>を定義します。また、この<code>interface</code>には<code>IService&lt;T&gt;</code>もあわせて定義します。</p>
@@ -245,7 +245,7 @@ namespace MagicOnionSample.Shared
     }
 }
 </code></pre>
-<h2 id="section-5">クライアント側の実装</h2>
+<h3 id="section-5">クライアント側の実装1</h3>
 <p><code>Shared</code>ディレクトリでは、クライアントとサーバーで共有できるクラスやインターフェースのみを持たせるために、<code>Shared</code>ディレクトリとは別に、<code>Assets/MagicOnionSample/Scripts/Unity/</code>を作成し、名前空間と実装を分離します。</p>
 <p><code>Unity</code>ディレクトリに<code>SampleEntryPoint.cs</code>を作成し、サーバーにローカルホストでアクセスする実装をします。</p>
 <p><code>MagicOnionClient</code>から<code>ISampleService</code>のエンドポイントに対して、上記で定義した<code>GreetAsync</code>を<code>interface</code>経由で呼び、結果を<code>Debug.Log</code>に表示させます。
@@ -285,10 +285,10 @@ namespace MagicOnionSample.Unity
 }
 </code></pre>
 <p>作成後、UnityのHierarchyに適当なGameObjectを作成し、<code>SampleEntryPoint</code>を付与します。</p>
-<h2 id="api-1">サーバー側における共有Api</h2>
+<h3 id="api">サーバー側における共有Api</h3>
 <p>Unityがコンパイルできるスクリプトは<code>Assets/</code>以下にあるものに限るため、サーバー側で共有Api用のプロジェクトを作成すると不整合がおきてしまうかもしれません。そのため、<code>MagicOnionSample.Shared</code>のプロジェクトでは、中身を実際には持たずに、上記で作成したUnityプロジェクト内の<code>Assets/MagicOnionSample/Scripts/Shared</code>ディレクトリにあるスクリプトを参照することでサーバー側でも共有Apiとして使えるようにします。</p>
 <p>そのため、<code>MagicOnionSample.Shared</code>のディレクトリ構成は以下のようになります。</p>
-<pre><code class="line-numbers">MagicOnionSample
+<pre><code class="language-text line-numbers">MagicOnionSample
   |-MagicOnionSample.Shared
       |-MagicOnionSample.Shared.csproj
 </code></pre>
@@ -315,7 +315,7 @@ namespace MagicOnionSample.Unity
 
 &lt;/Project&gt;
 </code></pre>
-<h2 id="section-6">サーバー側の実装</h2>
+<h3 id="section-6">サーバー側の実装1</h3>
 <p>上記で準備した共有Apiのプロジェクトをサーバー側のプロジェクトで参照することで、Unity上で定義した<code>ISampleService</code>を利用することができるようになります。
 <code>SampleService.cs</code>を作成し、<code>ISampleService</code>の実装を行います。
 簡単な文字列を返すように実装しました。</p>
@@ -336,14 +336,14 @@ namespace MagicOnionSample.Server.Services
     }
 }
 </code></pre>
-<h2 id="section-7">動作確認</h2>
+<h3 id="section-7">動作確認1</h3>
 <p><code>dotnet run</code>コマンド等でサーバーを起動し、<code>SampleEntryPoint</code>が適当なGameObjectに付与されているのを確認した後にUnityを実行し、UnityのConsoleに<code>Welcome Foo!</code>と表示されたら成功です。
 以上で、サーバーとクライアントの1対1のApiコールができました。</p>
-<h1 id="section-8">作ってみる2</h1>
+<h2 id="section-8">作ってみる2</h2>
 <p>前の項では、サーバーとクライアントの1対1のApiコールを実装しました。次に、サーバーとクライアントの1対多のApiコールを実装します。
 マルチプレイでプレイヤーの座標をリアルタイムで同期させるといったことが用途としてあげられます。</p>
 <p>今回は、プレイヤーが部屋に参加したかどうかを知らせるApiを実装します。</p>
-<h2 id="api-2">共有Apiの定義</h2>
+<h3 id="api2">共有Apiの定義2</h3>
 <p>初めに、<code>Player</code>を一つのモデルとして管理するために、<code>Shared</code>ディレクトリに<code>Player.cs</code>を作成します。
 <code>MessagePackObject</code>の属性をクラスや構造体に付与することで、MessagePackがシリアライズできるようになり、<code>Key</code>によってそれぞれのプロパティを管理します。</p>
 <pre><code class="language-csharp line-numbers">using MessagePack;
@@ -383,7 +383,7 @@ namespace MagicOnionSample.Shared
 }
 </code></pre>
 <p>これらのApiコールのの流れとして、<code>ISampleHub</code>の<code>JoinAsync</code>を呼ぶことで、サーバーに名前と部屋名を渡し、サーバー側の処理が完了すると<code>ISampleHubReceiver</code>の<code>OnJoin</code>がコールバックとして呼ばれる形になります。</p>
-<h2 id="section-9">クライアント側の実装</h2>
+<h3 id="section-9">クライアント側の実装2</h3>
 <p>クライアント側では、<code>ISampleHubReceiver</code>を実装した<code>SampleHubReceiver</code>を作成します。
 <code>Unity</code>ディレクトリに<code>SampleHubReceiver.cs</code>を作成し、コールバックの内容を実装します。
 <code>Player</code>が参加したら<code>Player</code>の<code>Name</code>と<code>Room</code>がUnityのConsoleに表示されます。</p>
@@ -449,7 +449,7 @@ namespace MagicOnionSample.Unity
     }
 }
 </code></pre>
-<h2 id="section-10">サーバー側の実装</h2>
+<h3 id="section-10">サーバー側の実装2</h3>
 <p>サーバー側では<code>ISampleHub</code>の実装を行います。
 <code>SampleHub.cs</code>を作成し、<code>name</code>と<code>room</code>が与えられたら<code>Player</code>を作成して返すといった実装を行います。</p>
 <p><code>Broadcast</code>に<code>IGroup</code>のインスタンスを渡すことで、グループ内のすべてのクライアントに対してコールバックを呼ぶことができます。</p>
@@ -475,14 +475,14 @@ namespace MagicOnionSample.Server.Hubs
     }
 }
 </code></pre>
-<h2 id="section-11">動作確認</h2>
+<h3 id="section-11">動作確認2</h3>
 <p>上記の動作確認と同じように、<code>dotnet run</code>コマンド等でサーバーを起動してUnityを実行すると、UnityのConsoleに<code>Welcome Foo!</code>と<code>Foo, bar</code>表示されたら成功です。
 また、サーバー側のConsoleでは<code>Join Foo to the Bar</code>と表示されます。
 以上で、サーバーとクライアントの1対多のApiコールができました。</p>
-<h1 id="section-12">その他注意点</h1>
+<h2 id="section-12">その他注意点</h2>
 <p><code>List&lt;T&gt;</code>や<code>Array&lt;T&gt;</code>などをMessagePackに渡す場合は、シリアライズの時に<code>null</code>の場合、エラーが発生することがあります。プロパティの初期化子を使って初期化をすることで、シリアライズでエラーを回避することができます。</p>
 <p>自作クラスのコンストラクタを実装する場合、コンストラクタ引数がないコンストラクタをMessagePackに渡すと、シリアライズ時にエラーが発生するため、引数があるコンストラクタに加えて、引数がないコンストラクタを作成する必要があります。</p>
-<h1 id="section-13">まとめ</h1>
+<h2 id="section-13">まとめ</h2>
 <p>MagicOnionを使ってリアルタイム通信の世界に入門しました。</p>
 <ul>
 <li>UnityプロジェクトにインストールしたMagicOnionとMessagePackでコンパイルエラーが発生する場合は<code>MagicOnion.Client</code>に<code>MessagePack.Annotations</code>を追加する</li>

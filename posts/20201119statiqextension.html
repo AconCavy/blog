@@ -81,9 +81,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録</p>
-<h1 id="section-1">方法</h1>
+<h2 id="section-1">方法</h2>
 <p><code>Bootstrapper</code>において、<code>Statiq.Web</code>でWebサイトを生成するメソッドである<code>CreateWeb()</code>では、markdownに関わるModuleの<code>RenderMarkdown</code>を<code>Templates</code>内で設定している。
 そのため、<code>ConfigureTemplates()</code>を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
 Statiqでは、markdownを生成するために<a href="https://github.com/lunet-io/markdig">markdig</a>を使っているようなので、markdownの設定を追加するには<code>IMarkdownExtension</code>を継承したクラスを<code>Rendermarkdown.UseExtension&lt;TExtension&gt;()</code>に渡す必要がある。</p>
@@ -143,7 +143,7 @@ namespace Blog.Extensions
 
 </code></pre>
 <p>以上の2つの設定を追加してビルドすることで、bootstrapによる<code>&lt;img&gt;</code>タグのレスポンシブ対応、<code>&lt;table&gt;</code>タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。</p>
-<h1 id="section-2">まとめ</h1>
+<h2 id="section-2">まとめ</h2>
 <p>StatiqのBootstrapperにて<code>ConfigureTemplates()</code>からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、<code>RenderMarkdown.UseExtension&lt;TExtension&gt;()</code>に<code>IMarkdownExtension</code>を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。</p>
 
                         </div>

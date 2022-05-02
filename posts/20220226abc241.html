@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 241の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc241">https://atcoder.jp/contests/abc241</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29662070">コンテスト提出</a></p>
 <p>現在の値を<code>curr</code>とし、現在の値を<code>A[curr]</code>で更新します。</p>
 <pre><code class="language-csharp line-numbers">var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
@@ -98,7 +98,7 @@ for (var i = 0; i &lt; 3; i++)
 
 Console.WriteLine(curr);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29664697">コンテスト提出</a></p>
 <p>あらかじめ麵の長さ<code>A</code>の個数を辞書に持ち、<code>B</code>を順番に見たときに、1個以上ある場合は辞書の<code>B</code>の値をデクリメントし、0個または辞書に存在しない場合は答えは<code>No</code>になります。最終的にすべてを見ることができれば、答えは<code>Yes</code>となります。</p>
 <pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
@@ -128,7 +128,7 @@ foreach (var b in B)
 
 Console.WriteLine(&quot;Yes&quot;);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29675472">コンテスト提出</a></p>
 <p>マスを順にみて、端を<code>(i,j)</code>に固定したときに連続した区間のうち4つ以上<code>#</code>が存在すれば、答えは<code>Yes</code>となります。
 縦の場合は<code>(i,j)</code>から<code>(i+5,j)</code>まで、横の場合は<code>(i,j)</code>から<code>(i,j+5)</code>まで、斜めの場合は<code>(i,j)</code>から<code>(i+5,j+5)</code>と<code>(i+5,j-5)</code>を確かめます。
@@ -200,7 +200,7 @@ for (var i = 0; i &lt; N; i++)
 
 Console.WriteLine(&quot;No&quot;);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29715030">復習提出 (FenwickTree)</a>
 <a href="https://atcoder.jp/contests/abc241/submissions/29716771">復習提出 (平衡二分探索木)</a></p>
 <p><code>FenwickTree</code>を使った場合の解き方です。
@@ -591,7 +591,7 @@ while (Q-- &gt; 0)
     }
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29701801">コンテスト提出</a></p>
 <p><code>mod</code>の性質上、最大でも<code>N</code>回でループすることがわかります。
 そのため、答えは<code>(1回のループ中の和 * ループ回数) + (ループに入るまでの和 + ループの端数の和)</code>で求めることができます。

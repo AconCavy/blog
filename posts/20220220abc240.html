@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 240の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc240">https://atcoder.jp/contests/abc240</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29503598">コンテスト提出</a></p>
 <p>10で割ったときのあまりの値を比較することで、ループを再現することができます。
 また、隣り合っていることは差が1であればいいので、それを確かめます。
@@ -95,7 +95,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 var answer = (A + 1) % 10 == B % 10 || (B + 1) % 10 == A % 10;
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29506402">コンテスト提出</a></p>
 <p>重複を削除したときの個数が答えとなります。
 C#のLINQには、<code>Distinct</code>というシーケンス内の重複を除いたシーケンスを返すメソッドがあるため、それを使い個数を数えます。</p>
@@ -104,7 +104,7 @@ var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
 var answer = A.Distinct().Count();
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29511865">コンテスト提出</a></p>
 <p>動的計画法で答えを求めます。
 <code>i</code>番目のジャンプを座標<code>j(0&lt;=j&lt;=X)</code>から行うと、<code>i+1</code>番目では、<code>j+a</code>または<code>j+b</code>に存在することができます。初期状態の<code>0</code>を<code>true</code>としたとき、そこからの遷移を計算し、<code>N</code>回ジャンプ後の<code>X</code>の値が<code>true</code>ならば存在することができると表現できます。</p>
@@ -124,7 +124,7 @@ for (var i = 0; i &lt; N; i++)
 var answer = dp[N, X];
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29521922">コンテスト提出</a></p>
 <p>スタックに順番にボールを追加していき、同じ数字がK個連続した場合は削除する操作を行います。このとき一つの数字につき1つの値を入れていると、計算量は<code>O(N^2)</code>になってしまうので、連続した値は値と個数の一つのオブジェクトとしてまとめ、スタックに入っているボールの個数を管理することで、計算量を<code>O(N)</code>に抑えることができます。
 具体的には、もしスタックが空またはスタックのトップと異なる値の場合は、値と個数1をタプルとしてまとめてスタックに追加し、もしスタックのトップと同じ値の場合は、スタックのトップの個数を更新します。その後、スタックのトップを順にみていき、値と個数が同じ場合はスタックから取り除き、現在の個数も減少させます。</p>
@@ -172,7 +172,7 @@ foreach (var a in A)
     Console.WriteLine(curr);
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29533033">コンテスト提出</a></p>
 <p>問題文の根付き木について、子を持たない頂点に対してそれぞれ異なる値を与えたときに、部分木<code>i</code>が持つ値群の最小値と最大値をそれぞれ<code>Li</code>と<code>Ri</code>としたとき、頂点<code>i</code>は区間<code>[Li, Ri]</code>を持つと解釈することができます。
 そのため、深さ優先探索を行い、子を持たない頂点の場合はそれまでに出現していない値を<code>Li</code>と<code>Ri</code>に設定し、子を持つ頂点は、子の<code>Li</code>と<code>Ri</code>の中でそれぞれ最小、最大となるものを選択することで、答えとなる区間を求めることができます。</p>

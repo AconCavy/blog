@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 236の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc236">https://atcoder.jp/contests/abc236</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc236/submissions/28718361">コンテスト提出</a></p>
 <p>文字列を文字の配列としてとり、指定されたインデックスの中身を入れ替えます。</p>
 <pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().ToCharArray();
@@ -102,7 +102,7 @@ b = a;
 
 (a, b) = (b, a); // 上と同じ
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc236/submissions/28722017">コンテスト提出</a></p>
 <p>カードはすべて数値なので、<code>4N</code>枚のカードの総和<code>(4 * N * (N+1) / 2)</code>から渡されたカードの束Aの総和を引くことで、抜き取られたカードを求めることができます。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
@@ -110,7 +110,7 @@ var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
 var answer = 4L * (N * (N + 1) / 2) - A.Sum();
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc236/submissions/28725764">コンテスト提出</a></p>
 <p>文字列をキーとした辞書を作成し、急行列車が止まる駅をチェックします。時間計算量は<code>O(NlogN)</code>になります。</p>
 <pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
@@ -150,7 +150,7 @@ foreach (var s in S)
     }
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc236/submissions/28749636">コンテスト提出</a></p>
 <p>今見ている人とスコアをもって深さ優先探索を行い、すべての人がペアを組み終わったときのスコアを最大値を求めます。遷移としては、既にペアを組んでいる場合は次の人に進み、組んでいない場合は今見ている人以降のまだペアを組んでいない人とペアを組みます。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
@@ -200,7 +200,7 @@ Dfs(0, 0);
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc236/tasks/abc236_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc236/submissions/28760550">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

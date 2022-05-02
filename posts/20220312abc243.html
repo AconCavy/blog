@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 243の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc243">https://atcoder.jp/contests/abc243</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30026790">コンテスト提出</a></p>
 <p><code>V</code>ミリリットルを使い切る周を考えるために、1周で使う量である<code>A+B+C</code>で余りを取ってから考えます。</p>
 <ul>
@@ -102,7 +102,7 @@ else if (V &lt; A + B) { Console.WriteLine(&quot;M&quot;); }
 else { Console.WriteLine(&quot;T&quot;); }
 
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30030964">コンテスト提出</a></p>
 <p>あらかじめ<code>A</code>と<code>B</code>の要素をキーとして、位置をそれぞれ別の辞書に保持しておきます。
 そして、<code>A</code>の要素を順番に見ていき、<code>A</code>の要素が<code>B</code>の辞書に存在するとき、位置が一致する場合と一致しない場合をそれぞれ数え上げます。</p>
@@ -132,7 +132,7 @@ foreach (var a in A)
 Console.WriteLine(ans1);
 Console.WriteLine(ans2);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30038745">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/ABC243/submissions/30081816">復習提出</a></p>
 <p>愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
@@ -177,7 +177,7 @@ foreach (var (y, x) in R)
 
 Console.WriteLine(&quot;No&quot;);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30044374">コンテスト提出</a></p>
 <p><code>N</code>回の移動後にいる頂点の番号は<code>10^18</code>以下であることが制約で保証されていますが、愚直にシミュレーションしてしまうと、制約<code>N&lt;=10^6</code>より、シミュレーション中の頂点の値が最大で<code>X*2^(N/2)</code>になり、現在のコンピュータの整数型では正しく計算することができません。
 そこで、子に移動して親に戻るといった、無駄な移動を省くことで、シミュレーション中でも頂点の値が<code>10^18</code>を超えないようにすることを考えます。
@@ -223,7 +223,7 @@ foreach (var c in T)
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30080632">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

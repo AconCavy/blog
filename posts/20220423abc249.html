@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 249の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc249">https://atcoder.jp/contests/abc249</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC249/submissions/31188853">コンテスト提出</a></p>
 <p>高橋君の進む距離を考えます。
 歩く+休むを1セットとすると、<code>X</code>秒間に<code>X/(A+C)</code>セット(端数切り捨て)できるため、距離は合計で<code>セット数*A*B</code>進むことができます。
@@ -113,7 +113,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC249/submissions/31188890">コンテスト提出</a></p>
 <p>一つずつ条件を判定していきます。<br>
 C#では、<code>char.IsUpper</code>関数で文字の大文字判定、<code>char.IsLower</code>関数で文字の小文字判定を行うことができます。
@@ -142,7 +142,7 @@ C#では、<code>char.IsUpper</code>関数で文字の大文字判定、<code>ch
     Console.WriteLine(ok ? &quot;Yes&quot; : &quot;No&quot;);
 }
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC249/submissions/31188932">コンテスト提出</a></p>
 <p>各文字列に対して使うor使わないの2択なため、<code>2^N</code>個の組み合わせがあり得ます。
 制約が<code>N&lt;=15</code>と少ないので、<code>bit全探索</code>を行うことで全ての組み合わせを走査することができます。
@@ -188,7 +188,7 @@ C#では、<code>char.IsUpper</code>関数で文字の大文字判定、<code>ch
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc249/tasks/abc249_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC249/submissions/31192606">コンテスト提出</a></p>
 <p>愚直に全ての<code>i,j,k</code>を走査する方法では、計算量が<code>O(N^3)</code>となり、<code>A[j]*A[k]=A[i]</code>となる<code>j,k</code>を走査する方法では、計算量が<code>O(N^2)</code>となりますが、制約が<code>1&lt;=N&lt;=2e5</code>と大きいため、実行時間制限内に処理を終わらせることができません。<br>
 そこで、あらかじめAの値の出現回数を数えておき、<code>1&lt;=p,q,r&lt;=2e5</code>のうち、<code>p=q*r</code>となる<code>p,q,r</code>の組における組み合わせの個数の総和を求めます。

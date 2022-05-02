@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 246の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc246">https://atcoder.jp/contests/abc246</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC246/submissions/30625941">コンテスト提出</a></p>
 <p>各辺は<code>X</code>軸または<code>Y</code>軸に平行な長方形なので、<code>X</code>が同じ頂点のペアが2つと<code>Y</code>が同じ頂点のペアが2つが存在することになります。<br>
 そのため、<code>X</code>と<code>Y</code>それぞれ値に対するペアの存在を管理し、余った<code>X</code>と<code>Y</code>の値が残りの頂点の座標となります。<br>
@@ -125,7 +125,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine($&quot;{x} {y}&quot;);
 }
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC246/submissions/30629082">コンテスト提出</a></p>
 <p>2点間の距離は<code>D=Sqrt(A*A+B*B)</code>なので、<code>(A/D, B/D)</code>が答えとなります。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
@@ -145,10 +145,10 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine($&quot;{answer.X} {answer.Y}&quot;);
 }
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC246/submissions/30633790">コンテスト提出</a></p>
 <p>まず、1枚のクーポンにつき<code>X</code>円安くできるため、可能な限り<code>X</code>円安くすることを考えます。<br>
-これは、<code>A[i]&gt;=X</code>となる<code>A[i]</code>はクーポンがある限り<code>A[i]-X</code>にすることができ、使うことができるクーポンの数が<code>k</code>のとき、<code>A[i]=A[i]-k*X</code>とすることができます。<br>
+これは、<code>A[i]&gt;=X</code>となる<code>A[i]</code>はクーポンがある限り<code>A[i]-X</code>にすることができ、使うことができるクーポンの数が<code>k</code>のとき、<code>A[i]=A[i]-k*X</code>とすることができます。
 <code>k</code>枚のクーポンを持っていて値段が<code>P</code>のとき、<code>Min(k, P/X)</code>枚のクーポンを使うことができるため、クーポンの数を更新しながら<code>A</code>を順にみていくことで、<code>A</code>の値を可能な限り<code>X</code>円安くした値にすることができます。<br>
 その後、まだクーポンが余っている場合は、<code>A</code>の全ての値は<code>A[i]&lt;X</code>となっているため、<code>A</code>の値が大きい順にクーポンを使って<code>0</code>円にすることができます。<br>
 そして、全ての操作を終えたときの和が答えとなります。</p>
@@ -174,7 +174,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC246/submissions/30679687">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>
@@ -203,7 +203,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc246/tasks/abc246_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC246/submissions/30677572">復習提出</a></p>
 <p>マスは最大4方向から移動してくる可能性があることに注意し、Dijkstra法で最短経路を求めます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()

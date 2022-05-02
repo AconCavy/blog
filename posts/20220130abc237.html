@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 237の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/ABC237">https://atcoder.jp/contests/ABC237</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28899214">コンテスト提出</a></p>
 <p>C#含めほとんどの言語では、<code>1 &lt;&lt; x</code>のようなビットシフト計算が備わっており、2の<code>x</code>乗を表現することができます。
 例えば、<code>1 &lt;&lt; 2</code>は、1を2進数で表すと<code>1</code>であり、2つ左にシフトすると<code>100</code>になって、10進数では<code>4</code>を表現します。</p>
@@ -94,7 +94,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 const long inf = 1L &lt;&lt; 31;
 Console.WriteLine(-inf &lt;= N &amp;&amp; N &lt; inf ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28909504">コンテスト提出</a></p>
 <p>転置行列は、<code>i</code>行<code>j</code>列目を<code>j</code>行<code>i</code>列目にしたものなので、そのまま添え字を入れ替えたものを結果として出力します。</p>
 <pre><code class="language-csharp line-numbers">var (H, W) = Scanner.Scan&lt;int, int&gt;();
@@ -119,7 +119,7 @@ for (var i = 0; i &lt; H; i++)
 
 Printer.Print2D(B, &quot; &quot;);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28919221">コンテスト提出</a></p>
 <p>あらかじめ、文字列前方と後方の連続する<code>a</code>を無視した文字列が回文であれば元の文が回文である可能性があります。
 このとき、文字列前方の連続する<code>a</code>の個数が文字列後方の連続する<code>a</code>の個数以下場合は、足りない<code>a</code>を前方に追加することで回文にすることができますが、それ以外(前方&gt;後方)の場合は後方に<code>a</code>を追加することはできないので、回文にすることはできません。
@@ -142,7 +142,7 @@ var t = S[l..(r + 1)];
 var answer = t == new string(t.Reverse().ToArray());
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28928816">コンテスト提出</a>
 <a href="https://atcoder.jp/contests/ABC237/submissions/28958803">復習提出</a></p>
 <p>数字をノードとしてみたときに、0をルートとするツリーを作成し、深さ優先探索の通りがかり順(左部分木-&gt;自分-&gt;右部分木)で見ていった結果が答えとなります。</p>
@@ -201,7 +201,7 @@ foreach (var (c, i) in S.Select((x, i) =&gt; (x, i)).Reverse())
  
 Console.WriteLine(string.Join(&quot; &quot;, deq));
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28933145">コンテスト提出</a>
 <a href="https://atcoder.jp/contests/ABC237/submissions/28962115">復習提出</a></p>
 <p><del>頂点<code>U</code>と頂点<code>V</code>をつなぐ辺にそれぞれ重みを付けてグラフを作成したときの、拡張ダイクストラ法で解くことを考えます。
@@ -251,7 +251,7 @@ Console.WriteLine(answer);
 </code></pre>
 <p>2022年1月31日現在のAtCoderの<code>C#(.NET Core 3.1.201)</code>では<code>PriorityQueue</code>は標準ライブラリにないため、自作する必要があります。
 <code>C#(.NET 6.0)</code>以降であれば、<code>PriorityQueue</code>が標準ライブラリに追加されるので、言語アップデートを待ちましょう。</p>
-<h2 id="f"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_f">問題F</a></h2>
+<h3 id="f"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28958599">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

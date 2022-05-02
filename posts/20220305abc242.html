@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 242の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc242">https://atcoder.jp/contests/abc242</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29883827">コンテスト提出</a></p>
 <p>それぞれどの条件に当てはまるかで確率を求めます。</p>
 <ul>
@@ -100,7 +100,7 @@ if (X &lt;= A) answer = 1d;
 if (A + 1 &lt;= X &amp;&amp; X &lt;= B) answer = (double)C / (B - A);
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29869226">コンテスト提出</a></p>
 <p>辞書順最小となる文字列は、文字列<code>S</code>を構成する文字のうち、小さいものを左から順に並べたものになります。
 そのため、文字列<code>S</code>をソートした文字列が答えとなります。</p>
@@ -109,7 +109,7 @@ Array.Sort(S);
 var answer = new string(S);
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29875962">コンテスト提出</a></p>
 <p>動的計画法で答えとなる個数を数え上げます。
 初期値として、1桁目は<code>1</code>から<code>9</code>である個数をそれぞれ<code>1</code>とします。</p>
@@ -144,7 +144,7 @@ for (var i = 1; i &lt; 10; i++)
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29901915">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>
@@ -183,7 +183,7 @@ char F(long t, long k)
 }
 
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29902510">復習提出</a></p>
 <p>辞書順で文字列<code>S</code>以下の文字列を考えます。
 回文のため、文字列<code>S</code>の前半分の文字列<code>S'</code>において、<code>S'</code>未満の個数を数え上げを行います。

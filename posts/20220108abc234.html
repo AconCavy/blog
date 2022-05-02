@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 234の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc234">https://atcoder.jp/contests/abc234</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/28380748">コンテスト提出</a></p>
 <p><code>F(x)</code>を定義し、求める式を<code>G(x)</code>とした時に、<code>G(T)</code>の値が答えとなります。</p>
 <pre><code class="language-csharp line-numbers">var T = Scanner.Scan&lt;int&gt;();
@@ -95,7 +95,7 @@ long G(long x) =&gt; F(F(F(x) + x) + F(F(x)));
 var answer = G(T);
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/28384115">コンテスト提出</a></p>
 <p>すべての点の組み合わせを試すことで求めることができます。
 最後に<code>Sqrt</code>を取ることで誤差を回避しました。</p>
@@ -120,7 +120,7 @@ foreach (var (x1, y1) in P)
 answer = Math.Sqrt(answer);
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/28387201">コンテスト提出</a></p>
 <p><code>K</code>を2進数表記したとき、<code>1</code>の値を<code>2</code>にしたものが答えとなります。</p>
 <pre><code class="language-csharp line-numbers">var K = Scanner.Scan&lt;long&gt;();
@@ -134,7 +134,7 @@ list.Reverse();
 var answer = string.Join(&quot;&quot;, list.Select(x =&gt; x * 2));
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/28404691">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc234/submissions/28418529">復習提出</a></p>
 <p>優先度付きキューを使い、キューのサイズが<code>K</code>個の時の最小の値がそれぞれの状態の答えとなります。
@@ -161,7 +161,7 @@ for (var i = K; i &lt; N; i++)
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/284197124">復習提出</a></p>
 <p>答えとしてあり得る値を考えたとき、</p>
 <ul>
@@ -192,7 +192,7 @@ var answer = hashset.Where(x =&gt; x &gt;= X).Min();
 Console.WriteLine(answer);
 </code></pre>
 <p><del>E問題を解こうとしてたはずなのにF問題やってたのでコンテスト中には解けませんでした。コンテスト後に気づいて解いてみたら解けてたので悔しいです。</del></p>
-<h2 id="e-1"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_f">問題E</a></h2>
+<h3 id="e-1"><a href="https://atcoder.jp/contests/abc234/tasks/abc234_f">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc234/submissions/28417399">復習提出</a></p>
 <p>コンテスト中の考察</p>
 <ul>

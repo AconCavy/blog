@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 235の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc235">https://atcoder.jp/contests/abc235</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28530777">コンテスト提出</a></p>
 <p>各桁を移動させて足します。</p>
 <pre><code class="language-csharp line-numbers">var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
@@ -97,7 +97,7 @@ answer += V[2] * 100 + V[0] * 10 + V[1];
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28530905">コンテスト提出</a></p>
 <p>順にみて前回より大きい場合は<code>curr</code>を更新し、小さい場合は移動することができないため、<code>curr</code>を表示します。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
@@ -118,7 +118,7 @@ for (var i = 0; i &lt; N; i++)
 
 Console.WriteLine(curr);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28535489">コンテスト提出</a></p>
 <p>クエリのたびにすべてを走査すると<code>O(N*Q)</code>となりTLEになるので、高速化する必要があります。
 あらかじめ値をキーとした出現場所をもつ辞書を作成し、その値が何番目に出現するかを保持しておき、クエリによる<code>x</code>の値が存在して、<code>k</code>の値が辞書内に存在する<code>x</code>の個数以内ならばその出現場所を表示し、それ以外の場合は<code>-1</code>を表示することで、クエリ当たり<code>O(logN)</code>で実行することができるようになります。</p>
@@ -152,7 +152,7 @@ while (Q-- &gt; 0)
     }
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28546896">コンテスト提出</a></p>
 <p>各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。<br>
 シフト操作によって、<code>N</code>の値より大きい数から<code>N</code>より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。<br>
@@ -193,7 +193,7 @@ else
     Console.WriteLine(-1);
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28551552">コンテスト提出</a></p>
 <p>クエリごとに最小全域木を求めると、ソートに<code>(MlogM)</code>、クラスカル法で最小全域木を求めるために<code>O(Ea(V))</code>となり、TLEになってしまいます。
 クエリに対してグラフはそれぞれ独立なため、あらかじめクエリを先読みしてすべての辺をまとめてソートし、クラスカル法で辺を見てその辺が有効な場合、もしその辺がクエリの辺である場合はそのクエリは有効であり、そうではない場合は最小全域木としてマージしていくことで、計算量を抑えることができます。</p>
@@ -231,7 +231,7 @@ foreach (var e in E1.Concat(E2).OrderBy(x =&gt; x.Cost))
 
 Console.WriteLine(string.Join(&quot;\n&quot;, answer.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
 </code></pre>
-<h2 id="f"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_f">問題F</a></h2>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28569936">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

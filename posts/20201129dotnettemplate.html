@@ -80,9 +80,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p><a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp">競プロ用のプロジェクトテンプレート</a>を整備したので、<code>dotnet new</code>のカスタムテンプレート作成の備忘録です。</p>
-<h1 id="dotnet-new">dotnet new のカスタムテンプレートとは</h1>
+<h2 id="dotnet-new">dotnet new のカスタムテンプレートとは</h2>
 <p>公式の情報は<a href="https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates">こちら</a></p>
 <p>.NETのプロジェクトを作成する際、<code>dotnet</code>コマンドを利用してプロジェクトを生成します。
 例えば、コンソールアプリケーションを作成する場合、</p>
@@ -94,7 +94,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p>既定のテンプレートとして、<code>dotnet new</code>コマンドに<code>-l|--list</code>オプションをつけて実行すると、現在インストールされている<code>dotnet new</code>コマンドで生成できるテンプレートを確認することができます。</p>
 <pre><code class="language-sh line-numbers">dotnet new -l
 </code></pre>
-<h1 id="section-1">作ってみる</h1>
+<h2 id="section-1">作ってみる</h2>
 <p>テンプレートの基本として、テンプレート化したいプロジェクトのディレクトリ下に、<code>.template.config</code>のディレクトリを作成し、さらにその下に、<code>template.json</code>を作成します。
 そして、<code>template.json</code>にプロパティを設定し、<code>dotnet new</code>コマンドを使ってインストールすることで、テンプレートを使うことができるようになります。</p>
 <pre><code class="language-sh line-numbers">dotnet new -i path-to-template
@@ -105,9 +105,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <li>解答用のクラス</li>
 <li>テスト用のクラス</li>
 </ul>
-<h2 id="section-2">プロジェクトのテンプレート</h2>
+<h3 id="section-2">プロジェクトのテンプレート</h3>
 <p>プロジェクトでは、解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします。</p>
-<pre><code class="line-numbers">Template.Project/
+<pre><code class="language-text line-numbers">Template.Project/
     |
     |- Tasks/
     |    |
@@ -121,7 +121,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     |- Template.Project.sln
 </code></pre>
 <p>このプロジェクトをベースとして、<code>Project/</code>下に<code>.template.config/</code>ディレクトリを作成し、その下に<code>template.json</code>を作成します。</p>
-<pre><code class="line-numbers">Template.Project/
+<pre><code class="language-text line-numbers">Template.Project/
     |
     |- .template.config
     |    |
@@ -198,7 +198,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </code></pre>
 <p><code>sourceName</code>に設定した文字列は、テンプレート以下のすべての対象の文字列が置換されるため、<code>dotnet new cpproj -n Sample</code>を実行した場合、<code>Template.Project/</code>ディレクトリ、<code>Template.Project.sln</code>が<code>Sample/</code>ディレクトリ、<code>Sample.sln</code>に置換されて生成されます。ファイル内の文字列も置換されるため注意が必要です。</p>
 <p>この状態で、<code>dotnet new -i path-to-template</code>コマンドでインストールし、<code>dotnet new cpproj -n Sample</code>を実行することで、上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます。</p>
-<pre><code class="line-numbers">Sample/
+<pre><code class="language-text line-numbers">Sample/
     |
     |- Tasks/
     |    |
@@ -211,7 +211,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     |
     |- Sample.sln
 </code></pre>
-<h3 id="section-3">コマンドの追加オプション</h3>
+<h4 id="section-3">コマンドの追加オプション</h4>
 <p>また、<code>Task.csproj</code>と<code>Tests.csproj</code>のターゲットフレームワークをテンプレート生成時に指定できるようにするため、<code>dotnet new cpproj</code>コマンドにオプションを追加します。</p>
 <p>まず、<code>.template.config</code>下に<code>dotnetcli.host.json</code>を追加します。
 <code>symbolInfo</code>メンバに、<code>longName</code>のオプションに<code>framework</code>を、<code>shortName</code>に<code>f</code>をもった<code>Framework</code>というメンバを追加します。
@@ -270,9 +270,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 </code></pre>
 <p>この状態で、<code>dotnet new cpproj -n Sample -f net5.0</code>を実行することで、<code>TargetFramework</code>に<code>net5.0</code>が設定されたプロジェクトを生成することができます。</p>
-<h2 id="section-4">解答用のクラスとテスト用のクラスのテンプレート</h2>
+<h3 id="section-4">解答用のクラスとテスト用のクラスのテンプレート</h3>
 <p>単一のファイルのみ生成するように、テンプレートを構築します。</p>
-<pre><code class="line-numbers">Template.Solver/
+<pre><code class="language-text line-numbers">Template.Solver/
     |
     |- .template.config/
     |    |
@@ -290,11 +290,11 @@ Template.Tests/
 </code></pre>
 <p>プロジェクトのテンプレートの作り方と同様に、<code>template.json</code>を記述しますが、単一ファイルのみ生成させるため、<code>preferNameDirectory</code>を削除、または<code>false</code>にします。</p>
 <p>解答用の<code>sourceName</code>を<code>Template.Solver</code>に、テスト用の<code>sourceName</code>を<code>Template.Tests</code>にすることで、<code>dotnet new</code>コマンドの<code>-n|--name</code>オプションに<code>Sample</code>を指定すると、それぞれ<code>Sample.cs</code>と<code>SampleTests.cs</code>が生成されます。</p>
-<h2 id="section-5">プロジェクトのパッケージ化</h2>
+<h3 id="section-5">プロジェクトのパッケージ化</h3>
 <p>テンプレートが3つ用意できましたが、テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります。
 そのため、3つのテンプレートまとめて、1つの<code>nuget</code>パッケージを生成します。
 3つのディレクトリを一つのディレクトリにまとめ、そのディレクトリと同じ階層に<code>csproj</code>ファイルを生成します。</p>
-<pre><code class="line-numbers">CPTemplate/
+<pre><code class="language-text line-numbers">CPTemplate/
     |
     |- content/
     |    |
@@ -403,7 +403,7 @@ Template.Tests/
 <pre><code class="language-sh line-numbers">dotnet pack
 </code></pre>
 <p>実行後、<code>bin/Debug/</code>下に<code>{PackageId}.{PackageVersion}.nupkg</code>が生成されます。</p>
-<pre><code class="line-numbers">CPTemplate/
+<pre><code class="language-text line-numbers">CPTemplate/
     |
     |- bin/
     |    |
@@ -415,7 +415,7 @@ Template.Tests/
 <p>この<code>nupkg</code>を<code>dotnet new</code>コマンドでインストールすることで、3つのテンプレートを1回でインストールすることができます。</p>
 <pre><code class="language-sh line-numbers">dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
 </code></pre>
-<h1 id="section-6">まとめ</h1>
+<h2 id="section-6">まとめ</h2>
 <p><code>dotnet new</code>のカスタムテンプレートの作り方と、テンプレートのパッケージ化の手順をまとめました。</p>
 <ul>
 <li>テンプレートのルートに<code>.template.config</code>ディレクトリを作成し、内に<code>template.json</code>を作成する。</li>

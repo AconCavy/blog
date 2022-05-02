@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 239の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc239">https://atcoder.jp/contests/abc239</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29426523">コンテスト提出</a></p>
 <p>与えられた計算式に入力のHを与えたときの答えを求めます。
 <code>int</code>だと<code>x * (12800000 + x)</code>の計算でオーバーフローしてしまうので、<code>long</code>で取ることに注意します。</p>
@@ -94,14 +94,14 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 double F(long x) =&gt; Math.Sqrt(x * (12800000 + x));
 Console.WriteLine(F(H));
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29432159">コンテスト提出</a></p>
 <p><code>X&gt;=0</code>のときはそのまま<code>X/10</code>で切り捨てを求め、<code>X&lt;0</code>のときは<code>-X/10</code>の切り上げた数の<code>-</code>を考えればいいです。</p>
 <pre><code class="language-csharp line-numbers">var X = Scanner.Scan&lt;long&gt;();
 var answer = X &gt;= 0 ? X / 10 : -(-X + 9) / 10;
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29441499">コンテスト提出</a></p>
 <p>一つの点に対して、<code>abs(dx)+abs(dy)==3</code>となる格子点は8つのみであり、それぞれの点の組み合わせのうち、一致する点があるかを全探索します。</p>
 <pre><code class="language-csharp line-numbers">var (x1, y1, x2, y2) = Scanner.Scan&lt;long, long, long, long&gt;();
@@ -120,7 +120,7 @@ foreach (var (dx1, dy1) in D)
 
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29446892">コンテスト提出</a></p>
 <p>200までの素数を作ることができるかを考えると、<code>{200以下の任意の素数}-{高橋君の選んだ素数}</code>となる整数を青木君は選ぶことで素数を作ることができます。そのため、高橋君の整数を固定し、200以下の素数をすべて見たときに青木君が選ぶことのできる整数が存在するかを判定します。もし青木君が素数を作るための整数を1つでも選ぶことができなければ、高橋君の勝利となります。</p>
 <pre><code class="language-csharp line-numbers">var (A, B, C, D) = Scanner.Scan&lt;int, int, int, int&gt;();
@@ -156,7 +156,7 @@ Console.WriteLine(answer ? &quot;Takahashi&quot; : &quot;Aoki&quot;);
     }
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29456696">コンテスト提出</a></p>
 <p>クエリごとに部分木を計算すると、計算量が<code>O(N^2)</code>でになってしまうので、あらかじめ部分木のうちで対象となりうる要素を保持しておくことを考えます。
 しかし、部分木のすべての数を保持してしまうと、全体で最悪<code>N*(N-1)/2</code>個の要素が存在し、ソートも考えると計算量が<code>O(N^2log(N^2))</code>でTLEになってしまうので、保持する要素を制限することを考えます。制約の、<code>1 &lt;= Ki &lt;= 20</code>から、各頂点で対象となる数は、最大でも20個ということがわかります。また、木Bが木Aの部分木のとき、木Bの大きいほうから21番目以降の要素は、木Aにおいても21番目以降であるため、21番目以降の要素は無視することができます。このことから、深さ優先探索を行って部分木を見たときに、部分木の要素のうち、降順で最大20個ずつ保持して行くことで、計算量を<code>O(Nlog(N))</code>に抑えることができ、各クエリ当たり<code>O(1)</code>で答えを求めることができます。</p>
@@ -200,7 +200,7 @@ for (var i = 0; i &lt; Q; i++)
     Console.WriteLine(list[v][k]);
 }
 </code></pre>
-<h2 id="f"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_f">問題F</a></h2>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc239/tasks/abc239_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC239/submissions/29479750">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

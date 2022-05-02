@@ -81,16 +81,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。</p>
-<h1 id="section-1">環境</h1>
+<h2 id="section-1">環境</h2>
 <ul>
 <li>OS: Windows 10</li>
 <li>CPU: AMD Ryzen 5 3600</li>
 <li>SDK: .NET 5.0</li>
 <li>BenchmarkDotnet: 0.12.1</li>
 </ul>
-<h2 id="section-2">計測対象</h2>
+<h3 id="section-2">計測対象</h3>
 <ul>
 <li>Runtimes
 <ul>
@@ -103,14 +103,14 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <li>1次元配列 (1e6)</li>
 <li>2次元配列 (1e3 * 1e3)</li>
 <li>2次元ジャグ配列 (1e3 * 1e3)</li>
-<li>3次元配列 (1e2 * 1e2 * 1e2)</li>
-<li>3次元ジャグ配列 (1e2 * 1e2 * 1e2)</li>
+<li>3次元配列 (1e2 <em>1e2</em> 1e2)</li>
+<li>3次元ジャグ配列 (1e2 <em>1e2</em> 1e2)</li>
 </ul>
 </li>
 </ul>
-<h2 id="section-3">操作</h2>
+<h3 id="section-3">操作</h3>
 <p>全ての要素に値を代入</p>
-<h2 id="section-4">スクリプト</h2>
+<h3 id="section-4">スクリプト</h3>
 <pre><code class="language-csharp line-numbers">using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
@@ -191,7 +191,7 @@ namespace BenchmarkSharp
     }
 }
 </code></pre>
-<h1 id="section-5">結果</h1>
+<h2 id="section-5">結果</h2>
 <div class="table-responsive">
 <table class="table">
 <thead>
@@ -425,7 +425,7 @@ namespace BenchmarkSharp
 </tbody>
 </table>
 </div>
-<h1 id="section-6">まとめ</h1>
+<h2 id="section-6">まとめ</h2>
 <p>.NET 5.0は .NET Core 3.1に比べて</p>
 <ul>
 <li>1次元配列 -&gt; 10%程度高速</li>

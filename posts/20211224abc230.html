@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 230の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc230">https://atcoder.jp/contests/abc230</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27643596">コンテスト提出</a></p>
 <p>入力を取り、<code>N</code>が42以上なら答えをインクリメントします。C#では出力をフォーマットできるので、0埋めフォーマットを行います。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
@@ -95,7 +95,7 @@ if (N &gt;= 42) N++;
 var answer = $&quot;AGC{N:000}&quot;;
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27651060">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc230/submissions/27674559">復習提出</a></p>
 <p>3つ連続した部分文字列において、<code>x</code>が3つ連続した場合、<code>oxo</code>のように<code>o</code>が2つ以上含まれている場合は答えは<code>No</code>になります。</p>
@@ -133,7 +133,7 @@ foreach (var t in new[] { &quot;oxx&quot;, &quot;xox&quot;, &quot;xxo&quot; })
  
 Console.WriteLine(&quot;No&quot;);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27664018">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc230/submissions/27674563">復習提出</a></p>
 <p>黒く塗りつぶすべきマスは、<code>x</code>の交点となる<code>(A,B)</code>からの距離<code>dx</code>と<code>dy</code>の絶対値が一致する箇所になります。
@@ -150,7 +150,7 @@ for (var i = P; i &lt;= Q; i++)
     Console.WriteLine();
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27665969">コンテスト提出</a></p>
 <p><code>D</code>列まとめてダメージを与えられるということは、壁の当たり判定を<code>D-1</code>伸ばして、パンチを1列にすることと同じことになります。
 そのため、壁の<code>R</code>に<code>D-1</code>を追加したときの区間スケジューリング問題として扱うことができます。
@@ -176,7 +176,7 @@ foreach (var (l, r) in W)
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27675153">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

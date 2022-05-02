@@ -82,16 +82,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。</p>
 <p>リポジトリは<a href="https://github.com/AconCavy/Mulinq">こちら</a></p>
-<h2 id="tldr">TL;DR</h2>
+<h3 id="tldr">TL;DR</h3>
 <ul>
 <li>GitHub ActionsでNuGetパッケージを作成した。</li>
 <li>作成したNuGetパッケージをNuGetにアップロードした。</li>
 <li>タグからリリース/プレリリースを判断できるようにした。</li>
 </ul>
-<h1 id="net">対象の.NETプロジェクトの設定</h1>
+<h2 id="net">対象の.NETプロジェクトの設定</h2>
 <p>パッケージ化する.NETプロジェクトの<code>.csproj</code>ファイルを更新します。
 今回はビルド構成として.NET 5と.NET Core 3.1のdllを生成するために、<code>TargetFrameworks</code>に<code>net5.0</code>と<code>netcoreapp3.1</code>を構成します。</p>
 <p>そして、NuGetの情報を構成します。今回は<code>.csproj</code>に構成しましたが、<code>.nuspec</code>ファイルを作成してNuGet情報だけを切り離して構成することも可能なようです。
@@ -117,13 +117,13 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 &lt;/Project&gt;
 </code></pre>
-<h1 id="nuget">NuGetの設定</h1>
+<h2 id="nuget">NuGetの設定</h2>
 <p>NuGetアカウントを持っていない場合はアカウントの作成をします。Microsoftアカウントから作成もできるみたいです。</p>
 <p>NuGetパッケージのアップロードには、NuGetのAPIキーが必要なので、APIキーを生成します。
 画面右上のユーザから、<code>API Keys</code>のページに移動し、<code>Create</code>フォームから、<code>Key Name</code>や<code>Package Owner</code>等必要な情報を埋め、APIキーを生成します。
 生成に成功すると、<code>Manage</code>パネルに生成したAPIキーが並ぶので、<code>Copy</code>でAPIキーをコピーします。一度ページから離れてしまうと、再びコピーできなくなるので、できなくなった場合は<code>Regenerate</code>から再生成します。</p>
 <p>コピーしたAPIキーをGitHubリポジトリの<code>Secrets</code>に登録することで、GitHub Actionsの環境変数としてアクセスできるようになります。リポジトリの<code>Setting -&gt; Secrets -&gt; New repository secret</code>で新しいシークレットを作成し、名前とAPIキーを登録します。今回は<code>NUGET_API_KEY</code>として登録しました。</p>
-<h1 id="workflow">Workflowの作成</h1>
+<h2 id="workflow">Workflowの作成</h2>
 <p><a href="20201212createrepository">リポジトリを作成したときにやっておきたいこと</a>のReleaseの作成をもとにWorkflowを作成します。</p>
 <p>RelaseのWorkflowを実行するトリガーとして、<code>v1.0.0</code>や<code>v1.0.0-alpha</code>のようなGitのタグがpushされたときに限定します。</p>
 <pre><code class="language-yml line-numbers">on:
@@ -150,7 +150,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </code></pre>
 <p>次にテストが成功した場合のみリリースを実行します。<code>needs: [test]</code>とすることで、<code>test</code>のjobが成功した場合のみ実行されるようになります。
 まず、プロジェクトからNuGetパッケージを作成します。このとき、<code>-p:Version</code>にバージョンを指定します。タグのバージョン情報を取得するために、<code>${GITHUB_REF##*/v}</code>を指定します。</p>
-<pre><code class="line-numbers">dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
+<pre><code class="language-text line-numbers">dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
 </code></pre>
 <p><code>GITHUB_REF</code>の環境変数では、ワークフローをトリガーしたタグのrefを取得でき、<code>v1.0.0</code>のようなタグの場合は<code>refs/heads/v1.0.0</code>という文字列を取得できます。そこから<code>1.0.0</code>の部分だけ取得し、<code>Version</code>の環境変数に指定します。
 ビルドに成功した場合は、<code>./publish</code>に<code>Mulinq.1.0.0.nupkg</code>が生成されます。</p>
@@ -250,14 +250,14 @@ jobs:
         draft: false
         prerelease: ${{ contains(github.ref, '-') }}
 </code></pre>
-<h1 id="workflow-1">Workflowの実行</h1>
+<h2 id="workflow-1">Workflowの実行</h2>
 <p>適当にコミットを作成し、<code>v0.0.1-alpha</code>というタグをつけ、GitHub上にプッシュします。</p>
 <p>作成したWorkflowが実行され、テスト、ビルド、アップロード、Releaseの作成が行われます。</p>
 <p>NuGetへアップロード直後は<code>Unlisted Packages</code>の状態でしたが、しばらくすると<code>Published Packages</code>になりました。</p>
 <p><img src="assets/images/nuget_upload.webp" class="img-fluid" alt="succeeded upload to nuget"></p>
 <p>GitHubのリリースのほうは、ちゃんと<code>Pre-Release</code>で作成されています。
 <img src="assets/images/gha_prerelease.webp" class="img-fluid" alt="pre-release"></p>
-<h1 id="section-1">まとめ</h1>
+<h2 id="section-1">まとめ</h2>
 <ul>
 <li>GitHub ActionsでNuGetパッケージを作成した。</li>
 <li>作成したNuGetパッケージをNuGetにアップロードした。</li>

@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 248の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc248">https://atcoder.jp/contests/abc248</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc248/submissions/31002746">コンテスト提出</a></p>
 <p><code>0</code>から<code>9</code>の合計から登場する数字を全て引いた後の値が答えとなります。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
@@ -101,7 +101,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(sum);
 }
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc248/submissions/31006946">コンテスト提出</a></p>
 <p>初期値を<code>A</code>として、<code>B</code>より小さいうちに<code>A</code>を何回<code>K</code>倍することができるかを数え上げます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
@@ -118,7 +118,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc248/submissions/31016119">コンテスト提出</a></p>
 <p><code>i</code>番目の値まで決めたときに、それまでの総和が<code>j</code>であるような数列の総数を動的計画法として答えを数え上げます。
 これは、<code>i+1</code>番目の値は、<code>i</code>番目までの総和<code>j</code>に<code>1&lt;=k&lt;=M</code>の何れかを足した数への遷移することができます。
@@ -150,7 +150,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc248/submissions/31021126">コンテスト提出</a></p>
 <p>クエリごとに指定された範囲を走査してしまうと、クエリごとの計算量が<code>O(N)</code>、全体計算量が<code>O(N^2)</code>となってしまい、実行時間制限内に終えることができないので、クエリごとの計算量を削減する方法を考えます。<br>
 ある値<code>X</code>を考えたとき、<code>[L,R]</code>の出現する場所の個数は<code>Rより大きい場所の番目 - L以上の場所の番目</code>で求めることができます。<br>
@@ -187,7 +187,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     }
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc248/tasks/abc248_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc248/submissions/31050544">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

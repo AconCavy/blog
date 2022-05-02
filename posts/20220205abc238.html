@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 238の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/ABC238">https://atcoder.jp/contests/ABC238</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29069118">コンテスト提出</a></p>
 <p><code>N</code>が1または5以上の時、答えは<code>Yes</code>になります。
 また、2の<code>N</code>乗を計算可能な大きさに丸めてから、実際に計算することでも求めることができます。</p>
@@ -95,7 +95,7 @@ N = Math.Min(60, N);
 var answer = (1L &lt;&lt; N) &gt; N * N;
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29078455">コンテスト提出</a></p>
 <p>現在のナイフの角度を持ちながら、それぞれの切れ込みの角度を計算します。360度を超える場合はx+360度と同じ角度なので、360で余りを取ります。すべての切れ込みをソートし、各切れ込みの差分の最大値が答えとなります。</p>
 <pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
@@ -117,7 +117,7 @@ for (var i = 0; i + 1 &lt; list.Count; i++)
 }
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29087110">コンテスト提出</a></p>
 <p><code>f(x)</code>を時間計算量<code>O(1)</code>で求めることができても、Nまで愚直に数え上げると時間計算量<code>O(N)</code>かかり、制約に間に合いません。
 それぞれの桁数の時の個数の和を求めます。</p>
@@ -149,7 +149,7 @@ for (var l = 1; l &lt;= 18 &amp;&amp; curr &lt;= N; l++)
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29094375">コンテスト提出</a></p>
 <p>ANDにより、<code>x &gt;= a</code>かつ<code>y &gt;= a</code>がわかり、<code>x &lt;= y</code>かつ<code>x = a</code>としたとき、<code>y = a + b</code>ということがわかります。
 <code>s = x + y = a + a + b = 2a + b</code>となり、<code>s - 2a = b</code>が成り立つ<code>b</code>の存在によって答えが求まります。
@@ -175,7 +175,7 @@ while (T-- &gt; 0)
     Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 }
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29102881">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>

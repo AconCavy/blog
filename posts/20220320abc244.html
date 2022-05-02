@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 244の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc244">https://atcoder.jp/contests/abc244</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30269043">コンテスト提出</a></p>
 <p>文字列の長さが<code>N</code>なので、文字列の<code>N-1</code>のインデックスにアクセスすることで、末尾を参照することができます。<br>
 また、C#8.0以降の環境では配列に対して<code>A[^i]</code>のような記述をすることにより、後ろから<code>i</code>番目の要素を参照することができるので、これを使うことでも末尾を参照することができます。</p>
@@ -95,7 +95,7 @@ var S = Scanner.Scan&lt;string&gt;();
 var answer = S[^1];
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30274402">コンテスト提出</a></p>
 <p>東西南北それぞれ移動するときの<code>x</code>と<code>y</code>移動量を用意し、現在の移動がどの向きに対して行われるかをインデックスとして管理することで簡単に記述することができます。<br>
 はじめの向きは<code>東</code>で、<code>ti=R</code>ならば右に90度回転するため、<code>東、南、西、北、東、...</code>の順番で向きが変化することがわかります。
@@ -121,7 +121,7 @@ foreach (var c in T)
 
 Console.WriteLine($&quot;{x} {y}&quot;);
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30277799">コンテスト提出</a></p>
 <p>インタラクティブな問題なので、出力を毎回Flushする必要があることに注意しましょう。<br>
 既に使った数字を記録しておき、まだ使っていない数字を出力すればよいです。<br>
@@ -144,7 +144,7 @@ while (true)
     used[y] = true;
 }
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30284560">コンテスト提出</a></p>
 <p><code>S</code>を<code>RGB</code>に並べ替えても対応する<code>T</code>は変わらないので、<code>S=RGB</code>としたときの<code>T</code>を考えます。<br>
 このとき、<code>T</code>がなりえる値は<code>RGB</code>、<code>RBG</code>、<code>BRG</code>、<code>BGR</code>、<code>GRB</code>、<code>GBR</code>の6通りしかありません。<br>
@@ -172,7 +172,7 @@ for (var i = 0; i &lt; 3; i++)
 var answer = x != 2;
 Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30292730">コンテスト提出</a></p>
 <p><code>dp[k][u][x] := k回目の移動で頂点uにいるとき、頂点Xに訪れた回数の偶奇(x)の通り数</code>とした動的計画法を解いたときの<code>dp[K][T][0]</code>が答えとなります。</p>
 <p>グラフにたいして状態を<code>(現在の頂点、移動回数、頂点Xに訪れた回数の偶奇)</code>として幅優先探索を行い、既に訪れた状態を重複して数えないようし、遷移先が<code>X</code>の場合は、遷移先のXの偶奇を変更し、それ以外の場合は遷移先の偶奇を変えずに遷移させます。
@@ -216,7 +216,7 @@ while (queue.Count &gt; 0)
 var answer = dp[K, T, 0];
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="f"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_f">問題F</a></h2>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc244/tasks/abc244_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC244/submissions/30304848">コンテスト提出</a></p>
 <p>状態<code>s</code>を<code>(パスの状態, 頂点)</code>としたときのパスの長さの最小値を考えます。
 これは、各頂点を始点として、現在の<code>(パスの状態、頂点、パスの長さ)</code>を持ち、状態<code>s</code>におけるパスの最小値を記録しながら幅優先探索を行うことで、全ての状態を求めることができます。<br>

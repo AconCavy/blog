@@ -81,12 +81,12 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </div>
 
                         <div class="post-body">
-                            <h1 id="section">はじめに</h1>
+                            <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 233の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
-<h1 id="section-1">コンテスト</h1>
+<h2 id="section-1">コンテスト</h2>
 <p><a href="https://atcoder.jp/contests/abc233">https://atcoder.jp/contests/abc233</a></p>
-<h2 id="a"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_a">問題A</a></h2>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc233/submissions/28110738">コンテスト提出</a></p>
 <p><code>(Y-X)</code>を10で割ったときの切り上げの値が必要な切手の数となります。
 <code>(Y-X)</code>が負の場合は既に金額が足りているので、0と<code>Max</code>を取ることで、<code>if</code>文なくすことができます。</p>
@@ -94,7 +94,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 var answer = Math.Max(0, ((Y - X) + 9) / 10);
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="b"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_b">問題B</a></h2>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc233/submissions/28113146">コンテスト提出</a></p>
 <p>C#では、<code>Array.Reverse</code>メソッドを使うことで、配列の指定した範囲を逆順にすることができます。</p>
 <pre><code class="language-csharp line-numbers">var (L, R) = Scanner.Scan&lt;int, int&gt;();
@@ -103,7 +103,7 @@ var S = Scanner.Scan&lt;string&gt;().ToCharArray();
 Array.Reverse(S, L, R - L);
 Console.WriteLine(string.Join(&quot;&quot;, S));
 </code></pre>
-<h2 id="c"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_c">問題C</a></h2>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc233/submissions/28122407">コンテスト提出</a></p>
 <p>総積が<code>X</code>になるためには、要素となる数が<code>X</code>の倍数である必要があるため、それ以外を除いたものから、袋からそれぞれ1つずつ選んだ時の組み合わせの数となります。<br>
 再帰関数を使って<code>idx</code>となる袋を順にみていくとき、ボールの値が現在の値<code>curr</code>の倍数であり、<code>curr</code>が0より大きい場合、次の袋に進むことができます。<br>
@@ -138,7 +138,7 @@ Dfs(0, X);
 
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="d"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_d">問題D</a></h2>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc233/submissions/28148861">復習提出</a></p>
 <p>コンテスト中の考察です。</p>
 <ul>
@@ -173,7 +173,7 @@ for (var i = 1; i &lt;= N; i++)
  
 Console.WriteLine(answer);
 </code></pre>
-<h2 id="e"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_e">問題E</a></h2>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc233/tasks/abc233_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc233/submissions/28143437">コンテスト提出</a></p>
 <p>大きい桁から累積和を取ると、その桁に最終的に足される数を求めることができます。
 累積和を小さい桁から見たとき、その桁の累積和の1の位の数が桁として確定し、累積和の1の位より大きい値は、その次の桁に繰り上げられるため、次の桁の累積和に足す必要があります。<br>

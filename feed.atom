@@ -4,18 +4,18 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-04-23T15:44:51Z</updated>
+	<updated>2022-05-02T14:46:31Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220423abc249</id>
 		<title>ABC249</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220423abc249" />
 		<updated>2022-04-23T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 249の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc249"&gt;https://atcoder.jp/contests/abc249&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188853"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;高橋君の進む距離を考えます。
 歩く+休むを1セットとすると、&lt;code&gt;X&lt;/code&gt;秒間に&lt;code&gt;X/(A+C)&lt;/code&gt;セット(端数切り捨て)できるため、距離は合計で&lt;code&gt;セット数*A*B&lt;/code&gt;進むことができます。
@@ -42,7 +42,7 @@
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188890"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;一つずつ条件を判定していきます。&lt;br /&gt;
 C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判定、&lt;code&gt;char.IsLower&lt;/code&gt;関数で文字の小文字判定を行うことができます。
@@ -71,7 +71,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(ok ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188932"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;各文字列に対して使うor使わないの2択なため、&lt;code&gt;2^N&lt;/code&gt;個の組み合わせがあり得ます。
 制約が&lt;code&gt;N&amp;lt;=15&lt;/code&gt;と少ないので、&lt;code&gt;bit全探索&lt;/code&gt;を行うことで全ての組み合わせを走査することができます。
@@ -117,7 +117,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31192606"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;愚直に全ての&lt;code&gt;i,j,k&lt;/code&gt;を走査する方法では、計算量が&lt;code&gt;O(N^3)&lt;/code&gt;となり、&lt;code&gt;A[j]*A[k]=A[i]&lt;/code&gt;となる&lt;code&gt;j,k&lt;/code&gt;を走査する方法では、計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となりますが、制約が&lt;code&gt;1&amp;lt;=N&amp;lt;=2e5&lt;/code&gt;と大きいため、実行時間制限内に処理を終わらせることができません。&lt;br /&gt;
 そこで、あらかじめAの値の出現回数を数えておき、&lt;code&gt;1&amp;lt;=p,q,r&amp;lt;=2e5&lt;/code&gt;のうち、&lt;code&gt;p=q*r&lt;/code&gt;となる&lt;code&gt;p,q,r&lt;/code&gt;の組における組み合わせの個数の総和を求めます。
@@ -155,12 +155,12 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		<title>ABC248</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220417abc248" />
 		<updated>2022-04-18T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 248の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248"&gt;https://atcoder.jp/contests/abc248&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248/submissions/31002746"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt;の合計から登場する数字を全て引いた後の値が答えとなります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -175,7 +175,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(sum);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248/submissions/31006946"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;初期値を&lt;code&gt;A&lt;/code&gt;として、&lt;code&gt;B&lt;/code&gt;より小さいうちに&lt;code&gt;A&lt;/code&gt;を何回&lt;code&gt;K&lt;/code&gt;倍することができるかを数え上げます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -192,7 +192,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248/submissions/31016119"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;i&lt;/code&gt;番目の値まで決めたときに、それまでの総和が&lt;code&gt;j&lt;/code&gt;であるような数列の総数を動的計画法として答えを数え上げます。
 これは、&lt;code&gt;i+1&lt;/code&gt;番目の値は、&lt;code&gt;i&lt;/code&gt;番目までの総和&lt;code&gt;j&lt;/code&gt;に&lt;code&gt;1&amp;lt;=k&amp;lt;=M&lt;/code&gt;の何れかを足した数への遷移することができます。
@@ -224,7 +224,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248/submissions/31021126"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;クエリごとに指定された範囲を走査してしまうと、クエリごとの計算量が&lt;code&gt;O(N)&lt;/code&gt;、全体計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまい、実行時間制限内に終えることができないので、クエリごとの計算量を削減する方法を考えます。&lt;br /&gt;
 ある値&lt;code&gt;X&lt;/code&gt;を考えたとき、&lt;code&gt;[L,R]&lt;/code&gt;の出現する場所の個数は&lt;code&gt;Rより大きい場所の番目 - L以上の場所の番目&lt;/code&gt;で求めることができます。&lt;br /&gt;
@@ -261,7 +261,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc248/tasks/abc248_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc248/submissions/31050544"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
@@ -342,12 +342,12 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		<title>ABC247</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220410abc247" />
 		<updated>2022-04-10T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 247の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc247"&gt;https://atcoder.jp/contests/abc247&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC247/submissions/30847103"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;S[i+1] (0&amp;lt;=i&amp;lt;=2)&lt;/code&gt;の値を&lt;code&gt;S[i]&lt;/code&gt;に移動し、&lt;code&gt;S[0]&lt;/code&gt;は誰もいなくなるので&lt;code&gt;0&lt;/code&gt;にしたものが答えとなります。
 つまり、&lt;code&gt;S&lt;/code&gt;の先頭に&lt;code&gt;0&lt;/code&gt;を追加した先頭4文字が答えとなります。&lt;/p&gt;
@@ -358,7 +358,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(T);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC247/submissions/30858089"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;i&lt;/code&gt;番目のあだ名&lt;code&gt;ai&lt;/code&gt;を付けることができる条件は、あるあだ名が&lt;code&gt;j!=i&lt;/code&gt;番目の姓&lt;code&gt;sj&lt;/code&gt;と名&lt;code&gt;tj&lt;/code&gt;のいずれも一致しないことであり、あだ名に&lt;code&gt;si&lt;/code&gt;を使った場合と、&lt;code&gt;ti&lt;/code&gt;を使った場合をすべてチェックしてどちらか一方でも使うことができれば、そのあだ名を使うことができます。
 これを全ての人に対して判定を行い、全ての人にあだ名を付けることができるかを判定します。&lt;/p&gt;
@@ -390,7 +390,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC247/submissions/30859642"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
 &lt;a href="https://atcoder.jp/contests/ABC247/submissions/30895077"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;初期値を&lt;code&gt;Si=1 (i=1)&lt;/code&gt;とし、&lt;code&gt;2&amp;lt;=i&amp;lt;=N&lt;/code&gt;では&lt;code&gt;S(i-1) i S(i-1)&lt;/code&gt;を文字列として構築することで答えを求めることができます。&lt;/p&gt;
@@ -406,7 +406,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC247/submissions/30865508"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;連結リストなどのデータ構造を使って、データを管理します。&lt;br /&gt;
 &lt;code&gt;c&lt;/code&gt;の値が大きいため、リストに&lt;code&gt;c&lt;/code&gt;個の値を入れてしまうとクエリ当たりの計算量が&lt;code&gt;O(c)&lt;/code&gt;、全体で&lt;code&gt;O(Qc)&lt;/code&gt;となり、実行時間制限内に処理を終えることができません。
@@ -444,7 +444,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc247/tasks/abc247_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC247/submissions/30884870"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Ai&amp;lt;Y &amp;amp;&amp;amp; X&amp;lt;Ai&lt;/code&gt;となる値が範囲に存在する場合、その範囲は無視することができるので、&lt;code&gt;Y&amp;lt;=Ai&amp;lt;=X&lt;/code&gt;のみで構成される連続部分列に分割し、連続部分列ごとに部分問題として数え上げることができるようになります。
 例えば、&lt;code&gt;X=3, Y=2, A=[4,1,3,2,3,2,1,2]&lt;/code&gt;の場合、&lt;code&gt;A=[[3,2,3,2], [2]]&lt;/code&gt;と分割できます。&lt;br /&gt;
@@ -516,12 +516,12 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		<title>ABC246</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220402abc246" />
 		<updated>2022-04-03T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 246の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc246"&gt;https://atcoder.jp/contests/abc246&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30625941"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;各辺は&lt;code&gt;X&lt;/code&gt;軸または&lt;code&gt;Y&lt;/code&gt;軸に平行な長方形なので、&lt;code&gt;X&lt;/code&gt;が同じ頂点のペアが2つと&lt;code&gt;Y&lt;/code&gt;が同じ頂点のペアが2つが存在することになります。&lt;br /&gt;
 そのため、&lt;code&gt;X&lt;/code&gt;と&lt;code&gt;Y&lt;/code&gt;それぞれ値に対するペアの存在を管理し、余った&lt;code&gt;X&lt;/code&gt;と&lt;code&gt;Y&lt;/code&gt;の値が残りの頂点の座標となります。&lt;br /&gt;
@@ -560,7 +560,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine($&amp;quot;{x} {y}&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30629082"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2点間の距離は&lt;code&gt;D=Sqrt(A*A+B*B)&lt;/code&gt;なので、&lt;code&gt;(A/D, B/D)&lt;/code&gt;が答えとなります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -580,10 +580,10 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine($&amp;quot;{answer.X} {answer.Y}&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30633790"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;まず、1枚のクーポンにつき&lt;code&gt;X&lt;/code&gt;円安くできるため、可能な限り&lt;code&gt;X&lt;/code&gt;円安くすることを考えます。&lt;br /&gt;
-これは、&lt;code&gt;A[i]&amp;gt;=X&lt;/code&gt;となる&lt;code&gt;A[i]&lt;/code&gt;はクーポンがある限り&lt;code&gt;A[i]-X&lt;/code&gt;にすることができ、使うことができるクーポンの数が&lt;code&gt;k&lt;/code&gt;のとき、&lt;code&gt;A[i]=A[i]-k*X&lt;/code&gt;とすることができます。&lt;br /&gt;
+これは、&lt;code&gt;A[i]&amp;gt;=X&lt;/code&gt;となる&lt;code&gt;A[i]&lt;/code&gt;はクーポンがある限り&lt;code&gt;A[i]-X&lt;/code&gt;にすることができ、使うことができるクーポンの数が&lt;code&gt;k&lt;/code&gt;のとき、&lt;code&gt;A[i]=A[i]-k*X&lt;/code&gt;とすることができます。
 &lt;code&gt;k&lt;/code&gt;枚のクーポンを持っていて値段が&lt;code&gt;P&lt;/code&gt;のとき、&lt;code&gt;Min(k, P/X)&lt;/code&gt;枚のクーポンを使うことができるため、クーポンの数を更新しながら&lt;code&gt;A&lt;/code&gt;を順にみていくことで、&lt;code&gt;A&lt;/code&gt;の値を可能な限り&lt;code&gt;X&lt;/code&gt;円安くした値にすることができます。&lt;br /&gt;
 その後、まだクーポンが余っている場合は、&lt;code&gt;A&lt;/code&gt;の全ての値は&lt;code&gt;A[i]&amp;lt;X&lt;/code&gt;となっているため、&lt;code&gt;A&lt;/code&gt;の値が大きい順にクーポンを使って&lt;code&gt;0&lt;/code&gt;円にすることができます。&lt;br /&gt;
 そして、全ての操作を終えたときの和が答えとなります。&lt;/p&gt;
@@ -609,7 +609,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30679687"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
@@ -638,7 +638,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc246/tasks/abc246_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC246/submissions/30677572"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;マスは最大4方向から移動してくる可能性があることに注意し、Dijkstra法で最短経路を求めます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -713,12 +713,12 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		<title>ABC245</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220326abc245" />
 		<updated>2022-03-27T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 245の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245"&gt;https://atcoder.jp/contests/abc245&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30430680"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;時刻が早いといえるのは、&lt;code&gt;A&lt;/code&gt;時のほうが&lt;code&gt;C&lt;/code&gt;時より早い(&lt;code&gt;A&amp;lt;C&lt;/code&gt;)とき、あるいは時が同じとき(&lt;code&gt;A==C&lt;/code&gt;)に&lt;code&gt;B&lt;/code&gt;分のほうが&lt;code&gt;D&lt;/code&gt;分より早い(&lt;code&gt;B&amp;lt;D&lt;/code&gt;)ときとなります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -730,7 +730,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     Console.WriteLine(answer ? &amp;quot;Takahashi&amp;quot; : &amp;quot;Aoki&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30433167"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;小さい順に数字を見ていき、その数字が&lt;code&gt;A&lt;/code&gt;に含まれているかを確認することで、&lt;code&gt;O(N^2)&lt;/code&gt;で答えを求めることができます。
 また、&lt;code&gt;A&lt;/code&gt;に含まれているものをメモしておき、&lt;code&gt;A&lt;/code&gt;に含まれていない最小の数値を答えることで、&lt;code&gt;O(N)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
@@ -754,7 +754,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30442020"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;全ての&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の要素の組み合わせを考えると、&lt;code&gt;O(2^N)&lt;/code&gt;となってしまい、&lt;code&gt;N&lt;/code&gt;が大きい場合は実行制限時間内に答えを求めることができません。&lt;br /&gt;
 そのため、計算量を抑えて答えを求める方法を考える必要があります。&lt;/p&gt;
@@ -789,7 +789,7 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30469582"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
 &lt;a href="https://atcoder.jp/contests/abc245/submissions/30487152"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;B=C/A&lt;/code&gt;となる数列&lt;code&gt;B&lt;/code&gt;を求める問題です。&lt;/p&gt;
@@ -827,7 +827,7 @@ C#のコードで書くと以下のようになります。&lt;/p&gt;
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30487009"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
@@ -875,7 +875,7 @@ C#のコードで書くと以下のようになります。&lt;/p&gt;
     Console.WriteLine(&amp;quot;Yes&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc245/tasks/abc245_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc245/submissions/30487303"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
@@ -921,12 +921,12 @@ C#のコードで書くと以下のようになります。&lt;/p&gt;
 		<title>ABC244</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220320abc244" />
 		<updated>2022-03-21T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 244の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc244"&gt;https://atcoder.jp/contests/abc244&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30269043"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;文字列の長さが&lt;code&gt;N&lt;/code&gt;なので、文字列の&lt;code&gt;N-1&lt;/code&gt;のインデックスにアクセスすることで、末尾を参照することができます。&lt;br /&gt;
 また、C#8.0以降の環境では配列に対して&lt;code&gt;A[^i]&lt;/code&gt;のような記述をすることにより、後ろから&lt;code&gt;i&lt;/code&gt;番目の要素を参照することができるので、これを使うことでも末尾を参照することができます。&lt;/p&gt;
@@ -935,7 +935,7 @@ var S = Scanner.Scan&amp;lt;string&amp;gt;();
 var answer = S[^1];
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30274402"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;東西南北それぞれ移動するときの&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;y&lt;/code&gt;移動量を用意し、現在の移動がどの向きに対して行われるかをインデックスとして管理することで簡単に記述することができます。&lt;br /&gt;
 はじめの向きは&lt;code&gt;東&lt;/code&gt;で、&lt;code&gt;ti=R&lt;/code&gt;ならば右に90度回転するため、&lt;code&gt;東、南、西、北、東、...&lt;/code&gt;の順番で向きが変化することがわかります。
@@ -961,7 +961,7 @@ foreach (var c in T)
 
 Console.WriteLine($&amp;quot;{x} {y}&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30277799"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;インタラクティブな問題なので、出力を毎回Flushする必要があることに注意しましょう。&lt;br /&gt;
 既に使った数字を記録しておき、まだ使っていない数字を出力すればよいです。&lt;br /&gt;
@@ -984,7 +984,7 @@ while (true)
     used[y] = true;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30284560"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;S&lt;/code&gt;を&lt;code&gt;RGB&lt;/code&gt;に並べ替えても対応する&lt;code&gt;T&lt;/code&gt;は変わらないので、&lt;code&gt;S=RGB&lt;/code&gt;としたときの&lt;code&gt;T&lt;/code&gt;を考えます。&lt;br /&gt;
 このとき、&lt;code&gt;T&lt;/code&gt;がなりえる値は&lt;code&gt;RGB&lt;/code&gt;、&lt;code&gt;RBG&lt;/code&gt;、&lt;code&gt;BRG&lt;/code&gt;、&lt;code&gt;BGR&lt;/code&gt;、&lt;code&gt;GRB&lt;/code&gt;、&lt;code&gt;GBR&lt;/code&gt;の6通りしかありません。&lt;br /&gt;
@@ -1012,7 +1012,7 @@ for (var i = 0; i &amp;lt; 3; i++)
 var answer = x != 2;
 Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30292730"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;dp[k][u][x] := k回目の移動で頂点uにいるとき、頂点Xに訪れた回数の偶奇(x)の通り数&lt;/code&gt;とした動的計画法を解いたときの&lt;code&gt;dp[K][T][0]&lt;/code&gt;が答えとなります。&lt;/p&gt;
 &lt;p&gt;グラフにたいして状態を&lt;code&gt;(現在の頂点、移動回数、頂点Xに訪れた回数の偶奇)&lt;/code&gt;として幅優先探索を行い、既に訪れた状態を重複して数えないようし、遷移先が&lt;code&gt;X&lt;/code&gt;の場合は、遷移先のXの偶奇を変更し、それ以外の場合は遷移先の偶奇を変えずに遷移させます。
@@ -1056,7 +1056,7 @@ while (queue.Count &amp;gt; 0)
 var answer = dp[K, T, 0];
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_f"&gt;問題F&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30304848"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;状態&lt;code&gt;s&lt;/code&gt;を&lt;code&gt;(パスの状態, 頂点)&lt;/code&gt;としたときのパスの長さの最小値を考えます。
 これは、各頂点を始点として、現在の&lt;code&gt;(パスの状態、頂点、パスの長さ)&lt;/code&gt;を持ち、状態&lt;code&gt;s&lt;/code&gt;におけるパスの最小値を記録しながら幅優先探索を行うことで、全ての状態を求めることができます。&lt;br /&gt;
@@ -1125,12 +1125,12 @@ Console.WriteLine(answer);
 		<title>ABC243</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220312abc243" />
 		<updated>2022-03-13T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc243"&gt;https://atcoder.jp/contests/abc243&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30026790"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;V&lt;/code&gt;ミリリットルを使い切る周を考えるために、1周で使う量である&lt;code&gt;A+B+C&lt;/code&gt;で余りを取ってから考えます。&lt;/p&gt;
 &lt;ul&gt;
@@ -1146,7 +1146,7 @@ else if (V &amp;lt; A + B) { Console.WriteLine(&amp;quot;M&amp;quot;); }
 else { Console.WriteLine(&amp;quot;T&amp;quot;); }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30030964"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;あらかじめ&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の要素をキーとして、位置をそれぞれ別の辞書に保持しておきます。
 そして、&lt;code&gt;A&lt;/code&gt;の要素を順番に見ていき、&lt;code&gt;A&lt;/code&gt;の要素が&lt;code&gt;B&lt;/code&gt;の辞書に存在するとき、位置が一致する場合と一致しない場合をそれぞれ数え上げます。&lt;/p&gt;
@@ -1176,7 +1176,7 @@ foreach (var a in A)
 Console.WriteLine(ans1);
 Console.WriteLine(ans2);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30038745"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
 &lt;a href="https://atcoder.jp/contests/ABC243/submissions/30081816"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
@@ -1221,7 +1221,7 @@ foreach (var (y, x) in R)
 
 Console.WriteLine(&amp;quot;No&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30044374"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;N&lt;/code&gt;回の移動後にいる頂点の番号は&lt;code&gt;10^18&lt;/code&gt;以下であることが制約で保証されていますが、愚直にシミュレーションしてしまうと、制約&lt;code&gt;N&amp;lt;=10^6&lt;/code&gt;より、シミュレーション中の頂点の値が最大で&lt;code&gt;X*2^(N/2)&lt;/code&gt;になり、現在のコンピュータの整数型では正しく計算することができません。
 そこで、子に移動して親に戻るといった、無駄な移動を省くことで、シミュレーション中でも頂点の値が&lt;code&gt;10^18&lt;/code&gt;を超えないようにすることを考えます。
@@ -1267,7 +1267,7 @@ foreach (var c in T)
 
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30080632"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
@@ -1330,12 +1330,12 @@ Console.WriteLine(answer);
 		<title>ABC242</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220305abc242" />
 		<updated>2022-03-06T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 242の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc242"&gt;https://atcoder.jp/contests/abc242&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC242/submissions/29883827"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;それぞれどの条件に当てはまるかで確率を求めます。&lt;/p&gt;
 &lt;ul&gt;
@@ -1349,7 +1349,7 @@ if (X &amp;lt;= A) answer = 1d;
 if (A + 1 &amp;lt;= X &amp;amp;&amp;amp; X &amp;lt;= B) answer = (double)C / (B - A);
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC242/submissions/29869226"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;辞書順最小となる文字列は、文字列&lt;code&gt;S&lt;/code&gt;を構成する文字のうち、小さいものを左から順に並べたものになります。
 そのため、文字列&lt;code&gt;S&lt;/code&gt;をソートした文字列が答えとなります。&lt;/p&gt;
@@ -1358,7 +1358,7 @@ Array.Sort(S);
 var answer = new string(S);
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC242/submissions/29875962"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;動的計画法で答えとなる個数を数え上げます。
 初期値として、1桁目は&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt;である個数をそれぞれ&lt;code&gt;1&lt;/code&gt;とします。&lt;/p&gt;
@@ -1393,7 +1393,7 @@ for (var i = 1; i &amp;lt; 10; i++)
 
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC242/submissions/29901915"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
 &lt;ul&gt;
@@ -1432,7 +1432,7 @@ char F(long t, long k)
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc242/tasks/abc242_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC242/submissions/29902510"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;辞書順で文字列&lt;code&gt;S&lt;/code&gt;以下の文字列を考えます。
 回文のため、文字列&lt;code&gt;S&lt;/code&gt;の前半分の文字列&lt;code&gt;S'&lt;/code&gt;において、&lt;code&gt;S'&lt;/code&gt;未満の個数を数え上げを行います。
@@ -1470,12 +1470,12 @@ while (Q-- &amp;gt; 0)
 		<title>ABC241</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220226abc241" />
 		<updated>2022-02-27T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241"&gt;https://atcoder.jp/contests/abc241&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29662070"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;現在の値を&lt;code&gt;curr&lt;/code&gt;とし、現在の値を&lt;code&gt;A[curr]&lt;/code&gt;で更新します。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
@@ -1487,7 +1487,7 @@ for (var i = 0; i &amp;lt; 3; i++)
 
 Console.WriteLine(curr);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29664697"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;あらかじめ麵の長さ&lt;code&gt;A&lt;/code&gt;の個数を辞書に持ち、&lt;code&gt;B&lt;/code&gt;を順番に見たときに、1個以上ある場合は辞書の&lt;code&gt;B&lt;/code&gt;の値をデクリメントし、0個または辞書に存在しない場合は答えは&lt;code&gt;No&lt;/code&gt;になります。最終的にすべてを見ることができれば、答えは&lt;code&gt;Yes&lt;/code&gt;となります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
@@ -1517,7 +1517,7 @@ foreach (var b in B)
 
 Console.WriteLine(&amp;quot;Yes&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29675472"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;マスを順にみて、端を&lt;code&gt;(i,j)&lt;/code&gt;に固定したときに連続した区間のうち4つ以上&lt;code&gt;#&lt;/code&gt;が存在すれば、答えは&lt;code&gt;Yes&lt;/code&gt;となります。
 縦の場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i+5,j)&lt;/code&gt;まで、横の場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i,j+5)&lt;/code&gt;まで、斜めの場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i+5,j+5)&lt;/code&gt;と&lt;code&gt;(i+5,j-5)&lt;/code&gt;を確かめます。
@@ -1589,7 +1589,7 @@ for (var i = 0; i &amp;lt; N; i++)
 
 Console.WriteLine(&amp;quot;No&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29715030"&gt;復習提出 (FenwickTree)&lt;/a&gt;
 &lt;a href="https://atcoder.jp/contests/abc241/submissions/29716771"&gt;復習提出 (平衡二分探索木)&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;FenwickTree&lt;/code&gt;を使った場合の解き方です。
@@ -1980,7 +1980,7 @@ while (Q-- &amp;gt; 0)
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29701801"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;mod&lt;/code&gt;の性質上、最大でも&lt;code&gt;N&lt;/code&gt;回でループすることがわかります。
 そのため、答えは&lt;code&gt;(1回のループ中の和 * ループ回数) + (ループに入るまでの和 + ループの端数の和)&lt;/code&gt;で求めることができます。
@@ -2024,12 +2024,12 @@ Console.WriteLine(current);
 		<title>ABC240</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220220abc240" />
 		<updated>2022-02-20T00:00:00Z</updated>
-		<content>&lt;h1 id="section"&gt;はじめに&lt;/h1&gt;
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 240の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h1 id="section-1"&gt;コンテスト&lt;/h1&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240"&gt;https://atcoder.jp/contests/abc240&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_a"&gt;問題A&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29503598"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;10で割ったときのあまりの値を比較することで、ループを再現することができます。
 また、隣り合っていることは差が1であればいいので、それを確かめます。
@@ -2038,7 +2038,7 @@ Console.WriteLine(current);
 var answer = (A + 1) % 10 == B % 10 || (B + 1) % 10 == A % 10;
 Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_b"&gt;問題B&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29506402"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;重複を削除したときの個数が答えとなります。
 C#のLINQには、&lt;code&gt;Distinct&lt;/code&gt;というシーケンス内の重複を除いたシーケンスを返すメソッドがあるため、それを使い個数を数えます。&lt;/p&gt;
@@ -2047,7 +2047,7 @@ var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
 var answer = A.Distinct().Count();
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_c"&gt;問題C&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29511865"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;動的計画法で答えを求めます。
 &lt;code&gt;i&lt;/code&gt;番目のジャンプを座標&lt;code&gt;j(0&amp;lt;=j&amp;lt;=X)&lt;/code&gt;から行うと、&lt;code&gt;i+1&lt;/code&gt;番目では、&lt;code&gt;j+a&lt;/code&gt;または&lt;code&gt;j+b&lt;/code&gt;に存在することができます。初期状態の&lt;code&gt;0&lt;/code&gt;を&lt;code&gt;true&lt;/code&gt;としたとき、そこからの遷移を計算し、&lt;code&gt;N&lt;/code&gt;回ジャンプ後の&lt;code&gt;X&lt;/code&gt;の値が&lt;code&gt;true&lt;/code&gt;ならば存在することができると表現できます。&lt;/p&gt;
@@ -2067,7 +2067,7 @@ for (var i = 0; i &amp;lt; N; i++)
 var answer = dp[N, X];
 Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_d"&gt;問題D&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29521922"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;スタックに順番にボールを追加していき、同じ数字がK個連続した場合は削除する操作を行います。このとき一つの数字につき1つの値を入れていると、計算量は&lt;code&gt;O(N^2)&lt;/code&gt;になってしまうので、連続した値は値と個数の一つのオブジェクトとしてまとめ、スタックに入っているボールの個数を管理することで、計算量を&lt;code&gt;O(N)&lt;/code&gt;に抑えることができます。
 具体的には、もしスタックが空またはスタックのトップと異なる値の場合は、値と個数1をタプルとしてまとめてスタックに追加し、もしスタックのトップと同じ値の場合は、スタックのトップの個数を更新します。その後、スタックのトップを順にみていき、値と個数が同じ場合はスタックから取り除き、現在の個数も減少させます。&lt;/p&gt;
@@ -2115,7 +2115,7 @@ foreach (var a in A)
     Console.WriteLine(curr);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_e"&gt;問題E&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc240/tasks/abc240_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc240/submissions/29533033"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;問題文の根付き木について、子を持たない頂点に対してそれぞれ異なる値を与えたときに、部分木&lt;code&gt;i&lt;/code&gt;が持つ値群の最小値と最大値をそれぞれ&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;としたとき、頂点&lt;code&gt;i&lt;/code&gt;は区間&lt;code&gt;[Li, Ri]&lt;/code&gt;を持つと解釈することができます。
 そのため、深さ優先探索を行い、子を持たない頂点の場合はそれまでに出現していない値を&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;に設定し、子を持つ頂点は、子の&lt;code&gt;Li&lt;/code&gt;と&lt;code&gt;Ri&lt;/code&gt;の中でそれぞれ最小、最大となるものを選択することで、答えとなる区間を求めることができます。&lt;/p&gt;
