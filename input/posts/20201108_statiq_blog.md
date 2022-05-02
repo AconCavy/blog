@@ -5,11 +5,11 @@ Updated: 11/8/2020
 Tags: [Statiq, Github Pages, Github Actions]
 ---
 
-# はじめに
+## はじめに
 
 前回のブログから一度も更新せずに3か月経ち、サイト生成を `Wyam` から `Statiq` に変えたついでに、サイトのレイアウトを頑張ってアレンジしたので記事を書きます。
 
-# Statiq
+## Statiq
 
 [Statiq](https://statiq.dev/) は [前回の記事](20200819wyamblog) で紹介した `Wyam` をリブランディングし、機能の追加に柔軟性を持たせたフレームワークだそうです。
 大きく3つのフレームワークに分かれており、基礎となる `Statiq.Framework`、一般的なWebサイト生成のための `Statiq.Web`、ドキュメントサイト生成のための `Statiq.Doc` に分かれています。
@@ -19,7 +19,7 @@ Tags: [Statiq, Github Pages, Github Actions]
 非商用の場合は他のPermissive Open-source License(MITやApache等)と同様のライセンスで利用することができます。
 詳しくは[こちら](https://github.com/statiqdev/Statiq.Web/blob/main/LICENSE-FAQ.md).
 
-## 使い方
+### 使い方
 
 Wyamは.NET上にツールをインストールして実行するのに対して、Statiqの場合はコンソールアプリケーションとして実行します。
 
@@ -49,7 +49,7 @@ namespace Blog
 
 次に、`./input/` ディレクトリ内に `index.md` を作成し、適当な内容を書いて保存します。
 
-```
+```text
 Title: Hello Statiq
 ---
 Hello world!
@@ -67,20 +67,21 @@ dotnet run -- preview
 
 サンプルとして、公式テーマの[CleanBlog](https://github.com/statiqdev/CleanBlog)を `./theme/` ディレクトリ内に配置してプロジェクトを実行することで、WyamのCleanBlogテーマと同様のWebサイトを生成することができます。
 
-## Github Pagesへの展開
+### Github Pagesへの展開
 
 Statiq.Webでは、公式でGithub Pagesへのデプロイ方法が用意されています。
 
 Wyamの時と同様に、設定ファイル(今回は `settings.yml`)に設定を追記する必要があります。
-```
-Host: aconcavy.github.io // github pagesのホスト
-LinkRoot: /Blog // バーチャルパス
+
+```yaml
+Host: aconcavy.github.io # github pagesのホスト
+LinkRoot: /Blog # バーチャルパス
 LinksUseHttps: true
 
-GitHubOwner: AconCavy // ユーザ名
-GitHubName: Blog // リポジトリ名
-GitHubToken: => Config.FromSetting<string>("GITHUB_TOKEN") // これはこのまま
-GitHubBranch: gh-pages // 生成先ブランチ
+GitHubOwner: AconCavy # ユーザ名
+GitHubName: Blog # リポジトリ名
+GitHubToken: => Config.FromSetting<string>("GITHUB_TOKEN") # これはこのまま
+GitHubBranch: gh-pages # 生成先ブランチ
 ```
 
 Github Actionでは次のようなワークフローを指定します。
@@ -116,14 +117,14 @@ jobs:
 
 サイトのテーマがうまく適用されない場合は、設定ファイルの `Host` や `LinkRoot` を見直すといいでしょう。
 
-# まとめ
+## まとめ
 
 Statiqで作成した静的Webサイトを、GitHub ActionsとGitHub Pagesデプロイする方法をまとめました。
 
 Wyamと比べてカスタマイズの自由度が高いみたいだけど、ドキュメントを調べても調べたいことにいまいち辿り着かないので、ドキュメントが豊富になればもっと使いやすくなりそうです。APIリファレンスとかも欲しい。
 まだプレビュー段階なので今後に期待しています。
 
-# あとがき
+## あとがき
 
 Webフロントなんもわからんマンだったので、CleanBlogのテーマを基にコードのシンタックスを変更したりしていたら3,4日ぐらいかかりました。おかげでWebデザインを学ぶことができたので、ちょっと前進でしょうか。
 

@@ -5,19 +5,19 @@ Updated: 01/21/2021
 Tags: [dotnet, GitHub Actions, NuGet] 
 ---
 
-# はじめに
+## はじめに
 
 GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Releaseの作成およびNuGetにパッケージをアップロードするまでをまとめた記事です。
 
 リポジトリは[こちら](https://github.com/AconCavy/Mulinq)
 
-## TL;DR
+### TL;DR
 
 - GitHub ActionsでNuGetパッケージを作成した。
 - 作成したNuGetパッケージをNuGetにアップロードした。
 - タグからリリース/プレリリースを判断できるようにした。
 
-# 対象の.NETプロジェクトの設定
+## 対象の.NETプロジェクトの設定
 
 パッケージ化する.NETプロジェクトの`.csproj`ファイルを更新します。
 今回はビルド構成として.NET 5と.NET Core 3.1のdllを生成するために、`TargetFrameworks`に`net5.0`と`netcoreapp3.1`を構成します。
@@ -48,7 +48,7 @@ GitHub Actionsで.NETプロジェクトからNuGetパッケージの作成、Rel
 </Project>
 ```
 
-# NuGetの設定
+## NuGetの設定
 
 NuGetアカウントを持っていない場合はアカウントの作成をします。Microsoftアカウントから作成もできるみたいです。
 
@@ -58,7 +58,7 @@ NuGetパッケージのアップロードには、NuGetのAPIキーが必要な�
 
 コピーしたAPIキーをGitHubリポジトリの`Secrets`に登録することで、GitHub Actionsの環境変数としてアクセスできるようになります。リポジトリの`Setting -> Secrets -> New repository secret`で新しいシークレットを作成し、名前とAPIキーを登録します。今回は`NUGET_API_KEY`として登録しました。
 
-# Workflowの作成
+## Workflowの作成
 
 [リポジトリを作成したときにやっておきたいこと](20201212createrepository)のReleaseの作成をもとにWorkflowを作成します。
 
@@ -94,7 +94,7 @@ jobs:
 次にテストが成功した場合のみリリースを実行します。`needs: [test]`とすることで、`test`のjobが成功した場合のみ実行されるようになります。
 まず、プロジェクトからNuGetパッケージを作成します。このとき、`-p:Version`にバージョンを指定します。タグのバージョン情報を取得するために、`${GITHUB_REF##*/v}`を指定します。
 
-```
+```text
 dotnet pack ./src/Mulinq/Mulinq.csproj -c Release -p:Version=${GITHUB_REF##*/v} -o ./publish
 ```
 
@@ -149,7 +149,6 @@ release:
     draft: false
     prerelease: ${{ contains(github.ref, '-') }}
 ```
-
 
 Workflow全体としては次のようになります。
 
@@ -207,7 +206,7 @@ jobs:
         prerelease: ${{ contains(github.ref, '-') }}
 ```
 
-# Workflowの実行
+## Workflowの実行
 
 適当にコミットを作成し、`v0.0.1-alpha`というタグをつけ、GitHub上にプッシュします。
 
@@ -220,7 +219,7 @@ NuGetへアップロード直後は`Unlisted Packages`の状態でしたが、�
 GitHubのリリースのほうは、ちゃんと`Pre-Release`で作成されています。
 ![pre-release](assets/images/gha_prerelease.webp)
 
-# まとめ
+## まとめ
 
 - GitHub ActionsでNuGetパッケージを作成した。
 - 作成したNuGetパッケージをNuGetにアップロードした。

@@ -5,15 +5,15 @@ Updated: 12/13/2020
 Tags: [Git, GitHub, GitHub Actions] 
 ---
 
-# これ何
+## これ何
 
 リポジトリを作成したときにやっておくと後々楽になるかもしれないことをまとめたメモです。
 
-# 開発環境ごとの差異をなくすために
+## 開発環境ごとの差異をなくすために
 
 開発者によってOSやエディタ等の開発環境が異なるのでルールを決めます。
 
-## git config
+### git config
 
 WindowsとMacOS / LinuxではOSにより行の終端が異なるため、何も変更していないつもりでも、OSが異なるとdiffが発生してしまう場合があります。それを避けるために、Gitの設定でbranchをcheckoutしたときに、ファイルをどの形式で認識するかを設定します。
 
@@ -33,11 +33,11 @@ git config --global core.autocrlf true
 git config --global core.autocrlf input
 ```
 
-## .gitattributes
+### .gitattributes
 
 リポジトリ単位で行の終端処理を行う場合は、`.gitattributes`をリポジトリのルートに作成して設定を行うことで、`core.autocrlf`を設定していない開発者がいてもGitが自動的にファイルの終端を変更してくれます。
 
-```
+```text
 * text=auto
 ```
 
@@ -45,7 +45,7 @@ git config --global core.autocrlf input
 
 その他詳しくは[こちら (GitHub Docs, 行終端を処理するようGitを設定する)](https://docs.github.com/ja/free-pro-team@latest/github/using-git/configuring-git-to-handle-line-endings)
 
-## .gitignore
+### .gitignore
 
 プロジェクトの生成物やエディタが生成するファイルなど、プロジェクトに関わりのないファイルやディレクトリを指定しましょう。
 
@@ -63,36 +63,36 @@ git config --global core.excludesfile core.excludesfile path/to/.gitignore_globa
 git config --global core.excludesfile core.excludesfile ~/.gitignore_global
 ```
 
-## .editorconfig
+### .editorconfig
 
 エディタによってインデントのサイズやコードスタイルなどのフォーマットの設定が変わります。ファイルごとにバラバラなフォーマットが適用されてしまうことを避けるために[EditorConfig](https://editorconfig.org/)を利用して、フォーマットスタイルを統一させます。EditorConfigはJetbrainsのIDEやVisualStudio等のIDEでは標準で搭載しており、Visual Studio Codeなどのエディタでもプラグインをインストールすることで利用することができるようになります。
 
 `.editorconfig`を作成し、エディタのフォーマット機能やEditorConfig対応のcliを利用することで、そのリポジトリのファイルを決まったルールでフォーマットすることができます。
 
-```
+```text
 root = true
 
-# すべてのファイル
+## すべてのファイル
 [*]
-end_of_line = lf              # フォーマット時に終端をLFに変換 .gitattributesで指定してるならいらないかも
+end_of_line = lf              ## フォーマット時に終端をLFに変換 .gitattributesで指定してるならいらないかも
 charset = utf-8
-insert_final_newline = true   # ファイルの最後に改行
-indent_style = space          # インデントはスペースで
-indent_size = 4               # インデント4
+insert_final_newline = true   ## ファイルの最後に改行
+indent_style = space          ## インデントはスペースで
+indent_size = 4               ## インデント4
 
-# jsonとymlファイル
+## jsonとymlファイル
 [*.{json, yml}]
-indent_size = 2               # インデント2
+indent_size = 2               ## インデント2
 ...
 ```
 
-# CI / CD
+## CI / CD
 
 Unit Testや正しくファイルがフォーマットされているかのチェック、Releaseの作成、デプロイ等を自動化することによって、繰り返しの作業が楽になるので可能ならやっておきたいです。
 
 以下dotnetのプロジェクトをGitHub ActionsでWorkflowを構築した場合の場合
 
-## Unit test
+### Unit test
 
 GitHub Workflowの`.NET Core`を選択すれば必要最低限のWorkflowは実現できます。
 
@@ -124,7 +124,7 @@ jobs:
 
 ![github action test failed](assets/images/gha_test_fail.webp)
 
-## Code format
+### Code format
 
 EditorConfigを設定しているとdotnet toolの`dotnet-format`を使うことでEditorConfigに合ったファイルのフォーマットの確認ができます。
 
@@ -159,7 +159,7 @@ jobs:
 
 ![github action lint failed](assets/images/gha_lint_fail.webp)
 
-# Releaseの作成
+## Releaseの作成
 
 Releaseでは、Release用のTagがpushされたときに成果物をリポジトリのReleaseにアップロードします。次の例では.dllファイルをアップロードします。
 
@@ -169,7 +169,7 @@ name: Release
 on:
   push:
     tags: 
-    - 'v[0-9]+.[0-9]+.[0-9]+*' # v0.0.1のようなTagがpushされたとき
+    - 'v[0-9]+.[0-9]+.[0-9]+*' ## v0.0.1のようなTagがpushされたとき
 
 jobs:  
   release:
@@ -178,7 +178,7 @@ jobs:
     
     steps:
     
-    # Build
+    ## Build
     - uses: actions/checkout@v2
     - name: Setup .NET 5
       uses: actions/setup-dotnet@v1
@@ -187,7 +187,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release
     
-    # リリースを作成
+    ## リリースを作成
     - name: Create Release 
       id: create_release
       uses: actions/create-release@v1
@@ -196,12 +196,12 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
-        # body |
-        # hoge hoge # Releaseコメント
+        ## body |
+        ## hoge hoge ## Releaseコメント
         draft: false
         prerelease: false
 
-    # リリースの成果物にHello.dllを追加
+    ## リリースの成果物にHello.dllを追加
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -211,14 +211,14 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./src/Hello/bin/Release/net5.0/Hello.dll
         asset_name: Hello.dll
-        asset_content_type: application/octet-stream # .dllファイルのcontent type
+        asset_content_type: application/octet-stream ## .dllファイルのcontent type
 ```
 
 Workflowを実行すると次のようなReleaseが作成されます。
 
 ![github action release](assets/images/gha_release.webp)
 
-# まとめ
+## まとめ
 
 リポジトリを作った初めに設定を色々とやっておくと後々楽ができるかもしれません。
 開発環境の差異をなくすための設定だけでもやっておくと混沌度が下がると思います。

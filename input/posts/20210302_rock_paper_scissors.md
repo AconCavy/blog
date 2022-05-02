@@ -5,20 +5,20 @@ Updated: 03/02/2021
 Tags: [csharp]
 ---
 
-# はじめに
+## はじめに
 
 `if` を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の [switch式](https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression) を使って受け取ります。
 
 先駆者様
 
-https://qiita.com/tadsan/items/65d91ba6b50535fc8815
+<https://qiita.com/tadsan/items/65d91ba6b50535fc8815>
 
-https://qiita.com/libraplanet/items/bcf17c22143dc77f875b
+<https://qiita.com/libraplanet/items/bcf17c22143dc77f875b>
 
 [Qiita](https://qiita.com/AconCavy/items/b86b9e835a362795d33f)とのクロスポストです。
 
-# 勝敗判定
+## 勝敗判定
 
 じゃんけんのルールとして、`->` の右側が強いものとすると、 `Rock` -> `Paper` -> `Scissors` -> `Rock` の関係性が成り立ち、3つの手を周期として勝敗が決まります。
 ここで、`Rock` を0、`Paper` を1、`Scissors` を2として、関係性をそれぞれ1の距離を持った有効グラフだとすると、自分の手と相手の手の距離が1では負け、距離が2では勝ち、距離が0(3)ではあいこのような表現することができます。
@@ -28,7 +28,7 @@ https://qiita.com/libraplanet/items/bcf17c22143dc77f875b
 このことから、`相手の手 - 自分の手` を計算することで距離を求めることができます。
 しかし、自分の手が2で、相手の手が0だった場合、`0 - 2 == -2`のように、距離が負数になってしまいます。このとき、じゃんけんは3つの手を周期としているため、自分の手や相手の手を3つ移動させたところで手は変わらず、勝敗は変わりません。つまり、距離に3を足したり、3で剰余を取ったとしても勝敗は変わりません。このことから、`(相手の手 - 自分の手 + 3) % 3` とすることで、距離を0、1、2の3つにすることができ、負数と3以上になることを避けることができます。
 
-# 実装
+## 実装
 
 `Rps` (Rock-Paper-Scissors) クラスに `Hand` (グー、チョキ、パー) と `Result` (引き分け、負け、勝ち) の `enum` を定義することで、`Battle` 関数の引数と戻り値にそれぞれ意味を持たせます。
 
@@ -100,7 +100,7 @@ public static class Program
 }
 ```
 
-# 実行結果
+## 実行結果
 
 ![rps.png](assets/images/rps.webp)
 

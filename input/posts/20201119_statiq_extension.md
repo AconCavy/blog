@@ -5,11 +5,11 @@ Updated: 11/19/2020
 Tags: [dotnet, Statiq] 
 ---
 
-# はじめに
+## はじめに
 
 Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録
 
-# 方法
+## 方法
 
 `Bootstrapper`において、`Statiq.Web`でWebサイトを生成するメソッドである`CreateWeb()`では、markdownに関わるModuleの`RenderMarkdown`を`Templates`内で設定している。
 そのため、`ConfigureTemplates()`を通じて、予め設定されたModuleを上書きすることで好みの設定を反映することができる。
@@ -78,6 +78,6 @@ namespace Blog.Extensions
 
 以上の2つの設定を追加してビルドすることで、bootstrapによる`<img>`タグのレスポンシブ対応、`<table>`タグのレイアウト、prism.jsの言語を指定したコードブロックに行数が表示されるようになる。
 
-# まとめ
+## まとめ
 
 StatiqのBootstrapperにて`ConfigureTemplates()`からテンプレートのmarkdownに関わるModuleを書き換えることで、markdownからhtmlを生成する設定を変更することができ、`RenderMarkdown.UseExtension<TExtension>()`に`IMarkdownExtension`を継承したクラスを設定することで、htmlタグのクラス等を変更することができる。

@@ -5,11 +5,11 @@ Updated: 12/08/2020
 Tags: [dotnet] 
 ---
 
-# はじめに
+## はじめに
 
 [競プロ用のプロジェクトテンプレート](https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp)を整備したので、`dotnet new`のカスタムテンプレート作成の備忘録です。
 
-# dotnet new のカスタムテンプレートとは
+## dotnet new のカスタムテンプレートとは
 
 公式の情報は[こちら](https://docs.microsoft.com/ja-jp/dotnet/core/tools/custom-templates)
 
@@ -31,7 +31,7 @@ dotnet new console -n Sample
 dotnet new -l
 ```
 
-# 作ってみる
+## 作ってみる
 
 テンプレートの基本として、テンプレート化したいプロジェクトのディレクトリ下に、`.template.config`のディレクトリを作成し、さらにその下に、`template.json`を作成します。
 そして、`template.json`にプロパティを設定し、`dotnet new`コマンドを使ってインストールすることで、テンプレートを使うことができるようになります。
@@ -46,11 +46,11 @@ dotnet new -i path-to-template
 - 解答用のクラス
 - テスト用のクラス
 
-## プロジェクトのテンプレート
+### プロジェクトのテンプレート
 
 プロジェクトでは、解答用のクラスとテスト用クラスを配置するための骨組みとしてのプロジェクトを生成するようにします。
 
-```
+```text
 Template.Project/
     |
     |- Tasks/
@@ -67,7 +67,7 @@ Template.Project/
 
 このプロジェクトをベースとして、`Project/`下に`.template.config/`ディレクトリを作成し、その下に`template.json`を作成します。
 
-```
+```text
 Template.Project/
     |
     |- .template.config
@@ -116,7 +116,7 @@ Template.Project/
 
 この状態で、`dotnet new -i path-to-template`コマンドでインストールし、`dotnet new cpproj -n Sample`を実行することで、上記のプロジェクトテンプレートをもとに以下のようなプロジェクトが生成されます。
 
-```
+```text
 Sample/
     |
     |- Tasks/
@@ -131,7 +131,7 @@ Sample/
     |- Sample.sln
 ```
 
-### コマンドの追加オプション
+#### コマンドの追加オプション
 
 また、`Task.csproj`と`Tests.csproj`のターゲットフレームワークをテンプレート生成時に指定できるようにするため、`dotnet new cpproj`コマンドにオプションを追加します。
 
@@ -203,12 +203,11 @@ Sample/
 
 この状態で、`dotnet new cpproj -n Sample -f net5.0`を実行することで、`TargetFramework`に`net5.0`が設定されたプロジェクトを生成することができます。
 
-
-## 解答用のクラスとテスト用のクラスのテンプレート
+### 解答用のクラスとテスト用のクラスのテンプレート
 
 単一のファイルのみ生成するように、テンプレートを構築します。
 
-```
+```text
 Template.Solver/
     |
     |- .template.config/
@@ -230,13 +229,13 @@ Template.Tests/
 
 解答用の`sourceName`を`Template.Solver`に、テスト用の`sourceName`を`Template.Tests`にすることで、`dotnet new`コマンドの`-n|--name`オプションに`Sample`を指定すると、それぞれ`Sample.cs`と`SampleTests.cs`が生成されます。
 
-## プロジェクトのパッケージ化
+### プロジェクトのパッケージ化
 
 テンプレートが3つ用意できましたが、テンプレートをインストールする際にはそれぞれ個別にインストールが必要となります。
 そのため、3つのテンプレートまとめて、1つの`nuget`パッケージを生成します。
 3つのディレクトリを一つのディレクトリにまとめ、そのディレクトリと同じ階層に`csproj`ファイルを生成します。
 
-```
+```text
 CPTemplate/
     |
     |- content/
@@ -264,7 +263,6 @@ CPTemplate/
 | `IncludeBuildOutput` | ビルド時に生成されるファイルをパッケージに含めるか |
 | `ContentTargetFolders` | パッケージ化するプロジェクトのルートが`content`か`contentFiles`以外の場合は設定する |
 | `Content` | パッケージに含めるファイルや除くファイルを設定する |
-
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -313,7 +311,7 @@ dotnet pack
 
 実行後、`bin/Debug/`下に`{PackageId}.{PackageVersion}.nupkg`が生成されます。
 
-```
+```text
 CPTemplate/
     |
     |- bin/
@@ -330,7 +328,7 @@ CPTemplate/
 dotnet new -i ./bin/Debug/AconCavy.Templates.1.0.0.nupkg
 ```
 
-# まとめ
+## まとめ
 
 `dotnet new`のカスタムテンプレートの作り方と、テンプレートのパッケージ化の手順をまとめました。
 

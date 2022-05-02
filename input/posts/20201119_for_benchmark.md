@@ -5,34 +5,34 @@ Updated: 11/19/2020
 Tags: [dotnet, csharp]
 ---
 
-# はじめに
+## はじめに
 
 .NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。
 
-# 環境
+## 環境
 
 - OS: Windows 10
 - CPU: AMD Ryzen 5 3600
 - SDK: .NET 5.0
 - BenchmarkDotnet: 0.12.1
 
-## 計測対象
+### 計測対象
 
 - Runtimes
-    - .NET Core 3.1.9
-    - .NET 5
+  - .NET Core 3.1.9
+  - .NET 5
 - Targets
-    - 1次元配列 (1e6)
-    - 2次元配列 (1e3 * 1e3)
-    - 2次元ジャグ配列 (1e3 * 1e3)
-    - 3次元配列 (1e2 * 1e2 * 1e2)
-    - 3次元ジャグ配列 (1e2 * 1e2 * 1e2)
+  - 1次元配列 (1e6)
+  - 2次元配列 (1e3 * 1e3)
+  - 2次元ジャグ配列 (1e3 * 1e3)
+  - 3次元配列 (1e2 *1e2* 1e2)
+  - 3次元ジャグ配列 (1e2 *1e2* 1e2)
 
-## 操作
+### 操作
 
 全ての要素に値を代入
 
-## スクリプト
+### スクリプト
 
 ```csharp
 using BenchmarkDotNet.Attributes;
@@ -116,7 +116,7 @@ namespace BenchmarkSharp
 }
 ```
 
-# 結果
+## 結果
 
 |     Method |           Job |       Runtime |        Mean |       Error |      StdDev |      Median | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |----------- |-------------- |-------------- |------------:|------------:|------------:|------------:|------:|--------:|------:|------:|------:|----------:|
@@ -135,7 +135,7 @@ namespace BenchmarkSharp
 | Dim3Jagged | .NET Core 3.1 | .NET Core 3.1 | 18,504.2 μs |   466.86 μs | 1,376.55 μs | 18,885.7 μs |  1.00 |    0.00 |     - |     - |     - |         - |
 | Dim3Jagged | .NET Core 5.0 | .NET Core 5.0 | 17,920.7 μs | 1,043.53 μs | 3,076.86 μs | 19,831.3 μs |  0.98 |    0.20 |     - |     - |     - |         - |
 
-# まとめ
+## まとめ
 
 .NET 5.0は .NET Core 3.1に比べて
 

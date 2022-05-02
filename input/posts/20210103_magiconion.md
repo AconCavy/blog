@@ -5,30 +5,30 @@ Updated: 02/24/2021
 Tags: [Unity, MagicOnion, MessagePack] 
 ---
 
-# はじめに
+## はじめに
 
 友人がC#のgRPCライブラリの`MagicOnion`の導入に苦戦してたので、手伝いながら使ってみたときにつまったところを纏めたものです。
 
 リポジトリは[こちら](https://github.com/AconCavy/practice-magiconion)
 
-# MagicOnion
+## MagicOnion
 
 [MagicOnion](https://github.com/Cysharp/MagicOnion)は、共通のインターフェースを介してクライアントとサーバーで手続きを呼び合う技術の[gRPC](https://github.com/grpc/grpc)をC#用に最適化した、リアルタイム通信ライブラリです。
 
 ASP.NET CoreにもgRPCのテンプレートは存在しますが、そちらは`proto`ファイルを作成し、そのファイルにインターフェースを定義を行います。一方MagicOnionの場合は、C#の`interface`を定義すればめんどくさいことはMagicOnion側でいろいろやってくれるため、クライアントとサーバーでどちらもC#を利用する場合には一つのソースを使いまわすことができたりと嬉しいことが多いです。そのため、クライアントはUnity、サーバーはASP.NET Coreを使うモバイルゲームなどのプロジェクトでよく使われるそうです。
 
-# 環境
+## 環境
 
 - Unity 2019.4.17f1
 - [MagicOnion 4.0.4](https://github.com/Cysharp/MagicOnion/releases/tag/4.0.4)
-- [MessagePack for C# 2.2.85](https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85)
+- [MessagePack for C## 2.2.85](https://github.com/neuecc/MessagePack-CSharp/releases/tag/v2.2.85)
 - gRPC ([grpc_unity_package.2.35.0-dev202012021242](https://packages.grpc.io/archive/2020/12/d7b70c3ea25c48ffdae7b8bd3c757594d4fff4b6-2be69c7e-9b25-4273-a7d4-3840da2d6723/csharp/grpc_unity_package.2.35.0-dev202012021242.zip))
 
-# 作ってみる1
+## 作ってみる1
 
 MagicOnionを使うにあたって、ASP.NET Coreでのサーバー、Unityでのクライアント、共有Apiの3つのプロジェクトを構成します。
 
-```
+```text
 MagicOnionSample/
   |- MagicOnionSample.Server/
   |- MagicOnionSample.Shared/
@@ -41,7 +41,7 @@ MagicOnionSample/
 `MagicOnionSample.Unity`にはUnityプロジェクトを作成します。
 `MagicOnionSample.sln`には`MagicOnionSample.Server`と`MagicOnionSample.Shared`を追加します。
 
-## クライアント側の準備
+### クライアント側の準備
 
 プロジェクトを作成したら、はじめに`Project Settings`を以下に変更します。
 
@@ -56,11 +56,11 @@ MagicOnionSample/
 
 MagicOnionとMessagePackのバージョンによってはUnityのコンパイルエラーは発生しませんが、MagicOnion 4.0.4とMessagePack 2.2.85の場合はMagicOnion側でコンパイルエラーが発生してしまいます。MessagePack 2.2.85からMessagePackの属性が含まれている名前空間が`MessagePack`から`MessagePack.Annotations`に変更されているようなので、`Assets/Scripts/MagicOnion.Client/MagicOnion.Client.asmdef`の `AssemblyDefinition References`に`MessagePack.Annotations`の参照を追加することでコンパイルエラーを解消できます。
 
-## サーバー側の準備
+### サーバー側の準備
 
 ASP.NET CoreのgRPCテンプレートで作成した場合、以下のような構成でプロジェクトが作成されます。
 
-```
+```text
 MagicOnionSample
   |-MagicOnionSample.Server
       |- Properties/
@@ -165,7 +165,7 @@ namespace MagicOnionSample.Server
 
 Httpsで通信を行う場合は、[こちら](https://docs.microsoft.com/ja-jp/aspnet/core/security/enforcing-ssl?view=aspnetcore-5.0&tabs=visual-studio)を参照してください。
 
-## 共有Apiの定義
+### 共有Apiの定義1
 
 Unityに戻り、MagicOnionで使用する`interface`やモデルクラス類を作成します。
 今回は`Assets/MagicOnionSample/Scripts/Shared/`に共有Apiを構成します。
@@ -184,7 +184,7 @@ namespace MagicOnionSample.Shared
 }
 ```
 
-## クライアント側の実装
+### クライアント側の実装1
 
 `Shared`ディレクトリでは、クライアントとサーバーで共有できるクラスやインターフェースのみを持たせるために、`Shared`ディレクトリとは別に、`Assets/MagicOnionSample/Scripts/Unity/`を作成し、名前空間と実装を分離します。
 
@@ -231,13 +231,13 @@ namespace MagicOnionSample.Unity
 
 作成後、UnityのHierarchyに適当なGameObjectを作成し、`SampleEntryPoint`を付与します。
 
-## サーバー側における共有Api
+### サーバー側における共有Api
 
 Unityがコンパイルできるスクリプトは`Assets/`以下にあるものに限るため、サーバー側で共有Api用のプロジェクトを作成すると不整合がおきてしまうかもしれません。そのため、`MagicOnionSample.Shared`のプロジェクトでは、中身を実際には持たずに、上記で作成したUnityプロジェクト内の`Assets/MagicOnionSample/Scripts/Shared`ディレクトリにあるスクリプトを参照することでサーバー側でも共有Apiとして使えるようにします。
 
 そのため、`MagicOnionSample.Shared`のディレクトリ構成は以下のようになります。
 
-```
+```text
 MagicOnionSample
   |-MagicOnionSample.Shared
       |-MagicOnionSample.Shared.csproj
@@ -270,7 +270,8 @@ nugetから`MagicOnion`、`MagicOnion.Abstractions`、`MessagePack`、`MessagePa
 
 </Project>
 ```
-## サーバー側の実装
+
+### サーバー側の実装1
 
 上記で準備した共有Apiのプロジェクトをサーバー側のプロジェクトで参照することで、Unity上で定義した`ISampleService`を利用することができるようになります。
 `SampleService.cs`を作成し、`ISampleService`の実装を行います。
@@ -295,19 +296,19 @@ namespace MagicOnionSample.Server.Services
 }
 ```
 
-## 動作確認
+### 動作確認1
 
 `dotnet run`コマンド等でサーバーを起動し、`SampleEntryPoint`が適当なGameObjectに付与されているのを確認した後にUnityを実行し、UnityのConsoleに`Welcome Foo!`と表示されたら成功です。
 以上で、サーバーとクライアントの1対1のApiコールができました。
 
-# 作ってみる2
+## 作ってみる2
 
 前の項では、サーバーとクライアントの1対1のApiコールを実装しました。次に、サーバーとクライアントの1対多のApiコールを実装します。
 マルチプレイでプレイヤーの座標をリアルタイムで同期させるといったことが用途としてあげられます。
 
 今回は、プレイヤーが部屋に参加したかどうかを知らせるApiを実装します。
 
-## 共有Apiの定義
+### 共有Apiの定義2
 
 初めに、`Player`を一つのモデルとして管理するために、`Shared`ディレクトリに`Player.cs`を作成します。
 `MessagePackObject`の属性をクラスや構造体に付与することで、MessagePackがシリアライズできるようになり、`Key`によってそれぞれのプロパティを管理します。
@@ -359,7 +360,7 @@ namespace MagicOnionSample.Shared
 
 これらのApiコールのの流れとして、`ISampleHub`の`JoinAsync`を呼ぶことで、サーバーに名前と部屋名を渡し、サーバー側の処理が完了すると`ISampleHubReceiver`の`OnJoin`がコールバックとして呼ばれる形になります。
 
-## クライアント側の実装
+### クライアント側の実装2
 
 クライアント側では、`ISampleHubReceiver`を実装した`SampleHubReceiver`を作成します。
 `Unity`ディレクトリに`SampleHubReceiver.cs`を作成し、コールバックの内容を実装します。
@@ -433,7 +434,7 @@ namespace MagicOnionSample.Unity
 }
 ```
 
-## サーバー側の実装
+### サーバー側の実装2
 
 サーバー側では`ISampleHub`の実装を行います。
 `SampleHub.cs`を作成し、`name`と`room`が与えられたら`Player`を作成して返すといった実装を行います。
@@ -464,20 +465,19 @@ namespace MagicOnionSample.Server.Hubs
 }
 ```
 
-## 動作確認
+### 動作確認2
 
 上記の動作確認と同じように、`dotnet run`コマンド等でサーバーを起動してUnityを実行すると、UnityのConsoleに`Welcome Foo!`と`Foo, bar`表示されたら成功です。
 また、サーバー側のConsoleでは`Join Foo to the Bar`と表示されます。
 以上で、サーバーとクライアントの1対多のApiコールができました。
 
-# その他注意点
+## その他注意点
 
 `List<T>`や`Array<T>`などをMessagePackに渡す場合は、シリアライズの時に`null`の場合、エラーが発生することがあります。プロパティの初期化子を使って初期化をすることで、シリアライズでエラーを回避することができます。
 
 自作クラスのコンストラクタを実装する場合、コンストラクタ引数がないコンストラクタをMessagePackに渡すと、シリアライズ時にエラーが発生するため、引数があるコンストラクタに加えて、引数がないコンストラクタを作成する必要があります。
 
-
-# まとめ
+## まとめ
 
 MagicOnionを使ってリアルタイム通信の世界に入門しました。
 
