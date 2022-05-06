@@ -1,6 +1,7 @@
 InputPaths: ../../input
 Host: aconcavy.github.io
 LinksUseHttps: true
+LinkRoot: /blog
 LinkLowercase: true
 UseCache: false
 DateTimeInputCulture: ja-JP
