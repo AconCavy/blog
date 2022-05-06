@@ -2,16 +2,16 @@
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
 		<title />
-		<link>https://aconcavy.github.io/</link>
+		<link>https://aconcavy.github.io/blog</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Fri, 06 May 2022 02:23:14 GMT</pubDate>
-		<lastBuildDate>Fri, 06 May 2022 02:23:14 GMT</lastBuildDate>
+		<pubDate>Fri, 06 May 2022 02:29:01 GMT</pubDate>
+		<lastBuildDate>Fri, 06 May 2022 02:29:01 GMT</lastBuildDate>
 		<item>
 			<title>ABC249</title>
-			<link>https://aconcavy.github.io/posts/20220423abc249</link>
+			<link>https://aconcavy.github.io/blog/posts/20220423abc249</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 249の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220423abc249</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220423abc249</guid>
 			<pubDate>Sat, 23 Apr 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 249の復習記事です。&lt;/p&gt;
@@ -155,9 +155,9 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		</item>
 		<item>
 			<title>ABC248</title>
-			<link>https://aconcavy.github.io/posts/20220417abc248</link>
+			<link>https://aconcavy.github.io/blog/posts/20220417abc248</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 248の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220417abc248</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220417abc248</guid>
 			<pubDate>Mon, 18 Apr 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 248の復習記事です。&lt;/p&gt;
@@ -343,9 +343,9 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		</item>
 		<item>
 			<title>ABC247</title>
-			<link>https://aconcavy.github.io/posts/20220410abc247</link>
+			<link>https://aconcavy.github.io/blog/posts/20220410abc247</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 247の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220410abc247</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220410abc247</guid>
 			<pubDate>Sun, 10 Apr 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 247の復習記事です。&lt;/p&gt;
@@ -518,9 +518,9 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		</item>
 		<item>
 			<title>ABC246</title>
-			<link>https://aconcavy.github.io/posts/20220402abc246</link>
+			<link>https://aconcavy.github.io/blog/posts/20220402abc246</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 246の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220402abc246</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220402abc246</guid>
 			<pubDate>Sun, 03 Apr 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 246の復習記事です。&lt;/p&gt;
@@ -716,9 +716,9 @@ C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判�
 		</item>
 		<item>
 			<title>ABC245</title>
-			<link>https://aconcavy.github.io/posts/20220326abc245</link>
+			<link>https://aconcavy.github.io/blog/posts/20220326abc245</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 245の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220326abc245</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220326abc245</guid>
 			<pubDate>Sun, 27 Mar 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 245の復習記事です。&lt;/p&gt;
@@ -925,9 +925,9 @@ C#のコードで書くと以下のようになります。&lt;/p&gt;
 		</item>
 		<item>
 			<title>ABC244</title>
-			<link>https://aconcavy.github.io/posts/20220320abc244</link>
+			<link>https://aconcavy.github.io/blog/posts/20220320abc244</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 244の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220320abc244</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220320abc244</guid>
 			<pubDate>Mon, 21 Mar 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 244の復習記事です。&lt;/p&gt;
@@ -1130,9 +1130,9 @@ Console.WriteLine(answer);
 		</item>
 		<item>
 			<title>ABC243</title>
-			<link>https://aconcavy.github.io/posts/20220312abc243</link>
+			<link>https://aconcavy.github.io/blog/posts/20220312abc243</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220312abc243</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220312abc243</guid>
 			<pubDate>Sun, 13 Mar 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;
@@ -1336,9 +1336,9 @@ Console.WriteLine(answer);
 		</item>
 		<item>
 			<title>ABC242</title>
-			<link>https://aconcavy.github.io/posts/20220305abc242</link>
+			<link>https://aconcavy.github.io/blog/posts/20220305abc242</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 242の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220305abc242</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220305abc242</guid>
 			<pubDate>Sun, 06 Mar 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 242の復習記事です。&lt;/p&gt;
@@ -1477,9 +1477,9 @@ while (Q-- &amp;gt; 0)
 		</item>
 		<item>
 			<title>ABC241</title>
-			<link>https://aconcavy.github.io/posts/20220226abc241</link>
+			<link>https://aconcavy.github.io/blog/posts/20220226abc241</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220226abc241</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220226abc241</guid>
 			<pubDate>Sun, 27 Feb 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;
@@ -2032,9 +2032,9 @@ Console.WriteLine(current);
 		</item>
 		<item>
 			<title>ABC240</title>
-			<link>https://aconcavy.github.io/posts/20220220abc240</link>
+			<link>https://aconcavy.github.io/blog/posts/20220220abc240</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 240の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/posts/20220220abc240</guid>
+			<guid>https://aconcavy.github.io/blog/posts/20220220abc240</guid>
 			<pubDate>Sun, 20 Feb 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 240の復習記事です。&lt;/p&gt;
