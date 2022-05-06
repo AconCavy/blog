@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<id>https://aconcavy.github.io/blog</id>
+	<id>https://aconcavy.github.io/blog/</id>
 	<title />
-	<link rel="self" href="https://aconcavy.github.io/blog" />
+	<link rel="self" href="https://aconcavy.github.io/blog/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-05-06T02:33:06Z</updated>
+	<updated>2022-05-06T02:44:01Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220423abc249</id>
 		<title>ABC249</title>
