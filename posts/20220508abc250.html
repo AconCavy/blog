@@ -1,0 +1,479 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC250</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC250">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220508abc250">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title post-title">ABC250</h1>
+
+    <div class="card-text post-meta">
+        Published on Sunday, 08 May 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Sunday, 08 May 2022
+    </div>
+
+        <div class="mt-3 mb-4">
+                <a href="/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 250の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc250">https://atcoder.jp/contests/abc250</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31514088">コンテスト提出</a></p>
+<p>隣接するマスは上下左右なので、<code>(R,C)</code>に<code>x</code>軸と<code>y</code>軸の差分4方向(<code>(+1,0), (-1,0), (0,+1),(0,-1)</code>)を確認し、<code>1&lt;=R+d&lt;=H &amp;&amp; 1&lt;=R+d&lt;=W</code>に含まれている個数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var (R, C) = Scanner.Scan&lt;int, int&gt;();
+    R--;
+    C--;
+    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
+    var answer = 0;
+    foreach (var (dh, dw) in D4)
+    {
+        var (nh, nw) = (R + dh, C + dw);
+        if (nh &lt; 0 || H &lt;= nh || nw &lt; 0 || W &lt;= nw) continue;
+        answer++;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31519381">コンテスト提出</a></p>
+<p><code>N=1, A=1, B=1</code>としたとき、</p>
+<pre><code class="language-text line-numbers">.#
+#.
+</code></pre>
+<p>のようになり、<code>i</code>と<code>j</code>がそれぞれ偶奇をとるとき、つまり<code>(0,0), (0,1), (1,0), (1,1)</code>の4パターンが存在することがわかります。<br>
+また、<code>A</code>と<code>B</code>の値を変更したとき、それぞれのタイルは縦<code>A</code>マス、横<code>B</code>マスになるので、<code>i</code>と<code>j</code>それぞれ<code>A</code>と<code>B</code>で割ったときの偶奇によってタイルを指定すれば、答えとなるタイルが求められます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, A, B) = Scanner.Scan&lt;int, int, int&gt;();
+    var G = new char[N * A, N * B];
+    for (var i = 0; i &lt; N * A; i++)
+    {
+        for (var j = 0; j &lt; N * B; j++)
+        {
+            var x = i / A % 2;
+            var y = j / B % 2;
+            G[i, j] = (x, y) switch
+            {
+                (0, 0) =&gt; '.',
+                (0, 1) =&gt; '#',
+                (1, 0) =&gt; '#',
+                (1, 1) =&gt; '.',
+                _ =&gt; '.',
+            };
+        }
+    }
+
+    Printer.Print2D(G);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31522256">コンテスト提出</a></p>
+<p>クエリごとに<code>x</code>の位置を全探索してしまうと、計算量が<code>O(N)</code>かかってしまい、全体計算量が<code>O(N^2)</code>となり実行時間制限に間に合いません。
+そこで、あらかじめ<code>x</code>の位置をキーとした辞書や配列などを用意しておきます。<br>
+クエリが与えられたら、<code>x</code>の位置を<code>i</code>とし、<code>i</code>が端(<code>i=N-1</code>)なら<code>i-1</code>、それ以外ならば<code>i+1</code>の位置を<code>j</code>として、<code>i</code>と<code>j</code>の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を<code>O(1)</code>にすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var A = Enumerable.Range(1, N).ToArray();
+    var dict = new Dictionary&lt;int, int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        dict[A[i]] = i;
+    }
+
+    for (var k = 0; k &lt; Q; k++)
+    {
+        var x = Scanner.Scan&lt;int&gt;();
+        var i = dict[x];
+        var j = i + 1 != N ? i + 1 : i - 1;
+        var y = A[j];
+        (A[i], A[j]) = (A[j], A[i]);
+        dict[x] = j;
+        dict[y] = i;
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, A));
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31525287">コンテスト提出</a></p>
+<p>問題文における最大の素数を考えたとき、<code>k=p*q^3, N&lt;=1e18</code>から、<code>q^3&lt;=N</code>までの素数を考えればいいため、<code>q</code>以下となる素数群を昇順にソートしたものをあらかじめ用意しておきます。<br>
+それらの素数を<code>p&lt;q</code>の範囲で走査したときの、<code>p*q^3&lt;=N</code>となる組み合わせの数が答えとなります。<br>
+このとき、全探索してしまうと、素数の数を<code>M</code>としたとき計算量<code>O(M^2)</code>となり、<code>N=1e18</code>のときに<code>M=78498</code>となって実行時間制限に間に合いませんが、<code>p*q^3&gt;N</code>のときの<code>q</code>以降の対象となりえない組み合わせを枝刈りすることで、実行時間制限に間に合わせることができます。<br>
+あるいは、<code>p&lt;q</code>の範囲で<code>q</code>を二部探索することで、計算量<code>O(MlogM)</code>で求めることができます。
+また、<code>p*q^3</code>の値が、64bit整数に収まらない場合もあるので、多倍長整数を使ったり、オーバーフローした場合の処理が必要となる場合があります。<br>
+C#の場合、整数のオーバーフローは例外が発生しませんが、<code>checked</code>ブロックを使うことで例外を明示的に発生させることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;long&gt;();
+    var primes = Sieve((int)1e6).ToArray();
+    var M = primes.Length;
+    var answer = 0;
+    for (var i = 0; i &lt; M; i++)
+    {
+        for (var j = i + 1; j &lt; M; j++)
+        {
+            var p = (long)primes[i];
+            var q = (long)primes[j] * primes[j] * primes[j];
+            try
+            {
+                checked
+                {
+                    if (p * q &lt;= N)
+                    {
+                        answer++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                break;
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+
+public static IEnumerable&lt;int&gt; Sieve(int value)
+{
+    if (value &lt; 2) yield break;
+    yield return 2;
+    var sieve = new bool[(value + 1) / 2];
+    for (var i = 1; i &lt; sieve.Length; i++)
+    {
+        if (sieve[i]) continue;
+        yield return i * 2 + 1;
+        for (var j = i; j &lt; sieve.Length; j += i * 2 + 1) sieve[j] = true;
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31543730">コンテスト提出</a></p>
+<p><code>A</code>の<code>x</code>番目までの要素に対応する<code>B</code>の最小の出現位置の最大が<code>y</code>以下であり、<code>B</code>の<code>y</code>番目までの要素に対応する<code>A</code>の最小の出現位置の最大が<code>x</code>以下であれば答えは<code>Yes</code>となります。</p>
+<p>あらかじめ、<code>A</code>の各要素の<code>B</code>における最小の出現位置(<code>AtoB</code>)と、<code>B</code>の各要素の<code>A</code>における最小の出現位置(<code>BtoA</code>)を求めておき、クエリごとに<code>AtoB</code>の<code>x</code>までの最大値と<code>BtoA</code>の<code>y</code>までの最大値を求められるようにします。<br>
+このとき愚直に<code>x</code>番目と<code>y</code>番目までを走査してしまうとクエリ当たりの計算量が<code>O(N)</code>となってしまうため、セグメントツリーのようなデータ構造をつかってRange Maximum Queryを求めることによって、クエリ当たりの計算量を<code>O(logN)</code>に抑えることができ、全体で<code>O(QlogN)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dictA = new Dictionary&lt;int, int&gt;();
+    var dictB = new Dictionary&lt;int, int&gt;();
+    const int inf = (int)1e9;
+    for (var i = 0; i &lt; N; i++)
+    {
+        dictA[A[i]] = inf;
+        dictA[B[i]] = inf;
+        dictB[A[i]] = inf;
+        dictB[B[i]] = inf;
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        dictA[B[i]] = Math.Min(dictA[B[i]], i + 1);
+        dictB[A[i]] = Math.Min(dictB[A[i]], i + 1);
+    }
+
+    var okIDA = new int[N];
+    var okIDB = new int[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        okIDA[i] = dictA[A[i]];
+        okIDB[i] = dictB[B[i]];
+    }
+
+    var stA = new SegmentTree&lt;int&gt;(okIDA, new Oracle());
+    var stB = new SegmentTree&lt;int&gt;(okIDB, new Oracle());
+
+    var Q = Scanner.Scan&lt;int&gt;();
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;int, int&gt;();
+        var answer = stA.Query(0, x) &lt;= y &amp;&amp; stB.Query(0, y) &lt;= x;
+        Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    }
+}
+
+public class Oracle : IOracle&lt;int&gt;
+{
+    public int MonoidIdentity =&gt; 0;
+
+    public int Operate(int a, int b)
+    {
+        return Math.Max(a, b);
+    }
+}
+
+public interface IOracle&lt;TMonoid&gt;
+{
+    TMonoid MonoidIdentity { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public class SegmentTree&lt;TMonoid&gt;
+{
+    public int Length { get; }
+    private readonly IOracle&lt;TMonoid&gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public SegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid&gt; oracle) : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
+    }
+
+    public SegmentTree(int length, IOracle&lt;TMonoid&gt; oracle)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &lt;&lt; _log &lt; Length) _log++;
+        _dataSize = 1 &lt;&lt; _log;
+        _data = new TMonoid[_dataSize &lt;&lt; 1];
+        Array.Fill(_data, oracle.MonoidIdentity);
+    }
+
+    public void Set(int index, TMonoid value)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        _data[index] = value;
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        return _data[index + _dataSize];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        var (sml, smr) = (_oracle.MonoidIdentity, _oracle.MonoidIdentity);
+        left += _dataSize;
+        right += _dataSize;
+        while (left &lt; right)
+        {
+            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &gt;&gt;= 1;
+            right &gt;&gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&gt; _data[1];
+
+    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        var sm = _oracle.MonoidIdentity;
+        do
+        {
+            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &lt; _dataSize)
+                {
+                    left &lt;&lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        var sm = _oracle.MonoidIdentity;
+        do
+        {
+            right--;
+            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &lt; _dataSize)
+                {
+                    right = (right &lt;&lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
+}
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220508abc250" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
