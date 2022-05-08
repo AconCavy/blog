@@ -5,8 +5,8 @@
 		<link>https://aconcavy.github.io/blog/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 08 May 2022 15:19:18 GMT</pubDate>
-		<lastBuildDate>Sun, 08 May 2022 15:19:18 GMT</lastBuildDate>
+		<pubDate>Sun, 08 May 2022 15:23:20 GMT</pubDate>
+		<lastBuildDate>Sun, 08 May 2022 15:23:20 GMT</lastBuildDate>
 		<item>
 			<title>ABC250</title>
 			<link>https://aconcavy.github.io/blog/posts/20220508abc250</link>
@@ -162,35 +162,35 @@ public static IEnumerable&amp;lt;int&amp;gt; Sieve(int value)
 &lt;a href="https://atcoder.jp/contests/abc250/submissions/31553993"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;A&lt;/code&gt;の&lt;code&gt;x&lt;/code&gt;番目までの要素に対応する&lt;code&gt;B&lt;/code&gt;の最小の出現位置の最大が&lt;code&gt;y&lt;/code&gt;以下であり、&lt;code&gt;B&lt;/code&gt;の&lt;code&gt;y&lt;/code&gt;番目までの要素に対応する&lt;code&gt;A&lt;/code&gt;の最小の出現位置の最大が&lt;code&gt;x&lt;/code&gt;以下であれば答えは&lt;code&gt;Yes&lt;/code&gt;となります。&lt;/p&gt;
 &lt;p&gt;あらかじめ、&lt;code&gt;A&lt;/code&gt;の各要素の&lt;code&gt;B&lt;/code&gt;における最小の出現位置(&lt;code&gt;AtoB&lt;/code&gt;)と、&lt;code&gt;B&lt;/code&gt;の各要素の&lt;code&gt;A&lt;/code&gt;における最小の出現位置(&lt;code&gt;BtoA&lt;/code&gt;)を求めておき、クエリごとに&lt;code&gt;AtoB&lt;/code&gt;の&lt;code&gt;x&lt;/code&gt;までの最大値と&lt;code&gt;BtoA&lt;/code&gt;の&lt;code&gt;y&lt;/code&gt;までの最大値を求められるようにします。&lt;br /&gt;
-このとき愚直に&lt;code&gt;x&lt;/code&gt;番目と&lt;code&gt;y&lt;/code&gt;番目までを走査してしまうとクエリ当たりの計算量が&lt;code&gt;O(N)&lt;/code&gt;となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;に抑えることができ、全体で&lt;code&gt;O(Q+N)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+このとき愚直に&lt;code&gt;x&lt;/code&gt;番目と&lt;code&gt;y&lt;/code&gt;番目までを走査してしまうとクエリ当たりの計算量が&lt;code&gt;O(N)&lt;/code&gt;となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;に抑えることができ、全体で&lt;code&gt;O(Q+NlogN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var N = Scanner.Scan&amp;lt;int&amp;gt;();
     var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
     var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var dictA = new Dictionary&amp;lt;int, int&amp;gt;();
-    var dictB = new Dictionary&amp;lt;int, int&amp;gt;();
+    var dictAB = new Dictionary&amp;lt;int, int&amp;gt;();
+    var dictBA = new Dictionary&amp;lt;int, int&amp;gt;();
     const int inf = (int)1e9;
     for (var i = 0; i &amp;lt; N; i++)
     {
-        dictA[A[i]] = inf;
-        dictA[B[i]] = inf;
-        dictB[A[i]] = inf;
-        dictB[B[i]] = inf;
+        dictAB[A[i]] = inf;
+        dictAB[B[i]] = inf;
+        dictBA[A[i]] = inf;
+        dictBA[B[i]] = inf;
     }
 
     for (var i = 0; i &amp;lt; N; i++)
     {
-        dictA[B[i]] = Math.Min(dictA[B[i]], i + 1);
-        dictB[A[i]] = Math.Min(dictB[A[i]], i + 1);
+        dictAB[B[i]] = Math.Min(dictAB[B[i]], i + 1);
+        dictBA[A[i]] = Math.Min(dictBA[A[i]], i + 1);
     }
 
     var cumAB = new int[N + 1];
     var cumBA = new int[N + 1];
     for (var i = 0; i &amp;lt; N; i++)
     {
-        cumAB[i + 1] = Math.Max(cumAB[i], dictA[A[i]]);
-        cumBA[i + 1] = Math.Max(cumBA[i], dictB[B[i]]);
+        cumAB[i + 1] = Math.Max(cumAB[i], dictAB[A[i]]);
+        cumBA[i + 1] = Math.Max(cumBA[i], dictBA[B[i]]);
     }
 
     var Q = Scanner.Scan&amp;lt;int&amp;gt;();

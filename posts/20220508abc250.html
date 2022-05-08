@@ -230,35 +230,35 @@ public static IEnumerable&lt;int&gt; Sieve(int value)
 <a href="https://atcoder.jp/contests/abc250/submissions/31553993">復習提出</a></p>
 <p><code>A</code>の<code>x</code>番目までの要素に対応する<code>B</code>の最小の出現位置の最大が<code>y</code>以下であり、<code>B</code>の<code>y</code>番目までの要素に対応する<code>A</code>の最小の出現位置の最大が<code>x</code>以下であれば答えは<code>Yes</code>となります。</p>
 <p>あらかじめ、<code>A</code>の各要素の<code>B</code>における最小の出現位置(<code>AtoB</code>)と、<code>B</code>の各要素の<code>A</code>における最小の出現位置(<code>BtoA</code>)を求めておき、クエリごとに<code>AtoB</code>の<code>x</code>までの最大値と<code>BtoA</code>の<code>y</code>までの最大値を求められるようにします。<br>
-このとき愚直に<code>x</code>番目と<code>y</code>番目までを走査してしまうとクエリ当たりの計算量が<code>O(N)</code>となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を<code>O(1)</code>に抑えることができ、全体で<code>O(Q+N)</code>で求めることができます。</p>
+このとき愚直に<code>x</code>番目と<code>y</code>番目までを走査してしまうとクエリ当たりの計算量が<code>O(N)</code>となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を<code>O(1)</code>に抑えることができ、全体で<code>O(Q+NlogN)</code>で求めることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var N = Scanner.Scan&lt;int&gt;();
     var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
     var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-    var dictA = new Dictionary&lt;int, int&gt;();
-    var dictB = new Dictionary&lt;int, int&gt;();
+    var dictAB = new Dictionary&lt;int, int&gt;();
+    var dictBA = new Dictionary&lt;int, int&gt;();
     const int inf = (int)1e9;
     for (var i = 0; i &lt; N; i++)
     {
-        dictA[A[i]] = inf;
-        dictA[B[i]] = inf;
-        dictB[A[i]] = inf;
-        dictB[B[i]] = inf;
+        dictAB[A[i]] = inf;
+        dictAB[B[i]] = inf;
+        dictBA[A[i]] = inf;
+        dictBA[B[i]] = inf;
     }
 
     for (var i = 0; i &lt; N; i++)
     {
-        dictA[B[i]] = Math.Min(dictA[B[i]], i + 1);
-        dictB[A[i]] = Math.Min(dictB[A[i]], i + 1);
+        dictAB[B[i]] = Math.Min(dictAB[B[i]], i + 1);
+        dictBA[A[i]] = Math.Min(dictBA[A[i]], i + 1);
     }
 
     var cumAB = new int[N + 1];
     var cumBA = new int[N + 1];
     for (var i = 0; i &lt; N; i++)
     {
-        cumAB[i + 1] = Math.Max(cumAB[i], dictA[A[i]]);
-        cumBA[i + 1] = Math.Max(cumBA[i], dictB[B[i]]);
+        cumAB[i + 1] = Math.Max(cumAB[i], dictAB[A[i]]);
+        cumBA[i + 1] = Math.Max(cumBA[i], dictBA[B[i]]);
     }
 
     var Q = Scanner.Scan&lt;int&gt;();
