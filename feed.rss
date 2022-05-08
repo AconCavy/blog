@@ -5,8 +5,8 @@
 		<link>https://aconcavy.github.io/blog/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 08 May 2022 15:23:20 GMT</pubDate>
-		<lastBuildDate>Sun, 08 May 2022 15:23:20 GMT</lastBuildDate>
+		<pubDate>Sun, 08 May 2022 15:47:17 GMT</pubDate>
+		<lastBuildDate>Sun, 08 May 2022 15:47:17 GMT</lastBuildDate>
 		<item>
 			<title>ABC250</title>
 			<link>https://aconcavy.github.io/blog/posts/20220508abc250</link>
@@ -73,9 +73,9 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31522256"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;クエリごとに&lt;code&gt;x&lt;/code&gt;の位置を全探索してしまうと、計算量が&lt;code&gt;O(N)&lt;/code&gt;かかってしまい、全体計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり実行時間制限に間に合いません。
+&lt;p&gt;クエリごとに&lt;code&gt;x&lt;/code&gt;の位置を全探索してしまうと、計算量が&lt;code&gt;O(N)&lt;/code&gt;かかってしまい、全体計算量が&lt;code&gt;O(QN)&lt;/code&gt;となり実行時間制限に間に合いません。
 そこで、あらかじめ&lt;code&gt;x&lt;/code&gt;の位置をキーとした辞書や配列などを用意しておきます。&lt;br /&gt;
-クエリが与えられたら、&lt;code&gt;x&lt;/code&gt;の位置を&lt;code&gt;i&lt;/code&gt;とし、&lt;code&gt;i&lt;/code&gt;が端(&lt;code&gt;i=N-1&lt;/code&gt;)なら&lt;code&gt;i-1&lt;/code&gt;、それ以外ならば&lt;code&gt;i+1&lt;/code&gt;の位置を&lt;code&gt;j&lt;/code&gt;として、&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;にすることができます。&lt;/p&gt;
+クエリが与えられたら、&lt;code&gt;x&lt;/code&gt;の位置を&lt;code&gt;i&lt;/code&gt;とし、&lt;code&gt;i&lt;/code&gt;が端(&lt;code&gt;i=N-1&lt;/code&gt;)なら&lt;code&gt;i-1&lt;/code&gt;、それ以外ならば&lt;code&gt;i+1&lt;/code&gt;の位置を&lt;code&gt;j&lt;/code&gt;として、&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;にすることができ、全体計算量&lt;code&gt;O(Q+N)&lt;/code&gt;に改善することができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
@@ -101,22 +101,24 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31525287"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31525287"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc250/submissions/31554504"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;問題文における最大の素数を考えたとき、&lt;code&gt;k=p*q^3, N&amp;lt;=1e18&lt;/code&gt;から、&lt;code&gt;q^3&amp;lt;=N&lt;/code&gt;までの素数を考えればいいため、&lt;code&gt;q&lt;/code&gt;以下となる素数群を昇順にソートしたものをあらかじめ用意しておきます。&lt;br /&gt;
 それらの素数を&lt;code&gt;p&amp;lt;q&lt;/code&gt;の範囲で走査したときの、&lt;code&gt;p*q^3&amp;lt;=N&lt;/code&gt;となる組み合わせの数が答えとなります。&lt;br /&gt;
 このとき、全探索してしまうと、素数の数を&lt;code&gt;M&lt;/code&gt;としたとき計算量&lt;code&gt;O(M^2)&lt;/code&gt;となり、&lt;code&gt;N=1e18&lt;/code&gt;のときに&lt;code&gt;M=78498&lt;/code&gt;となって実行時間制限に間に合いませんが、&lt;code&gt;p*q^3&amp;gt;N&lt;/code&gt;のときの&lt;code&gt;q&lt;/code&gt;以降の対象となりえない組み合わせを枝刈りすることで、実行時間制限に間に合わせることができます。&lt;br /&gt;
-あるいは、&lt;code&gt;p&amp;lt;q&lt;/code&gt;の範囲で&lt;code&gt;q&lt;/code&gt;を二部探索することで、計算量&lt;code&gt;O(MlogM)&lt;/code&gt;で求めることができます。
+あるいは、&lt;code&gt;p&amp;lt;q&lt;/code&gt;の範囲で&lt;code&gt;q&lt;/code&gt;を二部探索することで計算量&lt;code&gt;O(MlogM)&lt;/code&gt;、&lt;code&gt;p*q^3&amp;gt;=N&lt;/code&gt;ならば&lt;code&gt;(p+1)*q^3&amp;gt;=N&lt;/code&gt;から&lt;code&gt;q&lt;/code&gt;を大きいほうから尺取り法で求めることで&lt;code&gt;O(M)&lt;/code&gt;で求めることができます。
 また、&lt;code&gt;p*q^3&lt;/code&gt;の値が、64bit整数に収まらない場合もあるので、多倍長整数を使ったり、オーバーフローした場合の処理が必要となる場合があります。&lt;br /&gt;
 C#の場合、整数のオーバーフローは例外が発生しませんが、&lt;code&gt;checked&lt;/code&gt;ブロックを使うことで例外を明示的に発生させることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var N = Scanner.Scan&amp;lt;long&amp;gt;();
-    var primes = Sieve((int)1e6).ToArray();
+    var primes = Prime.Sieve((int)1e6).ToArray();
     var M = primes.Length;
     var answer = 0;
-    for (var i = 0; i &amp;lt; M; i++)
+    var j = M - 1;
+    for (var i = 0; i &amp;lt; j; i++)
     {
-        for (var j = i + 1; j &amp;lt; M; j++)
+        while (i &amp;lt; j)
         {
             var p = (long)primes[i];
             var q = (long)primes[j] * primes[j] * primes[j];
@@ -126,19 +128,21 @@ C#の場合、整数のオーバーフローは例外が発生しませんが、
                 {
                     if (p * q &amp;lt;= N)
                     {
-                        answer++;
+                        break;
                     }
                     else
                     {
-                        break;
+                        j--;
                     }
                 }
             }
             catch
             {
-                break;
+                j--;
             }
         }
+
+        answer += j - i;
     }
 
     Console.WriteLine(answer);

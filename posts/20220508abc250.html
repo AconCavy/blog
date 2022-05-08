@@ -141,9 +141,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc250/submissions/31522256">コンテスト提出</a></p>
-<p>クエリごとに<code>x</code>の位置を全探索してしまうと、計算量が<code>O(N)</code>かかってしまい、全体計算量が<code>O(N^2)</code>となり実行時間制限に間に合いません。
+<p>クエリごとに<code>x</code>の位置を全探索してしまうと、計算量が<code>O(N)</code>かかってしまい、全体計算量が<code>O(QN)</code>となり実行時間制限に間に合いません。
 そこで、あらかじめ<code>x</code>の位置をキーとした辞書や配列などを用意しておきます。<br>
-クエリが与えられたら、<code>x</code>の位置を<code>i</code>とし、<code>i</code>が端(<code>i=N-1</code>)なら<code>i-1</code>、それ以外ならば<code>i+1</code>の位置を<code>j</code>として、<code>i</code>と<code>j</code>の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を<code>O(1)</code>にすることができます。</p>
+クエリが与えられたら、<code>x</code>の位置を<code>i</code>とし、<code>i</code>が端(<code>i=N-1</code>)なら<code>i-1</code>、それ以外ならば<code>i+1</code>の位置を<code>j</code>として、<code>i</code>と<code>j</code>の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を<code>O(1)</code>にすることができ、全体計算量<code>O(Q+N)</code>に改善することができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, Q) = Scanner.Scan&lt;int, int&gt;();
@@ -169,22 +169,24 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 }
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_d">問題D</a></h3>
-<p><a href="https://atcoder.jp/contests/abc250/submissions/31525287">コンテスト提出</a></p>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31525287">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/abc250/submissions/31554504">復習提出</a></p>
 <p>問題文における最大の素数を考えたとき、<code>k=p*q^3, N&lt;=1e18</code>から、<code>q^3&lt;=N</code>までの素数を考えればいいため、<code>q</code>以下となる素数群を昇順にソートしたものをあらかじめ用意しておきます。<br>
 それらの素数を<code>p&lt;q</code>の範囲で走査したときの、<code>p*q^3&lt;=N</code>となる組み合わせの数が答えとなります。<br>
 このとき、全探索してしまうと、素数の数を<code>M</code>としたとき計算量<code>O(M^2)</code>となり、<code>N=1e18</code>のときに<code>M=78498</code>となって実行時間制限に間に合いませんが、<code>p*q^3&gt;N</code>のときの<code>q</code>以降の対象となりえない組み合わせを枝刈りすることで、実行時間制限に間に合わせることができます。<br>
-あるいは、<code>p&lt;q</code>の範囲で<code>q</code>を二部探索することで、計算量<code>O(MlogM)</code>で求めることができます。
+あるいは、<code>p&lt;q</code>の範囲で<code>q</code>を二部探索することで計算量<code>O(MlogM)</code>、<code>p*q^3&gt;=N</code>ならば<code>(p+1)*q^3&gt;=N</code>から<code>q</code>を大きいほうから尺取り法で求めることで<code>O(M)</code>で求めることができます。
 また、<code>p*q^3</code>の値が、64bit整数に収まらない場合もあるので、多倍長整数を使ったり、オーバーフローした場合の処理が必要となる場合があります。<br>
 C#の場合、整数のオーバーフローは例外が発生しませんが、<code>checked</code>ブロックを使うことで例外を明示的に発生させることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var N = Scanner.Scan&lt;long&gt;();
-    var primes = Sieve((int)1e6).ToArray();
+    var primes = Prime.Sieve((int)1e6).ToArray();
     var M = primes.Length;
     var answer = 0;
-    for (var i = 0; i &lt; M; i++)
+    var j = M - 1;
+    for (var i = 0; i &lt; j; i++)
     {
-        for (var j = i + 1; j &lt; M; j++)
+        while (i &lt; j)
         {
             var p = (long)primes[i];
             var q = (long)primes[j] * primes[j] * primes[j];
@@ -194,19 +196,21 @@ C#の場合、整数のオーバーフローは例外が発生しませんが、
                 {
                     if (p * q &lt;= N)
                     {
-                        answer++;
+                        break;
                     }
                     else
                     {
-                        break;
+                        j--;
                     }
                 }
             }
             catch
             {
-                break;
+                j--;
             }
         }
+
+        answer += j - i;
     }
 
     Console.WriteLine(answer);
