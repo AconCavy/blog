@@ -226,10 +226,11 @@ public static IEnumerable&lt;int&gt; Sieve(int value)
 }
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc250/tasks/abc250_e">問題E</a></h3>
-<p><a href="https://atcoder.jp/contests/abc250/submissions/31543730">コンテスト提出</a></p>
+<p><a href="https://atcoder.jp/contests/abc250/submissions/31543730">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/abc250/submissions/31553993">復習提出</a></p>
 <p><code>A</code>の<code>x</code>番目までの要素に対応する<code>B</code>の最小の出現位置の最大が<code>y</code>以下であり、<code>B</code>の<code>y</code>番目までの要素に対応する<code>A</code>の最小の出現位置の最大が<code>x</code>以下であれば答えは<code>Yes</code>となります。</p>
 <p>あらかじめ、<code>A</code>の各要素の<code>B</code>における最小の出現位置(<code>AtoB</code>)と、<code>B</code>の各要素の<code>A</code>における最小の出現位置(<code>BtoA</code>)を求めておき、クエリごとに<code>AtoB</code>の<code>x</code>までの最大値と<code>BtoA</code>の<code>y</code>までの最大値を求められるようにします。<br>
-このとき愚直に<code>x</code>番目と<code>y</code>番目までを走査してしまうとクエリ当たりの計算量が<code>O(N)</code>となってしまうため、セグメントツリーのようなデータ構造をつかってRange Maximum Queryを求めることによって、クエリ当たりの計算量を<code>O(logN)</code>に抑えることができ、全体で<code>O(QlogN)</code>で求めることができます。</p>
+このとき愚直に<code>x</code>番目と<code>y</code>番目までを走査してしまうとクエリ当たりの計算量が<code>O(N)</code>となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を<code>O(1)</code>に抑えることができ、全体で<code>O(Q+N)</code>で求めることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var N = Scanner.Scan&lt;int&gt;();
@@ -252,166 +253,21 @@ public static IEnumerable&lt;int&gt; Sieve(int value)
         dictB[A[i]] = Math.Min(dictB[A[i]], i + 1);
     }
 
-    var okIDA = new int[N];
-    var okIDB = new int[N];
+    var cumAB = new int[N + 1];
+    var cumBA = new int[N + 1];
     for (var i = 0; i &lt; N; i++)
     {
-        okIDA[i] = dictA[A[i]];
-        okIDB[i] = dictB[B[i]];
+        cumAB[i + 1] = Math.Max(cumAB[i], dictA[A[i]]);
+        cumBA[i + 1] = Math.Max(cumBA[i], dictB[B[i]]);
     }
-
-    var stA = new SegmentTree&lt;int&gt;(okIDA, new Oracle());
-    var stB = new SegmentTree&lt;int&gt;(okIDB, new Oracle());
 
     var Q = Scanner.Scan&lt;int&gt;();
     for (var i = 0; i &lt; Q; i++)
     {
         var (x, y) = Scanner.Scan&lt;int, int&gt;();
-        var answer = stA.Query(0, x) &lt;= y &amp;&amp; stB.Query(0, y) &lt;= x;
+        var answer = cumAB[x] &lt;= y &amp;&amp; cumBA[y] &lt;= x;
         Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
     }
-}
-
-public class Oracle : IOracle&lt;int&gt;
-{
-    public int MonoidIdentity =&gt; 0;
-
-    public int Operate(int a, int b)
-    {
-        return Math.Max(a, b);
-    }
-}
-
-public interface IOracle&lt;TMonoid&gt;
-{
-    TMonoid MonoidIdentity { get; }
-    TMonoid Operate(TMonoid a, TMonoid b);
-}
-
-public class SegmentTree&lt;TMonoid&gt;
-{
-    public int Length { get; }
-    private readonly IOracle&lt;TMonoid&gt; _oracle;
-    private readonly TMonoid[] _data;
-    private readonly int _log;
-    private readonly int _dataSize;
-
-    public SegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid&gt; oracle) : this(source.Count, oracle)
-    {
-        var idx = _dataSize;
-        foreach (var value in source) _data[idx++] = value;
-        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
-    }
-
-    public SegmentTree(int length, IOracle&lt;TMonoid&gt; oracle)
-    {
-        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
-        Length = length;
-        _oracle = oracle;
-        while (1 &lt;&lt; _log &lt; Length) _log++;
-        _dataSize = 1 &lt;&lt; _log;
-        _data = new TMonoid[_dataSize &lt;&lt; 1];
-        Array.Fill(_data, oracle.MonoidIdentity);
-    }
-
-    public void Set(int index, TMonoid value)
-    {
-        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index += _dataSize;
-        _data[index] = value;
-        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
-    }
-
-    public TMonoid Get(int index)
-    {
-        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        return _data[index + _dataSize];
-    }
-
-    public TMonoid Query(int left, int right)
-    {
-        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
-        var (sml, smr) = (_oracle.MonoidIdentity, _oracle.MonoidIdentity);
-        left += _dataSize;
-        right += _dataSize;
-        while (left &lt; right)
-        {
-            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
-            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
-            left &gt;&gt;= 1;
-            right &gt;&gt;= 1;
-        }
-
-        return _oracle.Operate(sml, smr);
-    }
-
-    public TMonoid QueryToAll() =&gt; _data[1];
-
-    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
-    {
-        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
-        if (left == Length) return Length;
-        left += _dataSize;
-        var sm = _oracle.MonoidIdentity;
-        do
-        {
-            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
-            if (!predicate(_oracle.Operate(sm, _data[left])))
-            {
-                while (left &lt; _dataSize)
-                {
-                    left &lt;&lt;= 1;
-                    var tmp = _oracle.Operate(sm, _data[left]);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    left++;
-                }
-
-                return left - _dataSize;
-            }
-
-            sm = _oracle.Operate(sm, _data[left]);
-            left++;
-        } while ((left &amp; -left) != left);
-
-        return Length;
-    }
-
-    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
-    {
-        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
-        if (right == 0) return 0;
-        right += _dataSize;
-        var sm = _oracle.MonoidIdentity;
-        do
-        {
-            right--;
-            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
-            if (!predicate(_oracle.Operate(_data[right], sm)))
-            {
-                while (right &lt; _dataSize)
-                {
-                    right = (right &lt;&lt; 1) + 1;
-                    var tmp = _oracle.Operate(_data[right], sm);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    right--;
-                }
-
-                return right + 1 - _dataSize;
-            }
-
-            sm = _oracle.Operate(_data[right], sm);
-        } while ((right &amp; -right) != right);
-
-        return 0;
-    }
-
-    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
 }
 </code></pre>
 
