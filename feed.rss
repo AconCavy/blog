@@ -5,8 +5,171 @@
 		<link>https://aconcavy.github.io/blog/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 08 May 2022 15:47:17 GMT</pubDate>
-		<lastBuildDate>Sun, 08 May 2022 15:47:17 GMT</lastBuildDate>
+		<pubDate>Sat, 14 May 2022 19:17:54 GMT</pubDate>
+		<lastBuildDate>Sat, 14 May 2022 19:17:54 GMT</lastBuildDate>
+		<item>
+			<title>ABC251</title>
+			<link>https://aconcavy.github.io/blog/posts/20220514abc251</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 251の復習記事です。&lt;/p&gt;</description>
+			<guid>https://aconcavy.github.io/blog/posts/20220514abc251</guid>
+			<pubDate>Sat, 14 May 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 251の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251"&gt;https://atcoder.jp/contests/abc251&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc251/tasks/abc251_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251/submissions/31659858"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;S&lt;/code&gt;を繰り返して長さ6以上の文字列を作成し、長さ6の文字を&lt;code&gt;SubString&lt;/code&gt;や&lt;code&gt;Range&lt;/code&gt;で作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var answer = S;
+    while (answer.Length &amp;lt; 6)
+    {
+        answer += S;
+    }
+
+    answer = answer[0..6];
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc251/tasks/abc251_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251/submissions/31659934"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1&amp;lt;=i,j,k&amp;lt;=N&lt;/code&gt;の組み合わせのうち、&lt;code&gt;A[i]&lt;/code&gt;、&lt;code&gt;A[i]+A[j]&lt;/code&gt;、&lt;code&gt;A[i]+A[j]+A[k]&lt;/code&gt;かつ&lt;code&gt;W&lt;/code&gt;以下になる組み合わせを全探索し、重複をなくしたものが答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var set = new HashSet&amp;lt;int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        set.Add(A[i]);
+        for (var j = i + 1; j &amp;lt; N; j++)
+        {
+            set.Add(A[i] + A[j]);
+            for (var k = j + 1; k &amp;lt; N; k++)
+            {
+                set.Add(A[i] + A[j] + A[k]);
+            }
+        }
+    }
+
+    var answer = set.Count(x =&amp;gt; x &amp;lt;= W);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc251/tasks/abc251_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251/submissions/31664269"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各文字列において2番目以降のスコアを無視したとき、スコアが最大の文字列が何番目にでてくるかを解答します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var sub = new (string S, int T)[N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var (s, t) = Scanner.Scan&amp;lt;string, int&amp;gt;();
+        sub[i] = (s, t);
+    }
+
+    var dict = new Dictionary&amp;lt;string, int&amp;gt;();
+
+    for (var i = N - 1; i &amp;gt;= 0; i--)
+    {
+        var (s, t) = sub[i];
+        dict[s] = t;
+    }
+
+    var max = -1;
+    var result = &amp;quot;&amp;quot;;
+    foreach (var (s, t) in dict)
+    {
+        if (max &amp;lt; t)
+        {
+            max = t;
+            result = s;
+        }
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (result == sub[i].S)
+        {
+            Console.WriteLine(i + 1);
+            return;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc251/tasks/abc251_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251/submissions/31695211"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;なにこれ?????????&lt;/li&gt;
+&lt;li&gt;フィボナッチ数列とかでどうにかならないか&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;W=100,000&lt;/code&gt;が解ければよさそう&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;1-100&lt;/code&gt;、&lt;code&gt;100-10000&lt;/code&gt;、&lt;code&gt;10000-1000000&lt;/code&gt;をカバーできれば全ての範囲をカバーできるようです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var W = Scanner.Scan&amp;lt;int&amp;gt;();
+    var list = new List&amp;lt;int&amp;gt;();
+
+    for (var i = 1; i &amp;lt;= 100; i++)
+    {
+        list.Add(i);
+        list.Add(i * 100);
+        list.Add(i * 10000);
+    }
+
+    Console.WriteLine(list.Count);
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, list));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc251/tasks/abc251_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc251/submissions/31695236"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;二部探索?&lt;/li&gt;
+&lt;li&gt;動的計画法?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i=1&lt;/code&gt;と&lt;code&gt;i=N&lt;/code&gt;の処理をどうするか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;i=1&lt;/code&gt;を採用したときと&lt;code&gt;i=N&lt;/code&gt;を採用したときの2つのパターンで動的計画法を解くことが解法でした。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    const long inf = (long)1e18;
+
+    var answer = inf;
+    for (var k = 0; k &amp;lt; 2; k++)
+    {
+        var dp = new long[N + 10, 2];
+        if (k == 0)
+        {
+            dp[1, 0] = 0;
+            dp[1, 1] = inf;
+        }
+        else
+        {
+            dp[1, 0] = inf;
+            dp[1, 1] = A[0];
+        }
+
+        for (var i = 1; i &amp;lt; N; i++)
+        {
+            dp[i + 1, 0] = dp[i, 1];
+            dp[i + 1, 1] = Math.Min(dp[i, 0], dp[i, 1]) + A[i];
+        }
+
+        if (k == 0) answer = Math.Min(answer, dp[N, 1]);
+        else answer = Math.Min(answer, Math.Min(dp[N, 0], dp[N, 1]));
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC250</title>
 			<link>https://aconcavy.github.io/blog/posts/20220508abc250</link>
@@ -1673,561 +1836,6 @@ while (Q-- &amp;gt; 0)
     if (new string(T).CompareTo(S) &amp;lt;= 0) answer++;
     Console.WriteLine(answer);
 }
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC241</title>
-			<link>https://aconcavy.github.io/blog/posts/20220226abc241</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;</description>
-			<guid>https://aconcavy.github.io/blog/posts/20220226abc241</guid>
-			<pubDate>Sun, 27 Feb 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 241の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241"&gt;https://atcoder.jp/contests/abc241&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29662070"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;現在の値を&lt;code&gt;curr&lt;/code&gt;とし、現在の値を&lt;code&gt;A[curr]&lt;/code&gt;で更新します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-var curr = 0;
-for (var i = 0; i &amp;lt; 3; i++)
-{
-    curr = A[curr];
-}
-
-Console.WriteLine(curr);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29664697"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;あらかじめ麵の長さ&lt;code&gt;A&lt;/code&gt;の個数を辞書に持ち、&lt;code&gt;B&lt;/code&gt;を順番に見たときに、1個以上ある場合は辞書の&lt;code&gt;B&lt;/code&gt;の値をデクリメントし、0個または辞書に存在しない場合は答えは&lt;code&gt;No&lt;/code&gt;になります。最終的にすべてを見ることができれば、答えは&lt;code&gt;Yes&lt;/code&gt;となります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-var dict = new Dictionary&amp;lt;int, int&amp;gt;();
-foreach (var a in A)
-{
-    if (!dict.ContainsKey(a))
-    {
-        dict[a] = 0;
-    }
-
-    dict[a]++;
-}
-
-foreach (var b in B)
-{
-    if (!dict.ContainsKey(b) || dict[b] == 0)
-    {
-        Console.WriteLine(&amp;quot;No&amp;quot;);
-        return;
-    }
-
-    dict[b]--;
-}
-
-Console.WriteLine(&amp;quot;Yes&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29675472"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;マスを順にみて、端を&lt;code&gt;(i,j)&lt;/code&gt;に固定したときに連続した区間のうち4つ以上&lt;code&gt;#&lt;/code&gt;が存在すれば、答えは&lt;code&gt;Yes&lt;/code&gt;となります。
-縦の場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i+5,j)&lt;/code&gt;まで、横の場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i,j+5)&lt;/code&gt;まで、斜めの場合は&lt;code&gt;(i,j)&lt;/code&gt;から&lt;code&gt;(i+5,j+5)&lt;/code&gt;と&lt;code&gt;(i+5,j-5)&lt;/code&gt;を確かめます。
-検査時に範囲外に出ないように注意します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var G = new string[N];
-for (var i = 0; i &amp;lt; N; i++)
-{
-    G[i] = Scanner.ScanLine();
-}
-
-for (var i = 0; i &amp;lt; N; i++)
-{
-    for (var j = 0; j &amp;lt; N; j++)
-    {
-        var ok = false;
-        if (i + 5 &amp;lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &amp;lt;= 5; k++)
-            {
-                if (G[i + k][j] == '#') count++;
-            }
-
-            ok |= count &amp;gt;= 4;
-        }
-
-        if (j + 5 &amp;lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &amp;lt;= 5; k++)
-            {
-                if (G[i][j + k] == '#') count++;
-            }
-
-            ok |= count &amp;gt;= 4;
-        }
-
-        if (i + 5 &amp;lt; N &amp;amp;&amp;amp; j + 5 &amp;lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &amp;lt;= 5; k++)
-            {
-                if (G[i + k][j + k] == '#') count++;
-            }
-
-            ok |= count &amp;gt;= 4;
-        }
-
-        if (i + 5 &amp;lt; N &amp;amp;&amp;amp; j - 5 &amp;gt;= 0)
-        {
-            var count = 0;
-            for (var k = 0; k &amp;lt;= 5; k++)
-            {
-                if (G[i + k][j - k] == '#') count++;
-            }
-
-            ok |= count &amp;gt;= 4;
-        }
-
-        if (ok)
-        {
-            Console.WriteLine(&amp;quot;Yes&amp;quot;);
-            return;
-        }
-
-    }
-}
-
-Console.WriteLine(&amp;quot;No&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29715030"&gt;復習提出 (FenwickTree)&lt;/a&gt;
-&lt;a href="https://atcoder.jp/contests/abc241/submissions/29716771"&gt;復習提出 (平衡二分探索木)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;FenwickTree&lt;/code&gt;を使った場合の解き方です。
-&lt;code&gt;x&lt;/code&gt;の値が大きいので、あらかじめクエリを先読みし、出現する座標を圧縮します。
-圧縮した&lt;code&gt;x&lt;/code&gt;の値を&lt;code&gt;cx&lt;/code&gt;としたとき、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が1であれば、&lt;code&gt;FenwickTree&lt;/code&gt;の&lt;code&gt;cx&lt;/code&gt;に1を追加します。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が2であれば、&lt;code&gt;FenwickTree&lt;/code&gt;の区間&lt;code&gt;[idx, cx]&lt;/code&gt;の値が&lt;code&gt;k&lt;/code&gt;以上の場所を二部探索し、存在するならばその時の&lt;code&gt;idx&lt;/code&gt;の対応する値が答えとなります。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が2であれば、&lt;code&gt;FenwickTree&lt;/code&gt;の区間&lt;code&gt;[cx, idx]&lt;/code&gt;の値が&lt;code&gt;k&lt;/code&gt;以上の場所を二部探索し、存在するならばその時の&lt;code&gt;idx&lt;/code&gt;の対応する値が答えとなります。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-var query = new (int, long, int)[Q];
-var set = new HashSet&amp;lt;long&amp;gt;();
-for (var i = 0; i &amp;lt; Q; i++)
-{
-    var line = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var (t, x) = ((int)line[0], line[1]);
-    var k = t == 1 ? -1 : (int)line[2];
-    query[i] = (t, x, k);
-    set.Add(x);
-}
- 
-var (map, remap) = Compress(set);
-var N = map.Count;
-var ft = new FenwickTree(N);
-foreach (var (t, x, k) in query)
-{
-    if (t == 1)
-    {
-        ft.Add(map[x], 1);
-    }
-    else if (t == 2)
-    {
-        bool F(int idx) =&amp;gt; ft.Sum(idx, map[x] + 1) &amp;gt;= k;
-        var idx = BinarySearch(map[x] + 1, 0, F);
-        var answer = F(idx) ? remap[idx] : -1;
-        Console.WriteLine(answer);
-    }
-    else
-    {
-        bool F(int idx) =&amp;gt; ft.Sum(map[x], idx + 1) &amp;gt;= k;
-        var idx = BinarySearch(map[x] - 1, N - 1, F);
-        var answer = F(idx) ? remap[idx] : -1;
-        Console.WriteLine(answer);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static int BinarySearch(int ng, int ok, Func&amp;lt;int, bool&amp;gt; func)
-{
-    while (Math.Abs(ok - ng) &amp;gt; 1)
-    {
-        var m = (ok + ng) / 2;
-        if (func(m)) ok = m;
-        else ng = m;
-    }
-
-    return ok;
-}
-
-public static (Dictionary&amp;lt;T, int&amp;gt; Map, Dictionary&amp;lt;int, T&amp;gt; ReMap) Compress&amp;lt;T&amp;gt;(IEnumerable&amp;lt;T&amp;gt; source)
-{
-    var distinct = source.Distinct().ToArray();
-    Array.Sort(distinct);
-    var map = new Dictionary&amp;lt;T, int&amp;gt;();
-    var remap = new Dictionary&amp;lt;int, T&amp;gt;();
-    foreach (var (x, i) in distinct.Select((x, i) =&amp;gt; (x, i)))
-    {
-        map[x] = i;
-        remap[i] = x;
-    }
-
-    return (map, remap);
-}
-
-public class FenwickTree
-{
-    private readonly long[] _data;
-    private readonly int _length;
-
-    public FenwickTree(int length)
-    {
-        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
-        _length = length;
-        _data = new long[length];
-    }
-
-    public void Add(int index, long item)
-    {
-        if (index &amp;lt; 0 || _length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index++;
-        while (index &amp;lt;= _length)
-        {
-            _data[index - 1] += item;
-            index += index &amp;amp; -index;
-        }
-    }
-
-    public long Sum(int length)
-    {
-        if (length &amp;lt; 0 || _length &amp;lt; length) throw new ArgumentOutOfRangeException(nameof(length));
-        var s = 0L;
-        while (length &amp;gt; 0)
-        {
-            s += _data[length - 1];
-            length -= length &amp;amp; -length;
-        }
-
-        return s;
-    }
-
-    public long Sum(int left, int right)
-    {
-        if (left &amp;lt; 0 || right &amp;lt; left || _length &amp;lt; right) throw new ArgumentOutOfRangeException();
-        return Sum(right) - Sum(left);
-    }
-
-    public int LowerBound(long item) =&amp;gt; CommonBound(item, LessThanOrEqual);
-    public int UpperBound(long item) =&amp;gt; CommonBound(item, LessThan);
-
-    private int CommonBound(long item, Func&amp;lt;long, long, bool&amp;gt; compare)
-    {
-        if (compare(item, _data[0])) return 0;
-        var x = 0;
-        var r = 1;
-        while (r &amp;lt; _length) r &amp;lt;&amp;lt;= 1;
-        for (var k = r; k &amp;gt; 0; k &amp;gt;&amp;gt;= 1)
-        {
-            if (x + k - 1 &amp;gt;= _length || compare(item, _data[x + k - 1])) continue;
-            item -= _data[x + k - 1];
-            x += k;
-        }
-
-        return x;
-    }
-
-    private static bool LessThanOrEqual(long x, long y) =&amp;gt; x &amp;lt;= y;
-    private static bool LessThan(long x, long y) =&amp;gt; x &amp;lt; y;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;平衡二分探索木を使った時の解き方です。
-C#では&lt;code&gt;MultiSet&lt;/code&gt;が存在しないので、平衡二分探索木を自作する必要があります。
-降順、昇順の平衡二分探索木を用意し、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が1であれば、両方の平衡二分探索木に&lt;code&gt;x&lt;/code&gt;を追加します。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が2であれば、降順の平衡二分探索木において&lt;code&gt;x&lt;/code&gt;以上になるインデックス&lt;code&gt;(idx)&lt;/code&gt;を取得し、&lt;code&gt;idx+k-1&lt;/code&gt;となる値が存在するならば、その値が答えとなります。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;t&lt;/code&gt;の値が3であれば、昇順の平衡二分探索木において、&lt;code&gt;x&lt;/code&gt;以下になるインデックス&lt;code&gt;(idx)&lt;/code&gt;を取得し、&lt;code&gt;idx+k-1&lt;/code&gt;となる値が存在するならば、その値が答えとなります。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-var asc = new RandomizedBinarySearchTree&amp;lt;long&amp;gt;();
-var desc = new RandomizedBinarySearchTree&amp;lt;long&amp;gt;((x, y) =&amp;gt; y.CompareTo(x));
-
-while (Q-- &amp;gt; 0)
-{
-    var line = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var (t, x) = (line[0], line[1]);
-    if (t == 1)
-    {
-        asc.Insert(x);
-        desc.Insert(x);
-    }
-    else
-    {
-        var k = (int)line[2] - 1;
-        var set = t == 2 ? desc : asc;
-        if (set.Count() == 0)
-        {
-            Console.WriteLine(-1);
-            continue;
-        }
-        var lb = set.LowerBound(x);
-        var answer = lb + k &amp;lt; set.Count() ? set.ElementAt(lb + k) : -1;
-        Console.WriteLine(answer);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;次のような平衡二分探索木を使用しました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public class RandomizedBinarySearchTree&amp;lt;T&amp;gt; : IEnumerable&amp;lt;T&amp;gt;
-{
-    private readonly Comparison&amp;lt;T&amp;gt; _comparison;
-    private readonly Compare _lowerBound;
-    private readonly Compare _upperBound;
-    private readonly Random _random;
-
-    private Node _root;
-    private int _count;
-
-    public RandomizedBinarySearchTree(int seed = 0) : this(comparer: null, seed) { }
-
-    public RandomizedBinarySearchTree(Comparer&amp;lt;T&amp;gt; comparer, int seed = 0) : this(
-        (comparer ?? Comparer&amp;lt;T&amp;gt;.Default).Compare, seed)
-    {
-    }
-
-    public RandomizedBinarySearchTree(Comparison&amp;lt;T&amp;gt; comparison, int seed = 0)
-    {
-        _comparison = comparison;
-        _lowerBound = (x, y) =&amp;gt; _comparison(x, y) &amp;gt;= 0;
-        _upperBound = (x, y) =&amp;gt; _comparison(x, y) &amp;gt; 0;
-        _random = new Random(seed);
-    }
-
-    public delegate bool Compare(T x, T y);
-
-    public void Insert(T value)
-    {
-        if (_root is null) _root = new Node(value);
-        else InsertAt(LowerBound(value), value);
-    }
-
-    public void InsertAt(int index, T value)
-    {
-        var (l, r) = Split(_root, index);
-        _root = Merge(Merge(l, new Node(value)), r);
-    }
-
-    public void Erase(T value)
-    {
-        EraseAt(LowerBound(value));
-    }
-
-    public void EraseAt(int index)
-    {
-        var (l, r1) = Split(_root, index);
-        var (_, r2) = Split(r1, 1);
-        _root = Merge(l, r2);
-    }
-
-    public T ElementAt(int index)
-    {
-        if (index &amp;lt; 0 || Count(_root) &amp;lt;= index) throw new ArgumentNullException(nameof(index));
-        var node = _root;
-        var idx = Count(node) - Count(node.R) - 1;
-        while (node is { })
-        {
-            if (idx == index) return node.Value;
-            if (idx &amp;gt; index)
-            {
-                node = node.L;
-                idx -= Count(node?.R) + 1;
-            }
-            else
-            {
-                node = node.R;
-                idx += Count(node?.L) + 1;
-            }
-        }
-
-        throw new ArgumentOutOfRangeException(nameof(index));
-    }
-
-    public bool Contains(T value)
-    {
-        return Find(value) is { };
-    }
-
-    public int Count() =&amp;gt; Count(_root);
-
-    public IEnumerator&amp;lt;T&amp;gt; GetEnumerator() =&amp;gt; Enumerate(_root).GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() =&amp;gt; GetEnumerator();
-
-    public int UpperBound(T value) =&amp;gt; CommonBound(value, _upperBound);
-    public int LowerBound(T value) =&amp;gt; CommonBound(value, _lowerBound);
-
-    public int CommonBound(T value, Compare compare)
-    {
-        var node = _root;
-        if (node is null) return -1;
-        var bound = Count(node);
-        var idx = bound - Count(node.R) - 1;
-        while (node is { })
-        {
-            if (compare(node.Value, value))
-            {
-                node = node.L;
-                bound = Math.Min(bound, idx);
-                idx -= Count(node?.R) + 1;
-            }
-            else
-            {
-                node = node.R;
-                idx += Count(node?.L) + 1;
-            }
-        }
-
-        return bound;
-    }
-
-    private double GetProbability() =&amp;gt; _random.NextDouble();
-
-    private Node Merge(Node l, Node r)
-    {
-        if (l is null || r is null) return l ?? r;
-        var (n, m) = (Count(l), Count(r));
-        if ((double)n / (n + m) &amp;gt; GetProbability())
-        {
-            l.R = Merge(l.R, r);
-            return l;
-        }
-        else
-        {
-            r.L = Merge(l, r.L);
-            return r;
-        }
-    }
-
-    private (Node, Node) Split(Node node, int k)
-    {
-        if (node is null) return (null, null);
-
-        if (k &amp;lt;= Count(node.L))
-        {
-            var (l, r) = Split(node.L, k);
-            node.L = r;
-            return (l, node);
-        }
-        else
-        {
-            var (l, r) = Split(node.R, k - Count(node.L) - 1);
-            node.R = l;
-            return (node, r);
-        }
-    }
-
-    private Node Find(T value)
-    {
-        var node = _root;
-        while (node is { })
-        {
-            var cmp = _comparison(node.Value, value);
-            if (cmp &amp;gt; 0) node = node.L;
-            else if (cmp &amp;lt; 0) node = node.R;
-            else break;
-        }
-
-        return node;
-    }
-
-    private static int Count(Node node) =&amp;gt; node?.Count ?? 0;
-
-    private static IEnumerable&amp;lt;T&amp;gt; Enumerate(Node node = null)
-    {
-        if (node is null) yield break;
-        foreach (var value in Enumerate(node.L)) yield return value;
-        yield return node.Value;
-        foreach (var value in Enumerate(node.R)) yield return value;
-    }
-
-    private class Node
-    {
-        public T Value { get; }
-
-        public Node L
-        {
-            get =&amp;gt; _l;
-            set
-            {
-                _l = value;
-                UpdateCount();
-            }
-        }
-
-        public Node R
-        {
-            get =&amp;gt; _r;
-            set
-            {
-                _r = value;
-                UpdateCount();
-            }
-        }
-
-        public int Count { get; private set; }
-
-        private Node _l;
-        private Node _r;
-
-        public Node(T value)
-        {
-            Value = value;
-            Count = 1;
-        }
-
-        private void UpdateCount()
-        {
-            Count = (L?.Count ?? 0) + (R?.Count ?? 0) + 1;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc241/tasks/abc241_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc241/submissions/29701801"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;mod&lt;/code&gt;の性質上、最大でも&lt;code&gt;N&lt;/code&gt;回でループすることがわかります。
-そのため、答えは&lt;code&gt;(1回のループ中の和 * ループ回数) + (ループに入るまでの和 + ループの端数の和)&lt;/code&gt;で求めることができます。
-実装としては、&lt;code&gt;idx&lt;/code&gt;のときの合計値と、&lt;code&gt;idx&lt;/code&gt;の時に&lt;code&gt;A&lt;/code&gt;の値を参照したことを保持しながら順にみていきます。
-一度見たことがある&lt;code&gt;A&lt;/code&gt;を参照する場合、&lt;code&gt;現在の合計値 - 1度目のidxの合計値&lt;/code&gt;から1回のループ中の和がわかり、&lt;code&gt;2度目のidx - 1度目のidx&lt;/code&gt;からループの長さが求まり、&lt;code&gt;(K - 1度目のidx) / ループの長さ&lt;/code&gt;でループの回数がわかるので、&lt;code&gt;(1回のループ中の和 * ループ回数)&lt;/code&gt;を求めることができます。
-また、&lt;code&gt;(K - 1度目のidx) % ループの長さ&lt;/code&gt;でループの端数となる残りの&lt;code&gt;idx&lt;/code&gt;を求めることができ、&lt;code&gt;一度目のidx + 残りのidx&lt;/code&gt;のときの合計値をみることで、&lt;code&gt;(ループに入るまでの和 + ループの端数の和)&lt;/code&gt;を求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, K) = Scanner.Scan&amp;lt;int, long&amp;gt;();
-var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-var dict = new Dictionary&amp;lt;int, int&amp;gt;();
-var steps = new List&amp;lt;long&amp;gt;();
-
-int F(long x) =&amp;gt; (int)(x % N);
-var current = 0L;
-for (var i = 0; i &amp;lt; K; i++)
-{
-    var x = F(current);
-    if (dict.ContainsKey(x))
-    {
-        var noloop = dict[x];
-        var loop = i - dict[x];
-        var div = (K - noloop) / loop;
-        current = (current - steps[noloop]) * div;
-        var mod = (int)((K - noloop) % loop);
-        if (mod &amp;lt; 0) mod += loop;
-        current += steps[noloop + mod];
-        break;
-    }
-
-    dict[x] = i;
-    steps.Add(current);
-    current += A[x];
-}
-
-Console.WriteLine(current);
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
