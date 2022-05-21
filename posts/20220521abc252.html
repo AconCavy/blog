@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC252</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC252">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+<meta property="og:url" content="https://aconcavy.github.io/blog/posts/20220521abc252">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://aconcavy.github.io/blog/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<header>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-md-5">
+                        
+<div class="post-header mb-5">
+    <h1 class="card-title post-title">ABC252</h1>
+
+    <div class="card-text post-meta">
+        Published on Saturday, 21 May 2022
+    </div>
+    <div class="card-text post-meta">
+        Updated on Saturday, 21 May 2022
+    </div>
+
+        <div class="mt-3 mb-4">
+                <a href="/tags/atcoder" class="badge badge-light"> atcoder</a>
+                <a href="/tags/csharp" class="badge badge-light"> csharp</a>
+        </div>
+
+    <hr>
+</div>
+
+                        <div class="post-body">
+                            <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 252の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc252">https://atcoder.jp/contests/abc252</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc252/tasks/abc252_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc252/submissions/31834327">コンテスト提出</a></p>
+<p>C#では<code>char</code>の<code>0-255</code>にはASCII文字コードが割り当てられているため、数値を<code>char</code>型に明示的に変換することで、与えられた数値に対する文字に変換することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var answer = (char)N;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc252/tasks/abc252_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc252/submissions/31840735">コンテスト提出</a></p>
+<p>おいしさが最大のときの食品の番号の集合をとり、<code>B</code>の何れかがその集合に存在していれば<code>Yes</code>、そうでなければ<code>No</code>となります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var set = new HashSet&lt;int&gt;();
+    var max = -1;
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (max &lt; A[i])
+        {
+            max = A[i];
+            set.Clear();
+            set.Add(i + 1);
+        }
+        else if (max == A[i])
+        {
+            set.Add(i + 1);
+        }
+    }
+
+    var answer = false;
+    foreach (var b in B)
+    {
+        answer |= set.Contains(b);
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc252/tasks/abc252_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc252/submissions/31852070">コンテスト提出</a></p>
+<p>表示される数字を全探索して最小となる秒数を求めます。<br>
+各リールにおいて指定した数字が出現する秒数を<code>N</code>周分保持し、出現する秒数が早い順から採用します。<br>
+採用したリールをメモしておき、全てのリールが採用された時の秒数の最小を出力します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = new int[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var s = Scanner.Scan&lt;string&gt;();
+        S[i] = s.Select(x =&gt; x - '0').ToArray();
+    }
+
+    const long inf = (long)1e18;
+    var answer = inf;
+    for (var n = 0; n &lt; 10; n++)
+    {
+        var list = new List&lt;(int T, int ID)&gt;();
+        for (var i = 0; i &lt; N; i++)
+        {
+            var idx = Array.IndexOf(S[i], n);
+            list.AddRange(Enumerable.Range(0, N).Select(x =&gt; (x * 10 + idx, i)));
+        }
+
+        list.Sort((x, y) =&gt; x.T.CompareTo(y.T));
+        var used = new HashSet&lt;int&gt;();
+        var curr = -1;
+        foreach (var (t, i) in list)
+        {
+            if (t &lt;= curr || used.Contains(i)) continue;
+            used.Add(i);
+            curr = t;
+            if (used.Count == N)
+            {
+                answer = Math.Min(answer, curr);
+                break;
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc252/tasks/abc252_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc252/submissions/31867979">コンテスト提出</a></p>
+<p>愚直に<code>i,j,k</code>の全ての組み合わせを全探索してしまうと、数え上げの時間計算量が<code>O(N^3)</code>となり、実行時間制限に間に合わないません。
+そこで、出現する数値をまとめて数え上げます。
+以下数値をまとめた個数の配列を<code>C</code>、<code>C</code>の長さを<code>M</code>とします。</p>
+<p><code>C</code>のうち、<code>0&lt;=i&lt;j&lt;k&lt;M</code>となる<code>i,j,k</code>の組み合わせを全探索すると、時間計算量が<code>O(M^3)</code>であり、時間計算量はまだ改善できていません。
+まず、<code>C</code>のうち<code>0&lt;=j&lt;k&lt;M</code>となる<code>j,k</code>組み合わせを愚直に考えると、以下のように数え上げることができます。</p>
+<pre><code class="language-csharp line-numbers">for(var j = 0; j &lt; M; j++)
+{
+    for(var k = j + 1; k &lt; M; k++)
+    {
+        sumJK += C[j] * C[k];
+    }
+}
+</code></pre>
+<p>この場合、<code>j,k</code>の組み合わせは時間計算量<code>O(M^2)</code>で求めることができますが、<code>j</code>を固定したときの組み合わせの個数は、<code>C[j]*(C[j+1] + C[j+2] + .. + C[M - 1])</code>となり、<code>C[j]</code>に<code>j</code>以降の累積和をかけたものであることがわかります。
+そのため、<code>C[k]</code>の累積和をあらかじめ求めておくことで、数え上げの時間計算量を<code>O(M)</code>に改善することができます。</p>
+<pre><code class="language-csharp line-numbers">for (var k = M - 1; k &gt;= 0; k--)
+{
+    cumK[k] = C[k] + cumK[k + 1];
+}
+
+for(var j = 0; j &lt; M; j++)
+{
+    sumJK += C[j] * cumK[j + 1];
+}
+</code></pre>
+<p>これを利用すると、<code>C</code>のうち<code>0&lt;=i&lt;j&lt;k&lt;M</code>となる<code>i,j,k</code>の組み合わせは時間計算量<code>O(M^2)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">for(var i = 0; i &lt; M; i++)
+{
+    for(var j = i + 1; j &lt; M; j++)
+    {
+        sumIJK += C[i] * C[j] * cumK[j + 1];
+    }
+}
+</code></pre>
+<p>また、<code>i</code>を固定したときの組み合わせは、<code>C[i] * (C[i+1]*cumK[i+2] + C[i+2]*cumK[i+3] + .. + C[M-2]*cumK[M-1])</code>となり、<code>C[i]</code>に<code>i</code>以降の<code>C</code>と<code>C[k]</code>の累積和をかけたものの累積和であることがわかります。
+そのため、<code>C[j]</code>に<code>C[k]</code>の累積和をかけたものの累積和をあらかじめ求めておくことで、数え上げの時間計算量を<code>O(M)</code>に改善することができます。</p>
+<pre><code class="language-csharp line-numbers">for (var j = M - 2; k &gt;= 0; k--)
+{
+    cumJ[k] = C[j] * cumK[j + 1] + cumJ[j + 1];
+}
+
+for(var i = 0; i &lt; M; j++)
+{
+    sumIJK += C[i] * cumJ[i + 1];
+}
+</code></pre>
+<p>以上により、時間計算量<code>O(M)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var count = new int[(int)2e5 + 1];
+    foreach (var a in A)
+    {
+        count[a]++;
+    }
+
+    var C = count.Where(x =&gt; x &gt; 0).ToArray();
+    var M = C.Length;
+
+    var cumK = new long[M + 1];
+    var cumJ = new long[M + 1];
+    for (var k = M - 1; k &gt;= 0; k--)
+    {
+        cumK[k] = C[k] + cumK[k + 1];
+    }
+
+    for (var j = M - 2; j &gt;= 0; j--)
+    {
+        cumJ[j] = C[j] * cumK[j + 1] + cumJ[j + 1];
+    }
+
+    long answer = 0;
+    for (var i = 0; i + 2 &lt;= M; i++)
+    {
+        answer += C[i] * cumJ[i + 1];
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc252/tasks/abc252_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc252/submissions/31874511">コンテスト提出</a></p>
+<p>頂点<code>1</code>からの最短経路を求め、各頂点への最短経路とその直前の頂点を結ぶ<code>N-1</code>本の道が答えとなります。<br>
+これは、頂点<code>1</code>から頂点<code>v</code>への最短経路があるとき、その経路上の頂点<code>u</code>への経路は、頂点<code>1</code>から頂点<code>u</code>への最短経路であることからわかります。
+ダイクストラ法で頂点<code>1</code>から各頂点への最短経路を求めるときに、各頂点の直前の頂点をメモしておき、頂点<code>v</code>の直前の頂点<code>u</code>をつなぐ道が何番目の道であるかを実装することで答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var dict = new Dictionary&lt;(int U, int V), int&gt;();
+    var G = new List&lt;(int, long)&gt;[N].Select(x =&gt; new List&lt;(int, long)&gt;()).ToArray();
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (a, b, c) = Scanner.Scan&lt;int, int, long&gt;();
+        a--; b--;
+        G[a].Add((b, c));
+        G[b].Add((a, c));
+
+        dict[(a, b)] = dict[(b, a)] = i + 1;
+    }
+
+    var costs = new long[N];
+    Array.Fill(costs, long.MaxValue);
+    costs[0] = 0;
+    var queue = new PriorityQueue&lt;(int U, long Cost)&gt;((x, y) =&gt; x.Cost.CompareTo(y.Cost));
+    queue.Enqueue((0, 0));
+    var prev = new int[N];
+    while (queue.Count &gt; 0)
+    {
+        var (u, cu) = queue.Dequeue();
+        if (costs[u] &lt; cu) continue;
+        foreach (var (v, cv) in G[u])
+        {
+            var c = costs[u] + cv;
+            if (costs[v] &lt;= c) continue;
+            costs[v] = c;
+            prev[v] = u;
+            queue.Enqueue((v, c));
+        }
+    }
+
+    var answer = new List&lt;int&gt;();
+    for (var v = 1; v &lt; N; v++)
+    {
+        var u = prev[v];
+        answer.Add(dict[(u, v)]);
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, answer));
+}
+</code></pre>
+
+                        </div>
+                        <div class="post-footer mt-5">
+    <div class="share">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220521abc252" data-size="large">
+            Tweet
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mt-3">
+            <img class="rounded-circle" src="/assets/images/icon.svg" alt="icon">
+        </div>
+        <div class="col-md-3 mt-3">
+            <h5 class="card-text">AconCavy</h5>
+            <div class="card-text">C#が好きなひきこもり</div>
+            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
+            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
