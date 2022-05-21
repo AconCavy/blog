@@ -69,7 +69,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
         Published on Saturday, 21 May 2022
     </div>
     <div class="card-text post-meta">
-        Updated on Saturday, 21 May 2022
+        Updated on Sunday, 22 May 2022
     </div>
 
         <div class="mt-3 mb-4">
@@ -212,7 +212,7 @@ for(var j = 0; j &lt; M; j++)
 </code></pre>
 <p>また、<code>i</code>を固定したときの組み合わせは、<code>C[i] * (C[i+1]*cumK[i+2] + C[i+2]*cumK[i+3] + .. + C[M-2]*cumK[M-1])</code>となり、<code>C[i]</code>に<code>i</code>以降の<code>C</code>と<code>C[k]</code>の累積和をかけたものの累積和であることがわかります。
 そのため、<code>C[j]</code>に<code>C[k]</code>の累積和をかけたものの累積和をあらかじめ求めておくことで、数え上げの時間計算量を<code>O(M)</code>に改善することができます。</p>
-<pre><code class="language-csharp line-numbers">for (var j = M - 2; k &gt;= 0; k--)
+<pre><code class="language-csharp line-numbers">for (var j = M - 1; k &gt;= 0; k--)
 {
     cumJ[k] = C[j] * cumK[j + 1] + cumJ[j + 1];
 }
@@ -243,13 +243,13 @@ for(var i = 0; i &lt; M; j++)
         cumK[k] = C[k] + cumK[k + 1];
     }
 
-    for (var j = M - 2; j &gt;= 0; j--)
+    for (var j = M - 1; j &gt;= 0; j--)
     {
         cumJ[j] = C[j] * cumK[j + 1] + cumJ[j + 1];
     }
 
     long answer = 0;
-    for (var i = 0; i + 2 &lt;= M; i++)
+    for (var i = 0; i &lt; M; i++)
     {
         answer += C[i] * cumJ[i + 1];
     }

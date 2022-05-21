@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-05-21T15:20:33Z</updated>
+	<updated>2022-05-21T18:26:20Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220521abc252</id>
 		<title>ABC252</title>
 		<link href="https://aconcavy.github.io/blog/posts/20220521abc252" />
-		<updated>2022-05-21T00:00:00Z</updated>
+		<updated>2022-05-22T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 252の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -141,7 +141,7 @@ for(var j = 0; j &amp;lt; M; j++)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;また、&lt;code&gt;i&lt;/code&gt;を固定したときの組み合わせは、&lt;code&gt;C[i] * (C[i+1]*cumK[i+2] + C[i+2]*cumK[i+3] + .. + C[M-2]*cumK[M-1])&lt;/code&gt;となり、&lt;code&gt;C[i]&lt;/code&gt;に&lt;code&gt;i&lt;/code&gt;以降の&lt;code&gt;C&lt;/code&gt;と&lt;code&gt;C[k]&lt;/code&gt;の累積和をかけたものの累積和であることがわかります。
 そのため、&lt;code&gt;C[j]&lt;/code&gt;に&lt;code&gt;C[k]&lt;/code&gt;の累積和をかけたものの累積和をあらかじめ求めておくことで、数え上げの時間計算量を&lt;code&gt;O(M)&lt;/code&gt;に改善することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for (var j = M - 2; k &amp;gt;= 0; k--)
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for (var j = M - 1; k &amp;gt;= 0; k--)
 {
     cumJ[k] = C[j] * cumK[j + 1] + cumJ[j + 1];
 }
@@ -172,13 +172,13 @@ for(var i = 0; i &amp;lt; M; j++)
         cumK[k] = C[k] + cumK[k + 1];
     }
 
-    for (var j = M - 2; j &amp;gt;= 0; j--)
+    for (var j = M - 1; j &amp;gt;= 0; j--)
     {
         cumJ[j] = C[j] * cumK[j + 1] + cumJ[j + 1];
     }
 
     long answer = 0;
-    for (var i = 0; i + 2 &amp;lt;= M; i++)
+    for (var i = 0; i &amp;lt; M; i++)
     {
         answer += C[i] * cumJ[i + 1];
     }
