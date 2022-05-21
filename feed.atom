@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://aconcavy.github.io/blog/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-05-21T15:16:08Z</updated>
+	<updated>2022-05-21T15:20:33Z</updated>
 	<entry>
 		<id>https://aconcavy.github.io/blog/posts/20220521abc252</id>
 		<title>ABC252</title>
@@ -118,7 +118,7 @@
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;この場合、&lt;code&gt;j,k&lt;/code&gt;の組み合わせは時間計算量&lt;code&gt;O(M^2)&lt;/code&gt;で求めることができますが、&lt;code&gt;j&lt;/code&gt;を固定したときの組み合わせの個数は、&lt;code&gt;C[j]*(C[j+1] + C[j+2] + .. + C[M - 1])&lt;/code&gt;となり、&lt;code&gt;C[j]&lt;/code&gt;に&lt;code&gt;j&lt;/code&gt;以降の累積和をかけたものであることがわかります。
+&lt;p&gt;この場合、&lt;code&gt;j,k&lt;/code&gt;の組み合わせは時間計算量&lt;code&gt;O(M^2)&lt;/code&gt;で求めることができますが、&lt;code&gt;j&lt;/code&gt;を固定したときの組み合わせの個数は、&lt;code&gt;C[j]*(C[j+1] + C[j+2] + .. + C[M-1])&lt;/code&gt;となり、&lt;code&gt;C[j]&lt;/code&gt;に&lt;code&gt;j&lt;/code&gt;以降の累積和をかけたものであることがわかります。
 そのため、&lt;code&gt;C[k]&lt;/code&gt;の累積和をあらかじめ求めておくことで、数え上げの時間計算量を&lt;code&gt;O(M)&lt;/code&gt;に改善することができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;for (var k = M - 1; k &amp;gt;= 0; k--)
 {

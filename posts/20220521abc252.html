@@ -189,7 +189,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     }
 }
 </code></pre>
-<p>この場合、<code>j,k</code>の組み合わせは時間計算量<code>O(M^2)</code>で求めることができますが、<code>j</code>を固定したときの組み合わせの個数は、<code>C[j]*(C[j+1] + C[j+2] + .. + C[M - 1])</code>となり、<code>C[j]</code>に<code>j</code>以降の累積和をかけたものであることがわかります。
+<p>この場合、<code>j,k</code>の組み合わせは時間計算量<code>O(M^2)</code>で求めることができますが、<code>j</code>を固定したときの組み合わせの個数は、<code>C[j]*(C[j+1] + C[j+2] + .. + C[M-1])</code>となり、<code>C[j]</code>に<code>j</code>以降の累積和をかけたものであることがわかります。
 そのため、<code>C[k]</code>の累積和をあらかじめ求めておくことで、数え上げの時間計算量を<code>O(M)</code>に改善することができます。</p>
 <pre><code class="language-csharp line-numbers">for (var k = M - 1; k &gt;= 0; k--)
 {
