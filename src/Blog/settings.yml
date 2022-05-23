@@ -1,5 +1,5 @@
 InputPaths: ../../input
-Host: aconcavy.github.io/blog
+Host: blog.aconcavy.dev
 LinksUseHttps: true
 LinkLowercase: true
 UseCache: false
