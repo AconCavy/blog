@@ -4,24 +4,26 @@ ArchiveOrderKey: Published
 ArchiveOrderDescending: true
 ---
 
-@foreach (var group in Document
-    .GetChildren()
-    .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
-    .OrderByDescending(x => x.Key))
-{
-    <h1 class="group-year m-4">@group.Key</h1>
-    foreach (var post in group)
+<div class="p-posts">
+    @foreach (var group in Document
+        .GetChildren()
+        .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
+        .OrderByDescending(x => x.Key))
     {
-        <div class="card shadow-sm c-post-preview">
-            <div class="card-body p-4">
-                <h3 class="card-title">@Html.DocumentLink(post)</h3>
-                @if (post.ContainsKey("Lead"))
-                {
-                    <div class="card-subtitle">@post.GetString("Lead")</div>
-                }
-                <p class="card-text c-post-preview__meta">@post.GetDateTime(WebKeys.Published).ToLongDateString()</p>
+        <h1 class="m-4 p-posts__group">@group.Key</h1>
+        foreach (var post in group)
+        {
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title">@Html.DocumentLink(post)</h3>
+                    @if (post.ContainsKey("Lead"))
+                    {
+                        <div class="card-subtitle">@post.GetString("Lead")</div>
+                    }
+                    <p class="card-text c-post-preview__meta">@post.GetDateTime(WebKeys.Published).ToLongDateString()</p>
+                </div>
             </div>
-        </div>
+        }
+        <hr>
     }
-    <hr>
-}
+</div>
