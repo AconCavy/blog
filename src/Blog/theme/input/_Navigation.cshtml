@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="@Context.GetLink("/")">@Context.GetString("SiteTitle")</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+        <a class="navbar-brand l-navbar__brand" href="@Context.GetLink("/")">@Context.GetString("SiteTitle")</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             @await Html.PartialAsync("_NavBar.cshtml")
