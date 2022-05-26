@@ -1,8 +1,8 @@
 .fab {
-  color: $blue;
+  color: $c-blue;
 
   &:focus,
   &:hover {
-    color: $accent;
+    color: $c-accent;
   }
 }

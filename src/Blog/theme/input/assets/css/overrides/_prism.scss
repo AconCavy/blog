@@ -2,7 +2,7 @@ code,
 pre,
 code[class*=language-],
 pre[class*=language-] {
-  color: $primary;
+  color: $c-primary;
   font-family: $font-family-monospace;
   text-align: left;
   white-space: pre;
@@ -22,7 +22,7 @@ pre[class*=language-] {
 }
 
 :not(pre) > code {
-  color: $pink;
+  color: $c-pink;
   font-weight: 400;
   margin: 0 .25rem;
   padding: 0 .25rem;
@@ -32,8 +32,8 @@ pre[class*=language-] {
 div.code-toolbar > .toolbar > .toolbar-item > a,
 div.code-toolbar > .toolbar > .toolbar-item > button,
 div.code-toolbar > .toolbar > .toolbar-item > span {
-  color: $secondary;
-  background: $backgroundAlt;
+  color: $c-secondary;
+  background: $c-main;
 }
 
 div.code-toolbar > .toolbar > .toolbar-item > a:focus,
@@ -42,7 +42,7 @@ div.code-toolbar > .toolbar > .toolbar-item > button:focus,
 div.code-toolbar > .toolbar > .toolbar-item > button:hover,
 div.code-toolbar > .toolbar > .toolbar-item > span:focus,
 div.code-toolbar > .toolbar > .toolbar-item > span:hover {
-  color: $accent;
+  color: $c-accent;
 }
 
 .token.comment,
@@ -50,25 +50,25 @@ div.code-toolbar > .toolbar > .toolbar-item > span:hover {
 .token.cdata,
 .token.doctype,
 .token.prolog {
-  color: $secondary;
+  color: $c-secondary;
 }
 
 .token.operator,
 .token.punctuation {
-  color: $cyan;
+  color: $c-cyan;
 }
 
 .token.function-name,
 .token.function {
-  color: $blue;
+  color: $c-blue;
 }
 
 .token.boolean {
-  color: $pink;
+  color: $c-pink;
 }
 
 .token.number {
-  color: $orange;
+  color: $c-orange;
 }
 
 .token.attr-name,
@@ -79,7 +79,7 @@ div.code-toolbar > .toolbar > .toolbar-item > span:hover {
 .token.symbol,
 .token.deleted,
 .token.tag {
-  color: $yellow;
+  color: $c-yellow;
 }
 
 .token.atrule,
@@ -87,7 +87,7 @@ div.code-toolbar > .toolbar > .toolbar-item > span:hover {
 .token.important,
 .token.keyword,
 .token.selector {
-  color: $purple;
+  color: $c-purple;
 }
 
 .token.attr-value,
@@ -97,5 +97,5 @@ div.code-toolbar > .toolbar > .toolbar-item > span:hover {
 .token.variable,
 .token.entity,
 .token.url {
-  color: $green;
+  color: $c-green;
 }
