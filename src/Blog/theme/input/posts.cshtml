@@ -12,14 +12,14 @@ ArchiveOrderDescending: true
     <h1 class="group-year m-4">@group.Key</h1>
     foreach (var post in group)
     {
-        <div class="card shadow-sm">
+        <div class="card shadow-sm c-post-preview">
             <div class="card-body p-4">
                 <h3 class="card-title">@Html.DocumentLink(post)</h3>
                 @if (post.ContainsKey("Lead"))
                 {
                     <div class="card-subtitle">@post.GetString("Lead")</div>
                 }
-                <p class="card-text post-meta">@post.GetDateTime(WebKeys.Published).ToLongDateString()</p>
+                <p class="card-text c-post-preview__meta">@post.GetDateTime(WebKeys.Published).ToLongDateString()</p>
             </div>
         </div>
     }

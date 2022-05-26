@@ -39,26 +39,8 @@
 
 .c-post-preview {
   background-color: $c-main;
-
-  &__link {
-    color: $c-primary;
-
-    &:focus,
-    &:hover {
-      color: $c-accent;
-    }
-  }
-
+  
   &__meta {
     color: $c-secondary;
-  }
-
-  &__meta-link {
-    color: $c-secondary;
-
-    &:focus,
-    &:hover {
-      color: $c-accent;
-    }
   }
 }
