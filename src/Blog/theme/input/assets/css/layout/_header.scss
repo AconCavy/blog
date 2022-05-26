@@ -1,0 +1,27 @@
+.l-header {
+
+  &__inner {
+    margin: 4.5rem 0 1rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    &__inner {
+      margin: 6rem 0 2rem;
+    }
+  }
+
+  &__heading {
+    color: $c-primary;
+    text-align: center;
+  }
+
+  &__subheading {
+    font-weight: 300;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .l-header {
+    margin: 6rem 0 2rem;
+  }
+}

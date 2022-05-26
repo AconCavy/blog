@@ -1,23 +1,26 @@
 @{
     var description = Document.WithoutSettings().GetString("Lead") ?? Document.WithoutSettings().GetString(WebKeys.Description);
-    var title = Document.GetString("Title") ?? Document.GetString("SiteTitle");
+    var title = Document.GetString("Title") ?? "Home";
     var isPost = Document.GetBool("IsPost") && title != "Tags" && title != "Archive";
 }
-<header>
-    @if (!isPost)
-    {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-heading">
-                        <h1>@title</h1>
-                        @if (!string.IsNullOrEmpty(description))
-                        {
-                            <h2 class="subheading">@description</h2>
-                        }
+
+<header class="l-header">
+    <div class="l-header__inner">
+        @if (!isPost)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="l-header__heading">
+                            <h1>@title</h1>
+                            @if (!string.IsNullOrEmpty(description))
+                            {
+                                <h2 class="l-header__subheading">@description</h2>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </header>
