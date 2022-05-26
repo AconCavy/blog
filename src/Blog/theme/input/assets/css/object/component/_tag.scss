@@ -10,17 +10,17 @@
     color: $c-accent;
   }
 
-  &__light {
+  &--light {
     background-color: $c-purple;
     color: $c-base;
   }
 
-  &__dark {
+  &--dark {
     background-color: $c-base;
     color: $c-purple;
   }
   
-  &__select {
+  &--select {
     background-color: $c-base;
     color: $c-accent;
   }
