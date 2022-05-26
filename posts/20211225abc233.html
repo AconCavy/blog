@@ -33,16 +33,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">acon.log</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts</a>
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
     </li>
 </ul>
 
@@ -51,37 +51,43 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </nav>
 
 
-<header>
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
 </header>
 
 
-<div class="container">
-    <div class="row">
-        <div id="content">
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC233</h1>
 
-                <div class="card shadow-sm">
-                    <div class="card-body p-md-5">
-                        
-<div class="post-header mb-5">
-    <h1 class="card-title post-title">ABC233</h1>
-
-    <div class="card-text post-meta">
-        Published on Saturday, 25 December 2021
-    </div>
-    <div class="card-text post-meta">
-        Updated on Saturday, 25 December 2021
-    </div>
-
-        <div class="mt-3 mb-4">
-                <a href="/tags/atcoder" class="badge badge-light"> atcoder</a>
-                <a href="/tags/csharp" class="badge badge-light"> csharp</a>
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 25 December 2021
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 25 December 2021
         </div>
 
-    <hr>
-</div>
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
 
-                        <div class="post-body">
-                            <h2 id="section">はじめに</h2>
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
 <p>AtCoder Beginner Contest 233の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <h2 id="section-1">コンテスト</h2>
@@ -204,47 +210,51 @@ else
 }
 </code></pre>
 
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20211225abc233" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
                         </div>
-                        <div class="post-footer mt-5">
-    <div class="share">
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20211225abc233" data-size="large">
-            Tweet
-        </a>
-    </div>
-
-    <hr>
-
-    <div class="row justify-content-center">
-        <div class="col-md-3 mt-3">
-            <img class="rounded-circle" src="/assets/images/icon.svg" alt="icon">
-        </div>
-        <div class="col-md-3 mt-3">
-            <h5 class="card-text">AconCavy</h5>
-            <div class="card-text">C#が好きなひきこもり</div>
-            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
-            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+                    </article>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
-                    </div>
-                </div>
-
-        </div>
-    </div>
-</div>
-
-<footer>
+<footer class="l-footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright &#xA9; 2020-2022 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>

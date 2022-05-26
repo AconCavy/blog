@@ -33,16 +33,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">acon.log</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts</a>
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
     </li>
 </ul>
 
@@ -51,36 +51,42 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </nav>
 
 
-<header>
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
 </header>
 
 
-<div class="container">
-    <div class="row">
-        <div id="content">
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</h1>
 
-                <div class="card shadow-sm">
-                    <div class="card-body p-md-5">
-                        
-<div class="post-header mb-5">
-    <h1 class="card-title post-title">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</h1>
-
-    <div class="card-text post-meta">
-        Published on Tuesday, 02 March 2021
-    </div>
-    <div class="card-text post-meta">
-        Updated on Tuesday, 02 March 2021
-    </div>
-
-        <div class="mt-3 mb-4">
-                <a href="/tags/csharp" class="badge badge-light"> csharp</a>
+        <div class="card-text c-post-header__meta">
+            Published on Tuesday, 02 March 2021
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Tuesday, 02 March 2021
         </div>
 
-    <hr>
-</div>
+            <div class="mt-3 mb-4">
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
 
-                        <div class="post-body">
-                            <h2 id="section">はじめに</h2>
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
 <p><code>if</code> を使わずにじゃんけんします。
 じゃんけんの結果はC#8の機能の <a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/operators/switch-expression">switch式</a> を使って受け取ります。</p>
 <p>先駆者様</p>
@@ -160,47 +166,51 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p><img src="assets/images/rps.webp" class="img-fluid" alt="rps.png"></p>
 <p><a href="https://sharplab.io/#v2:C4LgTgrgdgPgAgJgIwFgBQcAMACOSAsA3OlrkgHQAyAllAI7FrpQCGAtgKYDOADiwMYdsAZRZQAJgCMA9gA90Ab3TYVuBAGZlqpWlV61CLfuw7jx/tKhdgZHOLAsA7tgC82AESAhBkAiDIGUGd4xm+hZWNng4ADbSXEJuXoBWDID6DIB2DIAFMYCKDAFGQdgh1rbYjrSuHp5JyYC7SoCGDFlMujkqAG4sYNhsLDwlUBzOACLU/MDUli0AngA8AEo8XOQAEmLiADS2AHzZQaYN+gDa07MLEuST0vwA1gC6Je6AUOTuK3sz84vkAAodHGBXcYC8G4AJu/dsI8Di9hPxqFwuNIwFxvh5ADDk7g2ZgAvoFtgB6DHYZqtAAWiy4XR6OyuCmw+2eRxO5xWlMO4jeHzAdKeDPIYIhUJh2DRyOMuOwBIkRLcAFEoBA2OQAOIcYAANRYEQg3AAFMBRjwONIAGZq+mLACURvIAGEWNYpmzFqs1aaACrSACCYAco3tjH5+l10I4Ajx2DVgukjig2GKwvEXCN3r0vrA/v4geDLWw0h4PEsHCgNkjhNj9QaW22qixOLTia4EAiNjclIAQixgMAIhw1aGoCsM1nurnHdJhMAwLQAOaeuNmQVVmt1ilPJsttsdsPdzPZ/vYLhFYDJyfGEul/SUybcWfkXoOZwuVbYexOJb7nIns+1qjRWK3qIxR9Fo96F9qzfAB1Yob0KWhf3/YwAH1XFvYA8TAUNsG6ZxXVHKUc2AAB5CBcN1SYxFHDgxVkQQeCGSx7SfPQ+T/Us8AATjVAASdwFHaHgdk7C4URxIlOI6Hj1z7YA+JAEwZ1rFF3CNdEGhRb0lL/FTsjgdQyAANjUecuGyQ89A07AcylbAGW9QyzBpM4oO2d5tRZJ9OUhaF9IY1Q1I8lRjNMtgKVfYBLKfS8HyfSgPzshpQKgZT0G9Yy8B008gJsRdW3bBl01XczFnTUTsMLTYn2nQKSjVNVaGAI0ew3GwAFogyqmqw2wABqbB1CNbAAFJOoUnI4AAdiDFLZyNaTgAGujshUlEgA===">sharplabでの実行結果</a></p>
 
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20210302rockpaperscissors" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
                         </div>
-                        <div class="post-footer mt-5">
-    <div class="share">
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20210302rockpaperscissors" data-size="large">
-            Tweet
-        </a>
-    </div>
-
-    <hr>
-
-    <div class="row justify-content-center">
-        <div class="col-md-3 mt-3">
-            <img class="rounded-circle" src="/assets/images/icon.svg" alt="icon">
-        </div>
-        <div class="col-md-3 mt-3">
-            <h5 class="card-text">AconCavy</h5>
-            <div class="card-text">C#が好きなひきこもり</div>
-            <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
-            <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
+                    </article>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
-                    </div>
-                </div>
-
-        </div>
-    </div>
-</div>
-
-<footer>
+<footer class="l-footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright &#xA9; 2020-2022 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>

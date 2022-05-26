@@ -33,16 +33,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">acon.log</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts</a>
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
     </li>
 </ul>
 
@@ -51,141 +51,148 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </nav>
 
 
-<header>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-heading">
-                        <h1>acon.log</h1>
+
+<header class="l-header">
+    <div class="l-header__inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="l-header__heading">
+                            <h1>Home</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 </header>
 
 
-<div class="container">
-    <div class="row">
-        <div id="content">
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
 
+<div class="p-index">
+    <div class="container-sm-height">
+        <div class="row row-sm-height">
+            <div class="col-md-8 col-sm-height">
+                <div class="p-index-posts mb-4">
+                    
 
-<div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-md-8 col-sm-height">
-            
-
-<div class="card shadow-sm">
+<div class="card shadow-sm c-post-preview">
     <div class="card-body p-4">
         <h2 class="card-title"><a href="/posts/20201129dotnettemplate">dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;</a></h2>
-        <p class="post-meta">Sunday, 29 November 2020</p>
+        <p class="post-meta c-post-preview__meta">Sunday, 29 November 2020</p>
             <div class="card-text"><p><a href="https://github.com/AconCavy/CompetitiveProgrammingTemplateCSharp">競プロ用のプロジェクトテンプレート</a>を整備したので、<code>dotnet new</code>のカスタムテンプレート作成の備忘録です。</p></div>
             <a class="card-link" href="/posts/20201129dotnettemplate">Read more...</a>
     </div>
 </div>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm c-post-preview">
     <div class="card-body p-4">
         <h2 class="card-title"><a href="/posts/20201119statiqextension">Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;</a></h2>
-        <p class="post-meta">Thursday, 19 November 2020</p>
+        <p class="post-meta c-post-preview__meta">Thursday, 19 November 2020</p>
             <div class="card-text"><p>Statiqがmarkdownから生成するhtmlの任意のタグにクラスを追加する方法の備忘録</p></div>
             <a class="card-link" href="/posts/20201119statiqextension">Read more...</a>
     </div>
 </div>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm c-post-preview">
     <div class="card-body p-4">
         <h2 class="card-title"><a href="/posts/20201119forbenchmark">.NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;</a></h2>
-        <p class="post-meta">Thursday, 19 November 2020</p>
+        <p class="post-meta c-post-preview__meta">Thursday, 19 November 2020</p>
             <div class="card-text"><p>.NET 5でいろいろなパフォーマンスが向上したらしいので、1次元配列、2次元配列、2次元ジャグ配列、3次元配列、3次元配列のfor-loopのベンチマークを取ってみた。</p></div>
             <a class="card-link" href="/posts/20201119forbenchmark">Read more...</a>
     </div>
 </div>
 
 
-    <div class="post-nav">
-        <div class="float-start">
-                <a class="btn btn-primary" href="/page/9" role="button">
-                    <i class="fas fa-angle-double-left"></i>
-                    Newer
-                </a>
-        </div>
-        <div class="float-end">
-                <a class="btn btn-primary" href="/page/11" role="button">
-                    Older
-                    <i class="fas fa-angle-double-right"></i>
-                </a>
-        </div>
-        <div class="clearfix"></div>
+    <div class="float-start">
+            <a class="btn btn-primary" href="/page/9" role="button">
+                <i class="fas fa-angle-double-left"></i>
+                Newer
+            </a>
     </div>
+    <div class="float-end">
+            <a class="btn btn-primary" href="/page/11" role="button">
+                Older
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+    </div>
+    <div class="clearfix"></div>
 
-        </div>
-        <div class="col-md-4 col-sm-height">
-            <div class="about">
-    <div class="card justify-content-center">
-        <div class="card-body p-4">
-            <img class="card-img-top rounded" src="/assets/images/icon.svg" alt="icon">
-
-            <hr>
-
-            <div class="card-text">
-                C#が好きなひきこもり
+                </div>
             </div>
 
-            <div class="col">
-                <a class="nav-link fab fa-twitter fa-2x" href="https://twitter.com/AconCavy"></a>
-                <a class="nav-link fab fa-github fa-2x" href="https://github.com/AconCavy"></a>
-            </div>
+            <div class="col-md-4 col-sm-height">
+                <div class="p-index-about mb-4">
+                    <div class="card justify-content-center">
+                        <div class="card-body p-4">
+                            <img class="card-img-top rounded p-index-about__img c-icon-self--lg" src="/assets/images/icon.svg" alt="icon">
 
-            <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FAconCavy" alt="">
-        </div>
-    </div>
-</div>
+                            <hr>
 
-
-            <div class="card">
-                <div class="card-body p-4">
-                                <a href="/tags/csharp" class="badge badge-light"> csharp (25)</a>
-                                <a href="/tags/atcoder" class="badge badge-light"> atcoder (23)</a>
-                                <a href="/tags/dotnet" class="badge badge-light"> dotnet (4)</a>
-                                <a href="/tags/github-actions" class="badge badge-light"> GitHub Actions (4)</a>
-                                <a href="/tags/statiq" class="badge badge-light"> Statiq (2)</a>
-                                <a href="/tags/github-pages" class="badge badge-light"> Github Pages (2)</a>
-                                <a href="/tags/nuget" class="badge badge-light"> NuGet (1)</a>
-                                <a href="/tags/unity" class="badge badge-light"> Unity (1)</a>
-                                <a href="/tags/magiconion" class="badge badge-light"> MagicOnion (1)</a>
-                                <a href="/tags/messagepack" class="badge badge-light"> MessagePack (1)</a>
-                                <a href="/tags/git" class="badge badge-light"> Git (1)</a>
-                                <a href="/tags/github" class="badge badge-light"> GitHub (1)</a>
-                                <a href="/tags/wyam" class="badge badge-light"> Wyam (1)</a>
-                            <div class="mt-4">
-                                <div class="float-sm-right">
-                                    <a class="btn btn-primary" href="/tags" role="button">
-                                        All Tags <i class="fas fa-angle-double-right"></i>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
+                            <div class="card-text">
+                                C#が好きなひきこもり
                             </div>
+
+                            <div class="col">
+                                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+                            </div>
+
+                            <img class="p-index-about__img" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FAconCavy" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-index-tags mb-4">
+                    <div class="card">
+                        <div class="card-body p-4">
+                                        <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp (25)</a>
+                                        <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder (23)</a>
+                                        <a href="/tags/dotnet" class="badge badge-light c-tag--light"> dotnet (4)</a>
+                                        <a href="/tags/github-actions" class="badge badge-light c-tag--light"> GitHub Actions (4)</a>
+                                        <a href="/tags/statiq" class="badge badge-light c-tag--light"> Statiq (2)</a>
+                                        <a href="/tags/github-pages" class="badge badge-light c-tag--light"> Github Pages (2)</a>
+                                        <a href="/tags/nuget" class="badge badge-light c-tag--light"> NuGet (1)</a>
+                                        <a href="/tags/unity" class="badge badge-light c-tag--light"> Unity (1)</a>
+                                        <a href="/tags/magiconion" class="badge badge-light c-tag--light"> MagicOnion (1)</a>
+                                        <a href="/tags/messagepack" class="badge badge-light c-tag--light"> MessagePack (1)</a>
+                                        <a href="/tags/git" class="badge badge-light c-tag--light"> Git (1)</a>
+                                        <a href="/tags/github" class="badge badge-light c-tag--light"> GitHub (1)</a>
+                                        <a href="/tags/wyam" class="badge badge-light c-tag--light"> Wyam (1)</a>
+                                    <div class="mt-4">
+                                        <div class="float-sm-right">
+                                            <a class="btn btn-primary" href="/tags" role="button">
+                                                All Tags <i class="fas fa-angle-double-right"></i>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+            </div>
         </div>
     </div>
-</div>
+</main>
 
-<footer>
+<footer class="l-footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright &#xA9; 2020-2022 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>

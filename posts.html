@@ -33,16 +33,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">acon.log</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts</a>
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
     </li>
 </ul>
 
@@ -51,238 +51,243 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </nav>
 
 
-<header>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-heading">
-                        <h1>Posts</h1>
+
+<header class="l-header">
+    <div class="l-header__inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="l-header__heading">
+                            <h1>Posts</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 </header>
 
 
-<div class="container">
-    <div class="row">
-        <div id="content">
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
 
-
-    <h1 class="group-year m-4">2022</h1>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220521abc252">ABC252</a></h3>
-                <p class="card-text post-meta">Saturday, 21 May 2022</p>
+<div class="p-posts">
+        <h1 class="m-4 p-posts__group">2022</h1>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220521abc252">ABC252</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 21 May 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220514abc251">ABC251</a></h3>
-                <p class="card-text post-meta">Saturday, 14 May 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220514abc251">ABC251</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 14 May 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220508abc250">ABC250</a></h3>
-                <p class="card-text post-meta">Sunday, 08 May 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220508abc250">ABC250</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 08 May 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220423abc249">ABC249</a></h3>
-                <p class="card-text post-meta">Saturday, 23 April 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220423abc249">ABC249</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 23 April 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220417abc248">ABC248</a></h3>
-                <p class="card-text post-meta">Sunday, 17 April 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220417abc248">ABC248</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 17 April 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220410abc247">ABC247</a></h3>
-                <p class="card-text post-meta">Sunday, 10 April 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220410abc247">ABC247</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 10 April 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220402abc246">ABC246</a></h3>
-                <p class="card-text post-meta">Saturday, 02 April 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220402abc246">ABC246</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 02 April 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220326abc245">ABC245</a></h3>
-                <p class="card-text post-meta">Sunday, 27 March 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220326abc245">ABC245</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 27 March 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220320abc244">ABC244</a></h3>
-                <p class="card-text post-meta">Sunday, 20 March 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220320abc244">ABC244</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 20 March 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220312abc243">ABC243</a></h3>
-                <p class="card-text post-meta">Saturday, 12 March 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220312abc243">ABC243</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 12 March 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220305abc242">ABC242</a></h3>
-                <p class="card-text post-meta">Saturday, 05 March 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220305abc242">ABC242</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 05 March 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220226abc241">ABC241</a></h3>
-                <p class="card-text post-meta">Saturday, 26 February 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220226abc241">ABC241</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 26 February 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220220abc240">ABC240</a></h3>
-                <p class="card-text post-meta">Sunday, 20 February 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220220abc240">ABC240</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 20 February 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220219abc239">ABC239</a></h3>
-                <p class="card-text post-meta">Saturday, 19 February 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220219abc239">ABC239</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 19 February 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220205abc238">ABC238</a></h3>
-                <p class="card-text post-meta">Saturday, 05 February 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220205abc238">ABC238</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 05 February 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220130abc237">ABC237</a></h3>
-                <p class="card-text post-meta">Sunday, 30 January 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220130abc237">ABC237</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 30 January 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220123abc236">ABC236</a></h3>
-                <p class="card-text post-meta">Sunday, 23 January 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220123abc236">ABC236</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 23 January 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220115abc235">ABC235</a></h3>
-                <p class="card-text post-meta">Saturday, 15 January 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220115abc235">ABC235</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 15 January 2022</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20220108abc234">ABC234</a></h3>
-                <p class="card-text post-meta">Saturday, 08 January 2022</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20220108abc234">ABC234</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 08 January 2022</p>
+                </div>
             </div>
-        </div>
-    <hr>
-    <h1 class="group-year m-4">2021</h1>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20211225abc233">ABC233</a></h3>
-                <p class="card-text post-meta">Saturday, 25 December 2021</p>
+        <hr>
+        <h1 class="m-4 p-posts__group">2021</h1>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20211225abc233">ABC233</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 25 December 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20211224abc230">ABC230</a></h3>
-                <p class="card-text post-meta">Friday, 24 December 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20211224abc230">ABC230</a></h3>
+                    <p class="card-text c-post-preview__meta">Friday, 24 December 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20211222abc231">ABC231</a></h3>
-                <p class="card-text post-meta">Wednesday, 22 December 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20211222abc231">ABC231</a></h3>
+                    <p class="card-text c-post-preview__meta">Wednesday, 22 December 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20211220abc232">ABC232</a></h3>
-                <p class="card-text post-meta">Monday, 20 December 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20211220abc232">ABC232</a></h3>
+                    <p class="card-text c-post-preview__meta">Monday, 20 December 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20210302rockpaperscissors">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</a></h3>
-                <p class="card-text post-meta">Tuesday, 02 March 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20210302rockpaperscissors">&#x3058;&#x3083;&#x3093;&#x3051;&#x3093;</a></h3>
+                    <p class="card-text c-post-preview__meta">Tuesday, 02 March 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20210121uploadnuget">GitHub Actions&#x304B;&#x3089;NuGet&#x306B;&#x30D1;&#x30C3;&#x30B1;&#x30FC;&#x30B8;&#x3092;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;</a></h3>
-                <p class="card-text post-meta">Thursday, 21 January 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20210121uploadnuget">GitHub Actions&#x304B;&#x3089;NuGet&#x306B;&#x30D1;&#x30C3;&#x30B1;&#x30FC;&#x30B8;&#x3092;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;</a></h3>
+                    <p class="card-text c-post-preview__meta">Thursday, 21 January 2021</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20210103magiconion">MagicOnion&#x306B;&#x5165;&#x9580;&#x3057;&#x305F;</a></h3>
-                <p class="card-text post-meta">Sunday, 03 January 2021</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20210103magiconion">MagicOnion&#x306B;&#x5165;&#x9580;&#x3057;&#x305F;</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 03 January 2021</p>
+                </div>
             </div>
-        </div>
-    <hr>
-    <h1 class="group-year m-4">2020</h1>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20201212createrepository">&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x3068;&#x304D;&#x306B;&#x3084;&#x3063;&#x3066;&#x304A;&#x304D;&#x305F;&#x3044;&#x3053;&#x3068;</a></h3>
-                <p class="card-text post-meta">Saturday, 12 December 2020</p>
+        <hr>
+        <h1 class="m-4 p-posts__group">2020</h1>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20201212createrepository">&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x3068;&#x304D;&#x306B;&#x3084;&#x3063;&#x3066;&#x304A;&#x304D;&#x305F;&#x3044;&#x3053;&#x3068;</a></h3>
+                    <p class="card-text c-post-preview__meta">Saturday, 12 December 2020</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20201129dotnettemplate">dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;</a></h3>
-                <p class="card-text post-meta">Sunday, 29 November 2020</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20201129dotnettemplate">dotnet new&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30E0;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 29 November 2020</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20201119statiqextension">Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;</a></h3>
-                <p class="card-text post-meta">Thursday, 19 November 2020</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20201119statiqextension">Statiq&#x304C;markdown&#x304B;&#x3089;&#x751F;&#x6210;&#x3059;&#x308B;html&#x306E;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;</a></h3>
+                    <p class="card-text c-post-preview__meta">Thursday, 19 November 2020</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20201119forbenchmark">.NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;</a></h3>
-                <p class="card-text post-meta">Thursday, 19 November 2020</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20201119forbenchmark">.NET Core 3.1&#x3068;.NET 5&#x306E;for-loop&#x306E;&#x901F;&#x5EA6;&#x6BD4;&#x8F03;</a></h3>
+                    <p class="card-text c-post-preview__meta">Thursday, 19 November 2020</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20201108statiqblog">&#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;</a></h3>
-                <p class="card-text post-meta">Sunday, 08 November 2020</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20201108statiqblog">&#x30D6;&#x30ED;&#x30B0;&#x306E;&#x30EC;&#x30A4;&#x30A2;&#x30A6;&#x30C8;&#x5909;&#x66F4;&#x3068;Statiq&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;</a></h3>
+                    <p class="card-text c-post-preview__meta">Sunday, 08 November 2020</p>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title"><a href="/posts/20200819wyamblog">Wyam&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;&#x3068;GitHub Actions&#x3092;&#x4F7F;&#x3063;&#x305F;GitHub Pages&#x3078;&#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;</a></h3>
-                <p class="card-text post-meta">Wednesday, 19 August 2020</p>
+            <div class="card shadow-sm c-post-preview">
+                <div class="card-body p-4">
+                    <h3 class="card-title"><a href="/posts/20200819wyamblog">Wyam&#x3092;&#x4F7F;&#x3063;&#x305F;&#x9759;&#x7684;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x751F;&#x6210;&#x3068;GitHub Actions&#x3092;&#x4F7F;&#x3063;&#x305F;GitHub Pages&#x3078;&#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;</a></h3>
+                    <p class="card-text c-post-preview__meta">Wednesday, 19 August 2020</p>
+                </div>
             </div>
-        </div>
-    <hr>
-
+        <hr>
+</div>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
-<footer>
+<footer class="l-footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright &#xA9; 2020-2022 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>

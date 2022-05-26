@@ -33,16 +33,16 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">acon.log</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts</a>
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
     </li>
 </ul>
 
@@ -51,53 +51,58 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </nav>
 
 
-<header>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-heading">
-                        <h1>Tags</h1>
+
+<header class="l-header">
+    <div class="l-header__inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="l-header__heading">
+                            <h1>Tags</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 </header>
 
 
-<div class="container">
-    <div class="row">
-        <div id="content">
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
 
-
-        <a role="button" href="/tags/csharp" class="badge badge-light"> csharp (25)</a>
-        <a role="button" href="/tags/atcoder" class="badge badge-light"> atcoder (23)</a>
-        <a role="button" href="/tags/dotnet" class="badge badge-light"> dotnet (4)</a>
-        <a role="button" href="/tags/github-actions" class="badge badge-light"> GitHub Actions (4)</a>
-        <a role="button" href="/tags/statiq" class="badge badge-light"> Statiq (2)</a>
-        <a role="button" href="/tags/github-pages" class="badge badge-light"> Github Pages (2)</a>
-        <a role="button" href="/tags/nuget" class="badge badge-light"> NuGet (1)</a>
-        <a role="button" href="/tags/unity" class="badge badge-light"> Unity (1)</a>
-        <a role="button" href="/tags/magiconion" class="badge badge-light"> MagicOnion (1)</a>
-        <a role="button" href="/tags/messagepack" class="badge badge-light"> MessagePack (1)</a>
-        <a role="button" href="/tags/git" class="badge badge-light"> Git (1)</a>
-        <a role="button" href="/tags/github" class="badge badge-light"> GitHub (1)</a>
-        <a role="button" href="/tags/wyam" class="badge badge-light"> Wyam (1)</a>
-
+<div class="p-tags">
+            <a role="button" href="/tags/csharp" class="badge badge-light c-tag--light"> csharp (25)</a>
+            <a role="button" href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder (23)</a>
+            <a role="button" href="/tags/dotnet" class="badge badge-light c-tag--light"> dotnet (4)</a>
+            <a role="button" href="/tags/github-actions" class="badge badge-light c-tag--light"> GitHub Actions (4)</a>
+            <a role="button" href="/tags/statiq" class="badge badge-light c-tag--light"> Statiq (2)</a>
+            <a role="button" href="/tags/github-pages" class="badge badge-light c-tag--light"> Github Pages (2)</a>
+            <a role="button" href="/tags/nuget" class="badge badge-light c-tag--light"> NuGet (1)</a>
+            <a role="button" href="/tags/unity" class="badge badge-light c-tag--light"> Unity (1)</a>
+            <a role="button" href="/tags/magiconion" class="badge badge-light c-tag--light"> MagicOnion (1)</a>
+            <a role="button" href="/tags/messagepack" class="badge badge-light c-tag--light"> MessagePack (1)</a>
+            <a role="button" href="/tags/git" class="badge badge-light c-tag--light"> Git (1)</a>
+            <a role="button" href="/tags/github" class="badge badge-light c-tag--light"> GitHub (1)</a>
+            <a role="button" href="/tags/wyam" class="badge badge-light c-tag--light"> Wyam (1)</a>
+</div>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
-<footer>
+<footer class="l-footer">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <p>Copyright &#xA9; 2020-2022 AconCavy</p>
                 <ul class="list-inline text-center small">
                         <li class="list-inline-item">
-                            <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
                         </li>
                 </ul>
             </div>
