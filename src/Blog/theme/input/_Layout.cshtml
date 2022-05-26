@@ -35,30 +35,32 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
 @await Html.PartialAsync("_Header.cshtml")
 
-<div class="container">
-    <div class="row">
-        <div id="content">
-
-            @if (Document.GetBool("IsPost"))
-            {
-                <div class="card shadow-sm">
-                    <div class="card-body p-md-5">
-                        @await Html.PartialAsync("_PostHeader.cshtml")
-                        <div class="post-body">
-                            @RenderBody()
+<main>
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                @if (Document.GetBool("IsPost"))
+                {
+                    <article>
+                        <div class="card shadow-sm">
+                            <div class="card-body p-md-5">
+                                @await Html.PartialAsync("_PostHeader.cshtml")
+                                <div class="post-body">
+                                    @RenderBody()
+                                </div>
+                                @await Html.PartialAsync("_PostFooter.cshtml")
+                            </div>
                         </div>
-                        @await Html.PartialAsync("_PostFooter.cshtml")
-                    </div>
-                </div>
-            }
-            else
-            {
-                @RenderBody()
-            }
-
+                    </article>
+                }
+                else
+                {
+                    @RenderBody()
+                }
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 @await Html.PartialAsync("_Footer.cshtml")
 
