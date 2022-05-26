@@ -42,10 +42,10 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                 @if (Document.GetBool("IsPost"))
                 {
                     <article>
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm c-post">
                             <div class="card-body p-md-5">
                                 @await Html.PartialAsync("_PostHeader.cshtml")
-                                <div class="post-body">
+                                <div class="c-post-body">
                                     @RenderBody()
                                 </div>
                                 @await Html.PartialAsync("_PostFooter.cshtml")

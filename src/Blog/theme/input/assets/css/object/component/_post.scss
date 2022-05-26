@@ -1,0 +1,64 @@
+.c-post {
+  background-color: $c-main;
+}
+
+.c-post-header {
+  text-align: center;
+
+  &__title {
+  }
+
+  &__description {
+  }
+
+  &__meta {
+    color: $c-secondary;
+  }
+}
+
+.c-post-body {
+  text-align: start;
+
+  h1, h2, h3 {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.c-post-footer {
+  text-align: center;
+
+  &__share {
+    text-align: start;
+  }
+
+  &__img {
+    width: 6rem;
+  }
+}
+
+.c-post-preview {
+  background-color: $c-main;
+
+  &__link {
+    color: $c-primary;
+
+    &:focus,
+    &:hover {
+      color: $c-accent;
+    }
+  }
+
+  &__meta {
+    color: $c-secondary;
+  }
+
+  &__meta-link {
+    color: $c-secondary;
+
+    &:focus,
+    &:hover {
+      color: $c-accent;
+    }
+  }
+}

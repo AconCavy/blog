@@ -5,17 +5,17 @@
 }
 
 <header>
-    <div class="post-header mb-5">
-        <h1 class="card-title post-title">@title</h1>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">@title</h1>
         @if (!string.IsNullOrEmpty(description))
         {
-            <h2 class="card-text">@description</h2>
+            <h2 class="card-text c-post-header__description">@description</h2>
         }
 
-        <div class="card-text post-meta">
+        <div class="card-text c-post-header__meta">
             Published on @Document.GetDateTime(WebKeys.Published).ToLongDateString()
         </div>
-        <div class="card-text post-meta">
+        <div class="card-text c-post-header__meta">
             Updated on @Document.GetDateTime(WebKeys.Updated).ToLongDateString()
         </div>
 
