@@ -1,0 +1,15 @@
+.p-index {
+  &-posts {
+  }
+  
+  &-about {
+    text-align: center;
+
+    &__img {
+      display: inline-block;
+    }
+  }
+  
+  &-tags {
+  }
+}

@@ -9,36 +9,62 @@ ArchiveOrderDescending: true
 ArchiveTitle: => GetString("Title")
 ---
 
-<div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-md-8 col-sm-height">
-            @await Html.PartialAsync("_Posts.cshtml", Document)
-        </div>
-        <div class="col-md-4 col-sm-height">
-            @await Html.PartialAsync("_About.cshtml")
+<div class="p-index">
+    <div class="container-sm-height">
+        <div class="row row-sm-height">
+            <div class="col-md-8 col-sm-height">
+                <div class="p-index-posts mb-4">
+                    @await Html.PartialAsync("_Posts.cshtml", Document)
+                </div>
+            </div>
 
-            <div class="card">
-                <div class="card-body p-4">
-                    @{
-                        var tags = Outputs.Get("tags.html")?.GetChildren().OrderByDescending(x =>
-                            x.GetChildren().Count).ToArray() ?? Array.Empty<IDocument>();
-                        if (tags.Any())
-                        {
-                            @foreach (var tag in tags)
-                            {
-                                <a href="@Context.GetLink(tag)" class="badge badge-light c-tag--light"> @tag.GetTitle() (@tag.GetChildren().Count.ToString())</a>
-                            }
-                            <div class="mt-4">
-                                <div class="float-sm-right">
-                                    <a class="btn btn-primary" href="@Context.GetLink(Outputs.Get("tags.html"))"
-                                       role="button">
-                                        All Tags <i class="fas fa-angle-double-right"></i>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
+            <div class="col-md-4 col-sm-height">
+                <div class="p-index-about mb-4">
+                    <div class="card justify-content-center">
+                        <div class="card-body p-4">
+                            <img class="card-img-top rounded p-index-about__img c-icon-self--lg" src="@Context.GetLink("/assets/images/icon.svg")" alt="icon">
+
+                            <hr/>
+
+                            <div class="card-text">
+                                C#が好きなひきこもり
                             </div>
-                        }
-                    }
+
+                            <div class="col">
+                                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+                            </div>
+
+                            <img class="p-index-about__img" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FAconCavy" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-index-tags mb-4">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            @{
+                                var tags = Outputs.Get("tags.html")?.GetChildren().OrderByDescending(x =>
+                                    x.GetChildren().Count).ToArray() ?? Array.Empty<IDocument>();
+                                if (tags.Any())
+                                {
+                                    @foreach (var tag in tags)
+                                    {
+                                        <a href="@Context.GetLink(tag)" class="badge badge-light c-tag--light"> @tag.GetTitle() (@tag.GetChildren().Count.ToString())</a>
+                                    }
+                                    <div class="mt-4">
+                                        <div class="float-sm-right">
+                                            <a class="btn btn-primary" href="@Context.GetLink(Outputs.Get("tags.html"))"
+                                               role="button">
+                                                All Tags <i class="fas fa-angle-double-right"></i>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
