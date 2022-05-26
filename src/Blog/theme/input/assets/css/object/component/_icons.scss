@@ -1,0 +1,18 @@
+.c-icon-self {
+  &--lg {
+    width: 12rem;
+  }
+
+  &--sm {
+    width: 6rem;
+  }
+}
+
+.c-icon-sns {
+  color: $c-blue;
+
+  &:focus,
+  &:hover {
+    color: $c-accent;
+  }
+}
