@@ -11,33 +11,35 @@ Title: Tags
 ArchiveTitle: => GetString("GroupKey")
 ---
 
-@if (Document.ContainsKey(Keys.GroupKey))
-{
-    <div class="container-sm-height">
-        <div class="row row-sm-height">
-            <div class="col-md-8 col-sm-height">
-                @await Html.PartialAsync("_Posts.cshtml", Document)
-            </div>
-            <div class="col-md-4 col-sm-height">
-                <div class="card">
-                    <div class=" card-body p-4">
-                        @foreach (var tag in OutputPages.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count))
-                        {
-                            var badgeStyle = Document.GetString(Keys.GroupKey).Equals(tag.GetTitle(), StringComparison.OrdinalIgnoreCase) ? "c-tag--select" : "c-tag--light";
-                            var postCount = tag.GetChildren().Count.ToString();
-                            <a href="@Context.GetLink(tag)" class="badge badge-light @badgeStyle"> @tag.GetTitle() (@postCount)</a>
-                        }
+<div class="p-tags">
+    @if (Document.ContainsKey(Keys.GroupKey))
+    {
+        <div class="container-sm-height">
+            <div class="row row-sm-height">
+                <div class="col-md-8 col-sm-height">
+                    @await Html.PartialAsync("_Posts.cshtml", Document)
+                </div>
+                <div class="col-md-4 col-sm-height">
+                    <div class="card">
+                        <div class=" card-body p-4">
+                            @foreach (var tag in OutputPages.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count))
+                            {
+                                var badgeStyle = Document.GetString(Keys.GroupKey).Equals(tag.GetTitle(), StringComparison.OrdinalIgnoreCase) ? "c-tag--select" : "c-tag--light";
+                                var postCount = tag.GetChildren().Count.ToString();
+                                <a href="@Context.GetLink(tag)" class="badge badge-light @badgeStyle"> @tag.GetTitle() (@postCount)</a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
-else
-{
-    @foreach (var tag in Document.GetChildren().OrderByDescending(x => x.GetChildren().Count))
-    {
-        var postCount = tag.GetChildren().Count.ToString();
-        <a role="button" href="@Context.GetLink(tag)" class="badge badge-light c-tag--light"> @tag.GetTitle() (@postCount)</a>
     }
-}
+    else
+    {
+        @foreach (var tag in Document.GetChildren().OrderByDescending(x => x.GetChildren().Count))
+        {
+            var postCount = tag.GetChildren().Count.ToString();
+            <a role="button" href="@Context.GetLink(tag)" class="badge badge-light c-tag--light"> @tag.GetTitle() (@postCount)</a>
+        }
+    }
+</div>
