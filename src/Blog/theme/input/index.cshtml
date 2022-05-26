@@ -26,7 +26,7 @@ ArchiveTitle: => GetString("Title")
                         {
                             @foreach (var tag in tags)
                             {
-                                <a href="@Context.GetLink(tag)" class="badge badge-light"> @tag.GetTitle() (@tag.GetChildren().Count.ToString())</a>
+                                <a href="@Context.GetLink(tag)" class="badge badge-light c-tag__light"> @tag.GetTitle() (@tag.GetChildren().Count.ToString())</a>
                             }
                             <div class="mt-4">
                                 <div class="float-sm-right">

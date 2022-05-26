@@ -23,9 +23,9 @@ ArchiveTitle: => GetString("GroupKey")
                     <div class=" card-body p-4">
                         @foreach (var tag in OutputPages.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count))
                         {
-                            var badgeStyle = Document.GetString(Keys.GroupKey).Equals(tag.GetTitle(), StringComparison.OrdinalIgnoreCase) ? "badge-light select" : "badge-light";
+                            var badgeStyle = Document.GetString(Keys.GroupKey).Equals(tag.GetTitle(), StringComparison.OrdinalIgnoreCase) ? "c-tag__select" : "c-tag__light";
                             var postCount = tag.GetChildren().Count.ToString();
-                            <a href="@Context.GetLink(tag)" class="badge @badgeStyle"> @tag.GetTitle() (@postCount)</a>
+                            <a href="@Context.GetLink(tag)" class="badge badge-light @badgeStyle"> @tag.GetTitle() (@postCount)</a>
                         }
                     </div>
                 </div>
@@ -38,6 +38,6 @@ else
     @foreach (var tag in Document.GetChildren().OrderByDescending(x => x.GetChildren().Count))
     {
         var postCount = tag.GetChildren().Count.ToString();
-        <a role="button" href="@Context.GetLink(tag)" class="badge badge-light"> @tag.GetTitle() (@postCount)</a>
+        <a role="button" href="@Context.GetLink(tag)" class="badge badge-light c-tag__light"> @tag.GetTitle() (@postCount)</a>
     }
 }
