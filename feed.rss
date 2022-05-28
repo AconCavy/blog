@@ -5,8 +5,184 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Thu, 26 May 2022 08:25:54 GMT</pubDate>
-		<lastBuildDate>Thu, 26 May 2022 08:25:54 GMT</lastBuildDate>
+		<pubDate>Sat, 28 May 2022 14:24:31 GMT</pubDate>
+		<lastBuildDate>Sat, 28 May 2022 14:24:31 GMT</lastBuildDate>
+		<item>
+			<title>ABC253</title>
+			<link>https://blog.aconcavy.dev/posts/20220528abc253</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 253の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20220528abc253</guid>
+			<pubDate>Sat, 28 May 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 253の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253"&gt;https://atcoder.jp/contests/abc253&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc253/tasks/abc253_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253/submissions/31997507"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;要素が3つしかないため、3つの値の合計から最大値と最小値を引いた値が中央値として求めることができるので、中央値が&lt;code&gt;B&lt;/code&gt;と一致しているかを判定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var mid = A.Sum() - A.Min() - A.Max();
+    var answer = A[1] == mid ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;;
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc253/tasks/abc253_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253/submissions/32003197"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(h1,w1)&lt;/code&gt;から&lt;code&gt;(h2,w2)&lt;/code&gt;への移動回数は縦横の差分の合計&lt;code&gt;Abs(h2-h1) + Abs(w2-w1)&lt;/code&gt;で求めることができます。&lt;br /&gt;
+2つの&lt;code&gt;o&lt;/code&gt;の位置を取得は、1つ目ならば&lt;code&gt;(h1,w1)&lt;/code&gt;を更新し、2つ目ならば&lt;code&gt;(h2,w2)&lt;/code&gt;を更新するようにフラグなどで管理することで判定できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new string[H];
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;();
+    }
+
+    var (h1, w1) = (0, 0);
+    var (h2, w2) = (0, 0);
+    var ok = false;
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        for (var j = 0; j &amp;lt; W; j++)
+        {
+            if (G[i][j] == '-') continue;
+            if (!ok)
+            {
+                (h1, w1) = (i, j);
+                ok = true;
+            }
+            else
+            {
+                (h2, w2) = (i, j);
+            }
+        }
+    }
+
+    var answer = Math.Abs(h2 - h1) + Math.Abs(w2 - w1);
+    Console.WriteLine(answer);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc253/tasks/abc253_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253/submissions/32010454"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;リストを使って集合の管理をしてしまうと、クエリごとの最悪時間計算量が&lt;code&gt;O(NlogN)&lt;/code&gt;になってしまい、全体で&lt;code&gt;O(QNlogN)&lt;/code&gt;となり、実行時間制限に間に合いません。&lt;br /&gt;
+そこで、ソートされている集合(C#では&lt;code&gt;SortedSet&lt;/code&gt;)等を実際に集合に存在する値に対して使うことで、要素の追加を&lt;code&gt;O(logN)&lt;/code&gt;、最大値の最小値の取得を&lt;code&gt;O(1)&lt;/code&gt;で行うことができ、全体で&lt;code&gt;O(QlogN)&lt;/code&gt;に改善することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
+    var set = new SortedSet&amp;lt;int&amp;gt;();
+    var dict = new Dictionary&amp;lt;int, long&amp;gt;();
+    while (Q-- &amp;gt; 0)
+    {
+        var query = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+        if (query[0] == 1)
+        {
+            var x = query[1];
+            if (!dict.ContainsKey(x)) dict[x] = 0;
+            dict[x]++;
+            set.Add(x);
+        }
+        else if (query[0] == 2)
+        {
+            var (x, c) = (query[1], query[2]);
+            if (!dict.ContainsKey(x)) dict[x] = 0;
+            dict[x] -= Math.Min(dict[x], c);
+            if (dict[x] == 0)
+            {
+                set.Remove(x);
+            }
+        }
+        else
+        {
+            var answer = set.Max - set.Min;
+            Console.WriteLine(answer);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc253/tasks/abc253_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253/submissions/32035460"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc253/submissions/32057974"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N&lt;/code&gt;以下の値を全て捜査してしまうと、時間計算量が&lt;code&gt;O(N)&lt;/code&gt;になってしまい、&lt;code&gt;N=1e9&lt;/code&gt;の場合に間に合いません。
+そこで、&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;までの総和から、&lt;code&gt;A&lt;/code&gt;の倍数の総和と&lt;code&gt;B&lt;/code&gt;の倍数の総和を引き、&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の最小公倍数の総和を足すことで&lt;code&gt;O(logMin(a,b))&lt;/code&gt;で求めることができます。&lt;br /&gt;
+&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;x&lt;/code&gt;までの総和は、&lt;code&gt;F(x) = x * (x+1) / 2&lt;/code&gt;で求められるので、1から&lt;code&gt;N&lt;/code&gt;までの総和は&lt;code&gt;F(N)&lt;/code&gt;で求めることができます。&lt;br /&gt;
+&lt;code&gt;N&lt;/code&gt;以下の&lt;code&gt;X&lt;/code&gt;の倍数の総和は、&lt;code&gt;N&lt;/code&gt;以下に&lt;code&gt;X&lt;/code&gt;の倍数は&lt;code&gt;N/X&lt;/code&gt;個あるため、&lt;code&gt;M=N/X&lt;/code&gt;としたとき、&lt;code&gt;X*F(M)&lt;/code&gt;で求めることができます。
+よって、&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;y&lt;/code&gt;の最小公倍数を&lt;code&gt;LCM(x,y)&lt;/code&gt;としたとき、&lt;code&gt;F(N) - F(N/A)*A - F(N/B)*B + F(N/LCM(A,B))*LCM(A,B)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, A, B) = Scanner.Scan&amp;lt;long, long, long&amp;gt;();
+
+    long F(long x) =&amp;gt; x * (x + 1) / 2;
+    long G(long n, long a, long b)
+    {
+        var result = F(n);
+        result -= a * F(n / a);
+        result -= b * F(n / b);
+        var lcm = Lcm(a, b);
+        result += lcm * F(n / lcm);
+        return result;
+    }
+
+    var answer = G(N, A, B);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc253/tasks/abc253_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc253/submissions/32057606"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;累積和を求めながら動的計画法をすることで求めることができます。
+初期状態として、&lt;code&gt;[1,M]&lt;/code&gt;は各&lt;code&gt;1&lt;/code&gt;になり、&lt;code&gt;i+1&lt;/code&gt;項目への遷移は&lt;code&gt;dp[i][0..j-k] + dp[i][j+k..M]&lt;/code&gt;の総和となります。
+区間和&lt;code&gt;dp[i][0..j-k] + dp[i][j+k..M]&lt;/code&gt;を各&lt;code&gt;j&lt;/code&gt;に対して求めてしまうと、時間計算量が&lt;code&gt;O(M)&lt;/code&gt;かかってしまうので、あらかじめ累積和を取っておくことで、&lt;code&gt;j&lt;/code&gt;ごとに&lt;code&gt;O(1)&lt;/code&gt;で区間和を求めることができます。
+&lt;code&gt;K=0&lt;/code&gt;のときには注意が必要で、&lt;code&gt;dp[i][1..M]&lt;/code&gt;の総和が遷移します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M, K) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var dp = new mint[N + 1, M + 10];
+    for (var j = 1; j &amp;lt;= M; j++)
+    {
+        dp[0, j] = 1;
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var cum = new mint[M + 10];
+        for (var j = 1; j &amp;lt;= M; j++)
+        {
+            cum[j + 1] = cum[j] + dp[i, j];
+        }
+
+        for (var j = 1; j &amp;lt;= M; j++)
+        {
+            if (K &amp;gt; 0)
+            {
+                var l1 = 0;
+                var r1 = Math.Max(0, j - K) + 1;
+                var l2 = Math.Min(M + 1, j + K);
+                var r2 = M + 1;
+                dp[i + 1, j] += cum[r1] - cum[l1] + cum[r2] - cum[l2];
+            }
+            else
+            {
+                dp[i + 1, j] += cum[M + 1];
+            }
+        }
+    }
+
+    mint answer = 0;
+    for (var i = 1; i &amp;lt;= M; i++)
+    {
+        answer += dp[N - 1, i];
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC252</title>
 			<link>https://blog.aconcavy.dev/posts/20220521abc252</link>
@@ -1723,212 +1899,6 @@ for (var i = 0; i &amp;lt; 1 &amp;lt;&amp;lt; N; i++)
 
     answer += min;
 }
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC243</title>
-			<link>https://blog.aconcavy.dev/posts/20220312abc243</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20220312abc243</guid>
-			<pubDate>Sun, 13 Mar 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 243の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc243"&gt;https://atcoder.jp/contests/abc243&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30026790"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;V&lt;/code&gt;ミリリットルを使い切る周を考えるために、1周で使う量である&lt;code&gt;A+B+C&lt;/code&gt;で余りを取ってから考えます。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;残りの量が&lt;code&gt;A&lt;/code&gt;未満ならば、&lt;code&gt;F&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;残りの量が&lt;code&gt;A+B&lt;/code&gt;未満ならば、&lt;code&gt;M&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;それ以外ならば、&lt;code&gt;T&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;が答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (V, A, B, C) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
-V %= A + B + C;
-if (V &amp;lt; A) { Console.WriteLine(&amp;quot;F&amp;quot;); }
-else if (V &amp;lt; A + B) { Console.WriteLine(&amp;quot;M&amp;quot;); }
-else { Console.WriteLine(&amp;quot;T&amp;quot;); }
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30030964"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;あらかじめ&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の要素をキーとして、位置をそれぞれ別の辞書に保持しておきます。
-そして、&lt;code&gt;A&lt;/code&gt;の要素を順番に見ていき、&lt;code&gt;A&lt;/code&gt;の要素が&lt;code&gt;B&lt;/code&gt;の辞書に存在するとき、位置が一致する場合と一致しない場合をそれぞれ数え上げます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-
-var dictA = new Dictionary&amp;lt;int, int&amp;gt;();
-var dictB = new Dictionary&amp;lt;int, int&amp;gt;();
-for (var i = 0; i &amp;lt; N; i++)
-{
-    dictA[A[i]] = i;
-    dictB[B[i]] = i;
-}
-
-var ans1 = 0;
-var ans2 = 0;
-foreach (var a in A)
-{
-    if (dictB.ContainsKey(a))
-    {
-        if (dictA[a] == dictB[a]) ans1++;
-        else ans2++;
-    }
-}
-
-Console.WriteLine(ans1);
-Console.WriteLine(ans2);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30038745"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30081816"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;愚直にシミュレーションしてしまうと実行時間制限に間に合わないので、処理を高速化する必要があります。
-まず、動く方向は左右の2つしかないので、&lt;code&gt;Y&lt;/code&gt;の値が同じ人が衝突する可能性があると考えられます。
-そこで、左に動く人たちと右に動く人たちをそれぞれ&lt;code&gt;Y&lt;/code&gt;ごとに分けて管理することを考えます。
-そして、左に動く人たちと右に動く人たちの&lt;code&gt;Y&lt;/code&gt;が同じとき、右に動く人のうち最も左の位置(&lt;code&gt;RX&lt;/code&gt;)と、左に動く人のうち最も右の位置(&lt;code&gt;LX&lt;/code&gt;)において&lt;code&gt;RX&amp;lt;=LX&lt;/code&gt;が成り立てば、衝突が発生します。
-このことから、&lt;code&gt;Y&lt;/code&gt;の値をキーとして、左に動く人たちの最も右の&lt;code&gt;X&lt;/code&gt;と右に動く人たちの最も左の&lt;code&gt;X&lt;/code&gt;をそれぞれ辞書を作成し、&lt;code&gt;Y&lt;/code&gt;の値につき計算量&lt;code&gt;O(1)&lt;/code&gt;で衝突するかの判定をすることができ、全体で計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var P = new (int X, int Y)[N];
-for (var i = 0; i &amp;lt; N; i++)
-{
-    P[i] = Scanner.Scan&amp;lt;int, int&amp;gt;();
-}
-
-var S = Scanner.Scan&amp;lt;string&amp;gt;();
-var L = new Dictionary&amp;lt;int, int&amp;gt;();
-var R = new Dictionary&amp;lt;int, int&amp;gt;();
-const int inf = (int)1e9;
-for (var i = 0; i &amp;lt; N; i++)
-{
-    var (x, y) = P[i];
-    if (S[i] == 'L')
-    {
-        if (!L.ContainsKey(y)) L[y] = 0;
-        L[y] = Math.Max(L[y], x);
-    }
-    else
-    {
-        if (!R.ContainsKey(y)) R[y] = inf;
-        R[y] = Math.Min(R[y], x);
-    }
-}
-
-foreach (var (y, x) in R)
-{
-    if (L.ContainsKey(y) &amp;amp;&amp;amp; x &amp;lt;= L[y])
-    {
-        Console.WriteLine(&amp;quot;Yes&amp;quot;);
-        return;
-    }
-}
-
-Console.WriteLine(&amp;quot;No&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30044374"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N&lt;/code&gt;回の移動後にいる頂点の番号は&lt;code&gt;10^18&lt;/code&gt;以下であることが制約で保証されていますが、愚直にシミュレーションしてしまうと、制約&lt;code&gt;N&amp;lt;=10^6&lt;/code&gt;より、シミュレーション中の頂点の値が最大で&lt;code&gt;X*2^(N/2)&lt;/code&gt;になり、現在のコンピュータの整数型では正しく計算することができません。
-そこで、子に移動して親に戻るといった、無駄な移動を省くことで、シミュレーション中でも頂点の値が&lt;code&gt;10^18&lt;/code&gt;を超えないようにすることを考えます。
-これは、&lt;code&gt;S&lt;/code&gt;を順にみていったとき&lt;code&gt;U&lt;/code&gt;の直前にが&lt;code&gt;L&lt;/code&gt;または&lt;code&gt;R&lt;/code&gt;が存在すれば、&lt;code&gt;LU&lt;/code&gt;、&lt;code&gt;RU&lt;/code&gt;の操作を省くことができます。
-また、&lt;code&gt;S=LRUU&lt;/code&gt;の操作ような場合、&lt;code&gt;RU&lt;/code&gt;を省くと、&lt;code&gt;LU&lt;/code&gt;としてつながり、さらに省くことができます。
-このことから、&lt;code&gt;Stack&lt;/code&gt;のようなデータ構造を用いて直前の操作を保持しながら&lt;code&gt;S&lt;/code&gt;を順にみていき、&lt;code&gt;U&lt;/code&gt;の操作のとき、直前に&lt;code&gt;L&lt;/code&gt;または&lt;code&gt;R&lt;/code&gt;が存在するならば直前の操作を削除し、そうでなければ直前の操作を更新します。
-そして、&lt;code&gt;Stack&lt;/code&gt;に残った操作をシミュレーションすることで、&lt;code&gt;10^18&lt;/code&gt;の値を超えないように操作することができるようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, X) = Scanner.Scan&amp;lt;int, long&amp;gt;();
-var S = Scanner.Scan&amp;lt;string&amp;gt;();
-var stack = new Stack&amp;lt;char&amp;gt;();
-foreach (var c in S)
-{
-    if (stack.Count &amp;gt; 0 &amp;amp;&amp;amp; stack.Peek() != 'U' &amp;amp;&amp;amp; c == 'U')
-    {
-        stack.Pop();
-    }
-    else
-    {
-        stack.Push(c);
-    }
-}
-
-var T = stack.ToArray();
-Array.Reverse(T);
-
-var answer = X;
-foreach (var c in T)
-{
-    if (c == 'U')
-    {
-        answer /= 2;
-    }
-    else if (c == 'L')
-    {
-        answer *= 2;
-    }
-    else
-    {
-        answer *= 2;
-        answer++;
-    }
-}
-
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc243/tasks/abc243_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC243/submissions/30080632"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;コンテスト中の考察です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ワーシャルフロイド法で最短距離を求める?&lt;/li&gt;
-&lt;li&gt;最小全域木の頂点ごとの最短距離が元のグラフの頂点ごとの最短距離より大きいならば、一致するような辺を追加する?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;TLE&lt;/code&gt;と時間切れでした。&lt;/p&gt;
-&lt;p&gt;ワーシャルフロイド法で最短距離を求め、辺を見ていったとき、頂点&lt;code&gt;u&lt;/code&gt;と頂点&lt;code&gt;v&lt;/code&gt;を結ぶ辺のコストが&lt;code&gt;c&lt;/code&gt;だった場合、頂点&lt;code&gt;k&lt;/code&gt;を中継点とする&lt;code&gt;u-&amp;gt;k-&amp;gt;v&lt;/code&gt;となるルートのコストが&lt;code&gt;c&lt;/code&gt;以下だった場合、その辺は不要ということがわかります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-const long inf = (long)1e18;
-var G = new long[N, N];
-for (var i = 0; i &amp;lt; N; i++)
-{
-    for (var j = 0; j &amp;lt; N; j++)
-    {
-        G[i, j] = inf;
-    }
-}
-
-var E = new (int U, int V, long C)[M];
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (a, b, c) = Scanner.Scan&amp;lt;int, int, long&amp;gt;();
-    a--; b--;
-    G[a, b] = G[b, a] = c;
-    E[i] = (a, b, c);
-}
-
-for (var k = 0; k &amp;lt; N; k++)
-{
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        for (var j = 0; j &amp;lt; N; j++)
-        {
-            G[i, j] = Math.Min(G[i, j], G[i, k] + G[k, j]);
-        }
-    }
-}
-
-var answer = 0;
-foreach (var (i, j, c) in E)
-{
-    var unused = false;
-    for (var k = 0; k &amp;lt; N; k++)
-    {
-        if (i == k || j == k) continue;
-        unused |= G[i, k] + G[k, j] &amp;lt;= c;
-    }
-
-    if (unused) answer++;
-}
-
 Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
