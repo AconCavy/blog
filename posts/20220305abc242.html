@@ -100,20 +100,26 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <li><code>A+1 &lt;= X &lt;= B</code> ならば確率は<code>C/(B-A)</code></li>
 <li><code>B &lt; X</code>ならば確率は<code>0</code></li>
 </ul>
-<pre><code class="language-csharp line-numbers">var (A, B, C, X) = Scanner.Scan&lt;int, int, int, int&gt;();
-var answer = 0d;
-if (X &lt;= A) answer = 1d;
-if (A + 1 &lt;= X &amp;&amp; X &lt;= B) answer = (double)C / (B - A);
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B, C, X) = Scanner.Scan&lt;int, int, int, int&gt;();
+    var answer = 0d;
+    if (X &lt;= A) answer = 1d;
+    if (A + 1 &lt;= X &amp;&amp; X &lt;= B) answer = (double)C / (B - A);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29869226">コンテスト提出</a></p>
 <p>辞書順最小となる文字列は、文字列<code>S</code>を構成する文字のうち、小さいものを左から順に並べたものになります。
 そのため、文字列<code>S</code>をソートした文字列が答えとなります。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().ToCharArray();
-Array.Sort(S);
-var answer = new string(S);
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;().ToCharArray();
+    Array.Sort(S);
+    var answer = new string(S);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29875962">コンテスト提出</a></p>
@@ -125,30 +131,33 @@ Console.WriteLine(answer);
 </ul>
 <p>数え上げのときに<code>0</code>と<code>10</code>に遷移できるスペースを確保しておくと、<code>j=0</code>の時の<code>j-1</code>の遷移と<code>j=9</code>のときの<code>j+1</code>で<code>if</code>文が不要になります。
 <code>mint</code>は、<code>Mod</code>として指定した数値で余りをとった整数をもつ構造体です。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var dp = new mint[N + 1, 11];
-for (var i = 1; i &lt; 10; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    dp[1, i] = 1;
-}
-
-for (var i = 1; i &lt; N; i++)
-{
-    for (var j = 1; j &lt; 10; j++)
+    var N = Scanner.Scan&lt;int&gt;();
+    var dp = new mint[N + 1, 11];
+    for (var i = 1; i &lt; 10; i++)
     {
-        dp[i + 1, j - 1] += dp[i, j];
-        dp[i + 1, j] += dp[i, j];
-        dp[i + 1, j + 1] += dp[i, j];
+        dp[1, i] = 1;
     }
-}
 
-mint answer = 0;
-for (var i = 1; i &lt; 10; i++)
-{
-    answer += dp[N, i];
-}
+    for (var i = 1; i &lt; N; i++)
+    {
+        for (var j = 1; j &lt; 10; j++)
+        {
+            dp[i + 1, j - 1] += dp[i, j];
+            dp[i + 1, j] += dp[i, j];
+            dp[i + 1, j + 1] += dp[i, j];
+        }
+    }
 
-Console.WriteLine(answer);
+    mint answer = 0;
+    for (var i = 1; i &lt; 10; i++)
+    {
+        answer += dp[N, i];
+    }
+
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29901915">復習提出</a></p>
@@ -166,28 +175,30 @@ Console.WriteLine(answer);
 <li>それ以外ならば、<code>F(t,k)</code>=<code>F(t-1,k/2)+k%2+1</code></li>
 </ul>
 <p><code>F</code>は<code>O(logk)</code>で求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
-var N = S.Length;
-var Q = Scanner.Scan&lt;int&gt;();
-while (Q-- &gt; 0)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (t, k) = Scanner.Scan&lt;long, long&gt;();
-    var answer = F(t, k - 1);
-    Console.WriteLine(answer);
-}
+    var S = Scanner.Scan&lt;string&gt;();
+    var N = S.Length;
+    var Q = Scanner.Scan&lt;int&gt;();
+    while (Q-- &gt; 0)
+    {
+        var (t, k) = Scanner.Scan&lt;long, long&gt;();
+        var answer = F(t, k - 1);
+        Console.WriteLine(answer);
+    }
 
-char G(char c, long d)
-{
-    return (char)((c - 'A' + d) % 3 + 'A');
-}
+    char G(char c, long d)
+    {
+        return (char)((c - 'A' + d) % 3 + 'A');
+    }
 
-char F(long t, long k)
-{
-    if (t == 0) return S[(int)k];
-    if (k == 0) return G(S[0], t);
-    return G(F(t - 1, k / 2), k % 2 + 1);
+    char F(long t, long k)
+    {
+        if (t == 0) return S[(int)k];
+        if (k == 0) return G(S[0], t);
+        return G(F(t - 1, k / 2), k % 2 + 1);
+    }
 }
-
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc242/tasks/abc242_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC242/submissions/29902510">復習提出</a></p>
@@ -196,27 +207,30 @@ char F(long t, long k)
 この数え上げは、<code>S'</code>の文字をそれぞれ<code>0-25</code>の26進数としたときの個数として数え上げることができます。
 また、文字列<code>S</code>の前半分を回文にした文字列を<code>T</code>としたとき、<code>S</code>以下ならば、答えを1増やします。</p>
 <p>例えば、<code>S=ABCDE</code>ならば、<code>S'=ABC</code>なので、前半の数え上げは<code>26^2*0 + 26^1*1 + 26^0*2 = 28</code>となり、<code>T=ABCBA&lt;=S</code>なので答えは<code>29</code>になります。</p>
-<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
-while (Q-- &gt; 0)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var N = Scanner.Scan&lt;int&gt;();
-    var S = Scanner.Scan&lt;string&gt;();
-    var T = S.ToCharArray();
-
-    for (var i = 0; i &lt; (N + 1) / 2; i++)
+    var Q = Scanner.Scan&lt;int&gt;();
+    while (Q-- &gt; 0)
     {
-        T[N - 1 - i] = T[i];
-    }
+        var N = Scanner.Scan&lt;int&gt;();
+        var S = Scanner.Scan&lt;string&gt;();
+        var T = S.ToCharArray();
 
-    mint answer = 0;
-    for (var i = 0; i &lt; (N + 1) / 2; i++)
-    {
-        answer *= 26;
-        answer += T[i] - 'A';
-    }
+        for (var i = 0; i &lt; (N + 1) / 2; i++)
+        {
+            T[N - 1 - i] = T[i];
+        }
 
-    if (new string(T).CompareTo(S) &lt;= 0) answer++;
-    Console.WriteLine(answer);
+        mint answer = 0;
+        for (var i = 0; i &lt; (N + 1) / 2; i++)
+        {
+            answer *= 26;
+            answer += T[i] - 'A';
+        }
+
+        if (new string(T).CompareTo(S) &lt;= 0) answer++;
+        Console.WriteLine(answer);
+    }
 }
 </code></pre>
 

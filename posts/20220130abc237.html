@@ -96,34 +96,40 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28899214">コンテスト提出</a></p>
 <p>C#含めほとんどの言語では、<code>1 &lt;&lt; x</code>のようなビットシフト計算が備わっており、2の<code>x</code>乗を表現することができます。
 例えば、<code>1 &lt;&lt; 2</code>は、1を2進数で表すと<code>1</code>であり、2つ左にシフトすると<code>100</code>になって、10進数では<code>4</code>を表現します。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
-const long inf = 1L &lt;&lt; 31;
-Console.WriteLine(-inf &lt;= N &amp;&amp; N &lt; inf ? &quot;Yes&quot; : &quot;No&quot;);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;long&gt;();
+    const long inf = 1L &lt;&lt; 31;
+    Console.WriteLine(-inf &lt;= N &amp;&amp; N &lt; inf ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28909504">コンテスト提出</a></p>
 <p>転置行列は、<code>i</code>行<code>j</code>列目を<code>j</code>行<code>i</code>列目にしたものなので、そのまま添え字を入れ替えたものを結果として出力します。</p>
-<pre><code class="language-csharp line-numbers">var (H, W) = Scanner.Scan&lt;int, int&gt;();
-var A = new int[H, W];
-for (var i = 0; i &lt; H; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var AA = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-    for (var j = 0; j &lt; W; j++)
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var A = new int[H, W];
+    for (var i = 0; i &lt; H; i++)
     {
-        A[i, j] = AA[j];
+        var AA = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+        for (var j = 0; j &lt; W; j++)
+        {
+            A[i, j] = AA[j];
+        }
     }
-}
 
-var B = new int[W, H];
-for (var i = 0; i &lt; H; i++)
-{
-    for (var j = 0; j &lt; W; j++)
+    var B = new int[W, H];
+    for (var i = 0; i &lt; H; i++)
     {
-        B[j, i] = A[i, j];
+        for (var j = 0; j &lt; W; j++)
+        {
+            B[j, i] = A[i, j];
+        }
     }
-}
 
-Printer.Print2D(B, &quot; &quot;);
+    Printer.Print2D(B, &quot; &quot;);
+}
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28919221">コンテスト提出</a></p>
@@ -131,60 +137,66 @@ Printer.Print2D(B, &quot; &quot;);
 このとき、文字列前方の連続する<code>a</code>の個数が文字列後方の連続する<code>a</code>の個数以下場合は、足りない<code>a</code>を前方に追加することで回文にすることができますが、それ以外(前方&gt;後方)の場合は後方に<code>a</code>を追加することはできないので、回文にすることはできません。
 例えば、<code>aabcbaaa</code>では、前方と後方の連続した<code>a</code>を無視すると<code>bcb</code>となり回文になり、前方(2)は後方(3)以下なので、回文にすることができます。一方で、
 <code>aaabcbaa</code>では、同様に無視すると<code>bcb</code>となり回文になりますが、前方(3)は後方(2)より大きいため、回文にすることはできません。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.ScanLine();
-var (l, r) = (0, S.Length - 1);
-while (r &gt;= 0 &amp;&amp; S[r] == 'a') r--;
-while (l &lt; r &amp;&amp; S[l] == 'a') l++;
-
-var lc = l;
-var rc = S.Length - r - 1;
-if (lc &gt; rc)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    Console.WriteLine(&quot;No&quot;);
-    return;
-}
+    var S = Scanner.ScanLine();
+    var (l, r) = (0, S.Length - 1);
+    while (r &gt;= 0 &amp;&amp; S[r] == 'a') r--;
+    while (l &lt; r &amp;&amp; S[l] == 'a') l++;
 
-var t = S[l..(r + 1)];
-var answer = t == new string(t.Reverse().ToArray());
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    var lc = l;
+    var rc = S.Length - r - 1;
+    if (lc &gt; rc)
+    {
+        Console.WriteLine(&quot;No&quot;);
+        return;
+    }
+
+    var t = S[l..(r + 1)];
+    var answer = t == new string(t.Reverse().ToArray());
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28928816">コンテスト提出</a>
 <a href="https://atcoder.jp/contests/ABC237/submissions/28958803">復習提出</a></p>
 <p>数字をノードとしてみたときに、0をルートとするツリーを作成し、深さ優先探索の通りがかり順(左部分木-&gt;自分-&gt;右部分木)で見ていった結果が答えとなります。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var S = Scanner.ScanLine();
-var nodes = new Node[N + 1];
-for (var i = 0; i &lt;= N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    nodes[i] = new Node();
-}
- 
-foreach (var (c, i) in S.Select((x, i) =&gt; (x, i)))
-{
-    if (c == 'L')
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.ScanLine();
+    var nodes = new Node[N + 1];
+    for (var i = 0; i &lt;= N; i++)
     {
-        nodes[i].Left = i + 1;
+        nodes[i] = new Node();
     }
-    else
+    
+    foreach (var (c, i) in S.Select((x, i) =&gt; (x, i)))
     {
-        nodes[i].Right = i + 1;
+        if (c == 'L')
+        {
+            nodes[i].Left = i + 1;
+        }
+        else
+        {
+            nodes[i].Right = i + 1;
+        }
     }
+    
+    var answer = new List&lt;int&gt;();
+    
+    void Dfs(int curr)
+    {
+        if (curr &lt; 0) return;
+        Dfs(nodes[curr].Left);
+        answer.Add(curr);
+        Dfs(nodes[curr].Right);
+    }
+    
+    Dfs(0);
+    
+    Console.WriteLine(string.Join(&quot; &quot;, answer));
 }
- 
-var answer = new List&lt;int&gt;();
- 
-void Dfs(int curr)
-{
-    if (curr &lt; 0) return;
-    Dfs(nodes[curr].Left);
-    answer.Add(curr);
-    Dfs(nodes[curr].Right);
-}
- 
-Dfs(0);
- 
-Console.WriteLine(string.Join(&quot; &quot;, answer));
 </code></pre>
 <p><code>Node</code>は左側と右側を持つクラスです。</p>
 <pre><code class="language-csharp line-numbers">public class Node
@@ -195,17 +207,20 @@ Console.WriteLine(string.Join(&quot; &quot;, answer));
 </code></pre>
 <p><code>Deque</code>を使った場合は、文字列を逆順から見て、反対側に追加すればよいです。
 C#には<code>Deque</code>というクラスはありませんが、<code>LinkedList&lt;T&gt;</code>という連結リストがあるため、それを使うことで代用することができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var S = Scanner.ScanLine();
-var deq = new Deque&lt;int&gt;();
-deq.PushBack(N);
-foreach (var (c, i) in S.Select((x, i) =&gt; (x, i)).Reverse())
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (c == 'L') deq.PushBack(i);
-    else deq.PushFront(i);
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.ScanLine();
+    var deq = new Deque&lt;int&gt;();
+    deq.PushBack(N);
+    foreach (var (c, i) in S.Select((x, i) =&gt; (x, i)).Reverse())
+    {
+        if (c == 'L') deq.PushBack(i);
+        else deq.PushFront(i);
+    }
+    
+    Console.WriteLine(string.Join(&quot; &quot;, deq));
 }
- 
-Console.WriteLine(string.Join(&quot; &quot;, deq));
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/ABC237/tasks/ABC237_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC237/submissions/28933145">コンテスト提出</a>
@@ -217,43 +232,46 @@ Console.WriteLine(string.Join(&quot; &quot;, deq));
 <p><a href="https://twitter.com/kyopro_friends/status/1487807336202735617">競技プログラミングをするフレンズ E問題after_contest</a></p>
 <p>楽しさの減少を標高差のまま考えたとき、<code>U-&gt;V</code>に至る経路がどうであれ、楽しさは<code>H[U]-H[V]</code>を得ることができます。楽しさの減少が標高差の2倍のときは、<code>U-&gt;V</code>に至る経路のうち<code>H[X]&lt;H[Y]</code>の移動を行ったときに、楽しさが<code>H[X]-H[Y]</code>減少します。言い換えれば、減少分を辺のコストとしたときの単一始点最短経路問題として考えることができます。
 そして、各頂点の得られる楽しさから最小化された頂点のコストを引くことで、頂点に対する楽しさの最大化を行うことができます。</p>
-<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
-var H = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-var G = new List&lt;(int, long)&gt;[N].Select(x =&gt; new List&lt;(int, long)&gt;()).ToArray();
-for (var i = 0; i &lt; M; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (u, v) = Scanner.Scan&lt;int, int&gt;();
-    u--; v--;
-    G[u].Add((v, Math.Max(0, H[v] - H[u])));
-    G[v].Add((u, Math.Max(0, H[u] - H[v])));
-}
-
-var costs = new long[N];
-Array.Fill(costs, long.MaxValue);
-costs[0] = 0;
-var queue = new PriorityQueue&lt;(int U, long Cost)&gt;((x, y) =&gt; x.Cost.CompareTo(y.Cost));
-queue.Enqueue((0, 0));
-
-while (queue.Count &gt; 0)
-{
-    var (u, cu) = queue.Dequeue();
-    if (costs[u] &lt; cu) continue;
-    foreach (var (v, cv) in G[u])
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var H = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var G = new List&lt;(int, long)&gt;[N].Select(x =&gt; new List&lt;(int, long)&gt;()).ToArray();
+    for (var i = 0; i &lt; M; i++)
     {
-        var c = costs[u] + cv;
-        if (costs[v] &lt;= c) continue;
-        costs[v] = c;
-        queue.Enqueue((v, c));
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        G[u].Add((v, Math.Max(0, H[v] - H[u])));
+        G[v].Add((u, Math.Max(0, H[u] - H[v])));
     }
-}
 
-var answer = 0L;
-for (var i = 0; i &lt; N; i++)
-{
-    answer = Math.Max(answer, H[0] - H[i] - costs[i]);
-}
+    var costs = new long[N];
+    Array.Fill(costs, long.MaxValue);
+    costs[0] = 0;
+    var queue = new PriorityQueue&lt;(int U, long Cost)&gt;((x, y) =&gt; x.Cost.CompareTo(y.Cost));
+    queue.Enqueue((0, 0));
 
-Console.WriteLine(answer);
+    while (queue.Count &gt; 0)
+    {
+        var (u, cu) = queue.Dequeue();
+        if (costs[u] &lt; cu) continue;
+        foreach (var (v, cv) in G[u])
+        {
+            var c = costs[u] + cv;
+            if (costs[v] &lt;= c) continue;
+            costs[v] = c;
+            queue.Enqueue((v, c));
+        }
+    }
+
+    var answer = 0L;
+    for (var i = 0; i &lt; N; i++)
+    {
+        answer = Math.Max(answer, H[0] - H[i] - costs[i]);
+    }
+
+    Console.WriteLine(answer);
+}
 </code></pre>
 <p>2022年1月31日現在のAtCoderの<code>C#(.NET Core 3.1.201)</code>では<code>PriorityQueue</code>は標準ライブラリにないため、自作する必要があります。
 <code>C#(.NET 6.0)</code>以降であれば、<code>PriorityQueue</code>が標準ライブラリに追加されるので、言語アップデートを待ちましょう。</p>
@@ -277,41 +295,44 @@ for(var c2 = 0; c1 + c2 &lt;= N; c2++)
 </code></pre>
 <p>解説では、部分増加列の最後尾として考えられる最小値の数列の状態数を求めるdpでした。</p>
 <p><code>dp[i][a1][a2][a3]</code> := 長さが<code>i</code>で、長さ<code>j</code>の部分増加列の最後尾として考えられる最小値が<code>aj</code>であるような数列の状態数</p>
-<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
-var dp = new mint[N + 1, M + 2, M + 2, M + 2];
-dp[0, M + 1, M + 1, M + 1] = 1;
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    for (var a1 = 0; a1 &lt;= M + 1; a1++)
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var dp = new mint[N + 1, M + 2, M + 2, M + 2];
+    dp[0, M + 1, M + 1, M + 1] = 1;
+    for (var i = 0; i &lt; N; i++)
     {
-        for (var a2 = 0; a2 &lt;= M + 1; a2++)
+        for (var a1 = 0; a1 &lt;= M + 1; a1++)
         {
-            for (var a3 = 0; a3 &lt;= M + 1; a3++)
+            for (var a2 = 0; a2 &lt;= M + 1; a2++)
             {
-                for (var x = 1; x &lt;= M; x++)
+                for (var a3 = 0; a3 &lt;= M + 1; a3++)
                 {
-                    if (x &lt;= a1) dp[i + 1, x, a2, a3] += dp[i, a1, a2, a3];
-                    else if (x &lt;= a2) dp[i + 1, a1, x, a3] += dp[i, a1, a2, a3];
-                    else if (x &lt;= a3) dp[i + 1, a1, a2, x] += dp[i, a1, a2, a3];
+                    for (var x = 1; x &lt;= M; x++)
+                    {
+                        if (x &lt;= a1) dp[i + 1, x, a2, a3] += dp[i, a1, a2, a3];
+                        else if (x &lt;= a2) dp[i + 1, a1, x, a3] += dp[i, a1, a2, a3];
+                        else if (x &lt;= a3) dp[i + 1, a1, a2, x] += dp[i, a1, a2, a3];
+                    }
                 }
             }
         }
     }
-}
 
-mint answer = 0;
-for (var a1 = 1; a1 &lt;= M; a1++)
-{
-    for (var a2 = a1 + 1; a2 &lt;= M; a2++)
+    mint answer = 0;
+    for (var a1 = 1; a1 &lt;= M; a1++)
     {
-        for (var a3 = a2 + 1; a3 &lt;= M; a3++)
+        for (var a2 = a1 + 1; a2 &lt;= M; a2++)
         {
-            answer += dp[N, a1, a2, a3];
+            for (var a3 = a2 + 1; a3 &lt;= M; a3++)
+            {
+                answer += dp[N, a1, a2, a3];
+            }
         }
     }
-}
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 
                                 </div>

@@ -95,65 +95,77 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <h3 id="a"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27643596">コンテスト提出</a></p>
 <p>入力を取り、<code>N</code>が42以上なら答えをインクリメントします。C#では出力をフォーマットできるので、0埋めフォーマットを行います。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-if (N &gt;= 42) N++;
-// var answer = $&quot;AGC{N.ToString(&quot;000&quot;)}&quot;;
-var answer = $&quot;AGC{N:000}&quot;;
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    if (N &gt;= 42) N++;
+    // var answer = $&quot;AGC{N.ToString(&quot;000&quot;)}&quot;;
+    var answer = $&quot;AGC{N:000}&quot;;
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27651060">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc230/submissions/27674559">復習提出</a></p>
 <p>3つ連続した部分文字列において、<code>x</code>が3つ連続した場合、<code>oxo</code>のように<code>o</code>が2つ以上含まれている場合は答えは<code>No</code>になります。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
-var answer = true;
-for (var i = 0; i + 2 &lt; S.Length; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('x', 'x', 'x');
-    answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('o', 'x', 'o');
-}
+    var S = Scanner.Scan&lt;string&gt;();
+    var answer = true;
+    for (var i = 0; i + 2 &lt; S.Length; i++)
+    {
+        answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('x', 'x', 'x');
+        answer &amp;= (S[i], S[i + 1], S[i + 2]) != ('o', 'x', 'o');
+    }
 
-for (var i = 0; i + 1 &lt; S.Length; i++)
-{
-    answer &amp;= (S[i], S[i + 1]) != ('o', 'o');
-}
+    for (var i = 0; i + 1 &lt; S.Length; i++)
+    {
+        answer &amp;= (S[i], S[i + 1]) != ('o', 'o');
+    }
 
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <p>解説では、<code>Yes</code>になるテンプレートは高々3つなので、そのテンプレートの順番で<code>o</code>と<code>x</code>が出現しているかを判定します。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;();
-foreach (var t in new[] { &quot;oxx&quot;, &quot;xox&quot;, &quot;xxo&quot; })
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var ok = true;
-    for (var i = 0; i &lt; S.Length; i++)
+    var S = Scanner.Scan&lt;string&gt;();
+    foreach (var t in new[] { &quot;oxx&quot;, &quot;xox&quot;, &quot;xxo&quot; })
     {
-        ok &amp;= S[i] == t[i % 3];
+        var ok = true;
+        for (var i = 0; i &lt; S.Length; i++)
+        {
+            ok &amp;= S[i] == t[i % 3];
+        }
+    
+        if (ok)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
     }
- 
-    if (ok)
-    {
-        Console.WriteLine(&quot;Yes&quot;);
-        return;
-    }
+    
+    Console.WriteLine(&quot;No&quot;);
 }
- 
-Console.WriteLine(&quot;No&quot;);
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27664018">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc230/submissions/27674563">復習提出</a></p>
 <p>黒く塗りつぶすべきマスは、<code>x</code>の交点となる<code>(A,B)</code>からの距離<code>dx</code>と<code>dy</code>の絶対値が一致する箇所になります。
 そのため、対象となるマスを見ていくとき、<code>Abs(dx) == Abs(dy)</code>になるマスを黒く塗れば、求められる出力が得られます。</p>
-<pre><code class="language-csharp line-numbers">var (N, A, B) = Scanner.Scan&lt;long, long, long&gt;();
-var (P, Q, R, S) = Scanner.Scan&lt;long, long, long, long&gt;();
-
-for (var i = P; i &lt;= Q; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    for (var j = R; j &lt;= S; j++)
+    var (N, A, B) = Scanner.Scan&lt;long, long, long&gt;();
+    var (P, Q, R, S) = Scanner.Scan&lt;long, long, long, long&gt;();
+
+    for (var i = P; i &lt;= Q; i++)
     {
-        Console.Write(Math.Abs(A - i) == Math.Abs(B - j) ? '#' : '.');
+        for (var j = R; j &lt;= S; j++)
+        {
+            Console.Write(Math.Abs(A - i) == Math.Abs(B - j) ? '#' : '.');
+        }
+        Console.WriteLine();
     }
-    Console.WriteLine();
 }
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_d">問題D</a></h3>
@@ -161,26 +173,29 @@ for (var i = P; i &lt;= Q; i++)
 <p><code>D</code>列まとめてダメージを与えられるということは、壁の当たり判定を<code>D-1</code>伸ばして、パンチを1列にすることと同じことになります。
 そのため、壁の<code>R</code>に<code>D-1</code>を追加したときの区間スケジューリング問題として扱うことができます。
 <code>R</code>で壁を昇順ソートして順にみたとき、<code>L</code>が有効な場合に壁を叩くことができれば無効を<code>R</code>に更新することで数え上げることができます。</p>
-<pre><code class="language-csharp line-numbers">var (N, D) = Scanner.Scan&lt;int, long&gt;();
-var W = new (long L, long R)[N];
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (l, r) = Scanner.Scan&lt;long, long&gt;();
-    r += D - 1;
-    W[i] = (l, r);
-}
+    var (N, D) = Scanner.Scan&lt;int, long&gt;();
+    var W = new (long L, long R)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (l, r) = Scanner.Scan&lt;long, long&gt;();
+        r += D - 1;
+        W[i] = (l, r);
+    }
 
-Array.Sort(W, (x, y) =&gt; x.R.CompareTo(y.R));
-var answer = 0;
-var rr = 0L;
-foreach (var (l, r) in W)
-{
-    if (rr &gt;= l) continue;
-    rr = r;
-    answer++;
-}
+    Array.Sort(W, (x, y) =&gt; x.R.CompareTo(y.R));
+    var answer = 0;
+    var rr = 0L;
+    foreach (var (l, r) in W)
+    {
+        if (rr &gt;= l) continue;
+        rr = r;
+        answer++;
+    }
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc230/tasks/abc230_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc230/submissions/27675153">復習提出</a></p>
@@ -192,16 +207,19 @@ Console.WriteLine(answer);
 </ul>
 <p>時間切れになりました。</p>
 <p><code>N/i</code>を<code>k</code>としたとき、<code>k &lt;= N/i &lt; k+1</code>となる<code>i</code>の個数は<code>N/i &gt;= i &gt; N/(K+1)</code>となるため、<code>N/i - N/(i+1)</code>で求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
-var answer = 0L;
-for (var i = 1L; i * i &lt;= N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (i != N / i) answer += N / i;
-    var count = (N / i) - (N / (i + 1));
-    answer += i * count;
-}
+    var N = Scanner.Scan&lt;long&gt;();
+    var answer = 0L;
+    for (var i = 1L; i * i &lt;= N; i++)
+    {
+        if (i != N / i) answer += N / i;
+        var count = (N / i) - (N / (i + 1));
+        answer += i * count;
+    }
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 
                                 </div>

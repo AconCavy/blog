@@ -96,32 +96,38 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29069118">コンテスト提出</a></p>
 <p><code>N</code>が1または5以上の時、答えは<code>Yes</code>になります。
 また、2の<code>N</code>乗を計算可能な大きさに丸めてから、実際に計算することでも求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-N = Math.Min(60, N);
-var answer = (1L &lt;&lt; N) &gt; N * N;
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    N = Math.Min(60, N);
+    var answer = (1L &lt;&lt; N) &gt; N * N;
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29078455">コンテスト提出</a></p>
 <p>現在のナイフの角度を持ちながら、それぞれの切れ込みの角度を計算します。360度を超える場合はx+360度と同じ角度なので、360で余りを取ります。すべての切れ込みをソートし、各切れ込みの差分の最大値が答えとなります。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var list = new List&lt;int&gt; { 0 };
-var curr = 0;
-foreach (var a in A)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    list.Add((curr + a) % 360);
-    curr += a;
-    curr %= 360;
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var list = new List&lt;int&gt; { 0 };
+    var curr = 0;
+    foreach (var a in A)
+    {
+        list.Add((curr + a) % 360);
+        curr += a;
+        curr %= 360;
+    }
+    list.Add(360);
+    list.Sort();
+    var answer = 0;
+    for (var i = 0; i + 1 &lt; list.Count; i++)
+    {
+        answer = Math.Max(answer, list[i + 1] - list[i]);
+    }
+    Console.WriteLine(answer);
 }
-list.Add(360);
-list.Sort();
-var answer = 0;
-for (var i = 0; i + 1 &lt; list.Count; i++)
-{
-    answer = Math.Max(answer, list[i + 1] - list[i]);
-}
-Console.WriteLine(answer);
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29087110">コンテスト提出</a></p>
@@ -133,52 +139,58 @@ Console.WriteLine(answer);
 <li><code>N</code>と同じ桁の場合は<code>N - 10^(d-1) + 1</code>個存在する。(16の場合は、<code>16 - 10^(2-1) + 1</code>で7個)</li>
 </ul>
 <p>以上を踏まえて、<code>N</code>と同じ桁数まで数え上げることで、時間計算量<code>O(logN)</code>で求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;long&gt;();
-mint answer = 0;
-mint i2 = mint.Inverse(2);
-mint F(long x) =&gt; (mint)x * (x + 1) * i2;
-var curr = 1L;
-for (var l = 1; l &lt;= 18 &amp;&amp; curr &lt;= N; l++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    curr *= 10;
-    if (curr &lt;= N)
+    var N = Scanner.Scan&lt;long&gt;();
+    mint answer = 0;
+    mint i2 = mint.Inverse(2);
+    mint F(long x) =&gt; (mint)x * (x + 1) * i2;
+    var curr = 1L;
+    for (var l = 1; l &lt;= 18 &amp;&amp; curr &lt;= N; l++)
     {
-        var x = curr - curr / 10;
-        answer += F(x);
+        curr *= 10;
+        if (curr &lt;= N)
+        {
+            var x = curr - curr / 10;
+            answer += F(x);
+        }
+        else
+        {
+            var x = N - curr / 10 + 1;
+            answer += F(x);
+        }
     }
-    else
-    {
-        var x = N - curr / 10 + 1;
-        answer += F(x);
-    }
-}
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC238/submissions/29094375">コンテスト提出</a></p>
 <p>ANDにより、<code>x &gt;= a</code>かつ<code>y &gt;= a</code>がわかり、<code>x &lt;= y</code>かつ<code>x = a</code>としたとき、<code>y = a + b</code>ということがわかります。
 <code>s = x + y = a + a + b = 2a + b</code>となり、<code>s - 2a = b</code>が成り立つ<code>b</code>の存在によって答えが求まります。
 このとき、<code>y = a + b = a | b</code>とすると、<code>b</code>は<code>a</code>の0のビットをいくつか1にしたものかつ<code>a</code>の1のビットをすべて0にしたものになります。</p>
-<pre><code class="language-csharp line-numbers">var T = Scanner.Scan&lt;int&gt;();
-while (T-- &gt; 0)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (a, s) = Scanner.Scan&lt;long, long&gt;();
-    var a2 = a + a;
-    var answer = a2 &lt;= s;
-    var r = s - a2;
-    if (r &gt; 0)
+    var T = Scanner.Scan&lt;int&gt;();
+    while (T-- &gt; 0)
     {
-        for (var i = 0; i &lt; 63; i++)
+        var (a, s) = Scanner.Scan&lt;long, long&gt;();
+        var a2 = a + a;
+        var answer = a2 &lt;= s;
+        var r = s - a2;
+        if (r &gt; 0)
         {
-            if ((r &gt;&gt; i &amp; 1) == 1)
+            for (var i = 0; i &lt; 63; i++)
             {
-                answer &amp;= (a &gt;&gt; i &amp; 1) == 0;
+                if ((r &gt;&gt; i &amp; 1) == 1)
+                {
+                    answer &amp;= (a &gt;&gt; i &amp; 1) == 0;
+                }
             }
         }
-    }
 
-    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+        Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    }
 }
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/ABC238/tasks/ABC238_e">問題E</a></h3>
@@ -189,16 +201,19 @@ while (T-- &gt; 0)
 <li>クエリを右増左減のソート後に区間最小が0の時に区間を1に更新して最後に区間すべてが1であれば正? -&gt; 例1で偽</li>
 </ul>
 <p>解説では、累積和行列<code>B</code>を考えたときに、クエリにより<code>l</code>と<code>r</code>が与えられた場合<code>B[r] - B[l]</code>の値から<code>A[l]..A[r]</code>の総和が求められるものとし、<code>l</code>と<code>r</code>をグラフの辺として考えたとき、<code>0</code>から<code>N</code>まで連結であることを考えればいいようです。</p>
-<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
-var dsu = new DisjointSetUnion(N + 1);
-for (var i = 0; i &lt; Q; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (l, r) = Scanner.Scan&lt;int, int&gt;();
-    l--;
-    dsu.Merge(l, r);
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var dsu = new DisjointSetUnion(N + 1);
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var (l, r) = Scanner.Scan&lt;int, int&gt;();
+        l--;
+        dsu.Merge(l, r);
+    }
+    var answer = dsu.IsSame(0, N);
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 }
-var answer = dsu.IsSame(0, N);
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 </code></pre>
 
                                 </div>

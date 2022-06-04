@@ -95,75 +95,87 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <h3 id="a"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc232/submissions/27984773">コンテスト提出</a></p>
 <p><code>x</code>で文字列を分けてそれぞれ掛けます。</p>
-<pre><code class="language-csharp line-numbers">var S = Console.ReadLine().Trim().Split('x');
-var answer = long.Parse(S[0]) * long.Parse(S[1]);
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Console.ReadLine().Trim().Split('x');
+    var answer = long.Parse(S[0]) * long.Parse(S[1]);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <p>制約が3文字なので、<code>a</code>と<code>b</code>からそれぞれ文字<code>0</code>を引いて掛けるだけいいと思います。</p>
-<pre><code class="language-csharp line-numbers">var S = Console.ReadLine().Trim();
-var answer = (S[0] - '0') * (S[2] - '0');
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Console.ReadLine().Trim();
+    var answer = (S[0] - '0') * (S[2] - '0');
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc232/submissions/27989086">コンテスト提出</a></p>
 <p><code>a-z</code>を<code>0-25</code>とし、26通りのずらし方を試すことで、全部のパターンを調べることができます。<br>
 <code>z</code>の次は<code>a</code>なので、<code>26</code>は<code>a</code>となるため、<code>26</code>で余りを取ることで26の周期として扱うことができます。</p>
-<pre><code class="language-csharp line-numbers">var S = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
-var T = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
-for (var k = 0; k &lt; 26; k++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var ok = true;
-    for (var i = 0; i &lt; S.Length; i++)
+    var S = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+    var T = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+    for (var k = 0; k &lt; 26; k++)
     {
-        ok &amp;= (S[i] + k) % 26 == T[i] % 26;
-    }
+        var ok = true;
+        for (var i = 0; i &lt; S.Length; i++)
+        {
+            ok &amp;= (S[i] + k) % 26 == T[i] % 26;
+        }
 
-    if (ok)
-    {
-        Console.WriteLine(&quot;Yes&quot;);
-        return;
+        if (ok)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
     }
+    Console.WriteLine(&quot;No&quot;);
 }
-Console.WriteLine(&quot;No&quot;);
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc232/submissions/27999013">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/abc232/submissions/28020954">復習提出</a></p>
 <p>2つのグラフ<code>G1</code>と<code>G2</code>が同じ形であることは、<code>G2</code>の頂点番号のみを適切に置き換えたときに、<code>G1</code>のそれぞれの辺に対応する辺を持つことを示すことで判定することができます。<br>
 制約も<code>1&lt;=N&lt;=8</code>と小さいので、<code>G2</code>のそれぞれの頂点に対応する順列を総当たりし、<code>G2</code>の辺<code>E2</code>の頂点を置き換えた辺すべてが、<code>G1</code>の辺<code>E1</code>に存在するかを判定します。</p>
-<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
-var E1 = new bool[N, N];
-var E2 = new (int A, int B)[M];
-for (var i = 0; i &lt; M; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (a, b) = Scanner.Scan&lt;int, int&gt;();
-    a--; b--;
-    E1[a, b] = E1[b, a] = true;
-}
- 
-for (var i = 0; i &lt; M; i++)
-{
-    var (a, b) = Scanner.Scan&lt;int, int&gt;();
-    a--; b--;
-    E2[i] = (a, b);
-}
- 
-foreach (var order in Enumerable.Range(0, N).Permute())
-{
-    var ok = true;
-    foreach (var (c, d) in E2)
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var E1 = new bool[N, N];
+    var E2 = new (int A, int B)[M];
+    for (var i = 0; i &lt; M; i++)
     {
-        ok &amp;= E1[order[c], order[d]];
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        a--; b--;
+        E1[a, b] = E1[b, a] = true;
     }
 
-    if (ok)
+    for (var i = 0; i &lt; M; i++)
     {
-        Console.WriteLine(&quot;Yes&quot;);
-        return;
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        a--; b--;
+        E2[i] = (a, b);
     }
-}
 
-Console.WriteLine(&quot;No&quot;);
+    foreach (var order in Enumerable.Range(0, N).Permute())
+    {
+        var ok = true;
+        foreach (var (c, d) in E2)
+        {
+            ok &amp;= E1[order[c], order[d]];
+        }
+    
+        if (ok)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
 </code></pre>
 <p><code>Permute</code>メソッドは自作のLINQ拡張メソッドです。</p>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc232/tasks/abc232_d">問題D</a></h3>
@@ -172,34 +184,37 @@ Console.WriteLine(&quot;No&quot;);
 <p>移動方法が<code>i+1</code>か<code>j+1</code>のみなので、左上のマスから行くことができるマスを数え上げます。<br>
 もし隣り合うマスが<code>.</code>ならば、そのマスの現在の値と今いるマスの値+1との最大を集計することで、そのマスまで通ったマスの数の最大値をまとめることができます。<br>
 制約により左上の値が1のため、マスの値が0の場合は、マスが<code>#</code>、または到達不可能といえるので、判定を無視することができます。</p>
-<pre><code class="language-csharp line-numbers">var (H, W) = Scanner.Scan&lt;int, int&gt;();
-var C = new char[H][];
-for (var i = 0; i &lt; H; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    C[i] = Scanner.Scan&lt;string&gt;().ToArray();
-}
-var G = new int[H, W];
-G[0, 0] = 1;
-var answer = 0;
-for (var i = 0; i &lt; H; i++)
-{
-    for (var j = 0; j &lt; W; j++)
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var C = new char[H][];
+    for (var i = 0; i &lt; H; i++)
     {
-        if (G[i, j] == 0) continue;
-        answer = Math.Max(answer, G[i, j]);
-        if (i + 1 &lt; H &amp;&amp; C[i + 1][j] == '.')
+        C[i] = Scanner.Scan&lt;string&gt;().ToArray();
+    }
+    var G = new int[H, W];
+    G[0, 0] = 1;
+    var answer = 0;
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
         {
-            G[i + 1, j] = Math.Max(G[i + 1, j], G[i, j] + 1);
-        }
+            if (G[i, j] == 0) continue;
+            answer = Math.Max(answer, G[i, j]);
+            if (i + 1 &lt; H &amp;&amp; C[i + 1][j] == '.')
+            {
+                G[i + 1, j] = Math.Max(G[i + 1, j], G[i, j] + 1);
+            }
 
-        if (j + 1 &lt; W &amp;&amp; C[i][j + 1] == '.')
-        {
-            G[i, j + 1] = Math.Max(G[i, j + 1], G[i, j] + 1);
+            if (j + 1 &lt; W &amp;&amp; C[i][j + 1] == '.')
+            {
+                G[i, j + 1] = Math.Max(G[i, j + 1], G[i, j] + 1);
+            }
         }
     }
-}
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <blockquote class="blockquote">
 <p>高橋君がマス (1,1) から歩き始めるとき</p>

@@ -97,137 +97,152 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p>10で割ったときのあまりの値を比較することで、ループを再現することができます。
 また、隣り合っていることは差が1であればいいので、それを確かめます。
 例えば、<code>a=2, b=3</code>のときは、<code>2+1==3</code>となり、<code>a=1,b=10</code>の時は<code>1==0+1</code>となります。</p>
-<pre><code class="language-csharp line-numbers">var (A, B) = Scanner.Scan&lt;int, int&gt;();
-var answer = (A + 1) % 10 == B % 10 || (B + 1) % 10 == A % 10;
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B) = Scanner.Scan&lt;int, int&gt;();
+    var answer = (A + 1) % 10 == B % 10 || (B + 1) % 10 == A % 10;
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29506402">コンテスト提出</a></p>
 <p>重複を削除したときの個数が答えとなります。
 C#のLINQには、<code>Distinct</code>というシーケンス内の重複を除いたシーケンスを返すメソッドがあるため、それを使い個数を数えます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-var answer = A.Distinct().Count();
-Console.WriteLine(answer);
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var answer = A.Distinct().Count();
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29511865">コンテスト提出</a></p>
 <p>動的計画法で答えを求めます。
 <code>i</code>番目のジャンプを座標<code>j(0&lt;=j&lt;=X)</code>から行うと、<code>i+1</code>番目では、<code>j+a</code>または<code>j+b</code>に存在することができます。初期状態の<code>0</code>を<code>true</code>としたとき、そこからの遷移を計算し、<code>N</code>回ジャンプ後の<code>X</code>の値が<code>true</code>ならば存在することができると表現できます。</p>
-<pre><code class="language-csharp line-numbers">var (N, X) = Scanner.Scan&lt;int, int&gt;();
-var dp = new bool[N + 1, X + 1];
-dp[0, 0] = true;
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (a, b) = Scanner.Scan&lt;int, int&gt;();
-    for (var j = 0; j &lt;= X; j++)
+    var (N, X) = Scanner.Scan&lt;int, int&gt;();
+    var dp = new bool[N + 1, X + 1];
+    dp[0, 0] = true;
+    for (var i = 0; i &lt; N; i++)
     {
-        if (j + a &lt;= X) dp[i + 1, j + a] |= dp[i, j];
-        if (j + b &lt;= X) dp[i + 1, j + b] |= dp[i, j];
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        for (var j = 0; j &lt;= X; j++)
+        {
+            if (j + a &lt;= X) dp[i + 1, j + a] |= dp[i, j];
+            if (j + b &lt;= X) dp[i + 1, j + b] |= dp[i, j];
+        }
     }
-}
 
-var answer = dp[N, X];
-Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    var answer = dp[N, X];
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29521922">コンテスト提出</a></p>
 <p>スタックに順番にボールを追加していき、同じ数字がK個連続した場合は削除する操作を行います。このとき一つの数字につき1つの値を入れていると、計算量は<code>O(N^2)</code>になってしまうので、連続した値は値と個数の一つのオブジェクトとしてまとめ、スタックに入っているボールの個数を管理することで、計算量を<code>O(N)</code>に抑えることができます。
 具体的には、もしスタックが空またはスタックのトップと異なる値の場合は、値と個数1をタプルとしてまとめてスタックに追加し、もしスタックのトップと同じ値の場合は、スタックのトップの個数を更新します。その後、スタックのトップを順にみていき、値と個数が同じ場合はスタックから取り除き、現在の個数も減少させます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var curr = 0;
-var stack = new Stack&lt;(int V, int C)&gt;();
-foreach (var a in A)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    curr++;
-    if (stack.Count == 0)
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var curr = 0;
+    var stack = new Stack&lt;(int V, int C)&gt;();
+    foreach (var a in A)
     {
-        stack.Push((a, 1));
-        Console.WriteLine(curr);
-        continue;
-    }
-
-    var (v, c) = stack.Pop();
-
-    if (a == v)
-    {
-        c++;
-        stack.Push((v, c));
-    }
-    else
-    {
-        stack.Push((v, c));
-        stack.Push((a, 1));
-    }
-
-    while (stack.Count &gt; 0)
-    {
-        (v, c) = stack.Peek();
-        if (v == c)
+        curr++;
+        if (stack.Count == 0)
         {
-            stack.Pop();
-            curr -= c;
+            stack.Push((a, 1));
+            Console.WriteLine(curr);
+            continue;
+        }
+
+        var (v, c) = stack.Pop();
+
+        if (a == v)
+        {
+            c++;
+            stack.Push((v, c));
         }
         else
         {
-            break;
+            stack.Push((v, c));
+            stack.Push((a, 1));
         }
-    }
 
-    Console.WriteLine(curr);
+        while (stack.Count &gt; 0)
+        {
+            (v, c) = stack.Peek();
+            if (v == c)
+            {
+                stack.Pop();
+                curr -= c;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        Console.WriteLine(curr);
+    }
 }
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc240/tasks/abc240_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc240/submissions/29533033">コンテスト提出</a></p>
 <p>問題文の根付き木について、子を持たない頂点に対してそれぞれ異なる値を与えたときに、部分木<code>i</code>が持つ値群の最小値と最大値をそれぞれ<code>Li</code>と<code>Ri</code>としたとき、頂点<code>i</code>は区間<code>[Li, Ri]</code>を持つと解釈することができます。
 そのため、深さ優先探索を行い、子を持たない頂点の場合はそれまでに出現していない値を<code>Li</code>と<code>Ri</code>に設定し、子を持つ頂点は、子の<code>Li</code>と<code>Ri</code>の中でそれぞれ最小、最大となるものを選択することで、答えとなる区間を求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
-for (var i = 0; i &lt; N - 1; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (u, v) = Scanner.Scan&lt;int, int&gt;();
-    u--; v--;
-    G[u].Add(v);
-    G[v].Add(u);
-}
-
-const int inf = (int)1e9;
-var L = new int[N];
-var R = new int[N];
-var curr = 1;
-(int L, int R) Dfs(int u, int p)
-{
-    var l = inf;
-    var r = -inf;
-    foreach (var v in G[u])
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+    for (var i = 0; i &lt; N - 1; i++)
     {
-        if (v == p) continue;
-        var (ll, rr) = Dfs(v, u);
-        l = Math.Min(l, ll);
-        r = Math.Max(r, rr);
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        G[u].Add(v);
+        G[v].Add(u);
     }
 
-    if (l == inf)
+    const int inf = (int)1e9;
+    var L = new int[N];
+    var R = new int[N];
+    var curr = 1;
+    (int L, int R) Dfs(int u, int p)
     {
-        L[u] = curr;
-        R[u] = curr;
-        curr++;
+        var l = inf;
+        var r = -inf;
+        foreach (var v in G[u])
+        {
+            if (v == p) continue;
+            var (ll, rr) = Dfs(v, u);
+            l = Math.Min(l, ll);
+            r = Math.Max(r, rr);
+        }
+
+        if (l == inf)
+        {
+            L[u] = curr;
+            R[u] = curr;
+            curr++;
+        }
+        else
+        {
+            L[u] = l;
+            R[u] = r;
+        }
+
+        return (L[u], R[u]);
     }
-    else
+
+    Dfs(0, -1);
+
+    foreach (var (l, r) in L.Zip(R))
     {
-        L[u] = l;
-        R[u] = r;
+        Console.WriteLine($&quot;{l} {r}&quot;);
     }
-
-    return (L[u], R[u]);
-}
-
-Dfs(0, -1);
-
-foreach (var (l, r) in L.Zip(R))
-{
-    Console.WriteLine($&quot;{l} {r}&quot;);
 }
 </code></pre>
 

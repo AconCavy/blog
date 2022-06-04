@@ -95,66 +95,75 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <h3 id="a"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28530777">コンテスト提出</a></p>
 <p>各桁を移動させて足します。</p>
-<pre><code class="language-csharp line-numbers">var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
-var answer = 0;
-answer += V[0] * 100 + V[1] * 10 + V[2];
-answer += V[1] * 100 + V[2] * 10 + V[0];
-answer += V[2] * 100 + V[0] * 10 + V[1];
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+    var answer = 0;
+    answer += V[0] * 100 + V[1] * 10 + V[2];
+    answer += V[1] * 100 + V[2] * 10 + V[0];
+    answer += V[2] * 100 + V[0] * 10 + V[1];
 
-Console.WriteLine(answer);
+    Console.WriteLine(answer);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28530905">コンテスト提出</a></p>
 <p>順にみて前回より大きい場合は<code>curr</code>を更新し、小さい場合は移動することができないため、<code>curr</code>を表示します。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var H = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-var curr = 0L;
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (curr &lt; H[i])
+    var N = Scanner.Scan&lt;int&gt;();
+    var H = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var curr = 0L;
+    for (var i = 0; i &lt; N; i++)
     {
-        curr = H[i];
+        if (curr &lt; H[i])
+        {
+            curr = H[i];
+        }
+        else
+        {
+            Console.WriteLine(curr);
+            return;
+        }
     }
-    else
-    {
-        Console.WriteLine(curr);
-        return;
-    }
-}
 
-Console.WriteLine(curr);
+    Console.WriteLine(curr);
+}
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28535489">コンテスト提出</a></p>
 <p>クエリのたびにすべてを走査すると<code>O(N*Q)</code>となりTLEになるので、高速化する必要があります。
 あらかじめ値をキーとした出現場所をもつ辞書を作成し、その値が何番目に出現するかを保持しておき、クエリによる<code>x</code>の値が存在して、<code>k</code>の値が辞書内に存在する<code>x</code>の個数以内ならばその出現場所を表示し、それ以外の場合は<code>-1</code>を表示することで、クエリ当たり<code>O(logN)</code>で実行することができるようになります。</p>
-<pre><code class="language-csharp line-numbers">var (N, Q) = Scanner.Scan&lt;int, int&gt;();
-var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (!dict.ContainsKey(A[i])) dict[A[i]] = new List&lt;int&gt;();
-    dict[A[i]].Add(i + 1);
-}
-
-while (Q-- &gt; 0)
-{
-    var (x, k) = Scanner.Scan&lt;int, int&gt;();
-    k--;
-    if (dict.ContainsKey(x))
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+    for (var i = 0; i &lt; N; i++)
     {
-        if (k &lt; dict[x].Count)
+        if (!dict.ContainsKey(A[i])) dict[A[i]] = new List&lt;int&gt;();
+        dict[A[i]].Add(i + 1);
+    }
+
+    while (Q-- &gt; 0)
+    {
+        var (x, k) = Scanner.Scan&lt;int, int&gt;();
+        k--;
+        if (dict.ContainsKey(x))
         {
-            Console.WriteLine(dict[x][k]);
+            if (k &lt; dict[x].Count)
+            {
+                Console.WriteLine(dict[x][k]);
+            }
+            else
+            {
+                Console.WriteLine(-1);
+            }
         }
         else
         {
             Console.WriteLine(-1);
         }
-    }
-    else
-    {
-        Console.WriteLine(-1);
     }
 }
 </code></pre>
@@ -163,79 +172,85 @@ while (Q-- &gt; 0)
 <p>各操作をBFSで走査することにより、各値の更新は高々1回のみで十分になります。<br>
 シフト操作によって、<code>N</code>の値より大きい数から<code>N</code>より小さい値に変化する可能性もあるので、Nを文字列としてみたときの長さより大きい場合は無視することに注意します。<br>
 <code>Shift</code>メソッドは配列を与えられた値だけシフトする関数です。</p>
-<pre><code class="language-csharp line-numbers">var (A, N) = Scanner.Scan&lt;long, long&gt;();
-var dp = new Dictionary&lt;long, int&gt;();
-dp[1] = 0;
-
-var queue = new Queue&lt;long&gt;();
-queue.Enqueue(1);
-const int inf = (int)1e7;
-
-void Push(long curr, long next)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (next &gt; inf) return;
-    if (dp.ContainsKey(next)) return;
-    dp[next] = dp[curr] + 1;
-    queue.Enqueue(next);
-}
+    var (A, N) = Scanner.Scan&lt;long, long&gt;();
+    var dp = new Dictionary&lt;long, int&gt;();
+    dp[1] = 0;
 
-while (queue.Count &gt; 0)
-{
-    var u = queue.Dequeue();
-    if (u &gt;= 10 &amp;&amp; u % 10 != 0)
+    var queue = new Queue&lt;long&gt;();
+    queue.Enqueue(1);
+    const int inf = (int)1e7;
+
+    void Push(long curr, long next)
     {
-        var v = long.Parse(Shift(u.ToString().AsSpan(), 1));
-        Push(u, v);
+        if (next &gt; inf) return;
+        if (dp.ContainsKey(next)) return;
+        dp[next] = dp[curr] + 1;
+        queue.Enqueue(next);
     }
-    Push(u, u * A);
-}
- 
-if (dp.ContainsKey(N))
-{
-    Console.WriteLine(dp[N]);
-}
-else
-{
-    Console.WriteLine(-1);
+
+    while (queue.Count &gt; 0)
+    {
+        var u = queue.Dequeue();
+        if (u &gt;= 10 &amp;&amp; u % 10 != 0)
+        {
+            var v = long.Parse(Shift(u.ToString().AsSpan(), 1));
+            Push(u, v);
+        }
+        Push(u, u * A);
+    }
+    
+    if (dp.ContainsKey(N))
+    {
+        Console.WriteLine(dp[N]);
+    }
+    else
+    {
+        Console.WriteLine(-1);
+    }
 }
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28551552">コンテスト提出</a></p>
 <p>クエリごとに最小全域木を求めると、ソートに<code>(MlogM)</code>、クラスカル法で最小全域木を求めるために<code>O(Ea(V))</code>となり、TLEになってしまいます。
 クエリに対してグラフはそれぞれ独立なため、あらかじめクエリを先読みしてすべての辺をまとめてソートし、クラスカル法で辺を見てその辺が有効な場合、もしその辺がクエリの辺である場合はそのクエリは有効であり、そうではない場合は最小全域木としてマージしていくことで、計算量を抑えることができます。</p>
-<pre><code class="language-csharp line-numbers">var (N, M, Q) = Scanner.Scan&lt;int, int, int&gt;();
-var E1 = new Edge[M];
-var E2 = new Edge[Q];
-for (var i = 0; i &lt; M; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
-    a--; b--;
-    E1[i] = new Edge(-1, a, b, c);
-}
-
-for (var i = 0; i &lt; Q; i++)
-{
-    var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
-    a--; b--;
-    E2[i] = new Edge(i, a, b, c);
-}
-
-var answer = new bool[Q];
-var dsu = new DisjointSetUnion(N);
-foreach (var e in E1.Concat(E2).OrderBy(x =&gt; x.Cost))
-{
-    if (dsu.IsSame(e.U, e.V)) continue;
-    if (e.ID == -1)
+    var (N, M, Q) = Scanner.Scan&lt;int, int, int&gt;();
+    var E1 = new Edge[M];
+    var E2 = new Edge[Q];
+    for (var i = 0; i &lt; M; i++)
     {
-        dsu.Merge(e.U, e.V);
+        var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
+        a--; b--;
+        E1[i] = new Edge(-1, a, b, c);
     }
-    else
-    {
-        answer[e.ID] = true;
-    }
-}
 
-Console.WriteLine(string.Join(&quot;\n&quot;, answer.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var (a, b, c) = Scanner.Scan&lt;int, int, int&gt;();
+        a--; b--;
+        E2[i] = new Edge(i, a, b, c);
+    }
+
+    var answer = new bool[Q];
+    var dsu = new DisjointSetUnion(N);
+    foreach (var e in E1.Concat(E2).OrderBy(x =&gt; x.Cost))
+    {
+        if (dsu.IsSame(e.U, e.V)) continue;
+        if (e.ID == -1)
+        {
+            dsu.Merge(e.U, e.V);
+        }
+        else
+        {
+            answer[e.ID] = true;
+        }
+    }
+
+    Console.WriteLine(string.Join(&quot;\n&quot;, answer.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
+}
 </code></pre>
 <h3 id="f"><a href="https://atcoder.jp/contests/abc235/tasks/abc235_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/abc235/submissions/28569936">復習提出</a></p>
@@ -259,79 +274,82 @@ for(var i = 0; i &lt; S.Length; i++)
 </code></pre>
 <p>解説では、総和と個数をそれぞれ別に数え上げるそうです。
 <code>mint</code>は、あまりをとる整数型です。</p>
-<pre><code class="language-csharp line-numbers">var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
-var N = V.Length;
-var M = Scanner.Scan&lt;int&gt;();
-var C = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-
-var ok = 0;
-foreach (var c in C)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    ok |= 1 &lt;&lt; c;
-}
+    var V = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+    var N = V.Length;
+    var M = Scanner.Scan&lt;int&gt;();
+    var C = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
 
-var max = 1 &lt;&lt; 10;
-var count = new mint[2][] { new mint[max], new mint[max] };
-var sum = new mint[2][] { new mint[max], new mint[max] };
-mint curr = 0;
-var digits = 0;
+    var ok = 0;
+    foreach (var c in C)
+    {
+        ok |= 1 &lt;&lt; c;
+    }
 
-var t = 1;
-for (var i = 0; i &lt; N; i++)
-{
+    var max = 1 &lt;&lt; 10;
+    var count = new mint[2][] { new mint[max], new mint[max] };
+    var sum = new mint[2][] { new mint[max], new mint[max] };
+    mint curr = 0;
+    var digits = 0;
+
+    var t = 1;
+    for (var i = 0; i &lt; N; i++)
+    {
+        t ^= 1;
+        var tt = t ^ 1;
+        var c = V[i];
+        Array.Fill(count[tt], 0);
+        Array.Fill(sum[tt], 0);
+        for (var j = 0; j &lt; max; j++)
+        {
+            for (var d = 0; d &lt; 10; d++)
+            {
+                var next = j | (1 &lt;&lt; d);
+                count[tt][next] += count[t][j];
+                sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
+            }
+        }
+
+        if (i &gt; 0)
+        {
+            for (var d = 1; d &lt; 10; d++)
+            {
+                var next = 1 &lt;&lt; d;
+                count[tt][next]++;
+                sum[tt][next] += d;
+            }
+        }
+
+        for (var d = 0; d &lt; c; d++)
+        {
+            if (i == 0 &amp;&amp; d == 0) continue;
+            var next = digits | (1 &lt;&lt; d);
+            count[tt][next]++;
+            sum[tt][next] += curr * 10 + d;
+        }
+
+        digits |= 1 &lt;&lt; c;
+        curr = curr * 10 + c;
+    }
+
     t ^= 1;
-    var tt = t ^ 1;
-    var c = V[i];
-    Array.Fill(count[tt], 0);
-    Array.Fill(sum[tt], 0);
+    var answer = 0L;
     for (var j = 0; j &lt; max; j++)
     {
-        for (var d = 0; d &lt; 10; d++)
+        if ((j &amp; ok) == ok)
         {
-            var next = j | (1 &lt;&lt; d);
-            count[tt][next] += count[t][j];
-            sum[tt][next] += sum[t][j] * 10 + count[t][j] * d;
+            answer += sum[t][j];
         }
     }
 
-    if (i &gt; 0)
+    if ((digits &amp; ok) == ok)
     {
-        for (var d = 1; d &lt; 10; d++)
-        {
-            var next = 1 &lt;&lt; d;
-            count[tt][next]++;
-            sum[tt][next] += d;
-        }
+        answer += curr;
     }
 
-    for (var d = 0; d &lt; c; d++)
-    {
-        if (i == 0 &amp;&amp; d == 0) continue;
-        var next = digits | (1 &lt;&lt; d);
-        count[tt][next]++;
-        sum[tt][next] += curr * 10 + d;
-    }
-
-    digits |= 1 &lt;&lt; c;
-    curr = curr * 10 + c;
+    Console.WriteLine(answer);
 }
-
-t ^= 1;
-var answer = 0L;
-for (var j = 0; j &lt; max; j++)
-{
-    if ((j &amp; ok) == ok)
-    {
-        answer += sum[t][j];
-    }
-}
-
-if ((digits &amp; ok) == ok)
-{
-    answer += curr;
-}
-
-Console.WriteLine(answer);
 </code></pre>
 
                                 </div>

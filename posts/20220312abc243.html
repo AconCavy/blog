@@ -101,42 +101,48 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <li>それ以外ならば、<code>T</code></li>
 </ul>
 <p>が答えとなります。</p>
-<pre><code class="language-csharp line-numbers">var (V, A, B, C) = Scanner.Scan&lt;int, int, int, int&gt;();
-V %= A + B + C;
-if (V &lt; A) { Console.WriteLine(&quot;F&quot;); }
-else if (V &lt; A + B) { Console.WriteLine(&quot;M&quot;); }
-else { Console.WriteLine(&quot;T&quot;); }
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (V, A, B, C) = Scanner.Scan&lt;int, int, int, int&gt;();
+    V %= A + B + C;
+    if (V &lt; A) { Console.WriteLine(&quot;F&quot;); }
+    else if (V &lt; A + B) { Console.WriteLine(&quot;M&quot;); }
+    else { Console.WriteLine(&quot;T&quot;); }
+}
 
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30030964">コンテスト提出</a></p>
 <p>あらかじめ<code>A</code>と<code>B</code>の要素をキーとして、位置をそれぞれ別の辞書に保持しておきます。
 そして、<code>A</code>の要素を順番に見ていき、<code>A</code>の要素が<code>B</code>の辞書に存在するとき、位置が一致する場合と一致しない場合をそれぞれ数え上げます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-
-var dictA = new Dictionary&lt;int, int&gt;();
-var dictB = new Dictionary&lt;int, int&gt;();
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    dictA[A[i]] = i;
-    dictB[B[i]] = i;
-}
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
 
-var ans1 = 0;
-var ans2 = 0;
-foreach (var a in A)
-{
-    if (dictB.ContainsKey(a))
+    var dictA = new Dictionary&lt;int, int&gt;();
+    var dictB = new Dictionary&lt;int, int&gt;();
+    for (var i = 0; i &lt; N; i++)
     {
-        if (dictA[a] == dictB[a]) ans1++;
-        else ans2++;
+        dictA[A[i]] = i;
+        dictB[B[i]] = i;
     }
-}
 
-Console.WriteLine(ans1);
-Console.WriteLine(ans2);
+    var ans1 = 0;
+    var ans2 = 0;
+    foreach (var a in A)
+    {
+        if (dictB.ContainsKey(a))
+        {
+            if (dictA[a] == dictB[a]) ans1++;
+            else ans2++;
+        }
+    }
+
+    Console.WriteLine(ans1);
+    Console.WriteLine(ans2);
+}
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30038745">コンテスト提出</a><br>
@@ -146,42 +152,45 @@ Console.WriteLine(ans2);
 そこで、左に動く人たちと右に動く人たちをそれぞれ<code>Y</code>ごとに分けて管理することを考えます。
 そして、左に動く人たちと右に動く人たちの<code>Y</code>が同じとき、右に動く人のうち最も左の位置(<code>RX</code>)と、左に動く人のうち最も右の位置(<code>LX</code>)において<code>RX&lt;=LX</code>が成り立てば、衝突が発生します。
 このことから、<code>Y</code>の値をキーとして、左に動く人たちの最も右の<code>X</code>と右に動く人たちの最も左の<code>X</code>をそれぞれ辞書を作成し、<code>Y</code>の値につき計算量<code>O(1)</code>で衝突するかの判定をすることができ、全体で計算量<code>O(NlogN)</code>で答えを求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var P = new (int X, int Y)[N];
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    P[i] = Scanner.Scan&lt;int, int&gt;();
-}
-
-var S = Scanner.Scan&lt;string&gt;();
-var L = new Dictionary&lt;int, int&gt;();
-var R = new Dictionary&lt;int, int&gt;();
-const int inf = (int)1e9;
-for (var i = 0; i &lt; N; i++)
-{
-    var (x, y) = P[i];
-    if (S[i] == 'L')
+    var N = Scanner.Scan&lt;int&gt;();
+    var P = new (int X, int Y)[N];
+    for (var i = 0; i &lt; N; i++)
     {
-        if (!L.ContainsKey(y)) L[y] = 0;
-        L[y] = Math.Max(L[y], x);
+        P[i] = Scanner.Scan&lt;int, int&gt;();
     }
-    else
-    {
-        if (!R.ContainsKey(y)) R[y] = inf;
-        R[y] = Math.Min(R[y], x);
-    }
-}
 
-foreach (var (y, x) in R)
-{
-    if (L.ContainsKey(y) &amp;&amp; x &lt;= L[y])
+    var S = Scanner.Scan&lt;string&gt;();
+    var L = new Dictionary&lt;int, int&gt;();
+    var R = new Dictionary&lt;int, int&gt;();
+    const int inf = (int)1e9;
+    for (var i = 0; i &lt; N; i++)
     {
-        Console.WriteLine(&quot;Yes&quot;);
-        return;
+        var (x, y) = P[i];
+        if (S[i] == 'L')
+        {
+            if (!L.ContainsKey(y)) L[y] = 0;
+            L[y] = Math.Max(L[y], x);
+        }
+        else
+        {
+            if (!R.ContainsKey(y)) R[y] = inf;
+            R[y] = Math.Min(R[y], x);
+        }
     }
-}
 
-Console.WriteLine(&quot;No&quot;);
+    foreach (var (y, x) in R)
+    {
+        if (L.ContainsKey(y) &amp;&amp; x &lt;= L[y])
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30044374">コンテスト提出</a></p>
@@ -191,43 +200,46 @@ Console.WriteLine(&quot;No&quot;);
 また、<code>S=LRUU</code>の操作ような場合、<code>RU</code>を省くと、<code>LU</code>としてつながり、さらに省くことができます。
 このことから、<code>Stack</code>のようなデータ構造を用いて直前の操作を保持しながら<code>S</code>を順にみていき、<code>U</code>の操作のとき、直前に<code>L</code>または<code>R</code>が存在するならば直前の操作を削除し、そうでなければ直前の操作を更新します。
 そして、<code>Stack</code>に残った操作をシミュレーションすることで、<code>10^18</code>の値を超えないように操作することができるようになります。</p>
-<pre><code class="language-csharp line-numbers">var (N, X) = Scanner.Scan&lt;int, long&gt;();
-var S = Scanner.Scan&lt;string&gt;();
-var stack = new Stack&lt;char&gt;();
-foreach (var c in S)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (stack.Count &gt; 0 &amp;&amp; stack.Peek() != 'U' &amp;&amp; c == 'U')
+    var (N, X) = Scanner.Scan&lt;int, long&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+    var stack = new Stack&lt;char&gt;();
+    foreach (var c in S)
     {
-        stack.Pop();
+        if (stack.Count &gt; 0 &amp;&amp; stack.Peek() != 'U' &amp;&amp; c == 'U')
+        {
+            stack.Pop();
+        }
+        else
+        {
+            stack.Push(c);
+        }
     }
-    else
+
+    var T = stack.ToArray();
+    Array.Reverse(T);
+
+    var answer = X;
+    foreach (var c in T)
     {
-        stack.Push(c);
+        if (c == 'U')
+        {
+            answer /= 2;
+        }
+        else if (c == 'L')
+        {
+            answer *= 2;
+        }
+        else
+        {
+            answer *= 2;
+            answer++;
+        }
     }
+
+    Console.WriteLine(answer);
 }
-
-var T = stack.ToArray();
-Array.Reverse(T);
-
-var answer = X;
-foreach (var c in T)
-{
-    if (c == 'U')
-    {
-        answer /= 2;
-    }
-    else if (c == 'L')
-    {
-        answer *= 2;
-    }
-    else
-    {
-        answer *= 2;
-        answer++;
-    }
-}
-
-Console.WriteLine(answer);
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc243/tasks/abc243_e">問題E</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC243/submissions/30080632">復習提出</a></p>
@@ -238,51 +250,54 @@ Console.WriteLine(answer);
 </ul>
 <p><code>TLE</code>と時間切れでした。</p>
 <p>ワーシャルフロイド法で最短距離を求め、辺を見ていったとき、頂点<code>u</code>と頂点<code>v</code>を結ぶ辺のコストが<code>c</code>だった場合、頂点<code>k</code>を中継点とする<code>u-&gt;k-&gt;v</code>となるルートのコストが<code>c</code>以下だった場合、その辺は不要ということがわかります。</p>
-<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
-const long inf = (long)1e18;
-var G = new long[N, N];
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    for (var j = 0; j &lt; N; j++)
-    {
-        G[i, j] = inf;
-    }
-}
-
-var E = new (int U, int V, long C)[M];
-for (var i = 0; i &lt; M; i++)
-{
-    var (a, b, c) = Scanner.Scan&lt;int, int, long&gt;();
-    a--; b--;
-    G[a, b] = G[b, a] = c;
-    E[i] = (a, b, c);
-}
-
-for (var k = 0; k &lt; N; k++)
-{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    const long inf = (long)1e18;
+    var G = new long[N, N];
     for (var i = 0; i &lt; N; i++)
     {
         for (var j = 0; j &lt; N; j++)
         {
-            G[i, j] = Math.Min(G[i, j], G[i, k] + G[k, j]);
+            G[i, j] = inf;
         }
     }
-}
 
-var answer = 0;
-foreach (var (i, j, c) in E)
-{
-    var unused = false;
-    for (var k = 0; k &lt; N; k++)
+    var E = new (int U, int V, long C)[M];
+    for (var i = 0; i &lt; M; i++)
     {
-        if (i == k || j == k) continue;
-        unused |= G[i, k] + G[k, j] &lt;= c;
+        var (a, b, c) = Scanner.Scan&lt;int, int, long&gt;();
+        a--; b--;
+        G[a, b] = G[b, a] = c;
+        E[i] = (a, b, c);
     }
 
-    if (unused) answer++;
-}
+    for (var k = 0; k &lt; N; k++)
+    {
+        for (var i = 0; i &lt; N; i++)
+        {
+            for (var j = 0; j &lt; N; j++)
+            {
+                G[i, j] = Math.Min(G[i, j], G[i, k] + G[k, j]);
+            }
+        }
+    }
 
-Console.WriteLine(answer);
+    var answer = 0;
+    foreach (var (i, j, c) in E)
+    {
+        var unused = false;
+        for (var k = 0; k &lt; N; k++)
+        {
+            if (i == k || j == k) continue;
+            unused |= G[i, k] + G[k, j] &lt;= c;
+        }
+
+        if (unused) answer++;
+    }
+
+    Console.WriteLine(answer);
+}
 </code></pre>
 
                                 </div>

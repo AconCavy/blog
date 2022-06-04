@@ -95,116 +95,125 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <h3 id="a"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29662070">コンテスト提出</a></p>
 <p>現在の値を<code>curr</code>とし、現在の値を<code>A[curr]</code>で更新します。</p>
-<pre><code class="language-csharp line-numbers">var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var curr = 0;
-for (var i = 0; i &lt; 3; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    curr = A[curr];
-}
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var curr = 0;
+    for (var i = 0; i &lt; 3; i++)
+    {
+        curr = A[curr];
+    }
 
-Console.WriteLine(curr);
+    Console.WriteLine(curr);
+}
 </code></pre>
 <h3 id="b"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29664697">コンテスト提出</a></p>
 <p>あらかじめ麵の長さ<code>A</code>の個数を辞書に持ち、<code>B</code>を順番に見たときに、1個以上ある場合は辞書の<code>B</code>の値をデクリメントし、0個または辞書に存在しない場合は答えは<code>No</code>になります。最終的にすべてを見ることができれば、答えは<code>Yes</code>となります。</p>
-<pre><code class="language-csharp line-numbers">var (N, M) = Scanner.Scan&lt;int, int&gt;();
-var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-var dict = new Dictionary&lt;int, int&gt;();
-foreach (var a in A)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    if (!dict.ContainsKey(a))
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dict = new Dictionary&lt;int, int&gt;();
+    foreach (var a in A)
     {
-        dict[a] = 0;
+        if (!dict.ContainsKey(a))
+        {
+            dict[a] = 0;
+        }
+
+        dict[a]++;
     }
 
-    dict[a]++;
-}
-
-foreach (var b in B)
-{
-    if (!dict.ContainsKey(b) || dict[b] == 0)
+    foreach (var b in B)
     {
-        Console.WriteLine(&quot;No&quot;);
-        return;
+        if (!dict.ContainsKey(b) || dict[b] == 0)
+        {
+            Console.WriteLine(&quot;No&quot;);
+            return;
+        }
+
+        dict[b]--;
     }
 
-    dict[b]--;
+    Console.WriteLine(&quot;Yes&quot;);
 }
-
-Console.WriteLine(&quot;Yes&quot;);
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29675472">コンテスト提出</a></p>
 <p>マスを順にみて、端を<code>(i,j)</code>に固定したときに連続した区間のうち4つ以上<code>#</code>が存在すれば、答えは<code>Yes</code>となります。
 縦の場合は<code>(i,j)</code>から<code>(i+5,j)</code>まで、横の場合は<code>(i,j)</code>から<code>(i,j+5)</code>まで、斜めの場合は<code>(i,j)</code>から<code>(i+5,j+5)</code>と<code>(i+5,j-5)</code>を確かめます。
 検査時に範囲外に出ないように注意します。</p>
-<pre><code class="language-csharp line-numbers">var N = Scanner.Scan&lt;int&gt;();
-var G = new string[N];
-for (var i = 0; i &lt; N; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    G[i] = Scanner.ScanLine();
-}
-
-for (var i = 0; i &lt; N; i++)
-{
-    for (var j = 0; j &lt; N; j++)
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new string[N];
+    for (var i = 0; i &lt; N; i++)
     {
-        var ok = false;
-        if (i + 5 &lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &lt;= 5; k++)
-            {
-                if (G[i + k][j] == '#') count++;
-            }
-
-            ok |= count &gt;= 4;
-        }
-
-        if (j + 5 &lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &lt;= 5; k++)
-            {
-                if (G[i][j + k] == '#') count++;
-            }
-
-            ok |= count &gt;= 4;
-        }
-
-        if (i + 5 &lt; N &amp;&amp; j + 5 &lt; N)
-        {
-            var count = 0;
-            for (var k = 0; k &lt;= 5; k++)
-            {
-                if (G[i + k][j + k] == '#') count++;
-            }
-
-            ok |= count &gt;= 4;
-        }
-
-        if (i + 5 &lt; N &amp;&amp; j - 5 &gt;= 0)
-        {
-            var count = 0;
-            for (var k = 0; k &lt;= 5; k++)
-            {
-                if (G[i + k][j - k] == '#') count++;
-            }
-
-            ok |= count &gt;= 4;
-        }
-
-        if (ok)
-        {
-            Console.WriteLine(&quot;Yes&quot;);
-            return;
-        }
-
+        G[i] = Scanner.ScanLine();
     }
-}
 
-Console.WriteLine(&quot;No&quot;);
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            var ok = false;
+            if (i + 5 &lt; N)
+            {
+                var count = 0;
+                for (var k = 0; k &lt;= 5; k++)
+                {
+                    if (G[i + k][j] == '#') count++;
+                }
+
+                ok |= count &gt;= 4;
+            }
+
+            if (j + 5 &lt; N)
+            {
+                var count = 0;
+                for (var k = 0; k &lt;= 5; k++)
+                {
+                    if (G[i][j + k] == '#') count++;
+                }
+
+                ok |= count &gt;= 4;
+            }
+
+            if (i + 5 &lt; N &amp;&amp; j + 5 &lt; N)
+            {
+                var count = 0;
+                for (var k = 0; k &lt;= 5; k++)
+                {
+                    if (G[i + k][j + k] == '#') count++;
+                }
+
+                ok |= count &gt;= 4;
+            }
+
+            if (i + 5 &lt; N &amp;&amp; j - 5 &gt;= 0)
+            {
+                var count = 0;
+                for (var k = 0; k &lt;= 5; k++)
+                {
+                    if (G[i + k][j - k] == '#') count++;
+                }
+
+                ok |= count &gt;= 4;
+            }
+
+            if (ok)
+            {
+                Console.WriteLine(&quot;Yes&quot;);
+                return;
+            }
+
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc241/tasks/abc241_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc241/submissions/29715030">復習提出 (FenwickTree)</a>
@@ -217,40 +226,43 @@ Console.WriteLine(&quot;No&quot;);
 <li><code>t</code>の値が2であれば、<code>FenwickTree</code>の区間<code>[idx, cx]</code>の値が<code>k</code>以上の場所を二部探索し、存在するならばその時の<code>idx</code>の対応する値が答えとなります。</li>
 <li><code>t</code>の値が2であれば、<code>FenwickTree</code>の区間<code>[cx, idx]</code>の値が<code>k</code>以上の場所を二部探索し、存在するならばその時の<code>idx</code>の対応する値が答えとなります。</li>
 </ul>
-<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
-var query = new (int, long, int)[Q];
-var set = new HashSet&lt;long&gt;();
-for (var i = 0; i &lt; Q; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-    var (t, x) = ((int)line[0], line[1]);
-    var k = t == 1 ? -1 : (int)line[2];
-    query[i] = (t, x, k);
-    set.Add(x);
-}
- 
-var (map, remap) = Compress(set);
-var N = map.Count;
-var ft = new FenwickTree(N);
-foreach (var (t, x, k) in query)
-{
-    if (t == 1)
+    var Q = Scanner.Scan&lt;int&gt;();
+    var query = new (int, long, int)[Q];
+    var set = new HashSet&lt;long&gt;();
+    for (var i = 0; i &lt; Q; i++)
     {
-        ft.Add(map[x], 1);
+        var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+        var (t, x) = ((int)line[0], line[1]);
+        var k = t == 1 ? -1 : (int)line[2];
+        query[i] = (t, x, k);
+        set.Add(x);
     }
-    else if (t == 2)
+    
+    var (map, remap) = Compress(set);
+    var N = map.Count;
+    var ft = new FenwickTree(N);
+    foreach (var (t, x, k) in query)
     {
-        bool F(int idx) =&gt; ft.Sum(idx, map[x] + 1) &gt;= k;
-        var idx = BinarySearch(map[x] + 1, 0, F);
-        var answer = F(idx) ? remap[idx] : -1;
-        Console.WriteLine(answer);
-    }
-    else
-    {
-        bool F(int idx) =&gt; ft.Sum(map[x], idx + 1) &gt;= k;
-        var idx = BinarySearch(map[x] - 1, N - 1, F);
-        var answer = F(idx) ? remap[idx] : -1;
-        Console.WriteLine(answer);
+        if (t == 1)
+        {
+            ft.Add(map[x], 1);
+        }
+        else if (t == 2)
+        {
+            bool F(int idx) =&gt; ft.Sum(idx, map[x] + 1) &gt;= k;
+            var idx = BinarySearch(map[x] + 1, 0, F);
+            var answer = F(idx) ? remap[idx] : -1;
+            Console.WriteLine(answer);
+        }
+        else
+        {
+            bool F(int idx) =&gt; ft.Sum(map[x], idx + 1) &gt;= k;
+            var idx = BinarySearch(map[x] - 1, N - 1, F);
+            var answer = F(idx) ? remap[idx] : -1;
+            Console.WriteLine(answer);
+        }
     }
 }
 </code></pre>
@@ -354,31 +366,34 @@ C#では<code>MultiSet</code>が存在しないので、平衡二分探索木を
 <li><code>t</code>の値が2であれば、降順の平衡二分探索木において<code>x</code>以上になるインデックス<code>(idx)</code>を取得し、<code>idx+k-1</code>となる値が存在するならば、その値が答えとなります。</li>
 <li><code>t</code>の値が3であれば、昇順の平衡二分探索木において、<code>x</code>以下になるインデックス<code>(idx)</code>を取得し、<code>idx+k-1</code>となる値が存在するならば、その値が答えとなります。</li>
 </ul>
-<pre><code class="language-csharp line-numbers">var Q = Scanner.Scan&lt;int&gt;();
-var asc = new RandomizedBinarySearchTree&lt;long&gt;();
-var desc = new RandomizedBinarySearchTree&lt;long&gt;((x, y) =&gt; y.CompareTo(x));
-
-while (Q-- &gt; 0)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-    var (t, x) = (line[0], line[1]);
-    if (t == 1)
+    var Q = Scanner.Scan&lt;int&gt;();
+    var asc = new RandomizedBinarySearchTree&lt;long&gt;();
+    var desc = new RandomizedBinarySearchTree&lt;long&gt;((x, y) =&gt; y.CompareTo(x));
+
+    while (Q-- &gt; 0)
     {
-        asc.Insert(x);
-        desc.Insert(x);
-    }
-    else
-    {
-        var k = (int)line[2] - 1;
-        var set = t == 2 ? desc : asc;
-        if (set.Count() == 0)
+        var line = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+        var (t, x) = (line[0], line[1]);
+        if (t == 1)
         {
-            Console.WriteLine(-1);
-            continue;
+            asc.Insert(x);
+            desc.Insert(x);
         }
-        var lb = set.LowerBound(x);
-        var answer = lb + k &lt; set.Count() ? set.ElementAt(lb + k) : -1;
-        Console.WriteLine(answer);
+        else
+        {
+            var k = (int)line[2] - 1;
+            var set = t == 2 ? desc : asc;
+            if (set.Count() == 0)
+            {
+                Console.WriteLine(-1);
+                continue;
+            }
+            var lb = set.LowerBound(x);
+            var answer = lb + k &lt; set.Count() ? set.ElementAt(lb + k) : -1;
+            Console.WriteLine(answer);
+        }
     }
 }
 </code></pre>
@@ -604,34 +619,37 @@ while (Q-- &gt; 0)
 実装としては、<code>idx</code>のときの合計値と、<code>idx</code>の時に<code>A</code>の値を参照したことを保持しながら順にみていきます。
 一度見たことがある<code>A</code>を参照する場合、<code>現在の合計値 - 1度目のidxの合計値</code>から1回のループ中の和がわかり、<code>2度目のidx - 1度目のidx</code>からループの長さが求まり、<code>(K - 1度目のidx) / ループの長さ</code>でループの回数がわかるので、<code>(1回のループ中の和 * ループ回数)</code>を求めることができます。
 また、<code>(K - 1度目のidx) % ループの長さ</code>でループの端数となる残りの<code>idx</code>を求めることができ、<code>一度目のidx + 残りのidx</code>のときの合計値をみることで、<code>(ループに入るまでの和 + ループの端数の和)</code>を求めることができます。</p>
-<pre><code class="language-csharp line-numbers">var (N, K) = Scanner.Scan&lt;int, long&gt;();
-var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-var dict = new Dictionary&lt;int, int&gt;();
-var steps = new List&lt;long&gt;();
-
-int F(long x) =&gt; (int)(x % N);
-var current = 0L;
-for (var i = 0; i &lt; K; i++)
+<pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var x = F(current);
-    if (dict.ContainsKey(x))
+    var (N, K) = Scanner.Scan&lt;int, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var dict = new Dictionary&lt;int, int&gt;();
+    var steps = new List&lt;long&gt;();
+
+    int F(long x) =&gt; (int)(x % N);
+    var current = 0L;
+    for (var i = 0; i &lt; K; i++)
     {
-        var noloop = dict[x];
-        var loop = i - dict[x];
-        var div = (K - noloop) / loop;
-        current = (current - steps[noloop]) * div;
-        var mod = (int)((K - noloop) % loop);
-        if (mod &lt; 0) mod += loop;
-        current += steps[noloop + mod];
-        break;
+        var x = F(current);
+        if (dict.ContainsKey(x))
+        {
+            var noloop = dict[x];
+            var loop = i - dict[x];
+            var div = (K - noloop) / loop;
+            current = (current - steps[noloop]) * div;
+            var mod = (int)((K - noloop) % loop);
+            if (mod &lt; 0) mod += loop;
+            current += steps[noloop + mod];
+            break;
+        }
+
+        dict[x] = i;
+        steps.Add(current);
+        current += A[x];
     }
 
-    dict[x] = i;
-    steps.Add(current);
-    current += A[x];
+    Console.WriteLine(current);
 }
-
-Console.WriteLine(current);
 </code></pre>
 
                                 </div>
