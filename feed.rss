@@ -5,8 +5,174 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 28 May 2022 14:24:31 GMT</pubDate>
-		<lastBuildDate>Sat, 28 May 2022 14:24:31 GMT</lastBuildDate>
+		<pubDate>Sat, 04 Jun 2022 14:42:00 GMT</pubDate>
+		<lastBuildDate>Sat, 04 Jun 2022 14:42:00 GMT</lastBuildDate>
+		<item>
+			<title>ABC254</title>
+			<link>https://blog.aconcavy.dev/posts/20220604abc254</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 254の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20220604abc254</guid>
+			<pubDate>Sat, 04 Jun 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 254の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc254"&gt;https://atcoder.jp/contests/abc254&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc254/tasks/abc254_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC254/submissions/32198774"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文字列として入力を取り、文字列の後ろ2文字を表示します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;string&amp;gt;();
+    var answer = N[^2..];
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc254/tasks/abc254_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC254/submissions/32202968"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;問題文に沿って実装をします。
+これはパスカルの三角形、二項係数を表します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var nCk = new long[N, N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt;= i; j++)
+        {
+            if (j == 0 || j == i) nCk[i, j] = 1;
+            else nCk[i, j] = nCk[i - 1, j - 1] + nCk[i - 1, j];
+        }
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt;= i; j++)
+        {
+            Console.Write(nCk[i, j]);
+            Console.Write(j == i ? '\n' : ' ');
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc254/tasks/abc254_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC254/submissions/32210520"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A[i]&lt;/code&gt;が入れ替え可能な位置として、&lt;code&gt;A[i+K]&lt;/code&gt;や&lt;code&gt;A[i+k*2]&lt;/code&gt;のように&lt;code&gt;i+Kの倍数&lt;/code&gt;の何れかの値と入れ替えることができることがわかります。
+そのため、&lt;code&gt;i%K番目&lt;/code&gt;のグループごとに値をソートし、数列&lt;code&gt;B&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;番目に&lt;code&gt;i%K番目&lt;/code&gt;のグループの&lt;code&gt;i/K&lt;/code&gt;番目の値を復元してできたものが、&lt;code&gt;A&lt;/code&gt;をソートしたものと一致かを判定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;A = [3, 4, 1, 3, 4]
+G[0] = [3, 1, 4] -&amp;gt; [1, 3, 4]
+G[1] = [4, 3] -&amp;gt; [3, 4]
+B = [1, 3, 3, 4, 4]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var G = new int[K][].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i % K].Add(A[i]);
+    }
+
+    for (var i = 0; i &amp;lt; K; i++)
+    {
+        G[i].Sort();
+    }
+
+    var B = new List&amp;lt;int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        B.Add(G[i % K][i / K]);
+    }
+
+    var C = A.OrderBy(x =&amp;gt; x).ToArray();
+    var answer = true;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        answer &amp;amp;= B[i] == C[i];
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc254/tasks/abc254_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC254/submissions/32245869"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;long&amp;gt;();
+    var sq = new bool[N + 1];
+    for (var i = 1; i * i &amp;lt;= N; i++)
+    {
+        sq[i * i] = true;
+    }
+
+    var count = new long[N + 1];
+    for (var i = 1; i &amp;lt;= N; i++)
+    {
+        long j = 0;
+        foreach (var d in GetDivisors(i))
+        {
+            if (sq[d]) j = Math.Max(j, d);
+        }
+
+        count[i / j]++;
+    }
+
+    var answer = 0L;
+    for (var i = 1; i &amp;lt;= N; i++)
+    {
+        answer += count[i] * count[i];
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc254/tasks/abc254_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC254/submissions/32243464"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各クエリに対して、全ての頂点をメモしてDFSやBFSをしてしまうと、時間計算量が&lt;code&gt;O(QM)&lt;/code&gt;となってしまい、実行時間制限に間に合いません。
+しかし、制約にグラフの各頂点の時数は&lt;code&gt;3&lt;/code&gt;以下であり、&lt;code&gt;0&amp;lt;=k&amp;lt;=3&lt;/code&gt;とあることから、クエリあたり最大でも距離が&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;3&lt;/code&gt;の頂点の和&lt;code&gt;1+3^1+3^2+3^3=1+3+9+27=40&lt;/code&gt;しかないことがわかります。
+そのため、訪れた頂点のみを&lt;code&gt;HashSet&lt;/code&gt;などで管理することで、実行時間制限に間に合わせることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        a--; b--;
+        G[a].Add(b);
+        G[b].Add(a);
+    }
+
+    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
+    while (Q-- &amp;gt; 0)
+    {
+        var (x, k) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        x--;
+        var set = new HashSet&amp;lt;long&amp;gt;();
+        var queue = new Queue&amp;lt;(int, int)&amp;gt;();
+        set.Add(x);
+        queue.Enqueue((x, 0));
+        while (queue.Count &amp;gt; 0)
+        {
+            var (u, d) = queue.Dequeue();
+            if (d == k) continue;
+            foreach (var v in G[u])
+            {
+                if (set.Contains(v)) continue;
+                set.Add(v);
+                queue.Enqueue((v, d + 1));
+            }
+        }
+
+        var answer = set.Sum() + set.Count;
+        Console.WriteLine(answer);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC253</title>
 			<link>https://blog.aconcavy.dev/posts/20220528abc253</link>
@@ -1695,211 +1861,6 @@ C#のコードで書くと以下のようになります。&lt;/p&gt;
     Console.WriteLine(answer);
 }
 
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC244</title>
-			<link>https://blog.aconcavy.dev/posts/20220320abc244</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 244の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20220320abc244</guid>
-			<pubDate>Mon, 21 Mar 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 244の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc244"&gt;https://atcoder.jp/contests/abc244&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30269043"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文字列の長さが&lt;code&gt;N&lt;/code&gt;なので、文字列の&lt;code&gt;N-1&lt;/code&gt;のインデックスにアクセスすることで、末尾を参照することができます。&lt;br /&gt;
-また、C#8.0以降の環境では配列に対して&lt;code&gt;A[^i]&lt;/code&gt;のような記述をすることにより、後ろから&lt;code&gt;i&lt;/code&gt;番目の要素を参照することができるので、これを使うことでも末尾を参照することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var S = Scanner.Scan&amp;lt;string&amp;gt;();
-var answer = S[^1];
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30274402"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;東西南北それぞれ移動するときの&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;y&lt;/code&gt;移動量を用意し、現在の移動がどの向きに対して行われるかをインデックスとして管理することで簡単に記述することができます。&lt;br /&gt;
-はじめの向きは&lt;code&gt;東&lt;/code&gt;で、&lt;code&gt;ti=R&lt;/code&gt;ならば右に90度回転するため、&lt;code&gt;東、南、西、北、東、...&lt;/code&gt;の順番で向きが変化することがわかります。
-そのため、&lt;code&gt;東、南、西、北&lt;/code&gt;の順で移動量を用意し、回転させたときに&lt;code&gt;北&lt;/code&gt;の次は&lt;code&gt;東&lt;/code&gt;になるようにインデックスを4で割ったあまりとすることでインデックスをループさせることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var T = Scanner.Scan&amp;lt;string&amp;gt;();
-var D4 = new[] { (1, 0), (0, -1), (-1, 0), (0, 1) }; // 東、南、西、北
-var (x, y) = (0, 0);
-var curr = 0;
-foreach (var c in T)
-{
-    if (c == 'S')
-    {
-        x += D4[curr].Item1;
-        y += D4[curr].Item2;
-    }
-    else
-    {
-        curr++;
-        curr %= 4;
-    }
-}
-
-Console.WriteLine($&amp;quot;{x} {y}&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30277799"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;インタラクティブな問題なので、出力を毎回Flushする必要があることに注意しましょう。&lt;br /&gt;
-既に使った数字を記録しておき、まだ使っていない数字を出力すればよいです。&lt;br /&gt;
-制約は&lt;code&gt;1&amp;lt;=N&amp;lt;=1000&lt;/code&gt;なので、数字をすべて走査し使っていない数字を探す方法でも&lt;code&gt;O(N^2)&lt;/code&gt;で間に合います。&lt;br /&gt;
-また、&lt;code&gt;Queue&lt;/code&gt;のようなデータ構造を使って、既に使用したものを&lt;code&gt;Dequeue&lt;/code&gt;していくことで、&lt;code&gt;O(N)&lt;/code&gt;で解答することもできます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var N = Scanner.Scan&amp;lt;int&amp;gt;();
-var queue = new Queue&amp;lt;int&amp;gt;(Enumerable.Range(1, N * 2 + 1));
-var used = new bool[N * 2 + 2];
-while (true)
-{
-    while (queue.Count &amp;gt; 0 &amp;amp;&amp;amp; used[queue.Peek()]) queue.Dequeue();
-    var x = queue.Dequeue();
-    used[x] = true;
-    Console.WriteLine(x);
-    var y = Scanner.Scan&amp;lt;int&amp;gt;();
-    if (y == 0)
-    {
-        return;
-    }
-    used[y] = true;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30284560"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S&lt;/code&gt;を&lt;code&gt;RGB&lt;/code&gt;に並べ替えても対応する&lt;code&gt;T&lt;/code&gt;は変わらないので、&lt;code&gt;S=RGB&lt;/code&gt;としたときの&lt;code&gt;T&lt;/code&gt;を考えます。&lt;br /&gt;
-このとき、&lt;code&gt;T&lt;/code&gt;がなりえる値は&lt;code&gt;RGB&lt;/code&gt;、&lt;code&gt;RBG&lt;/code&gt;、&lt;code&gt;BRG&lt;/code&gt;、&lt;code&gt;BGR&lt;/code&gt;、&lt;code&gt;GRB&lt;/code&gt;、&lt;code&gt;GBR&lt;/code&gt;の6通りしかありません。&lt;br /&gt;
-&lt;code&gt;S=RGB&lt;/code&gt;からそれぞれの値になるためのスワップ回数を見ると、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;0回: &lt;code&gt;RGB&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;1回: &lt;code&gt;RBG&lt;/code&gt;、&lt;code&gt;BGR&lt;/code&gt;、&lt;code&gt;GRB&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;2回: &lt;code&gt;RGB&lt;/code&gt;、&lt;code&gt;BRG&lt;/code&gt;、&lt;code&gt;GBR&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;3回: &lt;code&gt;RBG&lt;/code&gt;、&lt;code&gt;BGR&lt;/code&gt;、&lt;code&gt;GRB&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;...&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;のように分類できます。&lt;br /&gt;
-このことから、スワップのグループを奇数回、偶数回で分けることができ、ぴったり&lt;code&gt;1e18&lt;/code&gt;回目に&lt;code&gt;S&lt;/code&gt;が&lt;code&gt;T&lt;/code&gt;になるようにスワップ操作をするには、&lt;code&gt;T&lt;/code&gt;が偶数グループに所属していることが条件となります。&lt;/p&gt;
-&lt;p&gt;実装では、&lt;code&gt;S&lt;/code&gt;と&lt;code&gt;T&lt;/code&gt;の対応する値が異なる数が&lt;code&gt;2&lt;/code&gt;である(&lt;code&gt;スワップ回数が1回&lt;/code&gt;)ときは答えは&lt;code&gt;No&lt;/code&gt;になり、それ以外の場合は&lt;code&gt;Yes&lt;/code&gt;となるような実装を行いました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (S1, S2, S3) = Scanner.Scan&amp;lt;char, char, char&amp;gt;();
-var (T1, T2, T3) = Scanner.Scan&amp;lt;char, char, char&amp;gt;();
-var S = new[] { S1, S2, S3 };
-var T = new[] { T1, T2, T3 };
-var x = 0;
-for (var i = 0; i &amp;lt; 3; i++)
-{
-    if (S[i] != T[i]) x++;
-}
-
-var answer = x != 2;
-Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30292730"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dp[k][u][x] := k回目の移動で頂点uにいるとき、頂点Xに訪れた回数の偶奇(x)の通り数&lt;/code&gt;とした動的計画法を解いたときの&lt;code&gt;dp[K][T][0]&lt;/code&gt;が答えとなります。&lt;/p&gt;
-&lt;p&gt;グラフにたいして状態を&lt;code&gt;(現在の頂点、移動回数、頂点Xに訪れた回数の偶奇)&lt;/code&gt;として幅優先探索を行い、既に訪れた状態を重複して数えないようし、遷移先が&lt;code&gt;X&lt;/code&gt;の場合は、遷移先のXの偶奇を変更し、それ以外の場合は遷移先の偶奇を変えずに遷移させます。
-&lt;code&gt;mint&lt;/code&gt;は指定したあまりを取った値を持つ整数型です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M, K, S, T, X) = Scanner.Scan&amp;lt;int, int, int, int, int, int&amp;gt;();
-S--; T--; X--;
-var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    u--; v--;
-    G[u].Add(v);
-    G[v].Add(u);
-}
-
-var dp = new mint[K + 1, N, 2];
-dp[0, S, 0] = 1;
-var used = new bool[K + 1, N, 2];
-var queue = new Queue&amp;lt;(int U, int T, int X)&amp;gt;();
-queue.Enqueue((S, 0, 0));
-while (queue.Count &amp;gt; 0)
-{
-    var (u, t, x) = queue.Dequeue();
-    if (t == K || used[t, u, x]) continue;
-    used[t, u, x] = true;
-    foreach (var v in G[u])
-    {
-        if (v == X)
-        {
-            dp[t + 1, v, x ^ 1] += dp[t, u, x];
-            queue.Enqueue((v, t + 1, x ^ 1));
-        }
-        else
-        {
-            dp[t + 1, v, x] += dp[t, u, x];
-            queue.Enqueue((v, t + 1, x));
-        }
-    }
-}
-
-var answer = dp[K, T, 0];
-Console.WriteLine(answer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc244/tasks/abc244_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC244/submissions/30304848"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;状態&lt;code&gt;s&lt;/code&gt;を&lt;code&gt;(パスの状態, 頂点)&lt;/code&gt;としたときのパスの長さの最小値を考えます。
-これは、各頂点を始点として、現在の&lt;code&gt;(パスの状態、頂点、パスの長さ)&lt;/code&gt;を持ち、状態&lt;code&gt;s&lt;/code&gt;におけるパスの最小値を記録しながら幅優先探索を行うことで、全ての状態を求めることができます。&lt;br /&gt;
-このとき、現在のパスの長さが、記録されている状態&lt;code&gt;s&lt;/code&gt;の長さよりも短い場合のみ探索することで、&lt;code&gt;O(N^2*2^N)&lt;/code&gt;で探索することができます。&lt;br /&gt;
-そして、全てのパスの状態における各頂点を終点としたときの長さがわかるので、各パスの状態ごとのパスの長さの最小値の和が求める答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
-for (var i = 0; i &amp;lt; M; i++)
-{
-    var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    u--; v--;
-    G[u].Add(v);
-    G[v].Add(u);
-}
-
-const int inf = (int)1e9;
-var dp = new int[1 &amp;lt;&amp;lt; N, N];
-for (var i = 1; i &amp;lt; 1 &amp;lt;&amp;lt; N; i++)
-{
-    for (var j = 0; j &amp;lt; N; j++)
-    {
-        dp[i, j] = inf;
-    }
-}
-
-var queue = new Queue&amp;lt;(int U, int S, int L)&amp;gt;();
-for (var i = 0; i &amp;lt; N; i++)
-{
-    var s = 1 &amp;lt;&amp;lt; i;
-    var l = 1;
-    dp[s, i] = l;
-    queue.Enqueue((i, s, l));
-    while (queue.Count &amp;gt; 0)
-    {
-        var (u, cs, cl) = queue.Dequeue();
-        if (l &amp;gt; dp[cs, u]) continue;
-        foreach (var v in G[u])
-        {
-            var ns = (cs &amp;gt;&amp;gt; v &amp;amp; 1) == 0 ? cs + (1 &amp;lt;&amp;lt; v) : cs - (1 &amp;lt;&amp;lt; v);
-            var nl = cl + 1;
-            if (nl &amp;gt;= dp[ns, v]) continue;
-            dp[ns, v] = nl;
-            queue.Enqueue((v, ns, nl));
-        }
-    }
-}
-
-var answer = 0;
-for (var i = 0; i &amp;lt; 1 &amp;lt;&amp;lt; N; i++)
-{
-    var min = inf;
-    for (var j = 0; j &amp;lt; N; j++)
-    {
-        min = Math.Min(min, dp[i, j]);
-    }
-
-    answer += min;
-}
-Console.WriteLine(answer);
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
