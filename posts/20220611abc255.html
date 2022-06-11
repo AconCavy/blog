@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC255</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC255">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220611abc255">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC255</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 11 June 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 11 June 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 255の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc255">https://atcoder.jp/contests/abc255</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc255/tasks/abc255_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC255/submissions/32372739">コンテスト提出</a></p>
+<p><code>R</code>と<code>C</code>の値ごとに場合分けして答えることもできますが(4通り)、<code>2*2</code>の行列<code>M</code>として値を保持して<code>M[R][C]</code>の値を答えることもできます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (R, C) = Scanner.Scan&lt;int, int&gt;();
+    R--; C--;
+    var M = new int[2][];
+    for (var i = 0; i &lt; 2; i++)
+    {
+        M[i] = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    }
+
+    var answer = M[R][C];
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc255/tasks/abc255_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC255/submissions/32381972">コンテスト提出</a></p>
+<p>ある人を照らすために必要な<code>R</code>は、何れかの明かりを持つことができる人の位置からの最小距離であり、その<code>R</code>の最大値を求めることで全ての人をカバーすることができます。<br>
+距離<code>D</code>は二点の<code>X</code>の差分<code>dx</code>と<code>Y</code>の差分を<code>dy</code>としたとき、<code>D = Sqrt(dx^2 + dy^2)</code>で求めることができますが、<code>D &lt; D'</code>ならば、<code>D^2 &lt; D'^2</code>なので、距離の二乗の値で走査することで、最後に答えを求めるときを除いて実数による誤差を無視することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var P = new (long X, long Y)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;long, long&gt;();
+        P[i] = (x, y);
+    }
+
+    var answer = 0L;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var min = inf;
+        for (var i = 0; i &lt; N; i++)
+        {
+            var dx = P[a].X - P[i].X;
+            var dy = P[a].Y - P[i].Y;
+            var d = dx * dx + dy * dy;
+            min = Math.Min(min, d);
+        }
+
+        answer = Math.Max(answer, min);
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<p>答え<code>R</code>の二部探索でも答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var P = new (long X, long Y)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;long, long&gt;();
+        P[i] = (x, y);
+    }
+
+    bool F(long x)
+    {
+        var ok = new bool[N];
+        foreach (var a in A)
+        {
+            for (var i = 0; i &lt; N; i++)
+            {
+                var dx = P[a].X - P[i].X;
+                var dy = P[a].Y - P[i].Y;
+                var d = dx * dx + dy * dy;
+                ok[i] |= d &lt;= x;
+            }
+        }
+
+        return ok.All(x =&gt; x);
+    }
+
+    const long inf = (long)1e18;
+    var answer = Math.Sqrt(BinarySearch(-1, inf, F));
+    Console.WriteLine(answer);
+}
+
+public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc255/tasks/abc255_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC255/submissions/32396621">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC255/submissions/32418071">復習提出</a></p>
+<p><code>D=0</code>のときは明らかに、<code>Abs(X-A)</code>となります。
+以下それ以外のときに<code>d=(X-A)/D</code>としたとき、</p>
+<ul>
+<li><code>0&lt;=d&lt;=N-2</code>のとき、<code>d+1</code>項目と<code>d+2</code>項目の間に<code>X</code>が存在するため、<code>Abs(X-(A+D*d))</code>と<code>Abs(X-(A+D*(d+1)))</code>の回数が小さいほうが答えとなります。</li>
+<li><code>d=N-1</code>のとき、<code>N</code>項より大きな(小さな)値にはすることができないため、<code>Abs(X-(A+D*(N-1)))</code>となります。</li>
+<li><code>d&lt;0</code>のとき、<code>1</code>項より小さな(大きな)値にすることができないため、<code>Abs(X-A)</code>となります。</li>
+</ul>
+<p>このことから、<code>d</code>を<code>0&lt;=d&lt;=N-1</code>に制限したときの<code>Abs(X-(A+D*d))</code>と<code>d+1&lt;=N-1</code>ならば<code>Abs(X-(A+D*(d+1)))</code>の回数が小さいほうが答えとなります。
+<code>(X-A)</code>には、初項が含まれていることに注意します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (X, A, D, N) = Scanner.Scan&lt;long, long, long, long&gt;();
+
+    long F(long n)
+    {
+        return Math.Abs(X - (A + n * D));
+    }
+
+    if (D == 0)
+    {
+        Console.WriteLine(F(0));
+        return;
+    }
+
+    var n = Math.Max(0, Math.Min(N - 1, (X - A) / D));
+    var answer = F(n);
+    if (n + 1 &lt;= N - 1) answer = Math.Min(answer, F(n + 1));
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc255/tasks/abc255_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC255/submissions/32399982">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC255/submissions/32418084">復習提出</a></p>
+<p>クエリごとに<code>A</code>の値を走査してしまうと、<code>O(QN)</code>かかってしまい、実行時間制限に間に合いません。
+そこで、<code>A</code>の値をソートし、<code>A</code>において<code>X</code>以上が現れる位置<code>i (0-indexed)</code>において左右に二つに分けた場合、左側の操作に必要な回数は<code>X*左側の個数 - A[0..i)の合計</code>となり、右側の操作に必要な回数は<code>A[i..N)の合計 - X*右側の個数</code>となることがわかります。<br>
+そのため、あらかじめ<code>A</code>の累積和を求めておき、クエリごとに<code>A</code>において<code>X</code>以上が現れる位置を二部探索で求めることで、位置を求めることに<code>O(logN)</code>、左側の合計と右側の合計を求めることに<code>O(1)</code>で対応することができ、全体で<code>O(QlogN)</code>で求めることができるようになります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    Array.Sort(A);
+    var cum = new long[N + 1];
+    for (var i = 0; i &lt; N; i++)
+    {
+        cum[i + 1] = cum[i] + A[i];
+    }
+
+    while (Q-- &gt; 0)
+    {
+        var X = Scanner.Scan&lt;long&gt;();
+        var l = LowerBound(A, X);
+        var r = N - l;
+        var answer = Math.Abs(cum[l] - X * l) + Math.Abs((cum[N] - cum[l]) - X * r);
+        Console.WriteLine(answer);
+    }
+}
+
+public static int LowerBound&lt;T&gt;(ReadOnlySpan&lt;T&gt; source, T key) where T : IComparable&lt;T&gt;
+{
+    var (l, r) = (-1, source.Length);
+    while (r - l &gt; 1)
+    {
+        var m = l + (r - l) / 2;
+        if (source[m].CompareTo(key) &gt;= 0) r = m;
+        else l = m;
+    }
+    return r;
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc255/tasks/abc255_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC255/submissions/32416252">復習提出</a></p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var S = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var X = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+
+    var B = new long[N];
+    for (var i = 0; i &lt; N - 1; i++)
+    {
+        B[i + 1] = S[i] - B[i];
+    }
+
+    var dict = new Dictionary&lt;long, long&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; M; j++)
+        {
+            var c = X[j] - B[i];
+            if (i % 2 == 1) c *= -1;
+            if (!dict.ContainsKey(c)) dict[c] = 0;
+            dict[c]++;
+        }
+    }
+
+    var answer = dict.Values.Max();
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220611abc255" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
