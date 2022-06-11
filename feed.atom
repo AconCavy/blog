@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-06-11T14:54:42Z</updated>
+	<updated>2022-06-11T15:07:46Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220611abc255</id>
 		<title>ABC255</title>
@@ -114,14 +114,13 @@ public static long BinarySearch(long ng, long ok, Func&amp;lt;long, bool&amp;gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC255/submissions/32396621"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
 &lt;a href="https://atcoder.jp/contests/ABC255/submissions/32418071"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;D=0&lt;/code&gt;のときは明らかに、&lt;code&gt;Abs(X-A)&lt;/code&gt;となります。
-以下それ以外のときに&lt;code&gt;d=(X-A)/D&lt;/code&gt;としたとき、&lt;/p&gt;
+以下それ以外のときに&lt;code&gt;d=(X-A)/D&lt;/code&gt;とし、&lt;code&gt;x&lt;/code&gt;を初項を除く項数の数として&lt;code&gt;F(x)=Abs(X-(A+D*x))&lt;/code&gt;としたとき、&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;0&amp;lt;=d&amp;lt;=N-2&lt;/code&gt;のとき、&lt;code&gt;d+1&lt;/code&gt;項目と&lt;code&gt;d+2&lt;/code&gt;項目の間に&lt;code&gt;X&lt;/code&gt;が存在するため、&lt;code&gt;Abs(X-(A+D*d))&lt;/code&gt;と&lt;code&gt;Abs(X-(A+D*(d+1)))&lt;/code&gt;の回数が小さいほうが答えとなります。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d=N-1&lt;/code&gt;のとき、&lt;code&gt;N&lt;/code&gt;項より大きな(小さな)値にはすることができないため、&lt;code&gt;Abs(X-(A+D*(N-1)))&lt;/code&gt;となります。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d&amp;lt;0&lt;/code&gt;のとき、&lt;code&gt;1&lt;/code&gt;項より小さな(大きな)値にすることができないため、&lt;code&gt;Abs(X-A)&lt;/code&gt;となります。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0&amp;lt;=d&amp;lt;=N-2&lt;/code&gt;のとき、&lt;code&gt;初項+d項目&lt;/code&gt;と&lt;code&gt;初項+(d+1)項目&lt;/code&gt;の間に&lt;code&gt;X&lt;/code&gt;が存在するため、&lt;code&gt;F(d)&lt;/code&gt;と&lt;code&gt;F(d+1)&lt;/code&gt;の回数が小さいほうが答えとなります。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d=N-1&lt;/code&gt;のとき、&lt;code&gt;N&lt;/code&gt;項より大きな項にすることができないため、&lt;code&gt;F(N-1)&lt;/code&gt;となります。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&amp;lt;0&lt;/code&gt;のとき、&lt;code&gt;1&lt;/code&gt;項より小さな項にすることができないため、&lt;code&gt;F(0)&lt;/code&gt;となります。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;このことから、&lt;code&gt;d&lt;/code&gt;を&lt;code&gt;0&amp;lt;=d&amp;lt;=N-1&lt;/code&gt;に制限したときの&lt;code&gt;Abs(X-(A+D*d))&lt;/code&gt;と&lt;code&gt;d+1&amp;lt;=N-1&lt;/code&gt;ならば&lt;code&gt;Abs(X-(A+D*(d+1)))&lt;/code&gt;の回数が小さいほうが答えとなります。
-&lt;code&gt;(X-A)&lt;/code&gt;には、初項が含まれていることに注意します。&lt;/p&gt;
+&lt;p&gt;このことから、&lt;code&gt;d&lt;/code&gt;を&lt;code&gt;0&amp;lt;=d&amp;lt;=N-1&lt;/code&gt;に制限したときの&lt;code&gt;F(d)&lt;/code&gt;と&lt;code&gt;d+1&amp;lt;=N-1&lt;/code&gt;ならば&lt;code&gt;F(d+1)&lt;/code&gt;の回数が小さいほうが答えとなります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (X, A, D, N) = Scanner.Scan&amp;lt;long, long, long, long&amp;gt;();

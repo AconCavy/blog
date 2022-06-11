@@ -191,14 +191,13 @@ public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
 <p><a href="https://atcoder.jp/contests/ABC255/submissions/32396621">コンテスト提出</a><br>
 <a href="https://atcoder.jp/contests/ABC255/submissions/32418071">復習提出</a></p>
 <p><code>D=0</code>のときは明らかに、<code>Abs(X-A)</code>となります。
-以下それ以外のときに<code>d=(X-A)/D</code>としたとき、</p>
+以下それ以外のときに<code>d=(X-A)/D</code>とし、<code>x</code>を初項を除く項数の数として<code>F(x)=Abs(X-(A+D*x))</code>としたとき、</p>
 <ul>
-<li><code>0&lt;=d&lt;=N-2</code>のとき、<code>d+1</code>項目と<code>d+2</code>項目の間に<code>X</code>が存在するため、<code>Abs(X-(A+D*d))</code>と<code>Abs(X-(A+D*(d+1)))</code>の回数が小さいほうが答えとなります。</li>
-<li><code>d=N-1</code>のとき、<code>N</code>項より大きな(小さな)値にはすることができないため、<code>Abs(X-(A+D*(N-1)))</code>となります。</li>
-<li><code>d&lt;0</code>のとき、<code>1</code>項より小さな(大きな)値にすることができないため、<code>Abs(X-A)</code>となります。</li>
+<li><code>0&lt;=d&lt;=N-2</code>のとき、<code>初項+d項目</code>と<code>初項+(d+1)項目</code>の間に<code>X</code>が存在するため、<code>F(d)</code>と<code>F(d+1)</code>の回数が小さいほうが答えとなります。</li>
+<li><code>d=N-1</code>のとき、<code>N</code>項より大きな項にすることができないため、<code>F(N-1)</code>となります。</li>
+<li><code>d&lt;0</code>のとき、<code>1</code>項より小さな項にすることができないため、<code>F(0)</code>となります。</li>
 </ul>
-<p>このことから、<code>d</code>を<code>0&lt;=d&lt;=N-1</code>に制限したときの<code>Abs(X-(A+D*d))</code>と<code>d+1&lt;=N-1</code>ならば<code>Abs(X-(A+D*(d+1)))</code>の回数が小さいほうが答えとなります。
-<code>(X-A)</code>には、初項が含まれていることに注意します。</p>
+<p>このことから、<code>d</code>を<code>0&lt;=d&lt;=N-1</code>に制限したときの<code>F(d)</code>と<code>d+1&lt;=N-1</code>ならば<code>F(d+1)</code>の回数が小さいほうが答えとなります。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (X, A, D, N) = Scanner.Scan&lt;long, long, long, long&gt;();
