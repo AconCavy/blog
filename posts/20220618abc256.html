@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC256</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC256">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220618abc256">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC256</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 18 June 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 18 June 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 256の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc256">https://atcoder.jp/contests/abc256</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc256/tasks/abc256_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC256/submissions/32536346">コンテスト提出</a></p>
+<p><code>Math.Pow(2, N)</code>や<code>1</code>をNビットシフトした値が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var answer = 1L &lt;&lt; N;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc256/tasks/abc256_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC256/submissions/32541675">コンテスト提出</a></p>
+<p>各ターンの初めに位置<code>0</code>に1を足し、位置<code>3,2,1,0</code>の順で<code>Min(現在の位置+a,4)</code>に移動させるシミュレーションを行います。
+位置の操作を<code>0,1,2,3</code>ではなく逆順で処理することで、移動した後の現在の位置を<code>0</code>にすることができるので、何個移動させたかを記録せずに操作できるようになります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var g = new int[5];
+    foreach (var a in A)
+    {
+        g[0]++;
+        for (var i = 3; i &gt;= 0; i--)
+        {
+            g[Math.Min(i + a, 4)] += g[i];
+            g[i] = 0;
+        }
+    }
+
+    var answer = g[4];
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc256/tasks/abc256_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC256/submissions/32554919">コンテスト提出</a></p>
+<p>全てのマスを全探索してしまうと<code>30^9</code>通りとなり、実行時間制限に間に合いません。
+しかし、左上の<code>2x2</code>マスさえわかれば、3行目と3列目の数字が固定されるので、<code>30^4</code>の全探索で済むようになります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H1, H2, H3, W1, W2, W3) = Scanner.Scan&lt;int, int, int, int, int, int&gt;();
+    var answer = 0;
+    for (var h1w1 = 1; h1w1 &lt; Math.Min(H1, W1); h1w1++)
+    {
+        for (var h2w1 = 1; h1w1 + h2w1 &lt; W1; h2w1++)
+        {
+            for (var h1w2 = 1; h1w1 + h1w2 &lt; H1; h1w2++)
+            {
+                for (var h2w2 = 1; h1w2 + h2w2 &lt; W2 &amp;&amp; h2w1 + h2w2 &lt; H2; h2w2++)
+                {
+                    var h3w1 = W1 - h1w1 - h2w1;
+                    var h3w2 = W2 - h1w2 - h2w2;
+                    var h1w3 = H1 - h1w1 - h1w2;
+                    var h2w3 = H2 - h2w1 - h2w2;
+                    if (H3 - h3w1 - h3w2 == W3 - h1w3 - h2w3 &amp;&amp; W3 - h1w3 - h2w3 &gt; 0)
+                    {
+                        answer++;
+                    }
+                }
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc256/tasks/abc256_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC256/submissions/32558635">コンテスト提出</a></p>
+<p>区間の左側を昇順で並べたときに、ある区間の左側よりもその直前区間の右側が大きい場合、その二つの区間をマージすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var range = new (int L, int R)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        range[i] = Scanner.Scan&lt;int, int&gt;();
+    }
+
+    Array.Sort(range, (x, y) =&gt; x.L.CompareTo(y.L));
+    var answer = new List&lt;(int L, int R)&gt;();
+    answer.Add(range[0]);
+
+    foreach (var (l, r) in range.Skip(1))
+    {
+        if (answer[^1].R &gt;= l)
+        {
+            answer[^1] = (Math.Min(answer[^1].L, l), Math.Max(answer[^1].R, r));
+        }
+        else
+        {
+            answer.Add((l, r));
+        }
+    }
+
+    answer.Sort((x, y) =&gt; x.L.CompareTo(y.L));
+    foreach (var (l, r) in answer)
+    {
+        Console.WriteLine($&quot;{l} {r}&quot;);
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc256/tasks/abc256_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC256/submissions/32565127">コンテスト提出</a></p>
+<p>嫌いな人との関係を有効辺として考えることで、グラフとして考えることができるようになります。<br>
+N頂点N辺のグラフであることから、連結成分ごとにサイクルは多くても1個であることがわかります。<br>
+そこで、グラフを強連結成分ごとに分解し、サイクル内の最小の不満を受け入れることで、サイクルごとの不満度を最小にすることができます。<br>
+そして、サイクルごとの不満度の総和が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var X = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var C = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var scc = new StronglyConnectedComponent(N);
+    for (var i = 0; i &lt; N; i++)
+    {
+        scc.AddEdge(i, X[i]);
+    }
+
+    const long inf = (long)1e18;
+    var answer = 0L;
+    foreach (var graph in scc.GetGraph())
+    {
+        if (graph.Count == 1) continue;
+        var min = inf;
+        foreach (var u in graph)
+        {
+            min = Math.Min(min, C[u]);
+        }
+
+        answer += min;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<p>強連結成分は<code>ACL</code>の<code>scc</code>等で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public class StronglyConnectedComponent
+{
+    public int Length { get; }
+    private readonly List&lt;(int, Edge)&gt; _edges;
+
+    public StronglyConnectedComponent(int length)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _edges = new List&lt;(int, Edge)&gt;();
+    }
+
+    public void AddEdge(int from, int to)
+    {
+        if (from &lt; 0 || Length &lt;= from) throw new ArgumentOutOfRangeException(nameof(from));
+        if (to &lt; 0 || Length &lt;= to) throw new ArgumentOutOfRangeException(nameof(to));
+        _edges.Add((from, new Edge(to)));
+    }
+
+    public (int GroupCount, int[] IDs) GetIDs()
+    {
+        var g = new CompressedSparseRow&lt;Edge&gt;(Length, _edges);
+        var (nowOrd, groupCount) = (0, 0);
+        var visited = new Stack&lt;int&gt;(Length);
+        var low = new int[Length];
+        var ord = new int[Length];
+        Array.Fill(ord, -1);
+        var ids = new int[Length];
+
+        void Dfs(int v)
+        {
+            low[v] = ord[v] = nowOrd++;
+            visited.Push(v);
+            for (var i = g.Start[v]; i &lt; g.Start[v + 1]; i++)
+            {
+                var to = g.Edges[i].To;
+                if (ord[to] == -1)
+                {
+                    Dfs(to);
+                    low[v] = Math.Min(low[v], low[to]);
+                }
+                else
+                {
+                    low[v] = Math.Min(low[v], ord[to]);
+                }
+            }
+
+            if (low[v] != ord[v]) return;
+            while (true)
+            {
+                var u = visited.Pop();
+                ord[u] = Length;
+                ids[u] = groupCount;
+                if (u == v) break;
+            }
+
+            groupCount++;
+        }
+
+        for (var i = 0; i &lt; Length; i++)
+        {
+            if (ord[i] == -1)
+                Dfs(i);
+        }
+
+        for (var i = 0; i &lt; Length; i++)
+        {
+            ids[i] = groupCount - 1 - ids[i];
+        }
+
+        return (groupCount, ids);
+    }
+
+    public IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt; GetGraph()
+    {
+        var (groupCount, ids) = GetIDs();
+        var groups = new List&lt;int&gt;[groupCount];
+        for (var i = 0; i &lt; groups.Length; i++)
+        {
+            groups[i] = new List&lt;int&gt;();
+        }
+
+        foreach (var (id, index) in ids.Select((x, i) =&gt; (x, i)))
+        {
+            groups[id].Add(index);
+        }
+
+        return groups;
+    }
+
+    private readonly struct Edge
+    {
+        public readonly int To;
+        public Edge(int to) =&gt; To = to;
+    }
+}
+
+public class CompressedSparseRow&lt;T&gt;
+{
+    public CompressedSparseRow(int length, IEnumerable&lt;(int ID, T)&gt; edges)
+    {
+        Start = new int[length + 1];
+        var es = edges.ToArray();
+        Edges = new T[es.Length];
+        foreach (var e in es) Start[e.ID + 1]++;
+        for (var i = 0; i &lt; length; i++) Start[i + 1] += Start[i];
+        var counter = new int[length + 1];
+        Start.AsSpan().CopyTo(counter.AsSpan());
+        foreach (var (i, t) in es) Edges[counter[i]++] = t;
+    }
+
+    public int[] Start { get; }
+    public T[] Edges { get; }
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220618abc256" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
