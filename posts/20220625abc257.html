@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC257</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC257">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220625abc257">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC257</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 25 June 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 25 June 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 257の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc257">https://atcoder.jp/contests/abc257</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc257/tasks/abc257_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc257/submissions/32714875">コンテスト提出</a></p>
+<p>長さ<code>N*26</code>の文字列の<code>X</code>番目の文字は何かと言い換えられるので、<code>X</code>を<code>0-indexed</code>に変換した<code>X-1</code>番目を<code>N</code>で割った番目のアルファベットが答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, int&gt;();
+    var answer = (char)((X - 1) / N + 'A');
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc257/tasks/abc257_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc257/submissions/32714940">コンテスト提出</a></p>
+<p><code>A</code>の位置と番号のペアとして位置を昇順にソートしたものを<code>B</code>、駒のあるマスを<code>X</code>、各クエリを<code>l</code>番目の駒に対する操作としたとき、</p>
+<ul>
+<li><code>l+1&lt;K</code>のとき、<code>B[l]のX</code>と<code>B[l+1]のX</code>が隣り合っていなければ<code>B[l]のX</code>を<code>+1</code>する。</li>
+<li><code>l==K</code>のとき、<code>B[l]のX</code>が<code>N</code>未満であれば<code>B[l]のX</code>を<code>+1</code>する。</li>
+</ul>
+<p>のように操作し、すべての操作が終わったときの<code>X</code>が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K, Q) = Scanner.Scan&lt;int, int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var L = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = A.Select((x, i) =&gt; (x, i)).ToArray();
+    Array.Sort(B, (x, y) =&gt; x.x.CompareTo(y.x));
+    foreach (var l in L.Select(x =&gt; x - 1))
+    {
+        if (l + 1 &lt; K)
+        {
+            if (B[l].x + 1 != B[l + 1].x) B[l].x++;
+        }
+        else
+        {
+            if (B[l].x &lt; N) B[l].x++;
+        }
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, B.Select(x =&gt; x.x)));
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc257/tasks/abc257_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc257/submissions/32722188">コンテスト提出</a></p>
+<p><code>X=0</code>のとき<code>f(X)=大人の数</code>であり、<code>X=infinity</code>のとき<code>f(X)=子供の数</code>であることから、答えは最小でも<code>Max(f(0), f(1e9+1))</code>であることがわかります。
+そして、子供と大人の座標を別々に管理しそれぞれを昇順でソートしておくことで、体重<code>X</code>未満の子供の数と体重<code>X</code>以上の大人の数を二部探索で調べることができるようになるので、境界としてありえる<code>N</code>人全ての<code>W</code>について調べることで答えを求めることができます。
+計算量は子供と大人の分類に<code>O(N)</code>、ソートに<code>(NlogN)</code>、各クエリごとに<code>O(logN)</code>なので、全体で<code>O(NlogN)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+    var W = Scanner.ScanEnumerable&lt;int&gt;().ToList();
+
+    var child = new List&lt;int&gt;();
+    var adult = new List&lt;int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        (S[i] == '0' ? child : adult).Add(W[i]);
+    }
+
+    child.Sort();
+    adult.Sort();
+
+    var answer = Math.Max(child.Count, adult.Count);
+    foreach (var w in W)
+    {
+        var c1 = LowerBound(child, w);
+        var c2 = adult.Count - LowerBound(adult, w);
+        answer = Math.Max(answer, c1 + c2);
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc257/tasks/abc257_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc257/submissions/32737230">コンテスト提出</a></p>
+<p>各始点について、全てのジャンプ台に移動可能な最小の<code>S</code>について二部探索をおこない、その最小を求めます。
+二部探索の判定式として、始点から幅優先探索を行うことで<code>O(N^2)</code>で全てのジャンプ台に移動可能かを判定することができます。
+全体計算量<code>O(N^3logN)</code>で答えを求めることができます。
+あるジャンプ台から別のジャンプ台へ移動可能か判定する際に、<code>P*S&gt;=|x0-x1|+|y0-x1|</code>の右辺は最大で<code>4e9</code>であることに注意しましょう。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var Jumps = new Jump[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y, p) = Scanner.Scan&lt;long, long, long&gt;();
+        Jumps[i] = new Jump(x, y, p);
+    }
+
+    bool CanMove(Jump from, Jump to, long s)
+    {
+        var d = Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
+        return s &gt;= d || from.P * s &gt;= d;
+    }
+
+    const long inf = (long)4e9;
+    var answer = inf;
+    for (var k = 0; k &lt; N; k++)
+    {
+        bool F(long s)
+        {
+            var queue = new Queue&lt;Jump&gt;();
+            var used = new bool[N];
+
+            used[k] = true;
+            queue.Enqueue(Jumps[k]);
+
+            while (queue.Count &gt; 0)
+            {
+                var u = queue.Dequeue();
+                for (var i = 0; i &lt; N; i++)
+                {
+                    if (!used[i] &amp;&amp; CanMove(u, Jumps[i], s))
+                    {
+                        used[i] = true;
+                        queue.Enqueue(Jumps[i]);
+                    }
+                }
+            }
+
+            return used.All(x =&gt; x);
+        }
+
+        var s = BinarySearch(-1, inf, F);
+        answer = Math.Min(answer, s);
+    }
+
+    Console.WriteLine(answer);
+}
+
+public readonly struct Jump
+{
+    public readonly long X;
+    public readonly long Y;
+    public readonly long P;
+    public Jump(long x, long y, long p) =&gt; (X, Y, P) = (x, y, p);
+}
+
+public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+
+    return ok;
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc257/tasks/abc257_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc257/submissions/32752336">復習提出</a></p>
+<p><code>C</code>の最小を<code>min</code>としたとき、桁数は最大でも<code>N/min</code>になります。
+その桁数が構成できるもののうち、ある桁の値<code>d</code>は、<code>C[d]</code>とその桁より右側を<code>min</code>にしたときの和であり、その和がその時点で採用することができれば、その桁を<code>d</code>とすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;long&gt;();
+    var C = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+
+    var min = C.Min();
+    var length = N / min;
+    var builder = new StringBuilder();
+    for (var i = 0; i &lt; length; i++)
+    {
+        for (var d = 9; d &gt;= 1; j--)
+        {
+            if (min * (length - 1 - i) + C[d - 1] &lt;= N)
+            {
+                N -= C[d - 1];
+                builder.Append((char)(d + '0'));
+                break;
+            }
+        }
+    }
+
+    var answer = builder.ToString();
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220625abc257" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
