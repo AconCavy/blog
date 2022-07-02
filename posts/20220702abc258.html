@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC258</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC258">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220702abc258">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC258</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 02 July 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 02 July 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 258の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc258">https://atcoder.jp/contests/abc258</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc258/tasks/abc258_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc258/submissions/32886264">コンテスト提出</a></p>
+<p>1時間は60分なので、Kを60で割った商が経過時、Kを60で割った余りが経過分となるので、<code>21+K/60</code>時<code>K%60</code>分が答えとなります。<br>
+C#では文字列補間で<a href="https://docs.microsoft.com/ja-jp/dotnet/standard/base-types/custom-numeric-format-strings">カスタム数値形式文字列</a>を使うことで、数値を<code>0</code>埋めで表示することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var K = Scanner.Scan&lt;int&gt;();
+    var x = K / 60;
+    var y = K % 60;
+    Console.WriteLine($&quot;{21 + x}:{y:00}&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc258/tasks/abc258_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc258/submissions/32895144">コンテスト提出</a></p>
+<p>全てのマスから縦横斜めの8方向にずらした数値を全探索します。<br>
+8方向全てを書くのは大変なので、行と列のそれぞれの移動差分を用意することで、差分に移動量を掛けて範囲内に収まるように<code>N</code>で割った余りを取ることで、簡単に記述することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = new int[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        A[i] = Scanner.ScanLine().Select(x =&gt; x - '0').ToArray();
+    }
+
+    var D8 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1) };
+
+    long answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            foreach (var (di, dj) in D8)
+            {
+                long v = 0;
+                for (var k = 0; k &lt; N; k++)
+                {
+                    var ii = (i + di * k + N) % N;
+                    var jj = (j + dj * k + N) % N;
+                    v = v * 10 + A[ii][jj];
+                }
+
+                answer = Math.Max(answer, v);
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc258/tasks/abc258_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc258/submissions/32897344">コンテスト提出</a></p>
+<p>クエリごとに文字列を操作してしまうと、クエリごとの計算量が<code>O(N)</code>、全体の計算量が<code>O(QN)</code>になってしまい、実行時間制限に間に合わないため、計算量を改善する必要があります。</p>
+<p>クエリ1に注目すると、<code>N</code>文字目の次を<code>1</code>文字目としたとき、文字列を<code>x</code>回右にシフトしてることがわかります。<br>
+そして、文字列を右にシフトすると、先頭の位置は<code>-x</code>分移動し、移動先が負の場合は<code>N</code>を足した位置が先頭になります。<br>
+このように、文字列の先頭の位置がどこであるかのみを管理することで、クエリごとの計算量を<code>O(1)</code>に改善することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+    var idx = 0;
+    while (Q-- &gt; 0)
+    {
+        var (t, x) = Scanner.Scan&lt;int, int&gt;();
+        if (t == 1)
+        {
+            idx = (idx - x + N) % N;
+        }
+        else
+        {
+            var i = (idx + x - 1) % N;
+            Console.WriteLine(S[i]);
+        }
+    }
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc258/tasks/abc258_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc258/submissions/32901859">コンテスト提出</a></p>
+<p><code>i番目のステージまでに必要な最小の時間 + 初回攻略時間 + (i番目のステージで必要な時間 * 残り回数全てを)</code>が<code>i</code>番目のステージおける時間の最小値となるとなるので、全てのステージにおける時間の最小値の最小値が答えとなります。
+ステージごとに毎度<code>i</code>番目のステージまでに必要な最小の時間を計算してしまうと時間計算量が<code>O(N)</code>かかってしまうので、累積和を用いることで<code>O(1)</code>に改善することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, int&gt;();
+    var AB = new (long A, long B)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        AB[i] = Scanner.Scan&lt;long, long&gt;();
+    }
+
+    var minStarts = new long[N];
+    for (var i = 1; i &lt; N; i++)
+    {
+        minStarts[i] = minStarts[i - 1] + AB[i - 1].A + AB[i - 1].B;
+    }
+
+    const long inf = (long)4e18;
+    var answer = inf;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var x = Math.Max(0, X - (i + 1));
+        var time = sum + AB[i].A + AB[i].B + x * AB[i].B;
+        answer = Math.Min(answer, time);
+        sum += AB[i].A + AB[i].B;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc258/tasks/abc258_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc258/submissions/32937679">復習提出</a></p>
+<p><code>i</code>番目のじゃがいもを開始位置としたとき、1つの箱に必要なじゃがいもの個数を<code>C[i]</code>とすると、次の箱に使うじゃがいもの開始位置は<code>(i+C[i])%N</code>となり、開始位置の集合は最大でも<code>N</code>の有向グラフとして表すことができます。</p>
+<pre><code class="language-text line-numbers"># 入力例1
+# 3 2 5
+# 3 4 1
+# 1
+# 2
+
+0番目のじゃがいもから箱を作る: {0, 1}    =&gt; 2個 =&gt; 次は (0+2)%3 = 2番目のじゃがいも
+2番目のじゃがいもから箱を作る: {2, 0, 1} =&gt; 3個 =&gt; 次は (2+3)%3 = 2番目のじゃがいも
+2番目のじゃがいもから箱を作る: {2, 0, 1} =&gt; 3個 =&gt; 次は (2+3)%3 = 2番目のじゃがいも
+...
+</code></pre>
+<p>このことから、有効グラフのK番目の頂点に値する開始位置における必要なじゃがいもの個数が答えとなります。
+時間計算量について、<code>C[i]</code>は累積和と尺取り法を使うことで<code>O(N)</code>、有効グラフも<code>O(N)</code>で事前に計算でき、クエリに対して<code>O(1)</code>で答えを求めることができるので、全体の時間計算量は<code>O(N+Q)</code>となります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q, X) = Scanner.Scan&lt;int, int, long&gt;();
+    var W = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var sum = W.Sum();
+
+    var cumW = new long[N * 2 + 1];
+    for (var i = 0; i &lt; N * 2; i++)
+    {
+        cumW[i + 1] = cumW[i] + W[i % N];
+    }
+
+    var counts = new long[N];
+    {
+        var r = 0;
+        var x = X % sum;
+        for (var l = 0; l &lt; N; l++)
+        {
+            counts[l] = X / sum * N;
+            while (cumW[r] - cumW[l] &lt; x) r++;
+            counts[l] += r - l;
+        }
+    }
+
+    var next = new int[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        next[i] = (int)((i + counts[i]) % N);
+    }
+
+    var steps = new List&lt;int&gt;();
+    var dict = new Dictionary&lt;int, int&gt;();
+    var noLoopLength = 0;
+    var loopLength = 0;
+    {
+        var curr = 0;
+        for (var i = 0;; i++)
+        {
+            if (dict.ContainsKey(curr))
+            {
+                noLoopLength = dict[curr];
+                loopLength = i - dict[curr];
+                break;
+            }
+
+            dict[curr] = i;
+            steps.Add(curr);
+            curr = next[curr];
+        }
+    }
+
+    while (Q-- &gt; 0)
+    {
+        var K = Scanner.Scan&lt;long&gt;() - 1;
+        if (K &lt;= noLoopLength)
+        {
+            var box = steps[(int)K];
+            Console.WriteLine(counts[box]);
+        }
+        else
+        {
+            var mod = (K - noLoopLength) % loopLength;
+            var box = steps[(int)(noLoopLength + mod)];
+            Console.WriteLine(counts[box]);
+        }
+    }
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220702abc258" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
