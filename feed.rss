@@ -5,8 +5,164 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 02 Jul 2022 15:27:16 GMT</pubDate>
-		<lastBuildDate>Sat, 02 Jul 2022 15:27:16 GMT</lastBuildDate>
+		<pubDate>Sat, 09 Jul 2022 14:40:02 GMT</pubDate>
+		<lastBuildDate>Sat, 09 Jul 2022 14:40:02 GMT</lastBuildDate>
+		<item>
+			<title>ABC259</title>
+			<link>https://blog.aconcavy.dev/posts/20220709abc259</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 259の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20220709abc259</guid>
+			<pubDate>Sat, 09 Jul 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 259の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259"&gt;https://atcoder.jp/contests/abc259&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33074995"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;M&amp;lt;X&lt;/code&gt;のとき、&lt;code&gt;D&lt;/code&gt;ずつ&lt;code&gt;X-M&lt;/code&gt;年分変化したので、最終的な身長からその変化分を引いた数&lt;code&gt;T-D*(X-M)&lt;/code&gt;が答えとなります。&lt;br /&gt;
+&lt;code&gt;X&amp;lt;=M&lt;/code&gt;のとき、&lt;code&gt;X&lt;/code&gt;歳にはすでに&lt;code&gt;T&lt;/code&gt;であるため、&lt;code&gt;M&lt;/code&gt;歳の時も&lt;code&gt;T&lt;/code&gt;です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M, X, T, D) = Scanner.Scan&amp;lt;int, int, int, int, int&amp;gt;();
+    var answer = T - D * Math.Max(X - M, 0);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33081607"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ベクトル&lt;code&gt;(a,b)&lt;/code&gt;に対して&lt;code&gt;d&lt;/code&gt;度の回転の操作を行います。
+これは、&lt;code&gt;x' = x * cos(rad(d)) - y * sin(rad(d))&lt;/code&gt;, &lt;code&gt;y' = x * sin(rad(d)) + y * cos(rad(d))&lt;/code&gt;で表すことができます。
+度から弧度法(ラジアン)を求めるには、&lt;code&gt;度 * PI / 180度&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (A, B, D) = Scanner.Scan&amp;lt;double, double, double&amp;gt;();
+    var rad = D * Math.PI / 180.0;
+    var sin = Math.Sin(rad);
+    var cos = Math.Cos(rad);
+    var x = A * cos - B * sin;
+    var y = A * sin + B * cos;
+    Console.WriteLine($&amp;quot;{x} {y}&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33110149"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文字列が一致するということは、同じ文字が連続した区間ごとに分割し、区間順にみたときに次の条件を全ての文字の区間が満たすときになります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;S&lt;/code&gt;と&lt;code&gt;T&lt;/code&gt;の区間で出現する文字が一致する。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;S&lt;/code&gt;と&lt;code&gt;T&lt;/code&gt;の区間で文字が連続する長さが両方とも&lt;code&gt;1&lt;/code&gt;である。または、文字が連続する長さが両方とも&lt;code&gt;2&lt;/code&gt;以上かつ&lt;code&gt;T&lt;/code&gt;の文字が連続する長さが&lt;code&gt;S&lt;/code&gt;の文字が連続する長さ以上である。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var T = Scanner.Scan&amp;lt;string&amp;gt;();
+
+    List&amp;lt;(char, int)&amp;gt; F(ReadOnlySpan&amp;lt;char&amp;gt; s)
+    {
+        var result = new List&amp;lt;(char, int)&amp;gt;();
+        var r = 0;
+        for (var l = 0; l &amp;lt; s.Length;)
+        {
+            r = l;
+            while (r &amp;lt; s.Length &amp;amp;&amp;amp; s[r] == s[l]) r++;
+            result.Add((s[l], r - l));
+            l = r;
+        }
+
+        return result;
+    }
+
+    var ss = F(S);
+    var tt = F(T);
+    var answer = ss.Count == tt.Count;
+    if (answer)
+    {
+        for (var i = 0; i &amp;lt; ss.Count; i++)
+        {
+            var (s, cs) = ss[i];
+            var (t, ct) = tt[i];
+            answer &amp;amp;= s == t;
+            answer &amp;amp;= cs == ct || cs &amp;gt; 1 &amp;amp;&amp;amp; ct &amp;gt; 1 &amp;amp;&amp;amp; cs &amp;lt; ct;
+        }
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33103648"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各円を頂点としたとき、円どうしで移動可能な場合に辺が存在すると考えると、グラフ問題として考えることができます。
+ある二つの円が移動可能ということは、その二つの円が共有点を持つということになります。
+共有点が存在するかどうかは、一つ目の円の半径を&lt;code&gt;r1&lt;/code&gt;、二つ目の円の半径を&lt;code&gt;r2&lt;/code&gt;、二つの円の中心間の距離を&lt;code&gt;d&lt;/code&gt;としたとき、&lt;code&gt;abs(r1-r2)&amp;lt;=d&amp;lt;=r1+r2&lt;/code&gt;が満たされれるかどうかで判断することができます。
+&lt;code&gt;Disjoint Set Union&lt;/code&gt;などのデータ構造や深さ優先探索、幅優先探索などで、&lt;code&gt;(sx,sy)&lt;/code&gt;が含まれる円と&lt;code&gt;(tx,ty)&lt;/code&gt;が含まれる円が連結であるかの判定を行うことで、答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var (sx, sy, tx, ty) = Scanner.Scan&amp;lt;long, long, long, long&amp;gt;();
+    var s = new Point(sx, sy);
+    var t = new Point(tx, ty);
+
+    var P = new (Point P, long R)[N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var (x, y, r) = Scanner.Scan&amp;lt;long, long, long&amp;gt;();
+        P[i] = (new Point(x, y), r);
+    }
+
+    long SqD(Point p1, Point p2)
+    {
+        var dx = p1.X - p2.X;
+        var dy = p1.Y - p2.Y;
+        return dx * dx + dy * dy;
+    }
+
+    var okS = new bool[N];
+    var okT = new bool[N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        okS[i] = SqD(s, P[i].P) == P[i].R * P[i].R;
+        okT[i] = SqD(t, P[i].P) == P[i].R * P[i].R;
+    }
+
+    var dsu = new DisjointSetUnion(N);
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = i + 1; j &amp;lt; N; j++)
+        {
+            var sqd = SqD(P[i].P, P[j].P);
+            var rr1 = P[i].R + P[j].R;
+            var rr2 = P[i].R - P[j].R;
+            if (rr2 * rr2 &amp;lt;= sqd &amp;amp;&amp;amp; sqd &amp;lt;= rr1 * rr1)
+            {
+                dsu.Merge(i, j);
+            }
+        }
+    }
+
+    var answer = false;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; N; j++)
+        {
+
+            answer |= okS[i] &amp;amp;&amp;amp; okT[j] &amp;amp;&amp;amp; dsu.IsSame(i, j);
+        }
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+
+public readonly struct Point
+{
+    public readonly long X;
+    public readonly long Y;
+    public Point(long x, long y) =&amp;gt; (X, Y) = (x, y);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC258</title>
 			<link>https://blog.aconcavy.dev/posts/20220702abc258</link>
@@ -1816,152 +1972,6 @@ public static IEnumerable&amp;lt;int&amp;gt; Sieve(int value)
         var answer = cumAB[x] &amp;lt;= y &amp;amp;&amp;amp; cumBA[y] &amp;lt;= x;
         Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
     }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC249</title>
-			<link>https://blog.aconcavy.dev/posts/20220423abc249</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 249の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20220423abc249</guid>
-			<pubDate>Sat, 23 Apr 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 249の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc249"&gt;https://atcoder.jp/contests/abc249&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188853"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;高橋君の進む距離を考えます。
-歩く+休むを1セットとすると、&lt;code&gt;X&lt;/code&gt;秒間に&lt;code&gt;X/(A+C)&lt;/code&gt;セット(端数切り捨て)できるため、距離は合計で&lt;code&gt;セット数*A*B&lt;/code&gt;進むことができます。
-また、&lt;code&gt;X&lt;/code&gt;から進んだセット数を引いたあまり&lt;code&gt;X%(A+C)&lt;/code&gt;のうち、最大&lt;code&gt;A&lt;/code&gt;秒間進むこともできるため、&lt;code&gt;Min(あまり,A)*B&lt;/code&gt;進むことができます。
-この二つを合わせた距離が高橋君の進む距離となります。
-&lt;code&gt;A秒間秒速Bメートルで歩き、C秒間休むことを繰り返した時のX秒後の距離&lt;/code&gt;を関数にすると、&lt;code&gt;F(A,B,C) = X/(A+C)*A*B + Min(X%(A+C),A)*B&lt;/code&gt;に定義できます。&lt;br /&gt;
-同様に青木君の距離を求め、どちらが長い距離を進んだかを比較して答えを求めます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var line = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var (A, B, C) = (line[0], line[1], line[2]);
-    var (D, E, F) = (line[3], line[4], line[5]);
-    var X = line[6];
-    int G(int a, int b, int c)
-    {
-        return (X / (a + c) * a * b) + Math.Min(X % (a + c), a) * b;
-    }
-
-    var takahashi = G(A, B, C);
-    var aoki = G(D, E, F);
-    var answer = &amp;quot;Draw&amp;quot;;
-    if (takahashi &amp;gt; aoki) answer = &amp;quot;Takahashi&amp;quot;;
-    if (takahashi &amp;lt; aoki) answer = &amp;quot;Aoki&amp;quot;;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188890"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;一つずつ条件を判定していきます。&lt;br /&gt;
-C#では、&lt;code&gt;char.IsUpper&lt;/code&gt;関数で文字の大文字判定、&lt;code&gt;char.IsLower&lt;/code&gt;関数で文字の小文字判定を行うことができます。
-また、&lt;code&gt;全ての文字が相異なる&lt;/code&gt;ということは、&lt;code&gt;元の文字列の長さ=重複を除いたときの文字列の長さ&lt;/code&gt;といえます。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;すべての文字をみて大文字が存在するかを判定する&lt;/li&gt;
-&lt;li&gt;すべての文字をみて小文字が存在するかを判定する&lt;/li&gt;
-&lt;li&gt;元の文字列の長さ=重複を除いたときの文字列の長さが成り立つかを判定する&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;これらすべてが成り立っているかを判定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var N = S.Length;
-    var M = S.Distinct().Count();
-    var ok = N == M;
-    var big = false;
-    var small = false;
-    foreach (var c in S)
-    {
-        big |= char.IsUpper(c);
-        small |= char.IsLower(c);
-    }
-
-    ok &amp;amp;= big &amp;amp;&amp;amp; small;
-    Console.WriteLine(ok ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31188932"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各文字列に対して使うor使わないの2択なため、&lt;code&gt;2^N&lt;/code&gt;個の組み合わせがあり得ます。
-制約が&lt;code&gt;N&amp;lt;=15&lt;/code&gt;と少ないので、&lt;code&gt;bit全探索&lt;/code&gt;を行うことで全ての組み合わせを走査することができます。
-&lt;code&gt;s&lt;/code&gt;を使用する&lt;code&gt;i&lt;/code&gt;の集合としたとき、&lt;code&gt;s&lt;/code&gt;において&lt;code&gt;i&lt;/code&gt;が使われているかを判定するには、&lt;code&gt;(s&amp;gt;&amp;gt;i&amp;amp;1)==1&lt;/code&gt;で求めることができます。
-そして、それぞれの組み合わせにおいて、使う文字列集合を全て走査し、文字の個数が&lt;code&gt;K&lt;/code&gt;個の文字の種類の最大値を求めます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var answer = 0;
-    var exists = new bool[N, 26];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var S = Scanner.Scan&amp;lt;string&amp;gt;();
-        foreach (var c in S)
-        {
-            exists[i, c - 'a'] = true;
-        }
-    }
-
-
-    for (var s = 0; s &amp;lt; 1 &amp;lt;&amp;lt; N; s++)
-    {
-        var count = new int[26];
-        for (var i = 0; i &amp;lt; N; i++)
-        {
-            if ((s &amp;gt;&amp;gt; i &amp;amp; 1) == 1)
-            {
-                for (var j = 0; j &amp;lt; 26; j++)
-                {
-                    count[j] += exists[i, j] ? 1 : 0;
-                }
-            }
-        }
-
-        var sum = 0;
-        for (var i = 0; i &amp;lt; 26; i++)
-        {
-            if (count[i] == K) sum++;
-        }
-
-        answer = Math.Max(answer, sum);
-    }
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc249/tasks/abc249_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC249/submissions/31192606"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;愚直に全ての&lt;code&gt;i,j,k&lt;/code&gt;を走査する方法では、計算量が&lt;code&gt;O(N^3)&lt;/code&gt;となり、&lt;code&gt;A[j]*A[k]=A[i]&lt;/code&gt;となる&lt;code&gt;j,k&lt;/code&gt;を走査する方法では、計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となりますが、制約が&lt;code&gt;1&amp;lt;=N&amp;lt;=2e5&lt;/code&gt;と大きいため、実行時間制限内に処理を終わらせることができません。&lt;br /&gt;
-そこで、あらかじめAの値の出現回数を数えておき、&lt;code&gt;1&amp;lt;=p,q,r&amp;lt;=2e5&lt;/code&gt;のうち、&lt;code&gt;p=q*r&lt;/code&gt;となる&lt;code&gt;p,q,r&lt;/code&gt;の組における組み合わせの個数の総和を求めます。
-組み合わせの個数は&lt;code&gt;pの個数 * qの個数 * rの個数&lt;/code&gt;でもとめることができます。
-&lt;code&gt;q&lt;/code&gt;を固定したとき、&lt;code&gt;r&lt;/code&gt;は&lt;code&gt;p/q (p&amp;lt;=2e5)&lt;/code&gt;まで走査すればよいため、計算量&lt;code&gt;O(MlogM)&lt;/code&gt;で求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var max = (int)2e5;
-    var count = new long[max + 1];
-    foreach (var a in A)
-    {
-        count[a]++;
-    }
-
-    var answer = 0L;
-    for (var q = 1; q &amp;lt;= max; q++)
-    {
-        for (var r = 1; q * r &amp;lt;= max; r++)
-        {
-            var p = q * r;
-            answer += count[p] * count[q] * count[r];
-        }
-    }
-
-    Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
