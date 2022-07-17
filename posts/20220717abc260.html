@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC260</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC260">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220717abc260">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC260</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Sunday, 17 July 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Sunday, 17 July 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 260の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc260">https://atcoder.jp/contests/abc260</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc260/tasks/abc260_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc260/submissions/33290941">コンテスト提出</a></p>
+<p>文字ごとの出現数を数え上げ、出現数が1つのみ文字を出力します。<br>
+C#の場合、<code>char</code>型を数値として扱い、小文字のアルファベットから<code>a</code>を引くことで<code>a,b,c,...</code>を<code>0,1,2,...</code>として管理することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var count = new int[26];
+    foreach (var c in S)
+    {
+        count[c - 'a']++;
+    }
+
+    for (var i = 0; i &lt; 26; i++)
+    {
+        if (count[i] == 1)
+        {
+            Console.WriteLine((char)('a' + i));
+            return;
+        }
+    }
+
+    Console.WriteLine(-1);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc260/tasks/abc260_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc260/submissions/33297423">コンテスト提出</a></p>
+<p>受験生の番目、数学のスコア、英語のスコアを<code>Tuple</code>などのデータクラスとして管理します。<br>
+<code>i</code>番目の学生が合格したかをフラグとして管理し、それぞれの条件ごとにソートして合格となっていない受験生が対象となるかを判定することで、時間計算量<code>O(NlogN+N)</code>で答えを求めることができます。<br>
+C#の場合、<a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.sort?view=net-6.0#system-array-sort-1(-0()-system-comparison((-0)))">Array.Sort メソッド</a>に<code>Comparison&lt;T&gt;</code>を指定することで、比較関数を与えてソートすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X, Y, Z) = Scanner.Scan&lt;int, int, int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var accepts = new bool[N];
+    var C = A.Zip(B).Select((x, i) =&gt; (A: x.First, B: x.Second, ID: i)).ToArray();
+
+    Array.Sort(C, (x, y) =&gt;
+    {
+        var result = y.A.CompareTo(x.A);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &lt; N &amp;&amp; X &gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        X--;
+    }
+
+    Array.Sort(C, (x, y) =&gt;
+    {
+        var result = y.B.CompareTo(x.B);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &lt; N &amp;&amp; Y &gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        Y--;
+    }
+
+    Array.Sort(C, (x, y) =&gt;
+    {
+        var result = (y.A + y.B).CompareTo(x.A + x.B);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &lt; N &amp;&amp; Z &gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        Z--;
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (accepts[i])
+        {
+            Console.WriteLine(i + 1);
+        }
+    }
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc260/tasks/abc260_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc260/submissions/33301206">コンテスト提出</a></p>
+<p>動的計画法で答えを求めます。
+赤い宝石と青い宝石のレベルごとの個数をそれぞれ管理し、レベル<code>N</code>からレベル<code>2</code>まで計算します。
+遷移としては、レベルごとに先に赤い宝石を変換し、次に青い宝石を変換します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X, Y) = Scanner.Scan&lt;int, long, long&gt;();
+    var Red = new long[N + 1];
+    var Blue = new long[N + 1];
+    Red[N] = 1;
+    for (var i = N; i &gt;= 2; i--)
+    {
+        Red[i - 1] += Red[i];
+        Blue[i] += Red[i] * X;
+        Red[i - 1] += Blue[i];
+        Blue[i - 1] += Blue[i] * Y;
+    }
+
+    var answer = Blue[1];
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc260/tasks/abc260_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc260/submissions/33307596">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/abc260/submissions/33325148">復習提出</a></p>
+<p>表になっているカードの集合のうち<code>X</code>以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
+前者のデータ構造では、<code>X</code>以上の値を時間計算量<code>O(N)</code>で探索してしまうと、全体の時間計算量が<code>O(N^2)</code>となってしまい実行時間制限に間に合いません。<br>
+そのため、二部探索のような時間計算量<code>O(logN)</code>で探索できるようなデータ構造(C++の場合は<code>set</code>、C#の場合は<code>SortedSet</code>)が必要です。<br>
+<code>SortedSet</code>から<code>GetViewBetween</code>したものの<code>Count</code>を取得しようとすると、場合によっては時間がかかるみたいなので、<code>LINQ</code>の<code>Any</code>で判定したほうが良いです。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var P = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x).ToArray();
+    var answer = new int[N + 1];
+    Array.Fill(answer, -1);
+    var set = new SortedSet&lt;int&gt;();
+    var dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+    var root = new int[N + 1];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var p = P[i];
+        var r = p;
+        var subset = set.GetViewBetween(p, N);
+
+        if (subset.Any())
+        {
+            var q = subset.Min;
+            r = root[q];
+            root[p] = r;
+            dict[r].Add(p);
+            set.Remove(q);
+            set.Add(p);
+        }
+        else
+        {
+            set.Add(p);
+            dict[p] = new List&lt;int&gt; { p };
+            root[p] = p;
+        }
+
+        if (dict[r].Count &gt;= K)
+        {
+            foreach (var v in dict[r])
+            {
+                answer[v] = i + 1;
+            }
+
+            set.Remove(p);
+            dict.Remove(r);
+        }
+    }
+
+    Console.WriteLine(string.Join(&quot;\n&quot;, answer.Skip(1)));
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220717abc260" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>

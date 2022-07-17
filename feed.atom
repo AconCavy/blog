@@ -4,7 +4,179 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-07-09T14:40:02Z</updated>
+	<updated>2022-07-17T14:52:58Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20220717abc260</id>
+		<title>ABC260</title>
+		<link href="https://blog.aconcavy.dev/posts/20220717abc260" />
+		<updated>2022-07-17T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 260の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260"&gt;https://atcoder.jp/contests/abc260&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33290941"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文字ごとの出現数を数え上げ、出現数が1つのみ文字を出力します。&lt;br /&gt;
+C#の場合、&lt;code&gt;char&lt;/code&gt;型を数値として扱い、小文字のアルファベットから&lt;code&gt;a&lt;/code&gt;を引くことで&lt;code&gt;a,b,c,...&lt;/code&gt;を&lt;code&gt;0,1,2,...&lt;/code&gt;として管理することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var count = new int[26];
+    foreach (var c in S)
+    {
+        count[c - 'a']++;
+    }
+
+    for (var i = 0; i &amp;lt; 26; i++)
+    {
+        if (count[i] == 1)
+        {
+            Console.WriteLine((char)('a' + i));
+            return;
+        }
+    }
+
+    Console.WriteLine(-1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33297423"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;受験生の番目、数学のスコア、英語のスコアを&lt;code&gt;Tuple&lt;/code&gt;などのデータクラスとして管理します。&lt;br /&gt;
+&lt;code&gt;i&lt;/code&gt;番目の学生が合格したかをフラグとして管理し、それぞれの条件ごとにソートして合格となっていない受験生が対象となるかを判定することで、時間計算量&lt;code&gt;O(NlogN+N)&lt;/code&gt;で答えを求めることができます。&lt;br /&gt;
+C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.sort?view=net-6.0#system-array-sort-1(-0()-system-comparison((-0)))"&gt;Array.Sort メソッド&lt;/a&gt;に&lt;code&gt;Comparison&amp;lt;T&amp;gt;&lt;/code&gt;を指定することで、比較関数を与えてソートすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, X, Y, Z) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var accepts = new bool[N];
+    var C = A.Zip(B).Select((x, i) =&amp;gt; (A: x.First, B: x.Second, ID: i)).ToArray();
+
+    Array.Sort(C, (x, y) =&amp;gt;
+    {
+        var result = y.A.CompareTo(x.A);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; X &amp;gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        X--;
+    }
+
+    Array.Sort(C, (x, y) =&amp;gt;
+    {
+        var result = y.B.CompareTo(x.B);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; Y &amp;gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        Y--;
+    }
+
+    Array.Sort(C, (x, y) =&amp;gt;
+    {
+        var result = (y.A + y.B).CompareTo(x.A + x.B);
+        return result == 0 ? x.ID.CompareTo(y.ID) : result;
+    });
+    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; Z &amp;gt; 0; i++)
+    {
+        if (accepts[C[i].ID]) continue;
+        accepts[C[i].ID] = true;
+        Z--;
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (accepts[i])
+        {
+            Console.WriteLine(i + 1);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33301206"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;動的計画法で答えを求めます。
+赤い宝石と青い宝石のレベルごとの個数をそれぞれ管理し、レベル&lt;code&gt;N&lt;/code&gt;からレベル&lt;code&gt;2&lt;/code&gt;まで計算します。
+遷移としては、レベルごとに先に赤い宝石を変換し、次に青い宝石を変換します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, X, Y) = Scanner.Scan&amp;lt;int, long, long&amp;gt;();
+    var Red = new long[N + 1];
+    var Blue = new long[N + 1];
+    Red[N] = 1;
+    for (var i = N; i &amp;gt;= 2; i--)
+    {
+        Red[i - 1] += Red[i];
+        Blue[i] += Red[i] * X;
+        Red[i - 1] += Blue[i];
+        Blue[i - 1] += Blue[i] * Y;
+    }
+
+    var answer = Blue[1];
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33307596"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc260/submissions/33325148"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;表になっているカードの集合のうち&lt;code&gt;X&lt;/code&gt;以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
+前者のデータ構造では、&lt;code&gt;X&lt;/code&gt;以上の値を時間計算量&lt;code&gt;O(N)&lt;/code&gt;で探索してしまうと、全体の時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまい実行時間制限に間に合いません。&lt;br /&gt;
+そのため、二部探索のような時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で探索できるようなデータ構造(C++の場合は&lt;code&gt;set&lt;/code&gt;、C#の場合は&lt;code&gt;SortedSet&lt;/code&gt;)が必要です。&lt;br /&gt;
+&lt;code&gt;SortedSet&lt;/code&gt;から&lt;code&gt;GetViewBetween&lt;/code&gt;したものの&lt;code&gt;Count&lt;/code&gt;を取得しようとすると、場合によっては時間がかかるみたいなので、&lt;code&gt;LINQ&lt;/code&gt;の&lt;code&gt;Any&lt;/code&gt;で判定したほうが良いです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().Select(x =&amp;gt; x).ToArray();
+    var answer = new int[N + 1];
+    Array.Fill(answer, -1);
+    var set = new SortedSet&amp;lt;int&amp;gt;();
+    var dict = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;();
+    var root = new int[N + 1];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var p = P[i];
+        var r = p;
+        var subset = set.GetViewBetween(p, N);
+
+        if (subset.Any())
+        {
+            var q = subset.Min;
+            r = root[q];
+            root[p] = r;
+            dict[r].Add(p);
+            set.Remove(q);
+            set.Add(p);
+        }
+        else
+        {
+            set.Add(p);
+            dict[p] = new List&amp;lt;int&amp;gt; { p };
+            root[p] = p;
+        }
+
+        if (dict[r].Count &amp;gt;= K)
+        {
+            foreach (var v in dict[r])
+            {
+                answer[v] = i + 1;
+            }
+
+            set.Remove(p);
+            dict.Remove(r);
+        }
+    }
+
+    Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer.Skip(1)));
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 260の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220709abc259</id>
 		<title>ABC259</title>
@@ -1763,206 +1935,5 @@ for(var i = 0; i &amp;lt; M; j++)
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 251の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220508abc250</id>
-		<title>ABC250</title>
-		<link href="https://blog.aconcavy.dev/posts/20220508abc250" />
-		<updated>2022-05-08T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 250の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250"&gt;https://atcoder.jp/contests/abc250&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31514088"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;隣接するマスは上下左右なので、&lt;code&gt;(R,C)&lt;/code&gt;に&lt;code&gt;x&lt;/code&gt;軸と&lt;code&gt;y&lt;/code&gt;軸の差分4方向(&lt;code&gt;(+1,0), (-1,0), (0,+1),(0,-1)&lt;/code&gt;)を確認し、&lt;code&gt;1&amp;lt;=R+d&amp;lt;=H &amp;amp;&amp;amp; 1&amp;lt;=R+d&amp;lt;=W&lt;/code&gt;に含まれている個数を数え上げます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var (R, C) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    R--;
-    C--;
-    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
-    var answer = 0;
-    foreach (var (dh, dw) in D4)
-    {
-        var (nh, nw) = (R + dh, C + dw);
-        if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw) continue;
-        answer++;
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31519381"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N=1, A=1, B=1&lt;/code&gt;としたとき、&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;.#
-#.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のようになり、&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;がそれぞれ偶奇をとるとき、つまり&lt;code&gt;(0,0), (0,1), (1,0), (1,1)&lt;/code&gt;の4パターンが存在することがわかります。&lt;br /&gt;
-また、&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の値を変更したとき、それぞれのタイルは縦&lt;code&gt;A&lt;/code&gt;マス、横&lt;code&gt;B&lt;/code&gt;マスになるので、&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;それぞれ&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;で割ったときの偶奇によってタイルを指定すれば、答えとなるタイルが求められます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, A, B) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    var G = new char[N * A, N * B];
-    for (var i = 0; i &amp;lt; N * A; i++)
-    {
-        for (var j = 0; j &amp;lt; N * B; j++)
-        {
-            var x = i / A % 2;
-            var y = j / B % 2;
-            G[i, j] = (x, y) switch
-            {
-                (0, 0) =&amp;gt; '.',
-                (0, 1) =&amp;gt; '#',
-                (1, 0) =&amp;gt; '#',
-                (1, 1) =&amp;gt; '.',
-                _ =&amp;gt; '.',
-            };
-        }
-    }
-
-    Printer.Print2D(G);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31522256"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;クエリごとに&lt;code&gt;x&lt;/code&gt;の位置を全探索してしまうと、計算量が&lt;code&gt;O(N)&lt;/code&gt;かかってしまい、全体計算量が&lt;code&gt;O(QN)&lt;/code&gt;となり実行時間制限に間に合いません。
-そこで、あらかじめ&lt;code&gt;x&lt;/code&gt;の位置をキーとした辞書や配列などを用意しておきます。&lt;br /&gt;
-クエリが与えられたら、&lt;code&gt;x&lt;/code&gt;の位置を&lt;code&gt;i&lt;/code&gt;とし、&lt;code&gt;i&lt;/code&gt;が端(&lt;code&gt;i=N-1&lt;/code&gt;)なら&lt;code&gt;i-1&lt;/code&gt;、それ以外ならば&lt;code&gt;i+1&lt;/code&gt;の位置を&lt;code&gt;j&lt;/code&gt;として、&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;の位置にある要素を入れ替え、位置をキーとした辞書の要素も入れ替えることで、クエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;にすることができ、全体計算量&lt;code&gt;O(Q+N)&lt;/code&gt;に改善することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var A = Enumerable.Range(1, N).ToArray();
-    var dict = new Dictionary&amp;lt;int, int&amp;gt;();
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        dict[A[i]] = i;
-    }
-
-    for (var k = 0; k &amp;lt; Q; k++)
-    {
-        var x = Scanner.Scan&amp;lt;int&amp;gt;();
-        var i = dict[x];
-        var j = i + 1 != N ? i + 1 : i - 1;
-        var y = A[j];
-        (A[i], A[j]) = (A[j], A[i]);
-        dict[x] = j;
-        dict[y] = i;
-    }
-
-    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, A));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31525287"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc250/submissions/31554504"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;問題文における最大の素数を考えたとき、&lt;code&gt;k=p*q^3, N&amp;lt;=1e18&lt;/code&gt;から、&lt;code&gt;q^3&amp;lt;=N&lt;/code&gt;までの素数を考えればいいため、&lt;code&gt;q&lt;/code&gt;以下となる素数群を昇順にソートしたものをあらかじめ用意しておきます。&lt;br /&gt;
-それらの素数を&lt;code&gt;p&amp;lt;q&lt;/code&gt;の範囲で走査したときの、&lt;code&gt;p*q^3&amp;lt;=N&lt;/code&gt;となる組み合わせの数が答えとなります。&lt;br /&gt;
-このとき、全探索してしまうと、素数の数を&lt;code&gt;M&lt;/code&gt;としたとき計算量&lt;code&gt;O(M^2)&lt;/code&gt;となり、&lt;code&gt;N=1e18&lt;/code&gt;のときに&lt;code&gt;M=78498&lt;/code&gt;となって実行時間制限に間に合いませんが、&lt;code&gt;p*q^3&amp;gt;N&lt;/code&gt;のときの&lt;code&gt;q&lt;/code&gt;以降の対象となりえない組み合わせを枝刈りすることで、実行時間制限に間に合わせることができます。&lt;br /&gt;
-あるいは、&lt;code&gt;p&amp;lt;q&lt;/code&gt;の範囲で&lt;code&gt;q&lt;/code&gt;を二部探索することで計算量&lt;code&gt;O(MlogM)&lt;/code&gt;、&lt;code&gt;p*q^3&amp;gt;=N&lt;/code&gt;ならば&lt;code&gt;(p+1)*q^3&amp;gt;=N&lt;/code&gt;から&lt;code&gt;q&lt;/code&gt;を大きいほうから尺取り法で求めることで&lt;code&gt;O(M)&lt;/code&gt;で求めることができます。
-また、&lt;code&gt;p*q^3&lt;/code&gt;の値が、64bit整数に収まらない場合もあるので、多倍長整数を使ったり、オーバーフローした場合の処理が必要となる場合があります。&lt;br /&gt;
-C#の場合、整数のオーバーフローは例外が発生しませんが、&lt;code&gt;checked&lt;/code&gt;ブロックを使うことで例外を明示的に発生させることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;long&amp;gt;();
-    var primes = Prime.Sieve((int)1e6).ToArray();
-    var M = primes.Length;
-    var answer = 0;
-    var j = M - 1;
-    for (var i = 0; i &amp;lt; j; i++)
-    {
-        while (i &amp;lt; j)
-        {
-            var p = (long)primes[i];
-            var q = (long)primes[j] * primes[j] * primes[j];
-            try
-            {
-                checked
-                {
-                    if (p * q &amp;lt;= N)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        j--;
-                    }
-                }
-            }
-            catch
-            {
-                j--;
-            }
-        }
-
-        answer += j - i;
-    }
-
-    Console.WriteLine(answer);
-}
-
-public static IEnumerable&amp;lt;int&amp;gt; Sieve(int value)
-{
-    if (value &amp;lt; 2) yield break;
-    yield return 2;
-    var sieve = new bool[(value + 1) / 2];
-    for (var i = 1; i &amp;lt; sieve.Length; i++)
-    {
-        if (sieve[i]) continue;
-        yield return i * 2 + 1;
-        for (var j = i; j &amp;lt; sieve.Length; j += i * 2 + 1) sieve[j] = true;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc250/tasks/abc250_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc250/submissions/31543730"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc250/submissions/31553993"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;A&lt;/code&gt;の&lt;code&gt;x&lt;/code&gt;番目までの要素に対応する&lt;code&gt;B&lt;/code&gt;の最小の出現位置の最大が&lt;code&gt;y&lt;/code&gt;以下であり、&lt;code&gt;B&lt;/code&gt;の&lt;code&gt;y&lt;/code&gt;番目までの要素に対応する&lt;code&gt;A&lt;/code&gt;の最小の出現位置の最大が&lt;code&gt;x&lt;/code&gt;以下であれば答えは&lt;code&gt;Yes&lt;/code&gt;となります。&lt;/p&gt;
-&lt;p&gt;あらかじめ、&lt;code&gt;A&lt;/code&gt;の各要素の&lt;code&gt;B&lt;/code&gt;における最小の出現位置(&lt;code&gt;AtoB&lt;/code&gt;)と、&lt;code&gt;B&lt;/code&gt;の各要素の&lt;code&gt;A&lt;/code&gt;における最小の出現位置(&lt;code&gt;BtoA&lt;/code&gt;)を求めておき、クエリごとに&lt;code&gt;AtoB&lt;/code&gt;の&lt;code&gt;x&lt;/code&gt;までの最大値と&lt;code&gt;BtoA&lt;/code&gt;の&lt;code&gt;y&lt;/code&gt;までの最大値を求められるようにします。&lt;br /&gt;
-このとき愚直に&lt;code&gt;x&lt;/code&gt;番目と&lt;code&gt;y&lt;/code&gt;番目までを走査してしまうとクエリ当たりの計算量が&lt;code&gt;O(N)&lt;/code&gt;となってしまうため、累積最大値をもとめておくことでクエリ当たりの計算量を&lt;code&gt;O(1)&lt;/code&gt;に抑えることができ、全体で&lt;code&gt;O(Q+NlogN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var dictAB = new Dictionary&amp;lt;int, int&amp;gt;();
-    var dictBA = new Dictionary&amp;lt;int, int&amp;gt;();
-    const int inf = (int)1e9;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        dictAB[A[i]] = inf;
-        dictAB[B[i]] = inf;
-        dictBA[A[i]] = inf;
-        dictBA[B[i]] = inf;
-    }
-
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        dictAB[B[i]] = Math.Min(dictAB[B[i]], i + 1);
-        dictBA[A[i]] = Math.Min(dictBA[A[i]], i + 1);
-    }
-
-    var cumAB = new int[N + 1];
-    var cumBA = new int[N + 1];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        cumAB[i + 1] = Math.Max(cumAB[i], dictAB[A[i]]);
-        cumBA[i + 1] = Math.Max(cumBA[i], dictBA[B[i]]);
-    }
-
-    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-    for (var i = 0; i &amp;lt; Q; i++)
-    {
-        var (x, y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        var answer = cumAB[x] &amp;lt;= y &amp;amp;&amp;amp; cumBA[y] &amp;lt;= x;
-        Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 250の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
