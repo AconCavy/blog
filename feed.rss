@@ -5,8 +5,8 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sun, 17 Jul 2022 14:52:58 GMT</pubDate>
-		<lastBuildDate>Sun, 17 Jul 2022 14:52:58 GMT</lastBuildDate>
+		<pubDate>Sun, 17 Jul 2022 15:13:01 GMT</pubDate>
+		<lastBuildDate>Sun, 17 Jul 2022 15:13:01 GMT</lastBuildDate>
 		<item>
 			<title>ABC260</title>
 			<link>https://blog.aconcavy.dev/posts/20220717abc260</link>
@@ -130,11 +130,11 @@ C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.arr
 &lt;p&gt;表になっているカードの集合のうち&lt;code&gt;X&lt;/code&gt;以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
 前者のデータ構造では、&lt;code&gt;X&lt;/code&gt;以上の値を時間計算量&lt;code&gt;O(N)&lt;/code&gt;で探索してしまうと、全体の時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまい実行時間制限に間に合いません。&lt;br /&gt;
 そのため、二部探索のような時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で探索できるようなデータ構造(C++の場合は&lt;code&gt;set&lt;/code&gt;、C#の場合は&lt;code&gt;SortedSet&lt;/code&gt;)が必要です。&lt;br /&gt;
-&lt;code&gt;SortedSet&lt;/code&gt;から&lt;code&gt;GetViewBetween&lt;/code&gt;したものの&lt;code&gt;Count&lt;/code&gt;を取得しようとすると、場合によっては時間がかかるみたいなので、&lt;code&gt;LINQ&lt;/code&gt;の&lt;code&gt;Any&lt;/code&gt;で判定したほうが良いです。&lt;/p&gt;
+&lt;code&gt;SortedSet&lt;/code&gt;から&lt;code&gt;GetViewBetween&lt;/code&gt;したサブセットの&lt;code&gt;Count&lt;/code&gt;プロパティが、場合によっては時間計算量&lt;code&gt;O(1)&lt;/code&gt;ではなさそうなので、&lt;code&gt;LINQ&lt;/code&gt;の&lt;code&gt;Any&lt;/code&gt;で存在判定をしたほうが良さそうです。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().Select(x =&amp;gt; x).ToArray();
+    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
     var answer = new int[N + 1];
     Array.Fill(answer, -1);
     var set = new SortedSet&amp;lt;int&amp;gt;();

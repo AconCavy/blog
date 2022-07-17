@@ -204,11 +204,11 @@ C#の場合、<a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.
 <p>表になっているカードの集合のうち<code>X</code>以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
 前者のデータ構造では、<code>X</code>以上の値を時間計算量<code>O(N)</code>で探索してしまうと、全体の時間計算量が<code>O(N^2)</code>となってしまい実行時間制限に間に合いません。<br>
 そのため、二部探索のような時間計算量<code>O(logN)</code>で探索できるようなデータ構造(C++の場合は<code>set</code>、C#の場合は<code>SortedSet</code>)が必要です。<br>
-<code>SortedSet</code>から<code>GetViewBetween</code>したものの<code>Count</code>を取得しようとすると、場合によっては時間がかかるみたいなので、<code>LINQ</code>の<code>Any</code>で判定したほうが良いです。</p>
+<code>SortedSet</code>から<code>GetViewBetween</code>したサブセットの<code>Count</code>プロパティが、場合によっては時間計算量<code>O(1)</code>ではなさそうなので、<code>LINQ</code>の<code>Any</code>で存在判定をしたほうが良さそうです。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, K) = Scanner.Scan&lt;int, int&gt;();
-    var P = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x).ToArray();
+    var P = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
     var answer = new int[N + 1];
     Array.Fill(answer, -1);
     var set = new SortedSet&lt;int&gt;();
