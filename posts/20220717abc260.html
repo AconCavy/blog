@@ -200,7 +200,7 @@ C#の場合、<a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc260/tasks/abc260_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc260/submissions/33307596">コンテスト提出</a><br>
-<a href="https://atcoder.jp/contests/abc260/submissions/33325148">復習提出</a></p>
+<a href="https://atcoder.jp/contests/abc260/submissions/33325990">復習提出</a></p>
 <p>表になっているカードの集合のうち<code>X</code>以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
 前者のデータ構造では、<code>X</code>以上の値を時間計算量<code>O(N)</code>で探索してしまうと、全体の時間計算量が<code>O(N^2)</code>となってしまい実行時間制限に間に合いません。<br>
 そのため、二部探索のような時間計算量<code>O(logN)</code>で探索できるようなデータ構造(C++の場合は<code>set</code>、C#の場合は<code>SortedSet</code>)が必要です。<br>
@@ -217,24 +217,22 @@ C#の場合、<a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.
     for (var i = 0; i &lt; N; i++)
     {
         var p = P[i];
-        var r = p;
+        var r = root[p] = p;
         var subset = set.GetViewBetween(p, N);
 
         if (subset.Any())
         {
             var q = subset.Min;
-            r = root[q];
-            root[p] = r;
-            dict[r].Add(p);
+            r = root[p] = root[q];
             set.Remove(q);
-            set.Add(p);
         }
         else
         {
-            set.Add(p);
-            dict[p] = new List&lt;int&gt; { p };
-            root[p] = p;
+            dict[r] = new List&lt;int&gt;();
         }
+        
+        set.Add(p);
+        dict[r].Add(p);
 
         if (dict[r].Count &gt;= K)
         {

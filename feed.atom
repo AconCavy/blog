@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-07-17T15:13:01Z</updated>
+	<updated>2022-07-17T15:23:31Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220717abc260</id>
 		<title>ABC260</title>
@@ -123,7 +123,7 @@ C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.arr
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33307596"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc260/submissions/33325148"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://atcoder.jp/contests/abc260/submissions/33325990"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;表になっているカードの集合のうち&lt;code&gt;X&lt;/code&gt;以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
 前者のデータ構造では、&lt;code&gt;X&lt;/code&gt;以上の値を時間計算量&lt;code&gt;O(N)&lt;/code&gt;で探索してしまうと、全体の時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまい実行時間制限に間に合いません。&lt;br /&gt;
 そのため、二部探索のような時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で探索できるようなデータ構造(C++の場合は&lt;code&gt;set&lt;/code&gt;、C#の場合は&lt;code&gt;SortedSet&lt;/code&gt;)が必要です。&lt;br /&gt;
@@ -140,24 +140,22 @@ C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.arr
     for (var i = 0; i &amp;lt; N; i++)
     {
         var p = P[i];
-        var r = p;
+        var r = root[p] = p;
         var subset = set.GetViewBetween(p, N);
 
         if (subset.Any())
         {
             var q = subset.Min;
-            r = root[q];
-            root[p] = r;
-            dict[r].Add(p);
+            r = root[p] = root[q];
             set.Remove(q);
-            set.Add(p);
         }
         else
         {
-            set.Add(p);
-            dict[p] = new List&amp;lt;int&amp;gt; { p };
-            root[p] = p;
+            dict[r] = new List&amp;lt;int&amp;gt;();
         }
+        
+        set.Add(p);
+        dict[r].Add(p);
 
         if (dict[r].Count &amp;gt;= K)
         {
