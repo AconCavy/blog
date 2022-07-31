@@ -4,14 +4,14 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-07-31T14:10:32Z</updated>
+	<updated>2022-07-31T14:15:50Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220731abc262</id>
-		<title>ABC000</title>
+		<title>ABC262</title>
 		<link href="https://blog.aconcavy.dev/posts/20220731abc262" />
-		<updated>2022-07-31T14:09:56Z</updated>
+		<updated>2022-07-31T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 262の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc000"&gt;https://atcoder.jp/contests/abc000&lt;/a&gt;&lt;/p&gt;
@@ -115,7 +115,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 262の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220723abc261</id>
