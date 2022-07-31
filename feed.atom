@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-07-31T14:15:50Z</updated>
+	<updated>2022-07-31T14:16:37Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220731abc262</id>
 		<title>ABC262</title>
@@ -14,8 +14,8 @@
 &lt;p&gt;AtCoder Beginner Contest 262の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc000"&gt;https://atcoder.jp/contests/abc000&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc262"&gt;https://atcoder.jp/contests/abc262&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33660849"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数&lt;/code&gt;ならば2年後、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+1&lt;/code&gt;ならば1年後、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+2&lt;/code&gt;ならばその年、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+3&lt;/code&gt;ならば3年後が答えとなります。
 &lt;code&gt;Y&lt;/code&gt;を4で割った余りが&lt;code&gt;4の倍数+n&lt;/code&gt;の&lt;code&gt;n&lt;/code&gt;なので、その値によって答えを求めます。&lt;/p&gt;
@@ -29,7 +29,7 @@
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33662725"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;U&lt;/code&gt;と&lt;code&gt;V&lt;/code&gt;間に辺があるかどうかを二次元配列&lt;code&gt;G&lt;/code&gt;で表現し、&lt;code&gt;G[a,b]&lt;/code&gt;、&lt;code&gt;G[b,c]&lt;/code&gt;、&lt;code&gt;G[c,a]&lt;/code&gt;のすべてに辺が存在するときの総数を数え上げます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -59,7 +59,7 @@
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33669451"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;条件となる&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;を全探索してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり、実行時間制限内に答えを求めることはできません。
 条件を満たす要素を考えてみると、&lt;code&gt;(i==A[i], j==A[j])&lt;/code&gt;と&lt;code&gt;(i==A[j], j==A[i])&lt;/code&gt;となる組み合わせが対象となります。
@@ -83,7 +83,7 @@
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33689722"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;A&lt;/code&gt;の項を選ぶ個数を1つ決めたときの和の余りを動的計画法で求め、全て求めたときのあまりが&lt;code&gt;0&lt;/code&gt;の数の&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;までの総和が答えとなります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()

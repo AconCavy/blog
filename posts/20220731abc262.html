@@ -91,8 +91,8 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <p>AtCoder Beginner Contest 262の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <h2 id="section-1">コンテスト</h2>
-<p><a href="https://atcoder.jp/contests/abc000">https://atcoder.jp/contests/abc000</a></p>
-<h3 id="a"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc262">https://atcoder.jp/contests/abc262</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc262/tasks/abc262_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC262/submissions/33660849">コンテスト提出</a></p>
 <p><code>Y</code>が<code>4の倍数</code>ならば2年後、<code>Y</code>が<code>4の倍数+1</code>ならば1年後、<code>Y</code>が<code>4の倍数+2</code>ならばその年、<code>Y</code>が<code>4の倍数+3</code>ならば3年後が答えとなります。
 <code>Y</code>を4で割った余りが<code>4の倍数+n</code>の<code>n</code>なので、その値によって答えを求めます。</p>
@@ -106,7 +106,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h3 id="b"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_b">問題B</a></h3>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc262/tasks/abc262_b">問題B</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC262/submissions/33662725">コンテスト提出</a></p>
 <p><code>U</code>と<code>V</code>間に辺があるかどうかを二次元配列<code>G</code>で表現し、<code>G[a,b]</code>、<code>G[b,c]</code>、<code>G[c,a]</code>のすべてに辺が存在するときの総数を数え上げます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
@@ -136,7 +136,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h3 id="c"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_c">問題C</a></h3>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc262/tasks/abc262_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC262/submissions/33669451">コンテスト提出</a></p>
 <p>条件となる<code>i</code>と<code>j</code>を全探索してしまうと、時間計算量が<code>O(N^2)</code>となり、実行時間制限内に答えを求めることはできません。
 条件を満たす要素を考えてみると、<code>(i==A[i], j==A[j])</code>と<code>(i==A[j], j==A[i])</code>となる組み合わせが対象となります。
@@ -160,7 +160,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 </code></pre>
-<h3 id="d"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_d">問題D</a></h3>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc262/tasks/abc262_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC262/submissions/33689722">復習提出</a></p>
 <p><code>A</code>の項を選ぶ個数を1つ決めたときの和の余りを動的計画法で求め、全て求めたときのあまりが<code>0</code>の数の<code>1</code>から<code>N</code>までの総和が答えとなります。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
