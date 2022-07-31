@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC000</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC000">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220731abc262">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC000</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Sunday, 31 July 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Monday, 01 January 0001
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 000の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc000">https://atcoder.jp/contests/abc000</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC262/submissions/33660849">コンテスト提出</a></p>
+<p><code>Y</code>が<code>4の倍数</code>ならば2年後、<code>Y</code>が<code>4の倍数+1</code>ならば1年後、<code>Y</code>が<code>4の倍数+2</code>ならばその年、<code>Y</code>が<code>4の倍数+3</code>ならば3年後が答えとなります。
+<code>Y</code>を4で割った余りが<code>4の倍数+n</code>の<code>n</code>なので、その値によって答えを求めます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var Y = Scanner.Scan&lt;int&gt;();
+    var answer = Y;
+    if (Y % 4 == 0) answer += 2;
+    if (Y % 4 == 1) answer += 1;
+    if (Y % 4 == 3) answer += 3;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC262/submissions/33662725">コンテスト提出</a></p>
+<p><code>U</code>と<code>V</code>間に辺があるかどうかを二次元配列<code>G</code>で表現し、<code>G[a,b]</code>、<code>G[b,c]</code>、<code>G[c,a]</code>のすべてに辺が存在するときの総数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var G = new bool[N, N];
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--;
+        v--;
+        G[u, v] = G[v, u] = true;
+    }
+
+    var answer = 0;
+    for (var a = 0; a &lt; N; a++)
+    {
+        for (var b = a + 1; b &lt; N; b++)
+        {
+            for (var c = b + 1; c &lt; N; c++)
+            {
+                if (G[a, b] &amp;&amp; G[b, c] &amp;&amp; G[c, a]) answer++;
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC262/submissions/33669451">コンテスト提出</a></p>
+<p>条件となる<code>i</code>と<code>j</code>を全探索してしまうと、時間計算量が<code>O(N^2)</code>となり、実行時間制限内に答えを求めることはできません。
+条件を満たす要素を考えてみると、<code>(i==A[i], j==A[j])</code>と<code>(i==A[j], j==A[i])</code>となる組み合わせが対象となります。
+前者の場合、<code>[1, x, x, 4, 5]</code>のような<code>A</code>があったとすると、<code>(1,4)</code>、<code>(1,5)</code>、<code>(4,5)</code>が答えとなり、<code>i==A[i]</code>となる要素から2つ選ぶ組み合わせとなるので、<code>i==A[i]</code>の個数を<code>C</code>とすると、<code>C*(C-1)/2</code>が前者の組み合わせの数となります。
+一方、後者の場合、<code>i&lt;j</code>より<code>A[i]&gt;i</code>かつ<code>A[A[i]]==i</code>となるものがペアとして成り立ち、その総和が後者の組み合わせの数となります。
+よって、これらの総和が答えとなります。
+<code>N</code>が最大<code>5*10^5</code>なので、<code>int</code>では収まらないので注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var answer = 0L;
+    var same = 0L;
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (A[i] == i) same++;
+        else if (A[i] &gt; i &amp;&amp; A[A[i]] == i) answer++;
+    }
+
+    answer += same * (same - 1) / 2;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC262/submissions/33689722">復習提出</a></p>
+<p><code>A</code>の項を選ぶ個数を1つ決めたときの和の余りを動的計画法で求め、全て求めたときのあまりが<code>0</code>の数の<code>1</code>から<code>N</code>までの総和が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    mint answer = 0;
+
+    for (var c = 1; c &lt;= N; c++)
+    {
+        var dp = new mint[N + 1, N + 1, N];
+        dp[0, 0, 0]++;
+        for (var i = 0; i &lt; N; i++)
+        {
+            for (var j = 0; j &lt; N; j++)
+            {
+                for (var k = 0; k &lt; N; k++)
+                {
+                    dp[i + 1, j + 1, (k + A[i]) % c] += dp[i, j, k];
+                    dp[i + 1, j, k] += dp[i, j, k];
+                }
+            }
+        }
+
+        answer += dp[N, c, 0];
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220731abc262" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
