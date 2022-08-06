@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC263</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC263">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220806abc263">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC263</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 06 August 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 06 August 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 263の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc263">https://atcoder.jp/contests/abc263</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc263/tasks/abc263_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc263/submissions/33803567">コンテスト提出</a></p>
+<p>数字ごとの枚数を数え上げ、数値<code>i</code>の枚数が<code>3</code>と数値<code>j</code>の枚数が<code>2</code>となる<code>i</code>と<code>j</code>が存在するかを全探索します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var count = new int[14];
+    foreach (var a in A) count[a]++;
+    for (var i = 1; i &lt;= 13; i++)
+    {
+        for (var j = 1; j &lt;= 13; j++)
+        {
+            if (count[i] == 3 &amp;&amp; count[j] == 2)
+            {
+                Console.WriteLine(&quot;Yes&quot;);
+                return;
+            }
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
+</code></pre>
+<p>数字をソートして、<code>A[0]==A[2] &amp;&amp; A[3]==A[4] || A[0]==A[1] &amp;&amp; A[2]==A[4]</code>で求める方法もあります。</p>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc263/tasks/abc263_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc263/submissions/33807089">コンテスト提出</a></p>
+<p>現在の値が<code>1</code>になるまで、現在の値を更新しながら回数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var P = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var curr = N;
+    var answer = 0;
+    while (curr != 1)
+    {
+        curr = P[curr - 2];
+        answer++;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc263/tasks/abc263_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc263/submissions/33809950">コンテスト提出</a></p>
+<p>現在の配列、深さ、ひとつ前の値を保持して深さ優先探索を行います。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+
+    void Dfs(int[] buffer, int idx, int prev)
+    {
+        if (idx == N)
+        {
+            Console.WriteLine(string.Join(&quot; &quot;, buffer));
+            return;
+        }
+
+        for (var i = prev + 1; i &lt;= M; i++)
+        {
+            buffer[idx] = i;
+            Dfs(buffer, idx + 1, i);
+        }
+    }
+
+    var buffer = new int[N];
+    Dfs(buffer, 0, 0);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc263/tasks/abc263_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc263/submissions/33822960">コンテスト提出</a></p>
+<p><code>x</code>と<code>y</code>を全探索してしまうと、時間計算量が<code>O(N^2)</code>となってしまい、実行時間制限内に答えを求めることができません。<br>
+数列を二つに分けたとき、数列の左側の合計と右側の合計は数列全体の合計になることに注目します。<br>
+そこで、左から<code>x</code>番目までの累積和を考えたとき、<code>x</code>番目の累積和になりえるものは<code>x-1番目までの累積和+A[x]</code>または<code>L*x</code>であり、それらの最小値を左から順に調べることで、<code>x</code>番目までの累積和の最小値を求めることができます。<br>
+同様に、右から<code>y</code>番目までの累積和の最小値を求め、左から<code>i</code>番目までの累積和と右から<code>N-i</code>番目の累積和の和の最小を求めることで、時間計算量<code>O(N)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, L, R) = Scanner.Scan&lt;int, long, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    const long inf = (long)1e18;
+    var cumL = new long[N + 1];
+    var cumR = new long[N + 1];
+    for (var i = 0; i &lt; N; i++)
+    {
+        cumL[i + 1] = Math.Min(cumL[i] + A[i], L * (i + 1));
+        cumR[N - 1 - i] = Math.Min(cumR[N - i] + A[N - 1 - i], R * (i + 1));
+    }
+
+    var answer = inf;
+    for (var i = 0; i &lt;= N; i++)
+    {
+        answer = Math.Min(answer, cumL[i] + cumR[i]);
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc263/tasks/abc263_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc263/submissions/33830652">コンテスト提出</a></p>
+<p><code>dp[i]</code>:=マス<code>i</code>からマス<code>N</code>にたどり着くまでにサイコロを振る回数の期待値とした動的計画法を行います。</p>
+<pre><code class="language-text line-numbers">dp[i] = (dp[i..i+A[i]] + 1) / (A[i] + 1) #(次の状態の期待値+1回)/種類数
+=&gt; dp[i] = dp[i] / (A[i] + 1) + (dp[(i+1)..(i+A[i])] + 1) / (A[i] + 1) #右辺に左辺が入っているので式変形
+=&gt; dp[i] * A[i] / (A[i] + 1) = (dp[(i+1)..(i+A[i])] + 1) / (A[i] + 1)
+=&gt; dp[i] = (dp[(i+1)..(i+A[i])] + A[i] + 1) / A[i]
+</code></pre>
+<p><code>i+1</code>から<code>i+A[i]</code>の累積和を<code>SegmentTree</code>のようなデータ構造で管理し、クエリ当たり<code>O(logN)</code>で累積和を求めることで、全体で<code>O(NlogN)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dp = new SegmentTree&lt;ModuloInteger&gt;(N + 1, new Oracle());
+    for (var i = N - 1; i &gt; 0; i--)
+    {
+        var sum = dp.Query(i, i + A[i - 1] + 1);
+        sum += A[i - 1] + 1;
+        sum /= A[i - 1];
+        dp.Set(i, sum);
+    }
+
+    var answer = dp.Get(1);
+    Console.WriteLine(answer);
+}
+</code></pre>
+<p><code>SegmentTree</code>は以下のようなものを使いました。</p>
+<pre><code class="language-csharp line-numbers">public class Oracle : IOracle&lt;ModuloInteger&gt;
+{
+    public ModuloInteger MonoidIdentity =&gt; (ModuloInteger)0;
+
+    public ModuloInteger Operate(ModuloInteger a, ModuloInteger b)
+    {
+        return a + b;
+    }
+}
+
+public interface IOracle&lt;TMonoid&gt;
+{
+    TMonoid MonoidIdentity { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public class SegmentTree&lt;TMonoid&gt;
+{
+    public int Length { get; }
+    private readonly IOracle&lt;TMonoid&gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public SegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid&gt; oracle) : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
+    }
+
+    public SegmentTree(int length, IOracle&lt;TMonoid&gt; oracle)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &lt;&lt; _log &lt; Length) _log++;
+        _dataSize = 1 &lt;&lt; _log;
+        _data = new TMonoid[_dataSize &lt;&lt; 1];
+        Array.Fill(_data, oracle.MonoidIdentity);
+    }
+
+    public void Set(int index, TMonoid value)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        _data[index] = value;
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        return _data[index + _dataSize];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        var (sml, smr) = (_oracle.MonoidIdentity, _oracle.MonoidIdentity);
+        left += _dataSize;
+        right += _dataSize;
+        while (left &lt; right)
+        {
+            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &gt;&gt;= 1;
+            right &gt;&gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&gt; _data[1];
+
+    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        var sm = _oracle.MonoidIdentity;
+        do
+        {
+            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &lt; _dataSize)
+                {
+                    left &lt;&lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.MonoidIdentity)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        var sm = _oracle.MonoidIdentity;
+        do
+        {
+            right--;
+            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &lt; _dataSize)
+                {
+                    right = (right &lt;&lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220806abc263" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
