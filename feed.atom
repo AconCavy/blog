@@ -4,7 +4,176 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-09-10T14:44:52Z</updated>
+	<updated>2022-09-17T14:38:24Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20220917abc269</id>
+		<title>ABC269</title>
+		<link href="https://blog.aconcavy.dev/posts/20220917abc269" />
+		<updated>2022-09-17T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 269の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc269"&gt;https://atcoder.jp/contests/abc269&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc269/tasks/abc269_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC269/submissions/34918764"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;入出力の問題です。
+C#では、コンソールからの文字列の入力を&lt;code&gt;Console.ReadLine()&lt;/code&gt;メソッド、コンソールへの文字列の出力を&lt;code&gt;Console.WriteLine()&lt;/code&gt;メソッドで行うことができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var values = Console.ReadLine().Split(' ');
+    var (a, b, c, d) = (long.Parse(values[0]), long.Parse(values[1]), long.Parse(values[2]), long.Parse(values[3]));
+    var answer = (a + b) * (c - d);
+    Console.WriteLine(answer);
+    Console.WriteLine(&amp;quot;Takahashi&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc269/tasks/abc269_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC269/submissions/34925112"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(A,B)&lt;/code&gt;は&lt;code&gt;#&lt;/code&gt;が出現する最小の行と最大の行になり、&lt;code&gt;(C,D)&lt;/code&gt;は、&lt;code&gt;#&lt;/code&gt;が出現する最小の列と最大の列になります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = 10;
+    var G = new string[N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;();
+    }
+
+    const int inf = (int)1e9;
+    var (a, b, c, d) = (inf, 0, inf, 0);
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; N; j++)
+        {
+            if (G[i][j] == '#')
+            {
+                a = Math.Min(a, i);
+                b = Math.Max(b, i);
+                c = Math.Min(c, j);
+                d = Math.Max(d, j);
+            }
+        }
+    }
+
+    Console.WriteLine($&amp;quot;{a + 1} {b + 1}&amp;quot;);
+    Console.WriteLine($&amp;quot;{c + 1} {d + 1}&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc269/tasks/abc269_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC269/submissions/34929182"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;求めたい集合は、&lt;code&gt;|&lt;/code&gt;をビット論理和としたとき、&lt;code&gt;x | N == N&lt;/code&gt;となる&lt;code&gt;x&lt;/code&gt;の集合です。
+&lt;code&gt;N&lt;/code&gt;がとても大きいので、&lt;code&gt;x&lt;/code&gt;を全探索してしまうと実行時間制限に間に合いません。
+そこで、&lt;code&gt;N&lt;/code&gt;のビットが立っている位置をビット全探索して論理和を求めることで、集合を求めることができます。
+制約により&lt;code&gt;N&lt;/code&gt;のビットが立っている個数は最大でも&lt;code&gt;15&lt;/code&gt;なので、答えとなる個数は最大でも&lt;code&gt;2^15&lt;/code&gt;なので、実行時間制限に十分間に合います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;long&amp;gt;();
+
+    var list = new List&amp;lt;int&amp;gt;();
+    for (var i = 0; i &amp;lt;= 60; i++)
+    {
+        if ((N &amp;gt;&amp;gt; i &amp;amp; 1) == 1) list.Add(i);
+    }
+
+    var answer = new List&amp;lt;long&amp;gt;();
+    var M = list.Count;
+    for (var i = 0; i &amp;lt; 1 &amp;lt;&amp;lt; M; i++)
+    {
+        var v = 0L;
+        for (var j = 0; j &amp;lt; M; j++)
+        {
+            if ((i &amp;gt;&amp;gt; j &amp;amp; 1) == 1)
+            {
+                v |= 1L &amp;lt;&amp;lt; list[j];
+            }
+        }
+
+        answer.Add(v);
+    }
+
+    answer.Sort();
+    Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc269/tasks/abc269_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC269/submissions/34934356"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N&lt;/code&gt;個のマスのペアが隣接する6マスにあるかを探索し、マスの番号を頂点とした&lt;code&gt;DisjointSetUnion (DSU, aka UnionFind)&lt;/code&gt;等を使って、連結成分の個数を数え上げます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var XY = new (int X, int Y)[N];
+    var dict = new Dictionary&amp;lt;(int X, int Y), int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var p = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        XY[i] = p;
+        dict[p] = i;
+    }
+
+    var D6 = new (int X, int Y)[6] { (-1, -1), (-1, 0), (0, -1), (0, 1), (1, 0), (1, 1) };
+    var dsu = new DisjointSetUnion(N);
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        foreach (var (dx, dy) in D6)
+        {
+            var np = (XY[i].X + dx, XY[i].Y + dy);
+            if (dict.ContainsKey(np))
+            {
+                var j = dict[np];
+                dsu.Merge(i, j);
+            }
+        }
+    }
+
+    var answer = dsu.GetGroups().Count();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc269/tasks/abc269_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC269/submissions/34943393"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;行と列はそれぞれ独立しているため、行と列を別に考えます。&lt;br /&gt;
+ある行&lt;code&gt;m&lt;/code&gt;までに含まれるルークの数を質問したとき(&lt;code&gt;! 1 m 1 N&lt;/code&gt;)、質問への答えが&lt;code&gt;m&lt;/code&gt;の場合、&lt;code&gt;1&lt;/code&gt;行から&lt;code&gt;m&lt;/code&gt;行までには既にルークが全て置かれており、&lt;code&gt;m+1&lt;/code&gt;行目から&lt;code&gt;N&lt;/code&gt;行目までに答えとなる行が存在することがわかり、&lt;code&gt;m&lt;/code&gt;以外の場合は&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;m&lt;/code&gt;行までの中に答えとなる行が存在することがわかります。
+また、制約が&lt;code&gt;2&amp;lt;=N&amp;lt;=1000&lt;/code&gt;であり、&lt;code&gt;N&amp;lt;=2^10&lt;/code&gt;であることから、答えとなる行&lt;code&gt;m&lt;/code&gt;の二部探索を行うことで、10回程度の質問で答えとなる行&lt;code&gt;m&lt;/code&gt;を求められることがわかります。&lt;br /&gt;
+同様に列に対しても二部探索で答えを求めることで、行と列合わせて20回程度の質問で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+
+    bool AskI(long m)
+    {
+        Console.WriteLine($&amp;quot;? 1 {m} 1 {N}&amp;quot;);
+        var c = Scanner.Scan&amp;lt;int&amp;gt;();
+        return c != m;
+    }
+
+    bool AskJ(long m)
+    {
+        Console.WriteLine($&amp;quot;? 1 {N} 1 {m}&amp;quot;);
+        var c = Scanner.Scan&amp;lt;int&amp;gt;();
+        return c != m;
+    }
+
+    var i = BinarySearch(0, N, AskI);
+    var j = BinarySearch(0, N, AskJ);
+    Console.WriteLine($&amp;quot;! {i} {j}&amp;quot;);
+}
+
+public static long BinarySearch(long l, long r, Func&amp;lt;long, bool&amp;gt; func)
+{
+    while (Math.Abs(r - l) &amp;gt; 1)
+    {
+        var m = (r + l) / 2;
+        if (func(m)) r = m;
+        else l = m;
+    }
+
+    return r;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 269の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220910abc268</id>
 		<title>ABC268</title>
@@ -1685,160 +1854,5 @@ C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.arr
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 260の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220709abc259</id>
-		<title>ABC259</title>
-		<link href="https://blog.aconcavy.dev/posts/20220709abc259" />
-		<updated>2022-07-09T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 259の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259"&gt;https://atcoder.jp/contests/abc259&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33074995"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;M&amp;lt;X&lt;/code&gt;のとき、&lt;code&gt;D&lt;/code&gt;ずつ&lt;code&gt;X-M&lt;/code&gt;年分変化したので、最終的な身長からその変化分を引いた数&lt;code&gt;T-D*(X-M)&lt;/code&gt;が答えとなります。&lt;br /&gt;
-&lt;code&gt;X&amp;lt;=M&lt;/code&gt;のとき、&lt;code&gt;X&lt;/code&gt;歳にはすでに&lt;code&gt;T&lt;/code&gt;であるため、&lt;code&gt;M&lt;/code&gt;歳の時も&lt;code&gt;T&lt;/code&gt;です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M, X, T, D) = Scanner.Scan&amp;lt;int, int, int, int, int&amp;gt;();
-    var answer = T - D * Math.Max(X - M, 0);
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33081607"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;ベクトル&lt;code&gt;(a,b)&lt;/code&gt;に対して&lt;code&gt;d&lt;/code&gt;度の回転の操作を行います。
-これは、&lt;code&gt;x' = x * cos(rad(d)) - y * sin(rad(d))&lt;/code&gt;, &lt;code&gt;y' = x * sin(rad(d)) + y * cos(rad(d))&lt;/code&gt;で表すことができます。
-度から弧度法(ラジアン)を求めるには、&lt;code&gt;度 * PI / 180度&lt;/code&gt;で求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (A, B, D) = Scanner.Scan&amp;lt;double, double, double&amp;gt;();
-    var rad = D * Math.PI / 180.0;
-    var sin = Math.Sin(rad);
-    var cos = Math.Cos(rad);
-    var x = A * cos - B * sin;
-    var y = A * sin + B * cos;
-    Console.WriteLine($&amp;quot;{x} {y}&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33110149"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文字列が一致するということは、同じ文字が連続した区間ごとに分割し、区間順にみたときに次の条件を全ての文字の区間が満たすときになります。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;S&lt;/code&gt;と&lt;code&gt;T&lt;/code&gt;の区間で出現する文字が一致する。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;S&lt;/code&gt;と&lt;code&gt;T&lt;/code&gt;の区間で文字が連続する長さが両方とも&lt;code&gt;1&lt;/code&gt;である。または、文字が連続する長さが両方とも&lt;code&gt;2&lt;/code&gt;以上かつ&lt;code&gt;T&lt;/code&gt;の文字が連続する長さが&lt;code&gt;S&lt;/code&gt;の文字が連続する長さ以上である。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var T = Scanner.Scan&amp;lt;string&amp;gt;();
-
-    List&amp;lt;(char, int)&amp;gt; F(ReadOnlySpan&amp;lt;char&amp;gt; s)
-    {
-        var result = new List&amp;lt;(char, int)&amp;gt;();
-        var r = 0;
-        for (var l = 0; l &amp;lt; s.Length;)
-        {
-            r = l;
-            while (r &amp;lt; s.Length &amp;amp;&amp;amp; s[r] == s[l]) r++;
-            result.Add((s[l], r - l));
-            l = r;
-        }
-
-        return result;
-    }
-
-    var ss = F(S);
-    var tt = F(T);
-    var answer = ss.Count == tt.Count;
-    if (answer)
-    {
-        for (var i = 0; i &amp;lt; ss.Count; i++)
-        {
-            var (s, cs) = ss[i];
-            var (t, ct) = tt[i];
-            answer &amp;amp;= s == t;
-            answer &amp;amp;= cs == ct || cs &amp;gt; 1 &amp;amp;&amp;amp; ct &amp;gt; 1 &amp;amp;&amp;amp; cs &amp;lt; ct;
-        }
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc259/tasks/abc259_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc259/submissions/33103648"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各円を頂点としたとき、円どうしで移動可能な場合に辺が存在すると考えると、グラフ問題として考えることができます。
-ある二つの円が移動可能ということは、その二つの円が共有点を持つということになります。
-共有点が存在するかどうかは、一つ目の円の半径を&lt;code&gt;r1&lt;/code&gt;、二つ目の円の半径を&lt;code&gt;r2&lt;/code&gt;、二つの円の中心間の距離を&lt;code&gt;d&lt;/code&gt;としたとき、&lt;code&gt;abs(r1-r2)&amp;lt;=d&amp;lt;=r1+r2&lt;/code&gt;が満たされれるかどうかで判断することができます。
-&lt;code&gt;Disjoint Set Union&lt;/code&gt;などのデータ構造や深さ優先探索、幅優先探索などで、&lt;code&gt;(sx,sy)&lt;/code&gt;が含まれる円と&lt;code&gt;(tx,ty)&lt;/code&gt;が含まれる円が連結であるかの判定を行うことで、答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var (sx, sy, tx, ty) = Scanner.Scan&amp;lt;long, long, long, long&amp;gt;();
-    var s = new Point(sx, sy);
-    var t = new Point(tx, ty);
-
-    var P = new (Point P, long R)[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var (x, y, r) = Scanner.Scan&amp;lt;long, long, long&amp;gt;();
-        P[i] = (new Point(x, y), r);
-    }
-
-    long SqD(Point p1, Point p2)
-    {
-        var dx = p1.X - p2.X;
-        var dy = p1.Y - p2.Y;
-        return dx * dx + dy * dy;
-    }
-
-    var okS = new bool[N];
-    var okT = new bool[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        okS[i] = SqD(s, P[i].P) == P[i].R * P[i].R;
-        okT[i] = SqD(t, P[i].P) == P[i].R * P[i].R;
-    }
-
-    var dsu = new DisjointSetUnion(N);
-
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        for (var j = i + 1; j &amp;lt; N; j++)
-        {
-            var sqd = SqD(P[i].P, P[j].P);
-            var rr1 = P[i].R + P[j].R;
-            var rr2 = P[i].R - P[j].R;
-            if (rr2 * rr2 &amp;lt;= sqd &amp;amp;&amp;amp; sqd &amp;lt;= rr1 * rr1)
-            {
-                dsu.Merge(i, j);
-            }
-        }
-    }
-
-    var answer = false;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        for (var j = 0; j &amp;lt; N; j++)
-        {
-
-            answer |= okS[i] &amp;amp;&amp;amp; okT[j] &amp;amp;&amp;amp; dsu.IsSame(i, j);
-        }
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-
-public readonly struct Point
-{
-    public readonly long X;
-    public readonly long Y;
-    public Point(long x, long y) =&amp;gt; (X, Y) = (x, y);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 259の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>

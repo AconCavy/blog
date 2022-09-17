@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC269</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC269">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220917abc269">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC269</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 17 September 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 17 September 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 269の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc269">https://atcoder.jp/contests/abc269</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc269/tasks/abc269_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC269/submissions/34918764">コンテスト提出</a></p>
+<p>入出力の問題です。
+C#では、コンソールからの文字列の入力を<code>Console.ReadLine()</code>メソッド、コンソールへの文字列の出力を<code>Console.WriteLine()</code>メソッドで行うことができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var values = Console.ReadLine().Split(' ');
+    var (a, b, c, d) = (long.Parse(values[0]), long.Parse(values[1]), long.Parse(values[2]), long.Parse(values[3]));
+    var answer = (a + b) * (c - d);
+    Console.WriteLine(answer);
+    Console.WriteLine(&quot;Takahashi&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc269/tasks/abc269_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC269/submissions/34925112">コンテスト提出</a></p>
+<p><code>(A,B)</code>は<code>#</code>が出現する最小の行と最大の行になり、<code>(C,D)</code>は、<code>#</code>が出現する最小の列と最大の列になります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = 10;
+    var G = new string[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;();
+    }
+
+    const int inf = (int)1e9;
+    var (a, b, c, d) = (inf, 0, inf, 0);
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            if (G[i][j] == '#')
+            {
+                a = Math.Min(a, i);
+                b = Math.Max(b, i);
+                c = Math.Min(c, j);
+                d = Math.Max(d, j);
+            }
+        }
+    }
+
+    Console.WriteLine($&quot;{a + 1} {b + 1}&quot;);
+    Console.WriteLine($&quot;{c + 1} {d + 1}&quot;);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc269/tasks/abc269_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC269/submissions/34929182">コンテスト提出</a></p>
+<p>求めたい集合は、<code>|</code>をビット論理和としたとき、<code>x | N == N</code>となる<code>x</code>の集合です。
+<code>N</code>がとても大きいので、<code>x</code>を全探索してしまうと実行時間制限に間に合いません。
+そこで、<code>N</code>のビットが立っている位置をビット全探索して論理和を求めることで、集合を求めることができます。
+制約により<code>N</code>のビットが立っている個数は最大でも<code>15</code>なので、答えとなる個数は最大でも<code>2^15</code>なので、実行時間制限に十分間に合います。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;long&gt;();
+
+    var list = new List&lt;int&gt;();
+    for (var i = 0; i &lt;= 60; i++)
+    {
+        if ((N &gt;&gt; i &amp; 1) == 1) list.Add(i);
+    }
+
+    var answer = new List&lt;long&gt;();
+    var M = list.Count;
+    for (var i = 0; i &lt; 1 &lt;&lt; M; i++)
+    {
+        var v = 0L;
+        for (var j = 0; j &lt; M; j++)
+        {
+            if ((i &gt;&gt; j &amp; 1) == 1)
+            {
+                v |= 1L &lt;&lt; list[j];
+            }
+        }
+
+        answer.Add(v);
+    }
+
+    answer.Sort();
+    Console.WriteLine(string.Join(&quot;\n&quot;, answer));
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc269/tasks/abc269_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC269/submissions/34934356">コンテスト提出</a></p>
+<p><code>N</code>個のマスのペアが隣接する6マスにあるかを探索し、マスの番号を頂点とした<code>DisjointSetUnion (DSU, aka UnionFind)</code>等を使って、連結成分の個数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var XY = new (int X, int Y)[N];
+    var dict = new Dictionary&lt;(int X, int Y), int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var p = Scanner.Scan&lt;int, int&gt;();
+        XY[i] = p;
+        dict[p] = i;
+    }
+
+    var D6 = new (int X, int Y)[6] { (-1, -1), (-1, 0), (0, -1), (0, 1), (1, 0), (1, 1) };
+    var dsu = new DisjointSetUnion(N);
+    for (var i = 0; i &lt; N; i++)
+    {
+        foreach (var (dx, dy) in D6)
+        {
+            var np = (XY[i].X + dx, XY[i].Y + dy);
+            if (dict.ContainsKey(np))
+            {
+                var j = dict[np];
+                dsu.Merge(i, j);
+            }
+        }
+    }
+
+    var answer = dsu.GetGroups().Count();
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc269/tasks/abc269_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC269/submissions/34943393">コンテスト提出</a></p>
+<p>行と列はそれぞれ独立しているため、行と列を別に考えます。<br>
+ある行<code>m</code>までに含まれるルークの数を質問したとき(<code>! 1 m 1 N</code>)、質問への答えが<code>m</code>の場合、<code>1</code>行から<code>m</code>行までには既にルークが全て置かれており、<code>m+1</code>行目から<code>N</code>行目までに答えとなる行が存在することがわかり、<code>m</code>以外の場合は<code>1</code>から<code>m</code>行までの中に答えとなる行が存在することがわかります。
+また、制約が<code>2&lt;=N&lt;=1000</code>であり、<code>N&lt;=2^10</code>であることから、答えとなる行<code>m</code>の二部探索を行うことで、10回程度の質問で答えとなる行<code>m</code>を求められることがわかります。<br>
+同様に列に対しても二部探索で答えを求めることで、行と列合わせて20回程度の質問で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+
+    bool AskI(long m)
+    {
+        Console.WriteLine($&quot;? 1 {m} 1 {N}&quot;);
+        var c = Scanner.Scan&lt;int&gt;();
+        return c != m;
+    }
+
+    bool AskJ(long m)
+    {
+        Console.WriteLine($&quot;? 1 {N} 1 {m}&quot;);
+        var c = Scanner.Scan&lt;int&gt;();
+        return c != m;
+    }
+
+    var i = BinarySearch(0, N, AskI);
+    var j = BinarySearch(0, N, AskJ);
+    Console.WriteLine($&quot;! {i} {j}&quot;);
+}
+
+public static long BinarySearch(long l, long r, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(r - l) &gt; 1)
+    {
+        var m = (r + l) / 2;
+        if (func(m)) r = m;
+        else l = m;
+    }
+
+    return r;
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220917abc269" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
