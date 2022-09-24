@@ -4,7 +4,169 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-09-17T14:38:24Z</updated>
+	<updated>2022-09-24T15:08:15Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20220924abc270</id>
+		<title>ABC270</title>
+		<link href="https://blog.aconcavy.dev/posts/20220924abc270" />
+		<updated>2022-09-24T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 270の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270"&gt;https://atcoder.jp/contests/abc270&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc270/tasks/abc270_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270/submissions/35093269"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;整数を2進数表記したとき、&lt;code&gt;2^0==1&lt;/code&gt;、&lt;code&gt;2^1==2&lt;/code&gt;、&lt;code&gt;2^2=4&lt;/code&gt;となり、入力&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の各ビットが立っているかをみることで、その問題に正解しているかどうかがわかります。
+そのため、&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の各ビットの論理和をとることで、答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (A, B) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var C = A | B;
+    Console.WriteLine(C);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc270/tasks/abc270_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270/submissions/35103936"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/abc270/submissions/35139218"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X&lt;/code&gt;が負のとき、&lt;code&gt;X&lt;/code&gt;、&lt;code&gt;Y&lt;/code&gt;、&lt;code&gt;Z&lt;/code&gt;を反転させることで&lt;code&gt;X&lt;/code&gt;が正の時として考えることができます。&lt;br /&gt;
+このとき、&lt;code&gt;X&amp;lt;Y&lt;/code&gt;または&lt;code&gt;Y&amp;lt;0&lt;/code&gt;であれば、&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;X&lt;/code&gt;の間に壁はないので、答えは&lt;code&gt;X&lt;/code&gt;となります。
+それ以外のとき、&lt;code&gt;Y&amp;lt;Z&lt;/code&gt;であれば、ハンマーを拾うことはできないので、答えは&lt;code&gt;-1&lt;/code&gt;となります。
+それ以外のとき、ハンマーを拾ってから&lt;code&gt;X&lt;/code&gt;に向かうことができるので、答えは&lt;code&gt;Abs(Z)+Abs(X-Z)&lt;/code&gt;となります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (X, Y, Z) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    if (X &amp;lt; 0)
+    {
+        X = -X;
+        Y = -Y;
+        Z = -Z;
+    }
+
+    if (X &amp;lt; Y || Y &amp;lt; 0)
+    {
+        Console.WriteLine(X);
+    }
+    else
+    {
+        if (Y &amp;lt; Z)
+        {
+            Console.WriteLine(-1);
+        }
+        else
+        {
+            Console.WriteLine(Math.Abs(Z) + Math.Abs(X - Z));
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc270/tasks/abc270_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270/submissions/35106711"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;訪れた直前の頂点をメモしながら、始点である&lt;code&gt;X&lt;/code&gt;から幅優先探索を行い、終点の&lt;code&gt;Y&lt;/code&gt;から直前の頂点をたどることでパスを復元することができます。
+復元した頂点は逆順であることに注意が必要です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, X, Y) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    X--; Y--;
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    for (var i = 0; i &amp;lt; N - 1; i++)
+    {
+        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        u--; v--;
+        G[u].Add(v);
+        G[v].Add(u);
+    }
+
+    var prev = new int[N];
+    Array.Fill(prev, -1);
+    var queue = new Queue&amp;lt;int&amp;gt;();
+    queue.Enqueue(X);
+    while (queue.Count &amp;gt; 0)
+    {
+        var u = queue.Dequeue();
+        foreach (var v in G[u])
+        {
+            if (prev[v] != -1) continue;
+            prev[v] = u;
+            queue.Enqueue(v);
+        }
+    }
+
+    var route = new List&amp;lt;int&amp;gt;();
+    var curr = Y;
+    while (true)
+    {
+        route.Add(curr + 1);
+        curr = prev[curr];
+        if(curr == X) break;
+    }
+
+    route.Reverse();
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, route));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc270/tasks/abc270_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270/submissions/35138376"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dp[i]:=石がi個のときの先手が取れる石の最大個数&lt;/code&gt;とした動的計画法をときます。
+遷移としては、石が&lt;code&gt;i-A[j]&lt;/code&gt;個のときの後手が取れる石の最大個数に&lt;code&gt;A[j]&lt;/code&gt;個足したものであることに注意が必要です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var dp = new int[N + 1];
+    for (var i = 0; i &amp;lt;= N; i++)
+    {
+        for (var j = 0; j &amp;lt; K; j++)
+        {
+            if (i - A[j] &amp;gt;= 0)
+            {
+                dp[i] = Math.Max(dp[i], (i - A[j] - dp[i - A[j]]) + A[j]);
+            }
+        }
+    }
+
+    var answer = dp[N];
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc270/tasks/abc270_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc270/submissions/35124130"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;愚直にシミュレーションしてしまうと実行時間制限に間に合いません。
+現在のかごにあるりんごの最小値が&lt;code&gt;v&lt;/code&gt;、りんごが1個以上あるかごの数を&lt;code&gt;c&lt;/code&gt;のときには&lt;code&gt;Min(K/c,v)&lt;/code&gt;周することができ、りんごは&lt;code&gt;Min(K/c,v)周*c個&lt;/code&gt;食べることができます。
+そして、食べられる&lt;code&gt;K&lt;/code&gt;が現在のりんごが1個以上あるかごの数未満になった場合は端数となるので、りんごが1個以上あるかごの番号が小さい順に数を減らすことで答えを求めることができます。
+全体計算量はりんごの数をソートするための&lt;code&gt;O(NlogN)&lt;/code&gt;となり、実行時間制限に間に合います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, long&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var basket = N;
+    var lap = 0L;
+    foreach (var v in A.OrderBy(x =&amp;gt; x))
+    {
+        if (K &amp;lt; basket) break;
+        var d = Math.Min(K / basket, v - lap);
+        K -= d * basket;
+        lap += d;
+        basket--;
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        A[i] = Math.Max(0, A[i] - lap);
+
+        if (A[i] &amp;gt; 0 &amp;amp;&amp;amp; K &amp;gt; 0)
+        {
+            A[i]--;
+            K--;
+        }
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, A));
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 270の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20220917abc269</id>
 		<title>ABC269</title>
@@ -1684,175 +1846,5 @@ public class SegmentTree&amp;lt;TMonoid&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 261の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220717abc260</id>
-		<title>ABC260</title>
-		<link href="https://blog.aconcavy.dev/posts/20220717abc260" />
-		<updated>2022-07-17T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 260の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260"&gt;https://atcoder.jp/contests/abc260&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33290941"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文字ごとの出現数を数え上げ、出現数が1つのみ文字を出力します。&lt;br /&gt;
-C#の場合、&lt;code&gt;char&lt;/code&gt;型を数値として扱い、小文字のアルファベットから&lt;code&gt;a&lt;/code&gt;を引くことで&lt;code&gt;a,b,c,...&lt;/code&gt;を&lt;code&gt;0,1,2,...&lt;/code&gt;として管理することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var count = new int[26];
-    foreach (var c in S)
-    {
-        count[c - 'a']++;
-    }
-
-    for (var i = 0; i &amp;lt; 26; i++)
-    {
-        if (count[i] == 1)
-        {
-            Console.WriteLine((char)('a' + i));
-            return;
-        }
-    }
-
-    Console.WriteLine(-1);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33297423"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;受験生の番目、数学のスコア、英語のスコアを&lt;code&gt;Tuple&lt;/code&gt;などのデータクラスとして管理します。&lt;br /&gt;
-&lt;code&gt;i&lt;/code&gt;番目の学生が合格したかをフラグとして管理し、それぞれの条件ごとにソートして合格となっていない受験生が対象となるかを判定することで、時間計算量&lt;code&gt;O(NlogN+N)&lt;/code&gt;で答えを求めることができます。&lt;br /&gt;
-C#の場合、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.array.sort?view=net-6.0#system-array-sort-1(-0()-system-comparison((-0)))"&gt;Array.Sort メソッド&lt;/a&gt;に&lt;code&gt;Comparison&amp;lt;T&amp;gt;&lt;/code&gt;を指定することで、比較関数を与えてソートすることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, X, Y, Z) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var accepts = new bool[N];
-    var C = A.Zip(B).Select((x, i) =&amp;gt; (A: x.First, B: x.Second, ID: i)).ToArray();
-
-    Array.Sort(C, (x, y) =&amp;gt;
-    {
-        var result = y.A.CompareTo(x.A);
-        return result == 0 ? x.ID.CompareTo(y.ID) : result;
-    });
-    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; X &amp;gt; 0; i++)
-    {
-        if (accepts[C[i].ID]) continue;
-        accepts[C[i].ID] = true;
-        X--;
-    }
-
-    Array.Sort(C, (x, y) =&amp;gt;
-    {
-        var result = y.B.CompareTo(x.B);
-        return result == 0 ? x.ID.CompareTo(y.ID) : result;
-    });
-    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; Y &amp;gt; 0; i++)
-    {
-        if (accepts[C[i].ID]) continue;
-        accepts[C[i].ID] = true;
-        Y--;
-    }
-
-    Array.Sort(C, (x, y) =&amp;gt;
-    {
-        var result = (y.A + y.B).CompareTo(x.A + x.B);
-        return result == 0 ? x.ID.CompareTo(y.ID) : result;
-    });
-    for (var i = 0; i &amp;lt; N &amp;amp;&amp;amp; Z &amp;gt; 0; i++)
-    {
-        if (accepts[C[i].ID]) continue;
-        accepts[C[i].ID] = true;
-        Z--;
-    }
-
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        if (accepts[i])
-        {
-            Console.WriteLine(i + 1);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33301206"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;動的計画法で答えを求めます。
-赤い宝石と青い宝石のレベルごとの個数をそれぞれ管理し、レベル&lt;code&gt;N&lt;/code&gt;からレベル&lt;code&gt;2&lt;/code&gt;まで計算します。
-遷移としては、レベルごとに先に赤い宝石を変換し、次に青い宝石を変換します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, X, Y) = Scanner.Scan&amp;lt;int, long, long&amp;gt;();
-    var Red = new long[N + 1];
-    var Blue = new long[N + 1];
-    Red[N] = 1;
-    for (var i = N; i &amp;gt;= 2; i--)
-    {
-        Red[i - 1] += Red[i];
-        Blue[i] += Red[i] * X;
-        Red[i - 1] += Blue[i];
-        Blue[i - 1] += Blue[i] * Y;
-    }
-
-    var answer = Blue[1];
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc260/tasks/abc260_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc260/submissions/33307596"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/abc260/submissions/33325990"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;表になっているカードの集合のうち&lt;code&gt;X&lt;/code&gt;以上の値を高速に求められるようなデータ構造と、カードの山を管理するデータ構造を使って何ターン目に食べられるかを判定します。
-前者のデータ構造では、&lt;code&gt;X&lt;/code&gt;以上の値を時間計算量&lt;code&gt;O(N)&lt;/code&gt;で探索してしまうと、全体の時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまい実行時間制限に間に合いません。&lt;br /&gt;
-そのため、二部探索のような時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で探索できるようなデータ構造(C++の場合は&lt;code&gt;set&lt;/code&gt;、C#の場合は&lt;code&gt;SortedSet&lt;/code&gt;)が必要です。&lt;br /&gt;
-&lt;code&gt;SortedSet&lt;/code&gt;から&lt;code&gt;GetViewBetween&lt;/code&gt;したサブセットの&lt;code&gt;Count&lt;/code&gt;プロパティが、場合によっては時間計算量&lt;code&gt;O(1)&lt;/code&gt;ではなさそうなので、&lt;code&gt;LINQ&lt;/code&gt;の&lt;code&gt;Any&lt;/code&gt;で存在判定をしたほうが良さそうです。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var answer = new int[N + 1];
-    Array.Fill(answer, -1);
-    var set = new SortedSet&amp;lt;int&amp;gt;();
-    var dict = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;();
-    var root = new int[N + 1];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var p = P[i];
-        var r = root[p] = p;
-        var subset = set.GetViewBetween(p, N);
-
-        if (subset.Any())
-        {
-            var q = subset.Min;
-            r = root[p] = root[q];
-            set.Remove(q);
-        }
-        else
-        {
-            dict[r] = new List&amp;lt;int&amp;gt;();
-        }
-        
-        set.Add(p);
-        dict[r].Add(p);
-
-        if (dict[r].Count &amp;gt;= K)
-        {
-            foreach (var v in dict[r])
-            {
-                answer[v] = i + 1;
-            }
-
-            set.Remove(p);
-            dict.Remove(r);
-        }
-    }
-
-    Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer.Skip(1)));
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 260の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
