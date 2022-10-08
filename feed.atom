@@ -4,7 +4,170 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-10-01T14:46:44Z</updated>
+	<updated>2022-10-08T14:17:41Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20221008abc272</id>
+		<title>ABC272</title>
+		<link href="https://blog.aconcavy.dev/posts/20221008abc272" />
+		<updated>2022-10-08T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 272の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc272"&gt;https://atcoder.jp/contests/abc272&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc272/tasks/abc272_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC272/submissions/35466353"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;C#では&lt;code&gt;LINQ&lt;/code&gt;という&lt;code&gt;IEnumerable&amp;lt;T&amp;gt;&lt;/code&gt;拡張メソッドを使うことで、整数型シーケンスの合計値を求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var answer = A.Sum();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc272/tasks/abc272_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC272/submissions/35471787"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;i(1&amp;lt;=i&amp;lt;=M)&lt;/code&gt;回目の講演会に&lt;code&gt;j(1&amp;lt;=j&amp;lt;=N)&lt;/code&gt;番目の人が参加しているかという2次元の表を構築し、全ての人&lt;code&gt;a&lt;/code&gt;と人&lt;code&gt;b&lt;/code&gt;の組み合わせ&lt;code&gt;(1&amp;lt;=a&amp;lt;b&amp;lt;=N)&lt;/code&gt;においてともに参加している講演会が1つでもあることを判定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var join = new bool[M, N];
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var X = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+        for (var j = 1; j &amp;lt;= X[0]; j++)
+        {
+            join[i, X[j] - 1] = true;
+        }
+    }
+
+    var answer = true;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = i + 1; j &amp;lt; N; j++)
+        {
+            var ok = false;
+            for (var k = 0; k &amp;lt; M; k++)
+            {
+                ok |= join[k, i] &amp;amp;&amp;amp; join[k, j];
+            }
+
+            answer &amp;amp;= ok;
+        }
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc272/tasks/abc272_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC272/submissions/35474568"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;異なる2要素を全探索してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり実行時間制限に間に合いません。&lt;br /&gt;
+2要素の和において偶数であることは、&lt;code&gt;偶数+偶数&lt;/code&gt;であること、または&lt;code&gt;奇数+奇数&lt;/code&gt;であることのみなので、&lt;code&gt;A&lt;/code&gt;を偶数と奇数にわけ、偶数が2個以上あればその最大値2つの和、奇数が2個以上あればその最大値2つの和のいずれかの最大値が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    Array.Sort(A);
+    Array.Reverse(A);
+    var even = new List&amp;lt;long&amp;gt;();
+    var odd = new List&amp;lt;long&amp;gt;();
+    foreach (var a in A)
+    {
+        if (a % 2 == 0) even.Add(a);
+        else odd.Add(a);
+    }
+
+    var answer = -1L;
+    if (even.Count &amp;gt;= 2) answer = Math.Max(answer, even[0] + even[1]);
+    if (odd.Count &amp;gt;= 2) answer = Math.Max(answer, odd[0] + odd[1]);
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc272/tasks/abc272_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC272/submissions/35503382"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;距離がちょうど&lt;code&gt;Sqrt(M)&lt;/code&gt;となる&lt;code&gt;(i,j)&lt;/code&gt;の差分をあらかじめ求めておき、&lt;code&gt;(1,1)&lt;/code&gt;から差分の幅優先探索をおこなうことで答えを求めることができます。
+距離がちょうど&lt;code&gt;Sqrt(M)&lt;/code&gt;となるには、&lt;code&gt;(i-k)^2 + (j-i)^2 == M&lt;/code&gt;となる必要があり、&lt;code&gt;i=0,j=0&lt;/code&gt;としたときに&lt;code&gt;k&lt;/code&gt;または&lt;code&gt;l&lt;/code&gt;を固定することによって、&lt;code&gt;l&lt;/code&gt;または&lt;code&gt;k&lt;/code&gt;を求めることができます。
+``&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+
+    var root = new Dictionary&amp;lt;int, int&amp;gt;();
+    for (var i = 0; i * i &amp;lt;= M; i++)
+    {
+        root[i * i] = i;
+    }
+
+    var delta = new HashSet&amp;lt;(int, int)&amp;gt;();
+
+    void Add(int dh, int dw)
+    {
+        if (dh * dh + dw * dw == M &amp;amp;&amp;amp; !delta.Contains((dh, dw)))
+        {
+            delta.Add((dh, dw));
+        }
+    }
+
+    // (i, j) = (0, 0)
+    for (var k = 0; k &amp;lt; N; k++)
+    {
+        var dh = (0 - k);
+        var dw2 = M - (dh * dh);
+        if (dw2 &amp;lt; 0) break;
+        if (root.ContainsKey(dw2))
+        {
+            var dw = root[dw2];
+            // l = dw - j or j - dw
+            Add(k, dw - 0);
+            Add(k, 0 - dw);
+            Add(dw - 0, k);
+            Add(0 - dw, k);
+        }
+    }
+
+    var dp = new long[N, N];
+    const long inf = (long)1e18;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; N; j++)
+        {
+            dp[i, j] = inf;
+        }
+    }
+
+    dp[0, 0] = 0;
+    var queue = new Queue&amp;lt;(int, int)&amp;gt;();
+    queue.Enqueue((0, 0));
+    while (queue.Count &amp;gt; 0)
+    {
+        var (i, j) = queue.Dequeue();
+        foreach (var (dh, dw) in delta)
+        {
+            var (k, l) = (i + dh, j + dw);
+            if (0 &amp;lt;= k &amp;amp;&amp;amp; k &amp;lt; N &amp;amp;&amp;amp; 0 &amp;lt;= l &amp;amp;&amp;amp; l &amp;lt; N &amp;amp;&amp;amp; dp[k, l] == inf)
+            {
+                dp[k, l] = dp[i, j] + 1;
+                queue.Enqueue((k, l));
+            }
+        }
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; N; j++)
+        {
+            if (dp[i, j] == inf) dp[i, j] = -1;
+        }
+    }
+
+    Printer.Print2D(dp, &amp;quot; &amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 272の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221001abc271</id>
 		<title>ABC271</title>
@@ -1748,117 +1911,5 @@ public class SegmentTree&amp;lt;TMonoid&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 263の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220731abc262</id>
-		<title>ABC262</title>
-		<link href="https://blog.aconcavy.dev/posts/20220731abc262" />
-		<updated>2022-07-31T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 262の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc262"&gt;https://atcoder.jp/contests/abc262&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33660849"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数&lt;/code&gt;ならば2年後、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+1&lt;/code&gt;ならば1年後、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+2&lt;/code&gt;ならばその年、&lt;code&gt;Y&lt;/code&gt;が&lt;code&gt;4の倍数+3&lt;/code&gt;ならば3年後が答えとなります。
-&lt;code&gt;Y&lt;/code&gt;を4で割った余りが&lt;code&gt;4の倍数+n&lt;/code&gt;の&lt;code&gt;n&lt;/code&gt;なので、その値によって答えを求めます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var Y = Scanner.Scan&amp;lt;int&amp;gt;();
-    var answer = Y;
-    if (Y % 4 == 0) answer += 2;
-    if (Y % 4 == 1) answer += 1;
-    if (Y % 4 == 3) answer += 3;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33662725"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;U&lt;/code&gt;と&lt;code&gt;V&lt;/code&gt;間に辺があるかどうかを二次元配列&lt;code&gt;G&lt;/code&gt;で表現し、&lt;code&gt;G[a,b]&lt;/code&gt;、&lt;code&gt;G[b,c]&lt;/code&gt;、&lt;code&gt;G[c,a]&lt;/code&gt;のすべてに辺が存在するときの総数を数え上げます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var G = new bool[N, N];
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        u--;
-        v--;
-        G[u, v] = G[v, u] = true;
-    }
-
-    var answer = 0;
-    for (var a = 0; a &amp;lt; N; a++)
-    {
-        for (var b = a + 1; b &amp;lt; N; b++)
-        {
-            for (var c = b + 1; c &amp;lt; N; c++)
-            {
-                if (G[a, b] &amp;amp;&amp;amp; G[b, c] &amp;amp;&amp;amp; G[c, a]) answer++;
-            }
-        }
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33669451"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;条件となる&lt;code&gt;i&lt;/code&gt;と&lt;code&gt;j&lt;/code&gt;を全探索してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり、実行時間制限内に答えを求めることはできません。
-条件を満たす要素を考えてみると、&lt;code&gt;(i==A[i], j==A[j])&lt;/code&gt;と&lt;code&gt;(i==A[j], j==A[i])&lt;/code&gt;となる組み合わせが対象となります。
-前者の場合、&lt;code&gt;[1, x, x, 4, 5]&lt;/code&gt;のような&lt;code&gt;A&lt;/code&gt;があったとすると、&lt;code&gt;(1,4)&lt;/code&gt;、&lt;code&gt;(1,5)&lt;/code&gt;、&lt;code&gt;(4,5)&lt;/code&gt;が答えとなり、&lt;code&gt;i==A[i]&lt;/code&gt;となる要素から2つ選ぶ組み合わせとなるので、&lt;code&gt;i==A[i]&lt;/code&gt;の個数を&lt;code&gt;C&lt;/code&gt;とすると、&lt;code&gt;C*(C-1)/2&lt;/code&gt;が前者の組み合わせの数となります。
-一方、後者の場合、&lt;code&gt;i&amp;lt;j&lt;/code&gt;より&lt;code&gt;A[i]&amp;gt;i&lt;/code&gt;かつ&lt;code&gt;A[A[i]]==i&lt;/code&gt;となるものがペアとして成り立ち、その総和が後者の組み合わせの数となります。
-よって、これらの総和が答えとなります。
-&lt;code&gt;N&lt;/code&gt;が最大&lt;code&gt;5*10^5&lt;/code&gt;なので、&lt;code&gt;int&lt;/code&gt;では収まらないので注意が必要です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().Select(x =&amp;gt; x - 1).ToArray();
-    var answer = 0L;
-    var same = 0L;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        if (A[i] == i) same++;
-        else if (A[i] &amp;gt; i &amp;amp;&amp;amp; A[A[i]] == i) answer++;
-    }
-
-    answer += same * (same - 1) / 2;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc262/tasks/abc262_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC262/submissions/33689722"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;A&lt;/code&gt;の項を選ぶ個数を1つ決めたときの和の余りを動的計画法で求め、全て求めたときのあまりが&lt;code&gt;0&lt;/code&gt;の数の&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;までの総和が答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    mint answer = 0;
-
-    for (var c = 1; c &amp;lt;= N; c++)
-    {
-        var dp = new mint[N + 1, N + 1, N];
-        dp[0, 0, 0]++;
-        for (var i = 0; i &amp;lt; N; i++)
-        {
-            for (var j = 0; j &amp;lt; N; j++)
-            {
-                for (var k = 0; k &amp;lt; N; k++)
-                {
-                    dp[i + 1, j + 1, (k + A[i]) % c] += dp[i, j, k];
-                    dp[i + 1, j, k] += dp[i, j, k];
-                }
-            }
-        }
-
-        answer += dp[N, c, 0];
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 262の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
