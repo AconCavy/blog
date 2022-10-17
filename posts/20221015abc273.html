@@ -169,8 +169,11 @@ public static (Dictionary&lt;T, int&gt; Map, Dictionary&lt;int, T&gt; ReMap) Com
 }
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc273/tasks/abc273_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc273/submissions/35759579">復習提出</a></p>
 <p>行と列の移動はそれぞれ独立しているので、行を移動するときの列、列を移動するときの行ごとにブロックの座標を管理し、移動途中にブロックが存在するかを<code>LowerBound</code>等で調べることで、クエリ当たり時間計算量<code>O(logN)</code>で求めることができます。</p>
-<p>下記のプログラムは考え方はあっていると思いますが、テストケースが4つ落ちています。どこがバグかわからないです...</p>
+<p><del>下記のプログラムは考え方はあっていると思いますが、テストケースが4つ落ちています。どこがバグかわからないです...</del><br>
+修正しました。
+番兵に指定した<code>rows</code>と<code>cols</code>、<code>cr</code>と<code>cc</code>の<code>H</code>と<code>W</code>が逆でした。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (H, W, cr, cc) = Scanner.Scan&lt;int, int, long, long&gt;();
@@ -180,9 +183,9 @@ public static (Dictionary&lt;T, int&gt; Map, Dictionary&lt;int, T&gt; ReMap) Com
     for (var i = 0; i &lt; N; i++)
     {
         var (r, c) = Scanner.Scan&lt;long, long&gt;();
-        if (!rows.ContainsKey(r)) rows[r] = new List&lt;long&gt; { 0, (H + 1) };
+        if (!rows.ContainsKey(r)) rows[r] = new List&lt;long&gt; { 0, (W + 1) };
         rows[r].Add(c);
-        if (!cols.ContainsKey(c)) cols[c] = new List&lt;long&gt; { 0, (W + 1) };
+        if (!cols.ContainsKey(c)) cols[c] = new List&lt;long&gt; { 0, (H + 1) };
         cols[c].Add(r);
     }
 
@@ -243,8 +246,8 @@ public static (Dictionary&lt;T, int&gt; Map, Dictionary&lt;int, T&gt; ReMap) Com
             }
         }
 
-        cr = Math.Min(Math.Max(cr, 1), W);
-        cc = Math.Min(Math.Max(cc, 1), H);
+        cr = Math.Min(Math.Max(cr, 1), H);
+        cc = Math.Min(Math.Max(cc, 1), W);
         Console.WriteLine($&quot;{cr} {cc}&quot;);
     }
 }

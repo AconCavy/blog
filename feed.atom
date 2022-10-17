@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-10-15T14:39:14Z</updated>
+	<updated>2022-10-17T18:53:02Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221015abc273</id>
 		<title>ABC273</title>
@@ -92,8 +92,11 @@ public static (Dictionary&amp;lt;T, int&amp;gt; Map, Dictionary&amp;lt;int, T&am
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc273/tasks/abc273_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc273/submissions/35759579"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;行と列の移動はそれぞれ独立しているので、行を移動するときの列、列を移動するときの行ごとにブロックの座標を管理し、移動途中にブロックが存在するかを&lt;code&gt;LowerBound&lt;/code&gt;等で調べることで、クエリ当たり時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
-&lt;p&gt;下記のプログラムは考え方はあっていると思いますが、テストケースが4つ落ちています。どこがバグかわからないです...&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;下記のプログラムは考え方はあっていると思いますが、テストケースが4つ落ちています。どこがバグかわからないです...&lt;/del&gt;&lt;br /&gt;
+修正しました。
+番兵に指定した&lt;code&gt;rows&lt;/code&gt;と&lt;code&gt;cols&lt;/code&gt;、&lt;code&gt;cr&lt;/code&gt;と&lt;code&gt;cc&lt;/code&gt;の&lt;code&gt;H&lt;/code&gt;と&lt;code&gt;W&lt;/code&gt;が逆でした。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (H, W, cr, cc) = Scanner.Scan&amp;lt;int, int, long, long&amp;gt;();
@@ -103,9 +106,9 @@ public static (Dictionary&amp;lt;T, int&amp;gt; Map, Dictionary&amp;lt;int, T&am
     for (var i = 0; i &amp;lt; N; i++)
     {
         var (r, c) = Scanner.Scan&amp;lt;long, long&amp;gt;();
-        if (!rows.ContainsKey(r)) rows[r] = new List&amp;lt;long&amp;gt; { 0, (H + 1) };
+        if (!rows.ContainsKey(r)) rows[r] = new List&amp;lt;long&amp;gt; { 0, (W + 1) };
         rows[r].Add(c);
-        if (!cols.ContainsKey(c)) cols[c] = new List&amp;lt;long&amp;gt; { 0, (W + 1) };
+        if (!cols.ContainsKey(c)) cols[c] = new List&amp;lt;long&amp;gt; { 0, (H + 1) };
         cols[c].Add(r);
     }
 
@@ -166,8 +169,8 @@ public static (Dictionary&amp;lt;T, int&amp;gt; Map, Dictionary&amp;lt;int, T&am
             }
         }
 
-        cr = Math.Min(Math.Max(cr, 1), W);
-        cc = Math.Min(Math.Max(cc, 1), H);
+        cr = Math.Min(Math.Max(cr, 1), H);
+        cc = Math.Min(Math.Max(cc, 1), W);
         Console.WriteLine($&amp;quot;{cr} {cc}&amp;quot;);
     }
 }
