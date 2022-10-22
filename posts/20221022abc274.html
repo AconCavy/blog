@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC274</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC274">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20221022abc274">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC274</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 22 October 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 22 October 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 274の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc274">https://atcoder.jp/contests/abc274</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc274/tasks/abc274_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC274/submissions/35862184">コンテスト提出</a></p>
+<p><code>double</code>型で<code>B/A</code>をとり、カスタム数値形式文字列の<a href="https://learn.microsoft.com/ja-jp/dotnet/standard/base-types/custom-numeric-format-strings#Specifier0">0カスタム指定子</a>で桁数を指定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B) = Scanner.Scan&lt;double, double&gt;();
+    var answer = B / A;
+    Console.WriteLine($&quot;{answer:0.000}&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc274/tasks/abc274_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC274/submissions/35864895">コンテスト提出</a></p>
+<p>二次元配列の入力を受け取り、列ごとにその行にある<code>#</code>の数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var G = new char[H][];
+    for (var i = 0; i &lt; H; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().ToArray();
+    }
+
+    var X = new int[W];
+    for (var j = 0; j &lt; W; j++)
+    {
+        for (var i = 0; i &lt; H; i++)
+        {
+            X[j] += G[i][j] == '#' ? 1 : 0;
+        }
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, X));
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc274/tasks/abc274_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC274/submissions/35873509">コンテスト提出</a></p>
+<p>辞書型などで番号<code>k</code>の親の数を管理します。
+初期値である番号<code>1</code>のアメーバが<code>0</code>であり、<code>1</code>が分裂すると<code>1*2=2</code>番目と<code>1*3</code>番目のアメーバは<code>1</code>番目のアメーバの数<code>+1</code>されたものがたどることができる親の数となります。
+そのため、<code>dict[i*2] = dict[i*2+1] = dict[A[i]]+1</code>のように順番にそのアメーバのたどることができる親の数を数え上げることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dict = new Dictionary&lt;int, int&gt;();
+    dict[1] = 0;
+    for (var i = 1; i &lt;= N; i++)
+    {
+        dict[i * 2] = dict[i * 2 + 1] = dict[A[i - 1]] + 1;
+    }
+
+    for (var i = 1; i &lt;= N * 2 + 1; i++)
+    {
+        Console.WriteLine(dict[k]);
+    }
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc274/tasks/abc274_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC274/submissions/35880846">コンテスト提出</a></p>
+<p>移動について、<code>i</code>が奇数番目の時は<code>X</code>の移動、偶数の時は<code>Y</code>の移動であることに注目し、<code>X</code>の移動と<code>Y</code>の移動それぞれについて<code>i</code>回目の移動で座標<code>P</code>行くことができるか、という動的計画法をとき、最終的に<code>x</code>と<code>y</code>にたどり着くことができるかを判定します。
+初期値<code>dpX{A[0]}, dpY{0}</code>とし、<code>i</code>が奇数番目の時は<code>dpX</code>の集合であり、ある頂点<code>px</code>が<code>px+A[i]</code>と<code>px-A[i]</code>に遷移します。
+同様に<code>i</code>が偶数番目の時は<code>dpY</code>の集合である頂点<code>py</code>が<code>py+A[i]</code>と<code>py-A[i]</code>に遷移します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, x, y) = Scanner.Scan&lt;int, int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var dpX = new HashSet&lt;int&gt;();
+    var dpY = new HashSet&lt;int&gt;();
+    dpX.Add(A[0]);
+    dpY.Add(0);
+    for (var i = 1; i &lt; N; i++)
+    {
+        var tmp = new HashSet&lt;int&gt;();
+        var target = i % 2 == 0 ? dpX : dpY;
+        foreach (var p in target)
+        {
+            tmp.Add(p + A[i]);
+            tmp.Add(p - A[i]);
+        }
+
+        if (i % 2 == 0) dpX = tmp;
+        else dpY = tmp;
+    }
+
+    var answer = dpX.Contains(x) &amp;&amp; dpY.Contains(y);
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc274/tasks/abc274_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC274/submissions/35898361">復習提出</a></p>
+<p>全ての組み合わせを愚直に探索してしまうと、時間計算量が<code>O((N+M)!)</code>となり実行時間制限に間に合いません。<br>
+そこで、原点と町と宝箱を頂点とした集合について、<code>dp[s][u]:=既に訪れている頂点集合sで現在地がuのときの距離の最小値</code>とした<code>bitDP</code>を行うことで、時間計算量<code>O(2^(N+M)*(N+M)^2)</code>で求めることができます。<br>
+<code>bitDP</code>をおこない、すべての町を訪れている集合<code>s</code>、現在地が<code>u</code>、訪れた宝箱の数が<code>k</code>、<code>Boost</code>を単位時間に対する倍率としたとき、<code>Min(dp[s,u]+D[u,0]*Boost[k])</code>が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var S = N + M + 1;
+    var P = new (int X, int Y)[S];
+    P[0] = (0, 0);
+    for (var i = 1; i &lt; S; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;int, int&gt;();
+        P[i] = (x, y);
+    }
+
+    double Distance(double x1, double y1, double x2, double y2)
+    {
+        var dx = x1 - x2;
+        var dy = y1 - y2;
+        return Math.Sqrt(dx * dx + dy * dy);
+    }
+
+    var D = new double[S, S];
+    for (var i = 0; i &lt; S; i++)
+    {
+        for (var j = 0; j &lt; S; j++)
+        {
+            D[i, j] = Distance(P[i].X, P[i].Y, P[j].X, P[j].Y);
+        }
+    }
+
+    const double inf = 7e18;
+
+    var p2 = new double[M + 1];
+    p2[0] = 1;
+    for (var i = 1; i &lt;= M; i++)
+    {
+        p2[i] = p2[i - 1] / 2.0;
+    }
+
+    var dp = new double[1 &lt;&lt; S, S];
+    for (var s = 0; s &lt; 1 &lt;&lt; S; s++)
+    {
+        for (var u = 0; u &lt; S; u++)
+        {
+            dp[s, u] = inf;
+        }
+    }
+
+    dp[1, 0] = 0;
+
+    int CountM(int s)
+    {
+        var k = 0;
+        for (var i = 0; i &lt; M; i++)
+        {
+            k += (s &gt;&gt; (N + 1 + i)) &amp; 1;
+        }
+
+        return k;
+    }
+
+    for (var s = 0; s &lt; 1 &lt;&lt; S; s++)
+    {
+        var k = CountM(s);
+        for (var u = 0; u &lt; S; u++)
+        {
+            for (var v = 0; v &lt; S; v++)
+            {
+                var t = s | (1 &lt;&lt; v);
+                dp[t, v] = Math.Min(dp[t, v], dp[s, u] + D[u, v] * p2[k]);
+            }
+        }
+    }
+
+    var answer = inf;
+    var mask = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        mask |= 1 &lt;&lt; (1 + i);
+    }
+
+    for (var s = 0; s &lt; 1 &lt;&lt; S; s++)
+    {
+        if ((s &amp; mask) != mask) continue;
+        var k = CountM(s);
+        for (var u = 0; u &lt; S; u++)
+        {
+            answer = Math.Min(answer, dp[s, u] + D[u, 0] * p2[k]);
+        }
+    }
+    
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20221022abc274" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>

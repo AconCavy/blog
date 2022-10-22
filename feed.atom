@@ -4,7 +4,204 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-10-17T18:53:02Z</updated>
+	<updated>2022-10-22T14:29:48Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20221022abc274</id>
+		<title>ABC274</title>
+		<link href="https://blog.aconcavy.dev/posts/20221022abc274" />
+		<updated>2022-10-22T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 274の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc274"&gt;https://atcoder.jp/contests/abc274&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc274/tasks/abc274_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC274/submissions/35862184"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;double&lt;/code&gt;型で&lt;code&gt;B/A&lt;/code&gt;をとり、カスタム数値形式文字列の&lt;a href="https://learn.microsoft.com/ja-jp/dotnet/standard/base-types/custom-numeric-format-strings#Specifier0"&gt;0カスタム指定子&lt;/a&gt;で桁数を指定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (A, B) = Scanner.Scan&amp;lt;double, double&amp;gt;();
+    var answer = B / A;
+    Console.WriteLine($&amp;quot;{answer:0.000}&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc274/tasks/abc274_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC274/submissions/35864895"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;二次元配列の入力を受け取り、列ごとにその行にある&lt;code&gt;#&lt;/code&gt;の数を数え上げます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new char[H][];
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToArray();
+    }
+
+    var X = new int[W];
+    for (var j = 0; j &amp;lt; W; j++)
+    {
+        for (var i = 0; i &amp;lt; H; i++)
+        {
+            X[j] += G[i][j] == '#' ? 1 : 0;
+        }
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, X));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc274/tasks/abc274_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC274/submissions/35873509"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;辞書型などで番号&lt;code&gt;k&lt;/code&gt;の親の数を管理します。
+初期値である番号&lt;code&gt;1&lt;/code&gt;のアメーバが&lt;code&gt;0&lt;/code&gt;であり、&lt;code&gt;1&lt;/code&gt;が分裂すると&lt;code&gt;1*2=2&lt;/code&gt;番目と&lt;code&gt;1*3&lt;/code&gt;番目のアメーバは&lt;code&gt;1&lt;/code&gt;番目のアメーバの数&lt;code&gt;+1&lt;/code&gt;されたものがたどることができる親の数となります。
+そのため、&lt;code&gt;dict[i*2] = dict[i*2+1] = dict[A[i]]+1&lt;/code&gt;のように順番にそのアメーバのたどることができる親の数を数え上げることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var dict = new Dictionary&amp;lt;int, int&amp;gt;();
+    dict[1] = 0;
+    for (var i = 1; i &amp;lt;= N; i++)
+    {
+        dict[i * 2] = dict[i * 2 + 1] = dict[A[i - 1]] + 1;
+    }
+
+    for (var i = 1; i &amp;lt;= N * 2 + 1; i++)
+    {
+        Console.WriteLine(dict[k]);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc274/tasks/abc274_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC274/submissions/35880846"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;移動について、&lt;code&gt;i&lt;/code&gt;が奇数番目の時は&lt;code&gt;X&lt;/code&gt;の移動、偶数の時は&lt;code&gt;Y&lt;/code&gt;の移動であることに注目し、&lt;code&gt;X&lt;/code&gt;の移動と&lt;code&gt;Y&lt;/code&gt;の移動それぞれについて&lt;code&gt;i&lt;/code&gt;回目の移動で座標&lt;code&gt;P&lt;/code&gt;行くことができるか、という動的計画法をとき、最終的に&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;y&lt;/code&gt;にたどり着くことができるかを判定します。
+初期値&lt;code&gt;dpX{A[0]}, dpY{0}&lt;/code&gt;とし、&lt;code&gt;i&lt;/code&gt;が奇数番目の時は&lt;code&gt;dpX&lt;/code&gt;の集合であり、ある頂点&lt;code&gt;px&lt;/code&gt;が&lt;code&gt;px+A[i]&lt;/code&gt;と&lt;code&gt;px-A[i]&lt;/code&gt;に遷移します。
+同様に&lt;code&gt;i&lt;/code&gt;が偶数番目の時は&lt;code&gt;dpY&lt;/code&gt;の集合である頂点&lt;code&gt;py&lt;/code&gt;が&lt;code&gt;py+A[i]&lt;/code&gt;と&lt;code&gt;py-A[i]&lt;/code&gt;に遷移します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, x, y) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var dpX = new HashSet&amp;lt;int&amp;gt;();
+    var dpY = new HashSet&amp;lt;int&amp;gt;();
+    dpX.Add(A[0]);
+    dpY.Add(0);
+    for (var i = 1; i &amp;lt; N; i++)
+    {
+        var tmp = new HashSet&amp;lt;int&amp;gt;();
+        var target = i % 2 == 0 ? dpX : dpY;
+        foreach (var p in target)
+        {
+            tmp.Add(p + A[i]);
+            tmp.Add(p - A[i]);
+        }
+
+        if (i % 2 == 0) dpX = tmp;
+        else dpY = tmp;
+    }
+
+    var answer = dpX.Contains(x) &amp;amp;&amp;amp; dpY.Contains(y);
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc274/tasks/abc274_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC274/submissions/35898361"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;全ての組み合わせを愚直に探索してしまうと、時間計算量が&lt;code&gt;O((N+M)!)&lt;/code&gt;となり実行時間制限に間に合いません。&lt;br /&gt;
+そこで、原点と町と宝箱を頂点とした集合について、&lt;code&gt;dp[s][u]:=既に訪れている頂点集合sで現在地がuのときの距離の最小値&lt;/code&gt;とした&lt;code&gt;bitDP&lt;/code&gt;を行うことで、時間計算量&lt;code&gt;O(2^(N+M)*(N+M)^2)&lt;/code&gt;で求めることができます。&lt;br /&gt;
+&lt;code&gt;bitDP&lt;/code&gt;をおこない、すべての町を訪れている集合&lt;code&gt;s&lt;/code&gt;、現在地が&lt;code&gt;u&lt;/code&gt;、訪れた宝箱の数が&lt;code&gt;k&lt;/code&gt;、&lt;code&gt;Boost&lt;/code&gt;を単位時間に対する倍率としたとき、&lt;code&gt;Min(dp[s,u]+D[u,0]*Boost[k])&lt;/code&gt;が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var S = N + M + 1;
+    var P = new (int X, int Y)[S];
+    P[0] = (0, 0);
+    for (var i = 1; i &amp;lt; S; i++)
+    {
+        var (x, y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        P[i] = (x, y);
+    }
+
+    double Distance(double x1, double y1, double x2, double y2)
+    {
+        var dx = x1 - x2;
+        var dy = y1 - y2;
+        return Math.Sqrt(dx * dx + dy * dy);
+    }
+
+    var D = new double[S, S];
+    for (var i = 0; i &amp;lt; S; i++)
+    {
+        for (var j = 0; j &amp;lt; S; j++)
+        {
+            D[i, j] = Distance(P[i].X, P[i].Y, P[j].X, P[j].Y);
+        }
+    }
+
+    const double inf = 7e18;
+
+    var p2 = new double[M + 1];
+    p2[0] = 1;
+    for (var i = 1; i &amp;lt;= M; i++)
+    {
+        p2[i] = p2[i - 1] / 2.0;
+    }
+
+    var dp = new double[1 &amp;lt;&amp;lt; S, S];
+    for (var s = 0; s &amp;lt; 1 &amp;lt;&amp;lt; S; s++)
+    {
+        for (var u = 0; u &amp;lt; S; u++)
+        {
+            dp[s, u] = inf;
+        }
+    }
+
+    dp[1, 0] = 0;
+
+    int CountM(int s)
+    {
+        var k = 0;
+        for (var i = 0; i &amp;lt; M; i++)
+        {
+            k += (s &amp;gt;&amp;gt; (N + 1 + i)) &amp;amp; 1;
+        }
+
+        return k;
+    }
+
+    for (var s = 0; s &amp;lt; 1 &amp;lt;&amp;lt; S; s++)
+    {
+        var k = CountM(s);
+        for (var u = 0; u &amp;lt; S; u++)
+        {
+            for (var v = 0; v &amp;lt; S; v++)
+            {
+                var t = s | (1 &amp;lt;&amp;lt; v);
+                dp[t, v] = Math.Min(dp[t, v], dp[s, u] + D[u, v] * p2[k]);
+            }
+        }
+    }
+
+    var answer = inf;
+    var mask = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        mask |= 1 &amp;lt;&amp;lt; (1 + i);
+    }
+
+    for (var s = 0; s &amp;lt; 1 &amp;lt;&amp;lt; S; s++)
+    {
+        if ((s &amp;amp; mask) != mask) continue;
+        var k = CountM(s);
+        for (var u = 0; u &amp;lt; S; u++)
+        {
+            answer = Math.Min(answer, dp[s, u] + D[u, 0] * p2[k]);
+        }
+    }
+    
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 274の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221015abc273</id>
 		<title>ABC273</title>
@@ -1595,216 +1792,5 @@ public readonly struct Point : IEquatable&amp;lt;Point&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 265の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220813abc264</id>
-		<title>ABC264</title>
-		<link href="https://blog.aconcavy.dev/posts/20220813abc264" />
-		<updated>2022-08-13T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 264の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264"&gt;https://atcoder.jp/contests/abc264&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc264/tasks/abc264_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264/submissions/33984910"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;C#では、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.string.substring?view=net-6.0"&gt;&lt;code&gt;SubString&lt;/code&gt;メソッド&lt;/a&gt;に始点と長さを指定することで、部分文字列を取得することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (L, R) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    L--;
-    const string atcoder = &amp;quot;atcoder&amp;quot;;
-    var answer = atcoder.SubString(L, R - L);
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;また、文字列スライスを使うことで&lt;code&gt;[L,R)&lt;/code&gt;区間の部分文字列を取得することもできます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (L, R) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    L--;
-    const string atcoder = &amp;quot;atcoder&amp;quot;;
-    var answer = atcoder[L..R];
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc264/tasks/abc264_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264/submissions/33988441"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;中心(8行目8列目)からの行の距離と列の距離の最大値の偶奇によって色分けされているので、それを判定します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (R, C) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var mid = 8;
-    var r = Math.Abs(mid - R);
-    var c = Math.Abs(mid - C);
-    var answer = Math.Max(r, c) % 2 == 0 ? &amp;quot;white&amp;quot; : &amp;quot;black&amp;quot;;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc264/tasks/abc264_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264/submissions/33998636"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;行列&lt;code&gt;A&lt;/code&gt;のうち、どの行と列を使うかの組み合わせを全探索してます。
-これは、bit全探索(2のn乗のビットが立っていれば、そのn行目またはn列目を使う)を行うことで簡潔に書くことができます。
-時間計算量は、最大でも&lt;code&gt;(2^10)*(2^10)≒10^6&lt;/code&gt;なので、余裕で間に合います。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H1, W1) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var A = new int[H1][];
-    for (var i = 0; i &amp;lt; H1; i++)
-    {
-        A[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    }
-
-    var (H2, W2) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var B = new int[H2][];
-    for (var i = 0; i &amp;lt; H2; i++)
-    {
-        B[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    }
-
-    for (var H = 0; H &amp;lt; 1 &amp;lt;&amp;lt; H1; H++)
-    {
-        var hc = 0;
-        for (var k = 0; k &amp;lt; H1; k++)
-        {
-            if ((H &amp;gt;&amp;gt; k &amp;amp; 1) == 1) hc++;
-        }
-
-        if (hc != H2) continue;
-
-        for (var W = 0; W &amp;lt; 1 &amp;lt;&amp;lt; W1; W++)
-        {
-            var wc = 0;
-            for (var k = 0; k &amp;lt; W1; k++)
-            {
-                if ((W &amp;gt;&amp;gt; k &amp;amp; 1) == 1) wc++;
-            }
-
-            if (wc != W2) continue;
-
-            var G = new List&amp;lt;List&amp;lt;int&amp;gt;&amp;gt;();
-            for (var i = 0; i &amp;lt; H1; i++)
-            {
-                if ((H &amp;gt;&amp;gt; i &amp;amp; 1) == 1) G.Add(new List&amp;lt;int&amp;gt;());
-                else continue;
-
-                for (var j = 0; j &amp;lt; W1; j++)
-                {
-                    if ((W &amp;gt;&amp;gt; j &amp;amp; 1) == 1) G[^1].Add(A[i][j]);
-                }
-            }
-
-            var ok = true;
-            for (var i = 0; i &amp;lt; H2; i++)
-            {
-                for (var j = 0; j &amp;lt; W2; j++)
-                {
-                    ok &amp;amp;= G[i][j] == B[i][j];
-                }
-            }
-
-            if (ok)
-            {
-                Console.WriteLine(&amp;quot;Yes&amp;quot;);
-                return;
-            }
-        }
-    }
-
-    Console.WriteLine(&amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc264/tasks/abc264_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264/submissions/33993322"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;数列をソートするための最小の操作回数は転倒数と一致するため、文字が&lt;code&gt;atcoder&lt;/code&gt;の何番目に値するかに変換した数列の転倒数を求めることで、時間計算量&lt;code&gt;O(|S|log|S|)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    const int N = 7;
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-
-    int F(char c)
-    {
-        return c switch
-        {
-            'a' =&amp;gt; 0,
-            't' =&amp;gt; 1,
-            'c' =&amp;gt; 2,
-            'o' =&amp;gt; 3,
-            'd' =&amp;gt; 4,
-            'e' =&amp;gt; 5,
-            'r' =&amp;gt; 6,
-            _ =&amp;gt; 7,
-        };
-    }
-
-    var T = S.Select(x =&amp;gt; F(x)).ToArray();
-    var ft = new FenwickTree(10);
-    var answer = 0L;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var c = T[i];
-        answer += i - ft.Sum(c + 1);
-        ft.Add(c, 1);
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;文字列を頂点として、隣接する文字を入れ替えていく幅優先探索でも、時間計算量&lt;code&gt;O(|S|!)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc264/tasks/abc264_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc264/submissions/34003277"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;全ての発電所から電線がつながっている都市をクエリごとに計算してしまうと、連結成分の判定に&lt;code&gt;Disjoint Set Union (DSU)&lt;/code&gt;を使ったとしても、&lt;code&gt;DSU&lt;/code&gt;の構成に時間計算量&lt;code&gt;O(α(N+M)) (α:アッカーマンの逆関数、非常に小さな定数)&lt;/code&gt;、全ての発電所の連結成分の個数の数え上げに時間計算量&lt;code&gt;O(M)&lt;/code&gt;となってしまい、全体で&lt;code&gt;O(Q(α(N+M)+M))&lt;/code&gt;となり、実行時間制限に間に合いません。&lt;br /&gt;
-そこで、使わない電線をあらかじめ繋いでおき、そこにクエリの逆順で電線を繋いでいくという問題に言い換えると、クエリごとに毎回&lt;code&gt;DSU&lt;/code&gt;を構築しなおす必要がなくなり、クエリ当たりの時間計算量が、全ての発電所の連結成分の個数の数え上げの&lt;code&gt;O(M)&lt;/code&gt;のみになります。&lt;br /&gt;
-さらに、全ての発電所の連結成分の数え上げを、ある一つの発電所に連結成分をまとめ、その発電所のみ調べることで、時間計算量を&lt;code&gt;O(1)&lt;/code&gt;にすることができます。&lt;br /&gt;
-このことから、クエリの先読み逆順処理と発電所のまとめあげをおこなうことで、全体の時間計算量を&lt;code&gt;O(α(N+M)+Q)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M, E) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    var Edges = new (int U, int V)[E];
-    for (var i = 0; i &amp;lt; E; i++)
-    {
-        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        Edges[i] = (u, v);
-    }
-
-    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-    var X = new int[Q];
-    var removes = new bool[E];
-    for (var i = 0; i &amp;lt; Q; i++)
-    {
-        var x = Scanner.Scan&amp;lt;int&amp;gt;() - 1;
-        X[i] = x;
-        removes[x] = true;
-    }
-
-    var s = 0;
-    var dsu = new DisjointSetUnion(N + M + 1);
-    for (var u = N + 1; u &amp;lt;= N + M; u++)
-    {
-        dsu.Merge(s, u);
-    }
-
-    for (var i = 0; i &amp;lt; E; i++)
-    {
-        if (!removes[i])
-        {
-            var (u, v) = Edges[i];
-            dsu.Merge(u, v);
-        }
-    }
-
-    var answer = new int[Q];
-    for (var i = Q - 1; i &amp;gt;= 0; i--)
-    {
-        answer[i] = dsu.SizeOf(s) - (M + 1);
-        var (u, v) = Edges[X[i]];
-        dsu.Merge(u, v);
-    }
-
-    Console.WriteLine(string.Join(&amp;quot;\n&amp;quot;, answer));
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 264の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
