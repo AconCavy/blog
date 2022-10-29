@@ -5,8 +5,235 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 22 Oct 2022 14:29:48 GMT</pubDate>
-		<lastBuildDate>Sat, 22 Oct 2022 14:29:48 GMT</lastBuildDate>
+		<pubDate>Sat, 29 Oct 2022 17:47:32 GMT</pubDate>
+		<lastBuildDate>Sat, 29 Oct 2022 17:47:32 GMT</lastBuildDate>
+		<item>
+			<title>ABC275</title>
+			<link>https://blog.aconcavy.dev/posts/20221029abc275</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 275の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20221029abc275</guid>
+			<pubDate>Sat, 29 Oct 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 275の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc275"&gt;https://atcoder.jp/contests/abc275&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc275/tasks/abc275_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC275/submissions/36033017"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;順番に&lt;code&gt;A&lt;/code&gt;の値を見ていき、それまでの最大値より大きい場合、最大値と答えを更新し、最後まで見たときの最大値の順番が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var H = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var answer = 0;
+    var max = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (max &amp;lt; H[i])
+        {
+            max = H[i];
+            answer = i + 1;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc275/tasks/abc275_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC275/submissions/36036335"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;64bit&lt;/code&gt;整数型を使っても、&lt;code&gt;10^18^6&lt;/code&gt;は整数型に収まりません。
+&lt;code&gt;(X*Y)%M&lt;/code&gt;の値は&lt;code&gt;(X%M)*(Y%M)&lt;/code&gt;の値と等しくなるように、余りをとる&lt;code&gt;+,-,*&lt;/code&gt;の演算は計算の途中で余りをとっても最終的な余りと等しくなります。
+そのため、各演算ごとに余りを取ることで、各項最大でも&lt;code&gt;10^9&lt;/code&gt;に収まり、掛け算でも&lt;code&gt;10^9 * 10^9&lt;/code&gt;で&lt;code&gt;10^18&lt;/code&gt;に収まります。
+引き算を行うことで値が負の値になる可能性があるので、余りを足すことで正の値にすることに注意します。
+余りをとる整数型の構造体をライブラリとして作っておくと便利です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (A, B, C, D, E, F) = Scanner.Scan&amp;lt;long, long, long, long, long, long&amp;gt;();
+    var answer = ((mint)A * (mint)B * (mint)C) - ((mint)D * (mint)E * (mint)F);
+    Console.WriteLine(answer);
+}
+
+public readonly struct ModuloInteger : IEquatable&amp;lt;ModuloInteger&amp;gt;
+{
+    public long Value { get; }
+
+    // The modulo will be used as an editable property.
+    // public static long Modulo { get; set; } = 998244353;
+    // The constant modulo will be recommended to use for performances in use cases.
+    public const long Modulo = 998244353;
+
+    public ModuloInteger(int value)
+    {
+        Value = value % Modulo;
+        if (Value &amp;lt; 0) Value += Modulo;
+    }
+
+    public ModuloInteger(long value)
+    {
+        Value = value % Modulo;
+        if (Value &amp;lt; 0) Value += Modulo;
+    }
+
+    public static implicit operator int(ModuloInteger mint) =&amp;gt; (int)mint.Value;
+    public static implicit operator long(ModuloInteger mint) =&amp;gt; mint.Value;
+    public static implicit operator ModuloInteger(int value) =&amp;gt; new ModuloInteger(value);
+    public static implicit operator ModuloInteger(long value) =&amp;gt; new ModuloInteger(value);
+    public static ModuloInteger operator +(ModuloInteger a, ModuloInteger b) =&amp;gt; a.Value + b.Value;
+    public static ModuloInteger operator -(ModuloInteger a, ModuloInteger b) =&amp;gt; a.Value - b.Value;
+    public static ModuloInteger operator *(ModuloInteger a, ModuloInteger b) =&amp;gt; a.Value * b.Value;
+    public static ModuloInteger operator /(ModuloInteger a, ModuloInteger b) =&amp;gt; a * b.Inverse();
+    public static bool operator ==(ModuloInteger a, ModuloInteger b) =&amp;gt; a.Equals(b);
+    public static bool operator !=(ModuloInteger a, ModuloInteger b) =&amp;gt; !a.Equals(b);
+    public bool Equals(ModuloInteger other) =&amp;gt; Value == other.Value;
+    public override bool Equals(object obj) =&amp;gt; obj is ModuloInteger other &amp;amp;&amp;amp; Equals(other);
+    public override int GetHashCode() =&amp;gt; Value.GetHashCode();
+    public override string ToString() =&amp;gt; Value.ToString();
+    public ModuloInteger Inverse() =&amp;gt; Inverse(Value);
+
+    public static ModuloInteger Inverse(long value)
+    {
+        if (value == 0) return 0;
+        var (s, t, m0, m1) = (Modulo, value, 0L, 1L);
+        while (t &amp;gt; 0)
+        {
+            var u = s / t;
+            s -= t * u;
+            m0 -= m1 * u;
+            (s, t) = (t, s);
+            (m0, m1) = (m1, m0);
+        }
+
+        if (m0 &amp;lt; 0) m0 += Modulo / s;
+        return m0;
+    }
+
+    public ModuloInteger Power(long n) =&amp;gt; Power(Value, n);
+
+    public static ModuloInteger Power(long value, long n)
+    {
+        if (n &amp;lt; 0) throw new ArgumentException(nameof(n));
+        var result = 1L;
+        while (n &amp;gt; 0)
+        {
+            if ((n &amp;amp; 1) &amp;gt; 0) result = result * value % Modulo;
+            value = value * value % Modulo;
+            n &amp;gt;&amp;gt;= 1;
+        }
+
+        return result;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc275/tasks/abc275_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC275/submissions/36052389"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;正方形となる4つの頂点を全探索し、正方形となる頂点の組み合わせを数え上げます。
+正方形の左上の頂点を&lt;code&gt;p1&lt;/code&gt;、右上の頂点を&lt;code&gt;p2&lt;/code&gt;、左下の頂点を&lt;code&gt;p3&lt;/code&gt;、右下を&lt;code&gt;p4&lt;/code&gt;としたとき、&lt;code&gt;p1-p2&lt;/code&gt;のベクトルと、&lt;code&gt;p3-p4&lt;/code&gt;のベクトルは一致し、&lt;code&gt;p1-p3&lt;/code&gt;のベクトルは、&lt;code&gt;p1-p2&lt;/code&gt;を90度回転させたものと一致する必要があります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = 9;
+    var G = new bool[N][];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x == '#').ToArray();
+    }
+
+    var answer = 0;
+
+    IEnumerable&amp;lt;(int H, int W)&amp;gt; F()
+    {
+        for (var i = 0; i &amp;lt; N; i++)
+        {
+            for (var j = 0; j &amp;lt; N; j++)
+            {
+                yield return (i, j);
+            }
+        }
+    }
+
+    foreach (var p1 in F())
+    {
+        foreach (var p2 in F())
+        {
+            foreach (var p3 in F())
+            {
+                foreach (var p4 in F())
+                {
+                    if (p1 == p2 || p1 == p3 || p1 == p4 || p2 == p3 || p2 == p4 || p3 == p4) continue;
+                    var e1 = (p2.H - p1.H, p2.W - p1.W);
+                    var e3 = (p4.H - p3.H, p4.W - p3.W);
+                    var e2 = (p3.W - p1.W, -(p3.H - p1.H));
+                    var ok = e1 == e3 &amp;amp;&amp;amp; e1 == e2;
+                    ok &amp;amp;= G[p1.H][p1.W];
+                    ok &amp;amp;= G[p2.H][p2.W];
+                    ok &amp;amp;= G[p3.H][p3.W];
+                    ok &amp;amp;= G[p4.H][p4.W];
+                    if (ok) answer++;
+                }
+            }
+        }
+    }
+
+    answer /= 4;
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc275/tasks/abc275_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC275/submissions/36053607"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;全ての&lt;code&gt;F(x)&lt;/code&gt;を都度求めてしまうと、何度も同じ計算を行ってしまい、&lt;code&gt;N&lt;/code&gt;が大きい場合、実行時間制限に間に合いません。
+そこで、一度計算した値を保持しておくことで(メモ化再帰)、同じ計算を省略することで、実行時間制限に間に合わせることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;long&amp;gt;();
+    var dp = new Dictionary&amp;lt;long, long&amp;gt;();
+    dp[0] = 1;
+
+    long F(long x)
+    {
+        if (dp.ContainsKey(x)) return dp[x];
+        return dp[x] = F(x / 2) + F(x / 3);
+    }
+
+    var answer = F(N);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc275/tasks/abc275_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC275/submissions/36065330"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dp[i][j]:=ルーレットをi回まわした時にマスjにいる確率&lt;/code&gt;とした動的計画法を解きます。
+遷移としては、&lt;code&gt;今いるマスの確率/M&lt;/code&gt;が次のいるマスの確率に寄与します。
+&lt;code&gt;M&lt;/code&gt;の逆元を求めることに&lt;code&gt;O(logMod)&lt;/code&gt;かかるので、前計算しておくことで高速化できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M, K) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var dp = new mint[K + 1, N + 1];
+    dp[0, 0] = 1;
+    var im = mint.Inverse(M);
+
+    for (var k = 0; k &amp;lt; K; k++)
+    {
+        for (var m = 1; m &amp;lt;= M; m++)
+        {
+            for (var n = 0; n &amp;lt; N; n++)
+            {
+                var x = n + m;
+                if (x &amp;gt; N) x = Math.Max(0, N - (x - N));
+                dp[k + 1, x] += dp[k, n] * im;
+            }
+        }
+    }
+
+    mint answer = 0;
+    for (var k = 0; k &amp;lt;= K; k++)
+    {
+        answer += dp[k, N];
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC274</title>
 			<link>https://blog.aconcavy.dev/posts/20221022abc274</link>
@@ -1588,218 +1815,6 @@ public readonly struct Point
     }
 
     Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC265</title>
-			<link>https://blog.aconcavy.dev/posts/20220821abc265</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 265の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20220821abc265</guid>
-			<pubDate>Sun, 21 Aug 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 265の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265"&gt;https://atcoder.jp/contests/abc265&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc265/tasks/abc265_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265/submissions/34200512"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;3個のりんごを&lt;code&gt;b&lt;/code&gt;セット買ったとき、1個のりんごを&lt;code&gt;a=N-b*3&lt;/code&gt;セット買うことができます。
-この&lt;code&gt;a&lt;/code&gt;と&lt;code&gt;b&lt;/code&gt;を全探索し、&lt;code&gt;a*X+b*Y&lt;/code&gt;の最小を求めます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (X, Y, N) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    const int inf = (int)1e9;
-    var answer = inf;
-    for (var b = 0; b * 3 &amp;lt;= N; b++)
-    {
-        var a = (N - b * 3);
-        var v = a * X + b * Y;
-        answer = Math.Min(answer, v);
-    }
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;X*3&amp;gt;Y&lt;/code&gt;で場合分けをして、時間計算量&lt;code&gt;O(1)&lt;/code&gt;で解くこともできます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (X, Y, N) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    var answer = X * 3 &amp;gt; Y ? (N / 3) * Y + N % 3 * X : X * N;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc265/tasks/abc265_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265/submissions/34206744"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;愚直にシミュレーションを行い、&lt;code&gt;現在の持ち時間-A[i]&lt;/code&gt;が&lt;code&gt;0&lt;/code&gt;以下になれば、答えは&lt;code&gt;No&lt;/code&gt;となります。
-1回の移動あたりのボーナスを全て探索してしまうと、全体の時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;かかってしまうので、あらかじめ配列として&lt;code&gt;bonus[x]&lt;/code&gt;をもっておくことで、1回の移動あたりのボーナスの値を&lt;code&gt;O(1)&lt;/code&gt;で取得することができ、全体計算量&lt;code&gt;O(N)&lt;/code&gt;で解くことができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M, T) = Scanner.Scan&amp;lt;int, int, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var bonus = new long[N + 1];
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        var (x, y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        bonus[x] = y;
-    }
-
-    var curr = T;
-    for (var i = 0; i &amp;lt; N - 1; i++)
-    {
-        curr += bonus[i + 1];
-        if (curr &amp;gt; A[i])
-        {
-            curr -= A[i];
-        }
-        else
-        {
-            Console.WriteLine(&amp;quot;No&amp;quot;);
-            return;
-        }
-    }
-
-    Console.WriteLine(&amp;quot;Yes&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc265/tasks/abc265_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265/submissions/34212489"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;現在いるマスに書かれている文字にそって愚直にシミュレーションを行います。
-あるマス&lt;code&gt;(i,j)&lt;/code&gt;からマスの外に出ようとした場合には、答えはマス&lt;code&gt;(i,j)&lt;/code&gt;となります。
-無限に移動し続ける場合の判定として、既に訪れたマスをフラグ管理なのでメモしておき、移動先のマスが既に訪れているマスの場合には答えは&lt;code&gt;-1&lt;/code&gt;となります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var G = new char[H][];
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        G[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
-    }
-
-    var used = new bool[H, W];
-    used[0, 0] = true;
-    var queue = new Queue&amp;lt;(int, int)&amp;gt;();
-    queue.Enqueue((0, 0));
-    while (queue.Count &amp;gt; 0)
-    {
-        var (ch, cw) = queue.Dequeue();
-        var (nh, nw) = G[ch][cw] switch
-        {
-            'U' =&amp;gt; (ch - 1, cw),
-            'D' =&amp;gt; (ch + 1, cw),
-            'L' =&amp;gt; (ch, cw - 1),
-            'R' =&amp;gt; (ch, cw + 1),
-            _ =&amp;gt; (0, 0),
-        };
-
-        if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw)
-        {
-            Console.WriteLine($&amp;quot;{ch + 1} {cw + 1}&amp;quot;);
-            return;
-        }
-
-        if (used[nh, nw])
-        {
-            Console.WriteLine(-1);
-            return;
-        }
-
-        used[nh, nw] = true;
-        queue.Enqueue((nh, nw));
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc265/tasks/abc265_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265/submissions/34217740"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;累積和をあらかじめ求めておくことで、区間和を時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求めることができます。
-また、尺取り法で区間和&lt;code&gt;Cum[w]-Cum[x]==P+Q+R&lt;/code&gt;となる区間を求めることで、&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;w&lt;/code&gt;が時間計算量&lt;code&gt;O(N)&lt;/code&gt;でわかります。
-この&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;w&lt;/code&gt;間で&lt;code&gt;Cum[y]-Cum[x]==P&lt;/code&gt;、&lt;code&gt;Cum[z]-Cum[y]==Q&lt;/code&gt;、&lt;code&gt;Cum[w]-Cum[z]==R&lt;/code&gt;となる&lt;code&gt;y&lt;/code&gt;と&lt;code&gt;z&lt;/code&gt;が存在すれば、答えは&lt;code&gt;Yes&lt;/code&gt;となります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, P, Q, R) = Scanner.Scan&amp;lt;int, long, long, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var cum = new long[N + 1];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        cum[i + 1] = cum[i] + A[i];
-    }
-
-    var PQR = P + Q + R;
-    var w = 0;
-    for (var x = 0; x &amp;lt; N; x++)
-    {
-        while (x &amp;lt; N &amp;amp;&amp;amp; cum[w] - cum[x] &amp;lt; PQR) w++;
-        if (cum[w] - cum[x] != PQR) continue;
-        
-        var y = l;
-        while (y &amp;lt; w &amp;amp;&amp;amp; cum[y] - cum[x] &amp;lt; P) y++;
-        if (cum[y] - cum[x] != P) continue;
-
-        var z = y;
-        while (z &amp;lt; w &amp;amp;&amp;amp; cum[z] - cum[y] &amp;lt; Q) z++;
-        if (cum[z] - cum[y] != Q) continue;
-
-        if (cum[w] - cum[z] != R) continue;
-
-        Console.WriteLine(&amp;quot;Yes&amp;quot;);
-        return;
-    }
-
-    Console.WriteLine(&amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc265/tasks/abc265_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc265/submissions/34223689"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dp[i][x][y] := i回目の移動で(x,y)に至る移動経路の個数&lt;/code&gt;とする動的計画法を解きます。
-ここで、&lt;code&gt;(x,y)&lt;/code&gt;の取りうる値は疎であることから、全ての&lt;code&gt;(x,y)&lt;/code&gt;を管理せずに移動しうる&lt;code&gt;(x,y)&lt;/code&gt;をキーとした辞書などを使って管理することで、時間計算量&lt;code&gt;O(N^3logN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var (A, B, C, D, E, F) = Scanner.Scan&amp;lt;long, long, long, long, long, long&amp;gt;();
-    var delta = new (long, long)[] { (A, B), (C, D), (E, F) };
-    var obstacles = new HashSet&amp;lt;Point&amp;gt;();
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        var (x, y) = Scanner.Scan&amp;lt;long, long&amp;gt;();
-        obstacles.Add(new Point(x, y));
-    }
-
-    var dp0 = new Dictionary&amp;lt;Point, mint&amp;gt;();
-    dp0[new Point(0, 0)] = 1;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var dp1 = new Dictionary&amp;lt;Point, mint&amp;gt;();
-        foreach (var (p, v) in dp0)
-        {
-            foreach (var (dx, dy) in delta)
-            {
-                var np = new Point(p.X + dx, p.Y + dy);
-                if (obstacles.Contains(np)) continue;
-                if (!dp1.ContainsKey(np)) dp1[np] = 0;
-                dp1[np] += v;
-            }
-        }
-
-        dp0 = dp1;
-    }
-
-    mint answer = 0;
-    foreach (var (_, v) in dp0)
-    {
-        answer += v;
-    }
-
-    Console.WriteLine(answer);
-}
-
-public readonly struct Point : IEquatable&amp;lt;Point&amp;gt;
-{
-    public readonly long X;
-    public readonly long Y;
-    public Point(long x, long y) =&amp;gt; (X, Y) = (x, y);
-    public bool Equals(Point other) =&amp;gt; X == other.X &amp;amp;&amp;amp; Y == other.Y;
-    public override int GetHashCode() =&amp;gt; HashCode.Combine(X, Y);
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
