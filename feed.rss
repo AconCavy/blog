@@ -5,8 +5,298 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 29 Oct 2022 17:47:32 GMT</pubDate>
-		<lastBuildDate>Sat, 29 Oct 2022 17:47:32 GMT</lastBuildDate>
+		<pubDate>Sat, 05 Nov 2022 15:41:27 GMT</pubDate>
+		<lastBuildDate>Sat, 05 Nov 2022 15:41:27 GMT</lastBuildDate>
+		<item>
+			<title>ABC276</title>
+			<link>https://blog.aconcavy.dev/posts/20221105abc276</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 276の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20221105abc276</guid>
+			<pubDate>Sat, 05 Nov 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 276の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276"&gt;https://atcoder.jp/contests/abc276&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36221467"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文字列&lt;code&gt;S&lt;/code&gt;を左から順番に調べて、&lt;code&gt;a&lt;/code&gt;が出現した場所を更新し、最後に更新された場所が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var answer = -1;
+    for (var i = 0; i &amp;lt; S.Length; i++)
+    {
+        if (S[i] == 'a') answer = i + 1;
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36225653"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;G[u][v]&lt;/code&gt;のように二次元配列で頂点&lt;code&gt;u&lt;/code&gt;が頂点&lt;code&gt;v&lt;/code&gt;と接続しているかを持ってしまうと、空間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となってしまいます。&lt;br /&gt;
+&lt;code&gt;N&lt;/code&gt;が最大で&lt;code&gt;10^5&lt;/code&gt;なので、二乗の&lt;code&gt;10^10&lt;/code&gt;の空間計算量が必要となってしまい、実行時間制限に間に合いません。
+そこで、頂点ごとにリストを持ち、接続されている頂点を追加していくことで、空間計算量が最大でも&lt;code&gt;10^5*2&lt;/code&gt;に収まり、ソートの計算量とあわせて全体で&lt;code&gt;O(logN+N)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        a--;
+        b--;
+        G[a].Add(b);
+        G[b].Add(a);
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i].Sort();
+        var c = G[i].Count;
+        if (c == 0) Console.WriteLine(0);
+        else Console.WriteLine($&amp;quot;{c} {string.Join(&amp;quot; &amp;quot;, G[i].Select(x =&amp;gt; x + 1))}&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36257482"&gt;コンテスト提出&lt;/a&gt;
+&lt;a href="https://atcoder.jp/contests/abc276/submissions/36264063"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;例を見てみると、&lt;code&gt;P&lt;/code&gt;の末尾が単調増加している部分の一つ手前(位置&lt;code&gt;i&lt;/code&gt;)から右側が変化していることがわかります。&lt;br /&gt;
+また、変化後の&lt;code&gt;P[i]&lt;/code&gt;は、もとの&lt;code&gt;P[i]&lt;/code&gt;より小さいものと入れ替わっており、&lt;code&gt;i&lt;/code&gt;より右側が逆順にソートされていることがわかります。&lt;br /&gt;
+ここで、&lt;code&gt;P[i]&lt;/code&gt;と入れ替える値は、&lt;code&gt;P[i]&lt;/code&gt;より小さいもので最大の値であり、&lt;code&gt;P&lt;/code&gt;の末尾は単調増加していることから、末尾から見て&lt;code&gt;P[i]&lt;/code&gt;より小さくなった値と入れ替えることで、辞書順の直前にすることができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Rust&lt;/code&gt;などでは&lt;code&gt;prev_permutation()&lt;/code&gt;メソッドを使って求めることもできます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var j = N - 2;
+    var k = N - 1;
+    while (P[j] &amp;lt; P[j + 1]) j--;
+    while (P[j] &amp;lt; P[k]) k--;
+    (P[j], P[k]) = (P[k], P[j]);
+    Array.Sort(P, j + 1, N - (j + 1));
+    for (var (l, r) = (j + 1, N - 1); l &amp;lt; r; l++, r--)
+    {
+        (P[l], P[r]) = (P[r], P[l]);
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, P));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36253185"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A&lt;/code&gt;が操作後に全て一致するには、&lt;code&gt;A[i] = 2^x * 3^y * V[i]&lt;/code&gt;で表すことができ、かつ&lt;code&gt;V[i]==V[j]&lt;/code&gt;である必要があります。
+そして、&lt;code&gt;A&lt;/code&gt;における最大公約数を&lt;code&gt;g&lt;/code&gt;とすると、&lt;code&gt;A[i] = 2^x * 3^y * g&lt;/code&gt;で表すことができます。
+このことから、&lt;code&gt;A[i]/g == 2^x * 3^y&lt;/code&gt;が成り立つかどうかを判定しつつ、全ての&lt;code&gt;A&lt;/code&gt;における&lt;code&gt;x&lt;/code&gt;と&lt;code&gt;y&lt;/code&gt;の総和が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+
+    var g = A.Aggregate(0L, Gcd);
+    var answer = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var k = A[i] / g;
+
+        while (k % 2 == 0)
+        {
+            k /= 2;
+            answer++;
+        }
+
+        while (k % 3 == 0)
+        {
+            k /= 3;
+            answer++;
+        }
+
+        if (k != 1)
+        {
+            Console.WriteLine(-1);
+            return;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+
+public static long Gcd(long a, long b) =&amp;gt; b == 0 ? a : Gcd(b, a % b);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36250764"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;4方向のみ移動可能であるため、直前にいたマスに戻らずに同じマスに訪れることができた場合は、&lt;code&gt;n&amp;gt;=4&lt;/code&gt;であることが確定します。
+そのため、直前に訪れたマスをメモしながら深さ優先探索を行い、開始始点にたどり着くことができるかを判定することで答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new char[H][];
+    var (sh, sw) = (0, 0);
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
+        for (var j = 0; j &amp;lt; W; j++)
+        {
+            if (G[i][j] == 'S') (sh, sw) = (i, j);
+        }
+    }
+
+    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
+
+    var used = new bool[H * W];
+    var prev = new int[H * W];
+    var s = sh * W + sw;
+
+    bool Dfs(int ch, int cw)
+    {
+        var u = ch * W + cw;
+        used[u] = true;
+        var result = false;
+
+        foreach (var (dh, dw) in D4)
+        {
+            var (nh, nw) = (ch + dh, cw + dw);
+            var v = nh * W + nw;
+            if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw) continue;
+            if (G[nh][nw] == '#') continue;
+            if (v == s &amp;amp;&amp;amp; v != prev[u]) result |= true;
+            if (used[v]) continue;
+            prev[v] = u;
+
+            result |= Dfs(nh, nw);
+        }
+
+        return result;
+    }
+
+    var answer = Dfs(sh, sw);
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc276/tasks/abc276_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc276/submissions/36263019"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;G[i][j]:=Max(1回目のカードA[i], 2回目のカードA[j])&lt;/code&gt;とすると、&lt;code&gt;k&lt;/code&gt;番目の期待値は&lt;code&gt;G[i][j] {i,j=1..k}&lt;/code&gt;の和を&lt;code&gt;k*k&lt;/code&gt;で割ったものとなります。
+&lt;code&gt;k&lt;/code&gt;番目の試行を考えたとき、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1回目に&lt;code&gt;k-1&lt;/code&gt;番目までのカードがでて、2回目に&lt;code&gt;k&lt;/code&gt;番目のカードがでるとすると、&lt;code&gt;G[i][k]=Max(A[i],A[k])&lt;/code&gt;になる。&lt;/li&gt;
+&lt;li&gt;1回目に&lt;code&gt;k&lt;/code&gt;番目のカードがでて、2回目に&lt;code&gt;k-1&lt;/code&gt;番目までのカードがでるとすると、&lt;code&gt;G[k][i]=Max(A[k],A[i])&lt;/code&gt;になる。&lt;/li&gt;
+&lt;li&gt;1回目に&lt;code&gt;k&lt;/code&gt;番目のカードがでて、2回目に&lt;code&gt;k&lt;/code&gt;番目のカードがでるとすると、&lt;code&gt;G[k][k]=A[k]&lt;/code&gt;になる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;k-1&lt;/code&gt;番目の&lt;code&gt;G[i][j] {i,j=1..(k-1)}&lt;/code&gt;の総和を&lt;code&gt;prev&lt;/code&gt;とすると、&lt;code&gt;k&lt;/code&gt;番目の&lt;code&gt;G[i][j] {i,j=1..k}&lt;/code&gt;の総和は、&lt;code&gt;prev + G[i][k]{i..(k-1)} + G[k][i] {i..(k-1)} + G[k][k]&lt;/code&gt;となります。
+このとき、&lt;code&gt;G[i][k]{i..(k-1)}&lt;/code&gt;は、&lt;code&gt;k-1番目までのA[k]より小さい数*A[k]&lt;/code&gt;を&lt;code&gt;sumS&lt;/code&gt;、&lt;code&gt;k-1番目までのA[k]より大きい数の和&lt;/code&gt;を&lt;code&gt;sumL&lt;/code&gt;とし、&lt;code&gt;G[i][k]{i..(k-1)}==G[k][i] {i..(k-1)}&lt;/code&gt;であることから、&lt;code&gt;k-1&lt;/code&gt;から&lt;code&gt;k&lt;/code&gt;の総和の増分は&lt;code&gt;(sumS + sumL)*2 + A[k]&lt;/code&gt;であることがわかります。&lt;br /&gt;
+このことから、&lt;code&gt;FenwickTree&lt;/code&gt;等を使って&lt;code&gt;k&lt;/code&gt;番目までの&lt;code&gt;A[k]&lt;/code&gt;より小さい数の個数と&lt;code&gt;A[k]&lt;/code&gt;より大きな数の和を管理しながら&lt;code&gt;k&lt;/code&gt;番目における合計&lt;code&gt;S[k]=S[k-1]+(sumS+sumL)*2+A[k]&lt;/code&gt;を計算していくことで、&lt;code&gt;k&lt;/code&gt;番目における期待値&lt;code&gt;S[k]/(k*k)&lt;/code&gt;を求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var (map, _) = Compress(A);
+    var ft1 = new FenwickTree(N);
+    var ft2 = new FenwickTree(N);
+    var dp = new mint[N];
+    dp[0] = A[0];
+    ft1.Add(map[A[0]], 1);
+    ft2.Add(map[A[0]], A[0]);
+
+    for (var i = 1; i &amp;lt; N; i++)
+    {
+        var sumS = ft1.Sum(map[A[i]] + 1) * A[i];
+        var sumL = ft2.Sum(map[A[i]] + 1, N);
+        dp[i] = dp[i - 1] + (sumS + sumL) * 2 + A[i];
+
+        ft1.Add(map[A[i]], 1);
+        ft2.Add(map[A[i]], A[i]);
+    }
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var curr = (mint)(i + 1) * (i + 1);
+        Console.WriteLine(dp[i] / curr);
+    }
+}
+
+public static (Dictionary&amp;lt;T, int&amp;gt; Map, Dictionary&amp;lt;int, T&amp;gt; ReMap) Compress&amp;lt;T&amp;gt;(IEnumerable&amp;lt;T&amp;gt; source)
+{
+    var distinct = source.Distinct().ToArray();
+    Array.Sort(distinct);
+    var map = new Dictionary&amp;lt;T, int&amp;gt;();
+    var remap = new Dictionary&amp;lt;int, T&amp;gt;();
+    foreach (var (x, i) in distinct.Select((x, i) =&amp;gt; (x, i)))
+    {
+        map[x] = i;
+        remap[i] = x;
+    }
+
+    return (map, remap);
+}
+
+public class FenwickTree
+{
+    public int Length { get; }
+    private readonly mint[] _data;
+
+    public FenwickTree(int length)
+    {
+        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _data = new mint[length];
+    }
+
+    public void Add(int index, long value)
+    {
+        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index++;
+        while (index &amp;lt;= Length)
+        {
+            _data[index - 1] += value;
+            index += index &amp;amp; -index;
+        }
+    }
+
+    public mint Sum(int length)
+    {
+        if (length &amp;lt; 0 || Length &amp;lt; length) throw new ArgumentOutOfRangeException(nameof(length));
+        mint s = 0;
+        while (length &amp;gt; 0)
+        {
+            s += _data[length - 1];
+            length -= length &amp;amp; -length;
+        }
+
+        return s;
+    }
+
+    public mint Sum(int left, int right)
+    {
+        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
+        return Sum(right) - Sum(left);
+    }
+
+    public int LowerBound(long value) =&amp;gt; Bound(value, (x, y) =&amp;gt; x &amp;lt;= y);
+    public int UpperBound(long value) =&amp;gt; Bound(value, (x, y) =&amp;gt; x &amp;lt; y);
+
+    private int Bound(long value, Func&amp;lt;long, long, bool&amp;gt; compare)
+    {
+        if (Length == 0 || compare(value, _data[0])) return 0;
+        var x = 0;
+        var r = 1;
+        while (r &amp;lt; Length) r &amp;lt;&amp;lt;= 1;
+        for (var k = r; k &amp;gt; 0; k &amp;gt;&amp;gt;= 1)
+        {
+            if (x + k - 1 &amp;gt;= Length || compare(value, _data[x + k - 1])) continue;
+            value -= _data[x + k - 1];
+            x += k;
+        }
+
+        return x;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC275</title>
 			<link>https://blog.aconcavy.dev/posts/20221029abc275</link>
@@ -1663,155 +1953,6 @@ C#では、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.string
             costs[v] -= A[u];
             queue.Enqueue((v, costs[v]));
         }
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC266</title>
-			<link>https://blog.aconcavy.dev/posts/20220827abc266</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 266の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20220827abc266</guid>
-			<pubDate>Sat, 27 Aug 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 266の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc266"&gt;https://atcoder.jp/contests/abc266&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc266/tasks/abc266_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34367371"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文字列&lt;code&gt;S&lt;/code&gt;の長さが奇数なので、&lt;code&gt;S&lt;/code&gt;のインデックス&lt;code&gt;Floor(Sの長さ/2)&lt;/code&gt;の文字が答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var N = S.Length;
-    Console.WriteLine(S[N / 2]);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc266/tasks/abc266_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34371987"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N-x&lt;/code&gt;が&lt;code&gt;998244353&lt;/code&gt;の倍数であるということは、&lt;code&gt;N&lt;/code&gt;を&lt;code&gt;998244353&lt;/code&gt;で割ったときの余りが&lt;code&gt;x&lt;/code&gt;になることがわかります。&lt;br /&gt;
-また、言語によって負の数に対する余りの計算は異なり、余りが負の値になる場合があります。
-&lt;code&gt;a&lt;/code&gt;を&lt;code&gt;b(!=0)&lt;/code&gt;で割ったときの余りが&lt;code&gt;c&lt;/code&gt;のとき、&lt;code&gt;a+b&lt;/code&gt;や&lt;code&gt;a-b&lt;/code&gt;を&lt;code&gt;b&lt;/code&gt;で割ったときの余りも&lt;code&gt;c&lt;/code&gt;になることから、&lt;code&gt;x&lt;/code&gt;が負の値のときは&lt;code&gt;998244353&lt;/code&gt;を足すことで、&lt;code&gt;0&amp;lt;=x&amp;lt;=998244353&lt;/code&gt;にすることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;long&amp;gt;();
-    const long M = 998244353;
-    var x = N % M;
-    if (x &amp;lt; 0) x += M;
-    Console.WriteLine(x);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc266/tasks/abc266_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34400444"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34409358"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;全ての角が180度未満であるかを外積を用いて判定します。
-角&lt;code&gt;abc&lt;/code&gt;の外積は&lt;code&gt;cross=(c.X-b.X)*(a.Y-b.Y)-(a.X-b.X)*(c.Y-b.Y)&lt;/code&gt;で計算でき、&lt;code&gt;abc&lt;/code&gt;が反時計回りなら&lt;code&gt;cross&amp;gt;=0&lt;/code&gt;の場合角&lt;code&gt;abc&lt;/code&gt;の角は&lt;code&gt;180&lt;/code&gt;度未満になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = 4;
-    var P = new Point[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var (x, y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        P[i] = new Point(x, y);
-    }
-
-    long Cross(Point a, Point b, Point c)
-    {
-        var (dx1, dy1) = (c.X - b.X, c.Y - b.Y);
-        var (dx2, dy2) = (a.X - b.X, a.Y - b.Y);
-        return dx1 * dy2 - dx2 * dy1;
-    }
-
-    var answer = true;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var a = P[i];
-        var b = P[(i + 1) % N];
-        var c = P[(i + 2) % N];
-        answer &amp;amp;= Cross(a, b, c) &amp;gt;= 0;
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-
-public readonly struct Point
-{
-    public readonly long X;
-    public readonly long Y;
-    public Point(long x, long y) =&amp;gt; (X, Y) = (x, y);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc266/tasks/abc266_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34392662"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34408822"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dp[t][x]:=時刻tの座標xにおける既に捕まえた大きさの最大値&lt;/code&gt;とした動的計画法を解きます。
-これは、時刻&lt;code&gt;t&lt;/code&gt;の座標&lt;code&gt;x&lt;/code&gt;における大きさを&lt;code&gt;A[t][x]&lt;/code&gt;としたとき、&lt;code&gt;dp[t][x] = Max(dp[t-1][x-1], dp[t-1][x], dp[t-1][x+1]) + A[t][x]&lt;/code&gt;の遷移で求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = new long[(int)1e5 + 1, 5];
-    var T = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var (t, x, a) = Scanner.Scan&amp;lt;int, int, long&amp;gt;();
-        A[t, x] = a;
-        T = t;
-    }
-
-    const long inf = (long)1e18;
-    var dp = new long[T + 1, 5];
-    for (var i = 0; i &amp;lt;= T; i++)
-    {
-        for (var j = 0; j &amp;lt; 5; j++)
-        {
-            dp[i, j] = -inf;
-        }
-    }
-
-    dp[0, 0] = 0;
-
-    for (var t = 1; t &amp;lt;= T; t++)
-    {
-        for (var x = 0; x &amp;lt; 5; x++)
-        {
-            for (var p = x - 1; p &amp;lt;= x + 1; p++)
-            {
-                if (0 &amp;lt;= p &amp;amp;&amp;amp; p &amp;lt; 5) dp[t, x] = Math.Max(dp[t, x], dp[t - 1, p] + A[t, x]);
-            }
-        }
-    }
-
-    var answer = 0L;
-    for (var i = 0; i &amp;lt; 5; i++)
-    {
-        answer = Math.Max(answer, dp[T, i]);
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc266/tasks/abc266_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC266/submissions/34405481"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;n&lt;/code&gt;回目の期待値は、&lt;code&gt;n-1&lt;/code&gt;回目の期待値と出目を比較して大きいほうを選んだときの&lt;code&gt;1-6&lt;/code&gt;の出目の総和になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var answer = 0.0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var exp = 0.0;
-        for (var x = 1; x &amp;lt;= 6; x++)
-        {
-            exp += Math.Max(x, answer) / 6.0;
-        }
-
-        answer = Math.Max(answer, exp);
     }
 
     Console.WriteLine(answer);
