@@ -1,0 +1,340 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC277</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC277">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20221112abc277">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC277</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 12 November 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 12 November 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 277の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc277">https://atcoder.jp/contests/abc277</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc277/tasks/abc277_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC277/submissions/36407369">コンテスト提出</a></p>
+<p><code>A[i]</code>を順にみていき、<code>A[i]==X</code>となる位置が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (A[i] == X) answer = i + 1;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc277/tasks/abc277_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC277/submissions/36412022">コンテスト提出</a></p>
+<p>一つ一つの文字を条件式として判別しても答えを求めることが可能ですが、2文字目の判定の対象が多いので、配列や<code>HashSet</code>等のデータ構造に集合として値を用意し、その集合に含まれているかどうかを判定することで、簡単に記述することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var answer = true;
+    var F = new HashSet&lt;char&gt; { 'H', 'D', 'C', 'S' };
+    var G = new HashSet&lt;char&gt; { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K' };
+    var memo = new HashSet&lt;string&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var s = Scanner.Scan&lt;string&gt;();
+        answer &amp;= F.Contains(s[0]);
+        answer &amp;= G.Contains(s[1]);
+        answer &amp;= !memo.Contains(s);
+        memo.Add(s);
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc277/tasks/abc277_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC277/submissions/36416984">コンテスト提出</a></p>
+<p>階層を頂点としたグラフを構築し、深さ優先探索や幅優先探索を行うことで、行くことができる階層を探索して最高の階層を求めます。<br>
+階層をそのまま頂点としたグラフを配列で構築してしまうと、はしごがつながっていない階層含めて<code>1e9</code>もの空間計算量が必要になってしまい、実行時間制限に間に合わなくなってしまいます。
+そこで、頂点を圧縮したり、辞書などのデータ構造を用いることで、はしごがつながっていない階層を無視することができ、最大でも<code>4e5</code>程度の空間計算量で収まり、実行時間制限内に処理することができるようになります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        if (!G.ContainsKey(a)) G[a] = new List&lt;int&gt;();
+        if (!G.ContainsKey(b)) G[b] = new List&lt;int&gt;();
+        G[a].Add(b);
+        G[b].Add(a);
+    }
+
+    var used = new HashSet&lt;int&gt; { 1 };
+    var queue = new Queue&lt;int&gt;();
+    queue.Enqueue(1);
+    while (queue.Count &gt; 0)
+    {
+        var u = queue.Dequeue();
+        if (!G.ContainsKey(u)) continue;
+        foreach (var v in G[u])
+        {
+            if (used.Contains(v)) continue;
+            used.Add(v);
+            queue.Enqueue(v);
+        }
+    }
+
+    var answer = used.Max();
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc277/tasks/abc277_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC277/submissions/36436734">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC277/submissions/36455348">復習提出</a></p>
+<p>操作について、あるカードの整数<code>v</code>をテーブルに置いたとき、次に出すことができるカードは<code>v</code>または<code>(v+1)%M</code>であることから、整数<code>v</code>のカードを出した時は、整数<code>v</code>のカードを全て出すことができます。
+そのため、カードの整数ごとに出すことのできる枚数や総和を辞書などでまとめあげることができます。
+整数<code>v</code>と<code>v</code>を出した時の総和<code>s</code>のペアを<code>P</code>とし、<code>P</code>を<code>v</code>でソートすると、<code>P[i+1].v%M==(P[i].v+1)%M</code>となる区間の総和が出すことができるカードの総和となります。
+この区間の総和は尺取り法で求めることができ、その最大値を<code>A</code>の総和から引いたものが答えとなります。
+また、<code>v==M-1</code>のとき<code>(v+1)%M</code>は<code>0</code>になり、円環になることがあるので注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    long sum = 0;
+    var dict = new Dictionary&lt;int, long&gt;();
+    foreach (var a in A)
+    {
+        if (!dict.ContainsKey(a)) dict[a] = 0;
+        dict[a] += a;
+        sum += a;
+    }
+
+    var K = dict.Count;
+    var B = new List&lt;(int V, long S)&gt;(dict.Select(kv =&gt; (kv.Key, kv.Value)));
+    B.Sort();
+    var l = 0;
+    var r = 0;
+
+    const long inf = (long)1e18;
+    var answer = inf;
+    while (l &lt; K)
+    {
+        r = l;
+        var s = B[r].S;
+        while (r + 1 &lt; l + K &amp;&amp; (B[(r + 1) % K].V % M) == (B[r % K].V + 1) % M)
+        {
+            s += B[(r + 1) % K].S;
+            r++;
+        }
+
+        answer = Math.Min(answer, sum - s);
+        l = r + 1;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc277/tasks/abc277_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC277/submissions/36429660">コンテスト提出</a></p>
+<p>スイッチは2回押すと元の状態に戻るので、スイッチの状態2通りについての各頂点のコストを管理し、現在のスイッチの状態を持ちながら幅優先探索を行うことで、答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M, K) = Scanner.Scan&lt;int, int, int&gt;();
+    var G = new List&lt;(int U, int A)&gt;[N];
+    G = new List&lt;(int U, int A)&gt;[N].Select(x =&gt; new List&lt;(int U, int A)&gt;()).ToArray();
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v, a) = Scanner.Scan&lt;int, int, int&gt;();
+        u--;
+        v--;
+        G[u].Add((v, a));
+        G[v].Add((u, a));
+    }
+
+    var T = new HashSet&lt;int&gt;();
+    if (K &gt; 0)
+    {
+        var S = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+        T = new HashSet&lt;int&gt;(S);
+    }
+
+    const int inf = (int)1e9;
+    var costs = new int[2][].Select(_ =&gt; new int[N]).ToArray();
+    Array.Fill(costs[0], inf);
+    Array.Fill(costs[1], inf);
+    costs[0][0] = 0;
+
+    var queue = new Queue&lt;(int T, int U, long Cost)&gt;();
+    queue.Enqueue((0, 0, 0));
+    while (queue.Count &gt; 0)
+    {
+        var (ut, u, uc) = queue.Dequeue();
+        var vt = ut;
+
+        for (var i = 0; i &lt; 2; i++)
+        {
+            foreach (var (v, a) in G[u])
+            {
+                if (a == vt) continue;
+                var c = costs[ut][u] + 1;
+                if (costs[vt][v] &lt;= c) continue;
+                costs[vt][v] = c;
+                queue.Enqueue((vt, v, c));
+            }
+
+            if (T.Contains(u)) vt = ut ^ 1;
+            else break;
+        }
+    }
+
+    var answer = Math.Min(costs[0][N - 1], costs[1][N - 1]);
+    if (answer == inf) answer = -1;
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20221112abc277" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
