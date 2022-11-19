@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-11-19T16:33:44Z</updated>
+	<updated>2022-11-19T17:02:26Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221119abc278</id>
 		<title>ABC278</title>
@@ -87,278 +87,47 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36621868"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36621868"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36652094"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;クエリごとに配列のすべての値を更新してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;になり、実行時間制限に間に合いません。&lt;br /&gt;
-区間変更区間更新が可能な遅延セグメント木などのデータ構造を用いてクエリごとに値を更新することで、時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+クエリの形式が&lt;code&gt;1&lt;/code&gt;における最新の全体更新の時間と値、数列&lt;code&gt;A&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;番目の値が最後に更新された時間を管理し、クエリの形式が&lt;code&gt;2&lt;/code&gt;か&lt;code&gt;3&lt;/code&gt;のときに&lt;code&gt;i&lt;/code&gt;番目の更新された時間が最新の全体更新の時間よりも前ならば、&lt;code&gt;i&lt;/code&gt;番目の値を最新の全体更新の値に変更してから処理を行うことで、時間計算量&lt;code&gt;O(N+Q)&lt;/code&gt;で答えを求めることができます。&lt;br /&gt;
+区間変更区間更新が可能な遅延セグメント木などのデータ構造を用いてクエリごとに値を更新することでも、時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
     var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-    var query = new int[Q][];
-    for (var i = 0; i &amp;lt; Q; i++)
+    var latest = (T: -1, X: 0);
+    var updated = new int[N];
+    Array.Fill(updated, -1);
+
+    void Update(int i, int x)
     {
-        query[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+        if (updated[i] &amp;lt; latest.T) A[i] = latest.X;
     }
 
-    var lst = new LazySegmentTree&amp;lt;Monoid, long&amp;gt;(A.Select(x =&amp;gt; new Monoid(x, 1)).ToArray(), new Oracle());
-
-    for (var i = 0; i &amp;lt; Q; i++)
+    for (var t = 0; t &amp;lt; Q; t++)
     {
-        var q = query[i][0];
+        var query = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+        var q = query[0];
         if (q == 1)
         {
-            var x = query[i][1];
-            lst.Apply(0, N, x);
+            var x = query[1];
+            latest = (t, x);
         }
         else if (q == 2)
         {
-            var (idx, x) = (query[i][1] - 1, query[i][2]);
-            var monoid = lst.Get(idx);
-            lst.Set(idx, new Monoid(monoid.Value + x, monoid.Size));
+            var (i, x) = (query[1] - 1, query[2]);
+            Update(i);
+            A[i] += x;
+            updated[i] = t;
         }
         else
         {
-            var idx = query[i][1] - 1;
-            var answer = lst.Get(idx).Value;
-            Console.WriteLine(answer);
+            var i = query[1] - 1;
+            Update(i);
+            Console.WriteLine(A[i]);
         }
-    }
-}
-
-public readonly struct Monoid
-{
-    public readonly long Value;
-    public readonly int Size;
-    public Monoid(long value, int size) =&amp;gt; (Value, Size) = (value, size);
-}
-
-public class Oracle : IOracle&amp;lt;Monoid, long&amp;gt;
-{
-    public long IdentityMapping =&amp;gt; (long)1e18;
-
-    public Monoid IdentityElement =&amp;gt; new Monoid(0, 0);
-
-    public long Compose(long f, long g)
-    {
-        return f == IdentityMapping ? g : f;
-    }
-
-    public Monoid Map(long f, Monoid x)
-    {
-        return f != IdentityMapping ? new Monoid(f * x.Size, x.Size) : x;
-    }
-
-    public Monoid Operate(Monoid a, Monoid b)
-    {
-        return new Monoid(a.Value + b.Value, a.Size + b.Size);
-    }
-}
-
-public interface IOracle&amp;lt;TMonoid&amp;gt;
-{
-    TMonoid IdentityElement { get; }
-    TMonoid Operate(TMonoid a, TMonoid b);
-}
-
-public interface IOracle&amp;lt;TMonoid, TMapping&amp;gt; : IOracle&amp;lt;TMonoid&amp;gt;
-{
-    TMapping IdentityMapping { get; }
-    TMonoid Map(TMapping f, TMonoid x);
-    TMapping Compose(TMapping f, TMapping g);
-}
-
-public class LazySegmentTree&amp;lt;TMonoid, TMapping&amp;gt;
-{
-    public int Length { get; }
-    private readonly IOracle&amp;lt;TMonoid, TMapping&amp;gt; _oracle;
-    private readonly TMonoid[] _data;
-    private readonly TMapping[] _lazy;
-    private readonly int _log;
-    private readonly int _dataSize;
-
-    public LazySegmentTree(IReadOnlyCollection&amp;lt;TMonoid&amp;gt; source, IOracle&amp;lt;TMonoid, TMapping&amp;gt; oracle)
-        : this(source.Count, oracle)
-    {
-        var idx = _dataSize;
-        foreach (var value in source) _data[idx++] = value;
-        for (var i = _dataSize - 1; i &amp;gt;= 1; i--) Update(i);
-    }
-
-    public LazySegmentTree(int length, IOracle&amp;lt;TMonoid, TMapping&amp;gt; oracle)
-    {
-        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
-        Length = length;
-        _oracle = oracle;
-        while (1 &amp;lt;&amp;lt; _log &amp;lt; Length) _log++;
-        _dataSize = 1 &amp;lt;&amp;lt; _log;
-        _data = new TMonoid[_dataSize &amp;lt;&amp;lt; 1];
-        Array.Fill(_data, _oracle.IdentityElement);
-        _lazy = new TMapping[_dataSize];
-        Array.Fill(_lazy, _oracle.IdentityMapping);
-    }
-
-    public void Set(int index, in TMonoid value)
-    {
-        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
-        _data[index] = value;
-        for (var i = 1; i &amp;lt;= _log; i++) Update(index &amp;gt;&amp;gt; i);
-    }
-
-    public TMonoid Get(int index)
-    {
-        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
-        return _data[index];
-    }
-
-    public TMonoid Query(int left, int right)
-    {
-        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
-        if (left == right) return _oracle.IdentityElement;
-        left += _dataSize;
-        right += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--)
-        {
-            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Push(left &amp;gt;&amp;gt; i);
-            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Push((right - 1) &amp;gt;&amp;gt; i);
-        }
-
-        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
-        while (left &amp;lt; right)
-        {
-            if ((left &amp;amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
-            if ((right &amp;amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
-            left &amp;gt;&amp;gt;= 1;
-            right &amp;gt;&amp;gt;= 1;
-        }
-
-        return _oracle.Operate(sml, smr);
-    }
-
-    public TMonoid QueryToAll() =&amp;gt; _data[1];
-
-    public void Apply(int index, TMapping mapping)
-    {
-        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
-        _data[index] = _oracle.Map(mapping, _data[index]);
-        for (var i = 1; i &amp;lt;= _log; i++) Update(index &amp;gt;&amp;gt; i);
-    }
-
-    public void Apply(int left, int right, in TMapping mapping)
-    {
-        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
-        if (left == right) return;
-        left += _dataSize;
-        right += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--)
-        {
-            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Push(left &amp;gt;&amp;gt; i);
-            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Push((right - 1) &amp;gt;&amp;gt; i);
-        }
-
-        var (l, r) = (left, right);
-        while (l &amp;lt; r)
-        {
-            if ((l &amp;amp; 1) == 1) ApplyToAll(l++, mapping);
-            if ((r &amp;amp; 1) == 1) ApplyToAll(--r, mapping);
-            l &amp;gt;&amp;gt;= 1;
-            r &amp;gt;&amp;gt;= 1;
-        }
-
-        for (var i = 1; i &amp;lt;= _log; i++)
-        {
-            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Update(left &amp;gt;&amp;gt; i);
-            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Update((right - 1) &amp;gt;&amp;gt; i);
-        }
-    }
-
-    public int MaxRight(int left, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
-    {
-        if (left &amp;lt; 0 || Length &amp;lt; left) throw new ArgumentOutOfRangeException(nameof(left));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
-        if (left == Length) return Length;
-        left += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--) Push(left &amp;gt;&amp;gt; i);
-        var sm = _oracle.IdentityElement;
-        do
-        {
-            while ((left &amp;amp; 1) == 0) left &amp;gt;&amp;gt;= 1;
-            if (!predicate(_oracle.Operate(sm, _data[left])))
-            {
-                while (left &amp;lt; _dataSize)
-                {
-                    Push(left);
-                    left &amp;lt;&amp;lt;= 1;
-                    var tmp = _oracle.Operate(sm, _data[left]);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    left++;
-                }
-
-                return left - _dataSize;
-            }
-
-            sm = _oracle.Operate(sm, _data[left]);
-            left++;
-        } while ((left &amp;amp; -left) != left);
-
-        return Length;
-    }
-
-    public int MinLeft(int right, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
-    {
-        if (right &amp;lt; 0 || Length &amp;lt; right) throw new ArgumentOutOfRangeException(nameof(right));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
-        if (right == 0) return 0;
-        right += _dataSize;
-        for (var i = _log; i &amp;gt;= 1; i--) Push((right - 1) &amp;gt;&amp;gt; i);
-        var sm = _oracle.IdentityElement;
-        do
-        {
-            right--;
-            while (right &amp;gt; 1 &amp;amp;&amp;amp; (right &amp;amp; 1) == 1) right &amp;gt;&amp;gt;= 1;
-            if (!predicate(_oracle.Operate(_data[right], sm)))
-            {
-                while (right &amp;lt; _dataSize)
-                {
-                    Push(right);
-                    right = (right &amp;lt;&amp;lt; 1) + 1;
-                    var tmp = _oracle.Operate(_data[right], sm);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    right--;
-                }
-
-                return right + 1 - _dataSize;
-            }
-
-            sm = _oracle.Operate(_data[right], sm);
-        } while ((right &amp;amp; -right) != right);
-
-        return 0;
-    }
-
-    private void Update(int k) =&amp;gt; _data[k] = _oracle.Operate(_data[k &amp;lt;&amp;lt; 1], _data[(k &amp;lt;&amp;lt; 1) + 1]);
-
-    private void ApplyToAll(int k, in TMapping mapping)
-    {
-        _data[k] = _oracle.Map(mapping, _data[k]);
-        if (k &amp;lt; _dataSize) _lazy[k] = _oracle.Compose(mapping, _lazy[k]);
-    }
-
-    private void Push(int k)
-    {
-        ApplyToAll(k &amp;lt;&amp;lt; 1, _lazy[k]);
-        ApplyToAll((k &amp;lt;&amp;lt; 1) + 1, _lazy[k]);
-        _lazy[k] = _oracle.IdentityMapping;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
