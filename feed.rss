@@ -5,20 +5,20 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 19 Nov 2022 14:19:53 GMT</pubDate>
-		<lastBuildDate>Sat, 19 Nov 2022 14:19:53 GMT</lastBuildDate>
+		<pubDate>Sat, 19 Nov 2022 14:23:26 GMT</pubDate>
+		<lastBuildDate>Sat, 19 Nov 2022 14:23:26 GMT</lastBuildDate>
 		<item>
-			<title>ABC000</title>
+			<title>ABC278</title>
 			<link>https://blog.aconcavy.dev/posts/20221119abc278</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 278の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221119abc278</guid>
 			<pubDate>Sat, 19 Nov 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 278の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc000"&gt;https://atcoder.jp/contests/abc000&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc278"&gt;https://atcoder.jp/contests/abc278&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36599335"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;0&lt;/code&gt;で初期化した長さ&lt;code&gt;N&lt;/code&gt;の配列に先頭から&lt;code&gt;A[i+K]&lt;/code&gt;の値を&lt;code&gt;N-K&lt;/code&gt;回代入することで、答えを求めることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -34,7 +34,7 @@
     Console.WriteLine(string.Join(&amp;quot; &amp;quot;, B));
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36606958"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;見間違えやすい時刻は、元の時刻の&lt;code&gt;AB:CD&lt;/code&gt;となる時刻であり、&lt;code&gt;AB&lt;/code&gt;は時の&lt;code&gt;10&lt;/code&gt;の位と分の&lt;code&gt;10&lt;/code&gt;の位の値、&lt;code&gt;CD&lt;/code&gt;は時の&lt;code&gt;1&lt;/code&gt;の位と分の&lt;code&gt;1&lt;/code&gt;の位の値になり、&lt;code&gt;0&amp;lt;=AB&amp;lt;24&lt;/code&gt;かつ&lt;code&gt;0&amp;lt;=AB&amp;lt;60&lt;/code&gt;であることが必要です。
 順に時刻をみていき、条件を満たす時刻が答えとなります。&lt;br /&gt;
@@ -60,7 +60,7 @@
     Console.WriteLine(&amp;quot;0 0&amp;quot;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36610705"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;ユーザがフォローしている人の集合を辞書で管理し、&lt;code&gt;t==1,2&lt;/code&gt;のときは集合を更新、&lt;code&gt;t==3&lt;/code&gt;のときはそれぞれのユーザがフォローしている人の集合に存在しているかを判定します。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
@@ -89,7 +89,7 @@
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36621868"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;クエリごとに配列のすべての値を更新してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;になり、実行時間制限に間に合いません。&lt;br /&gt;
 区間変更区間更新が可能な遅延セグメント木などのデータ構造を用いてクエリごとに値を更新することで、時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
@@ -365,7 +365,7 @@ public class LazySegmentTree&amp;lt;TMonoid, TMapping&amp;gt;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc278/tasks/abc278_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36626239"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;愚直に範囲にある数を計算してしまうと、時間計算量が&lt;code&gt;O(H^2W^2)&lt;/code&gt;となり実行時間制限に間に合いません。&lt;br /&gt;
 そこで、マスに書かれている値&lt;code&gt;c&lt;/code&gt;ごとの二次元累積和を求めておくと、マス目全体の&lt;code&gt;c&lt;/code&gt;の数と黒く塗りつぶした部分の&lt;code&gt;c&lt;/code&gt;の数を引くことで、塗りつぶされていないマスに書かれている&lt;code&gt;c&lt;/code&gt;の数を数え上げることができます。
