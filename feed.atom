@@ -4,7 +4,491 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2022 AconCavy</rights>
-	<updated>2022-11-12T15:30:13Z</updated>
+	<updated>2022-11-19T14:19:53Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20221119abc278</id>
+		<title>ABC000</title>
+		<link href="https://blog.aconcavy.dev/posts/20221119abc278" />
+		<updated>2022-11-19T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc000"&gt;https://atcoder.jp/contests/abc000&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36599335"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;0&lt;/code&gt;で初期化した長さ&lt;code&gt;N&lt;/code&gt;の配列に先頭から&lt;code&gt;A[i+K]&lt;/code&gt;の値を&lt;code&gt;N-K&lt;/code&gt;回代入することで、答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var B = new int[N];
+    for (var i = 0; i &amp;lt; N - K; i++)
+    {
+        B[i] = A[i + K];
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, B));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36606958"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;見間違えやすい時刻は、元の時刻の&lt;code&gt;AB:CD&lt;/code&gt;となる時刻であり、&lt;code&gt;AB&lt;/code&gt;は時の&lt;code&gt;10&lt;/code&gt;の位と分の&lt;code&gt;10&lt;/code&gt;の位の値、&lt;code&gt;CD&lt;/code&gt;は時の&lt;code&gt;1&lt;/code&gt;の位と分の&lt;code&gt;1&lt;/code&gt;の位の値になり、&lt;code&gt;0&amp;lt;=AB&amp;lt;24&lt;/code&gt;かつ&lt;code&gt;0&amp;lt;=AB&amp;lt;60&lt;/code&gt;であることが必要です。
+順に時刻をみていき、条件を満たす時刻が答えとなります。&lt;br /&gt;
+&lt;code&gt;h=23, m=59&lt;/code&gt;のときなど、&lt;code&gt;00 00&lt;/code&gt;が答えとなることに注意が必要です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    for (var h = H; h &amp;lt; 24; h++)
+    {
+        for (var m = 0; m &amp;lt; 60; m++)
+        {
+            if (h == H &amp;amp;&amp;amp; m &amp;lt; M) continue;
+            var ab = h / 10 * 10 + m / 10;
+            var cd = h % 10 * 10 + m % 10;
+            if (ab &amp;lt; 24 &amp;amp;&amp;amp; cd &amp;lt; 60)
+            {
+                Console.WriteLine($&amp;quot;{h} {m}&amp;quot;);
+                return;
+            }
+        }
+    }
+
+    Console.WriteLine(&amp;quot;0 0&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36610705"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ユーザがフォローしている人の集合を辞書で管理し、&lt;code&gt;t==1,2&lt;/code&gt;のときは集合を更新、&lt;code&gt;t==3&lt;/code&gt;のときはそれぞれのユーザがフォローしている人の集合に存在しているかを判定します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var dict = new Dictionary&amp;lt;int, HashSet&amp;lt;int&amp;gt;&amp;gt;();
+    while (Q-- &amp;gt; 0)
+    {
+        var (t, a, b) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+        if (!dict.ContainsKey(a)) dict[a] = new HashSet&amp;lt;int&amp;gt;();
+        if (!dict.ContainsKey(b)) dict[b] = new HashSet&amp;lt;int&amp;gt;();
+
+        if (t == 1)
+        {
+            dict[a].Add(b);
+        }
+        else if (t == 2)
+        {
+            dict[a].Remove(b);
+        }
+        else
+        {
+            var answer = dict[a].Contains(b) &amp;amp;&amp;amp; dict[b].Contains(a);
+            Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36621868"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;クエリごとに配列のすべての値を更新してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;になり、実行時間制限に間に合いません。&lt;br /&gt;
+区間変更区間更新が可能な遅延セグメント木などのデータ構造を用いてクエリごとに値を更新することで、時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
+    var query = new int[Q][];
+    for (var i = 0; i &amp;lt; Q; i++)
+    {
+        query[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    }
+
+    var lst = new LazySegmentTree&amp;lt;Monoid, long&amp;gt;(A.Select(x =&amp;gt; new Monoid(x, 1)).ToArray(), new Oracle());
+
+    for (var i = 0; i &amp;lt; Q; i++)
+    {
+        var q = query[i][0];
+        if (q == 1)
+        {
+            var x = query[i][1];
+            lst.Apply(0, N, x);
+        }
+        else if (q == 2)
+        {
+            var (idx, x) = (query[i][1] - 1, query[i][2]);
+            var monoid = lst.Get(idx);
+            lst.Set(idx, new Monoid(monoid.Value + x, monoid.Size));
+        }
+        else
+        {
+            var idx = query[i][1] - 1;
+            var answer = lst.Get(idx).Value;
+            Console.WriteLine(answer);
+        }
+    }
+}
+
+public readonly struct Monoid
+{
+    public readonly long Value;
+    public readonly int Size;
+    public Monoid(long value, int size) =&amp;gt; (Value, Size) = (value, size);
+}
+
+public class Oracle : IOracle&amp;lt;Monoid, long&amp;gt;
+{
+    public long IdentityMapping =&amp;gt; (long)1e18;
+
+    public Monoid IdentityElement =&amp;gt; new Monoid(0, 0);
+
+    public long Compose(long f, long g)
+    {
+        return f == IdentityMapping ? g : f;
+    }
+
+    public Monoid Map(long f, Monoid x)
+    {
+        return f != IdentityMapping ? new Monoid(f * x.Size, x.Size) : x;
+    }
+
+    public Monoid Operate(Monoid a, Monoid b)
+    {
+        return new Monoid(a.Value + b.Value, a.Size + b.Size);
+    }
+}
+
+public interface IOracle&amp;lt;TMonoid&amp;gt;
+{
+    TMonoid IdentityElement { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public interface IOracle&amp;lt;TMonoid, TMapping&amp;gt; : IOracle&amp;lt;TMonoid&amp;gt;
+{
+    TMapping IdentityMapping { get; }
+    TMonoid Map(TMapping f, TMonoid x);
+    TMapping Compose(TMapping f, TMapping g);
+}
+
+public class LazySegmentTree&amp;lt;TMonoid, TMapping&amp;gt;
+{
+    public int Length { get; }
+    private readonly IOracle&amp;lt;TMonoid, TMapping&amp;gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly TMapping[] _lazy;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public LazySegmentTree(IReadOnlyCollection&amp;lt;TMonoid&amp;gt; source, IOracle&amp;lt;TMonoid, TMapping&amp;gt; oracle)
+        : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &amp;gt;= 1; i--) Update(i);
+    }
+
+    public LazySegmentTree(int length, IOracle&amp;lt;TMonoid, TMapping&amp;gt; oracle)
+    {
+        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &amp;lt;&amp;lt; _log &amp;lt; Length) _log++;
+        _dataSize = 1 &amp;lt;&amp;lt; _log;
+        _data = new TMonoid[_dataSize &amp;lt;&amp;lt; 1];
+        Array.Fill(_data, _oracle.IdentityElement);
+        _lazy = new TMapping[_dataSize];
+        Array.Fill(_lazy, _oracle.IdentityMapping);
+    }
+
+    public void Set(int index, in TMonoid value)
+    {
+        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
+        _data[index] = value;
+        for (var i = 1; i &amp;lt;= _log; i++) Update(index &amp;gt;&amp;gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
+        return _data[index];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
+        if (left == right) return _oracle.IdentityElement;
+        left += _dataSize;
+        right += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--)
+        {
+            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Push(left &amp;gt;&amp;gt; i);
+            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Push((right - 1) &amp;gt;&amp;gt; i);
+        }
+
+        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
+        while (left &amp;lt; right)
+        {
+            if ((left &amp;amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp;amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &amp;gt;&amp;gt;= 1;
+            right &amp;gt;&amp;gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&amp;gt; _data[1];
+
+    public void Apply(int index, TMapping mapping)
+    {
+        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--) Push(index &amp;gt;&amp;gt; i);
+        _data[index] = _oracle.Map(mapping, _data[index]);
+        for (var i = 1; i &amp;lt;= _log; i++) Update(index &amp;gt;&amp;gt; i);
+    }
+
+    public void Apply(int left, int right, in TMapping mapping)
+    {
+        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
+        if (left == right) return;
+        left += _dataSize;
+        right += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--)
+        {
+            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Push(left &amp;gt;&amp;gt; i);
+            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Push((right - 1) &amp;gt;&amp;gt; i);
+        }
+
+        var (l, r) = (left, right);
+        while (l &amp;lt; r)
+        {
+            if ((l &amp;amp; 1) == 1) ApplyToAll(l++, mapping);
+            if ((r &amp;amp; 1) == 1) ApplyToAll(--r, mapping);
+            l &amp;gt;&amp;gt;= 1;
+            r &amp;gt;&amp;gt;= 1;
+        }
+
+        for (var i = 1; i &amp;lt;= _log; i++)
+        {
+            if ((left &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != left) Update(left &amp;gt;&amp;gt; i);
+            if ((right &amp;gt;&amp;gt; i) &amp;lt;&amp;lt; i != right) Update((right - 1) &amp;gt;&amp;gt; i);
+        }
+    }
+
+    public int MaxRight(int left, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
+    {
+        if (left &amp;lt; 0 || Length &amp;lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--) Push(left &amp;gt;&amp;gt; i);
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            while ((left &amp;amp; 1) == 0) left &amp;gt;&amp;gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &amp;lt; _dataSize)
+                {
+                    Push(left);
+                    left &amp;lt;&amp;lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp;amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
+    {
+        if (right &amp;lt; 0 || Length &amp;lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        for (var i = _log; i &amp;gt;= 1; i--) Push((right - 1) &amp;gt;&amp;gt; i);
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            right--;
+            while (right &amp;gt; 1 &amp;amp;&amp;amp; (right &amp;amp; 1) == 1) right &amp;gt;&amp;gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &amp;lt; _dataSize)
+                {
+                    Push(right);
+                    right = (right &amp;lt;&amp;lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp;amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&amp;gt; _data[k] = _oracle.Operate(_data[k &amp;lt;&amp;lt; 1], _data[(k &amp;lt;&amp;lt; 1) + 1]);
+
+    private void ApplyToAll(int k, in TMapping mapping)
+    {
+        _data[k] = _oracle.Map(mapping, _data[k]);
+        if (k &amp;lt; _dataSize) _lazy[k] = _oracle.Compose(mapping, _lazy[k]);
+    }
+
+    private void Push(int k)
+    {
+        ApplyToAll(k &amp;lt;&amp;lt; 1, _lazy[k]);
+        ApplyToAll((k &amp;lt;&amp;lt; 1) + 1, _lazy[k]);
+        _lazy[k] = _oracle.IdentityMapping;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc000/tasks/abc000_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC278/submissions/36626239"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;愚直に範囲にある数を計算してしまうと、時間計算量が&lt;code&gt;O(H^2W^2)&lt;/code&gt;となり実行時間制限に間に合いません。&lt;br /&gt;
+そこで、マスに書かれている値&lt;code&gt;c&lt;/code&gt;ごとの二次元累積和を求めておくと、マス目全体の&lt;code&gt;c&lt;/code&gt;の数と黒く塗りつぶした部分の&lt;code&gt;c&lt;/code&gt;の数を引くことで、塗りつぶされていないマスに書かれている&lt;code&gt;c&lt;/code&gt;の数を数え上げることができます。
+これにより、二次元累積和の構築には時間計算量&lt;code&gt;O(HW)&lt;/code&gt;がかかり、&lt;code&gt;c&lt;/code&gt;の数え上げには時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求めることができます。&lt;br /&gt;
+そして、各&lt;code&gt;(k,l)&lt;/code&gt;ごとに&lt;code&gt;N&lt;/code&gt;種類の&lt;code&gt;c&lt;/code&gt;の数を求めることになるので、全体計算量&lt;code&gt;O(HW+HWN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, W, N, h, w) = Scanner.Scan&amp;lt;int, int, int, int, int&amp;gt;();
+    var A = new int[H][];
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        A[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    }
+
+    var cum = new CumulativeSum2D[N].Select(_ =&amp;gt; new CumulativeSum2D(H, W)).ToArray();
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        for (var j = 0; j &amp;lt; W; j++)
+        {
+            var a = A[i][j] - 1;
+            cum[a].Add(i, j, 1);
+        }
+    }
+
+    var answer = new int[H - h + 1].Select(_ =&amp;gt; new int[W - w + 1]).ToArray();
+
+    for (var i = 0; i &amp;lt; H - h + 1; i++)
+    {
+        for (var j = 0; j &amp;lt; W - w + 1; j++)
+        {
+            var sum = 0;
+            for (var k = 0; k &amp;lt; N; k++)
+            {
+                var all = cum[k].Sum(H, W);
+                var blak = cum[k].Sum(i, j, i + h, j + w);
+                if (all - blak &amp;gt; 0) sum++;
+            }
+
+            answer[i][j] = sum;
+        }
+    }
+
+    Printer.Print2D(answer, &amp;quot; &amp;quot;);
+}
+
+public class CumulativeSum2D
+{
+    public int Height { get; }
+    public int Width { get; }
+    private readonly long[] _data;
+    private readonly long[] _sum;
+    private bool _isUpdated;
+
+    public CumulativeSum2D(int height, int width)
+    {
+        if (height &amp;lt;= 0) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt;= 0) throw new ArgumentOutOfRangeException(nameof(width));
+        Height = height;
+        Width = width;
+        _data = new long[height * width];
+        _sum = new long[(height + 1) * (width + 1)];
+    }
+
+    public void Add(int height, int width, long value)
+    {
+        if (height &amp;lt; 0 || Height &amp;lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt; 0 || Width &amp;lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        _isUpdated = false;
+        _data[height * Width + width] += value;
+    }
+
+    public void Set(int height, int width, long value)
+    {
+        if (height &amp;lt; 0 || Height &amp;lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt; 0 || Width &amp;lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        _isUpdated = false;
+        _data[height * Width + width] = value;
+    }
+
+    public long Get(int height, int width)
+    {
+        if (height &amp;lt; 0 || Height &amp;lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt; 0 || Width &amp;lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        return _data[height * Width + width];
+    }
+
+    public long Sum(int height, int width)
+    {
+        if (height &amp;lt; 0 || Height &amp;lt; height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt; 0 || Width &amp;lt; width) throw new ArgumentOutOfRangeException(nameof(width));
+        if (!_isUpdated) Build();
+        return _sum[height * (Width + 1) + width];
+    }
+
+    public long Sum(int height1, int width1, int height2, int width2)
+    {
+        if (height1 &amp;lt; 0 || Height &amp;lt; height1) throw new ArgumentOutOfRangeException(nameof(height1));
+        if (width1 &amp;lt; 0 || Width &amp;lt; width1) throw new ArgumentOutOfRangeException(nameof(width1));
+        if (height2 &amp;lt; 0 || Height &amp;lt; height2) throw new ArgumentOutOfRangeException(nameof(height2));
+        if (width2 &amp;lt; 0 || Width &amp;lt; width2) throw new ArgumentOutOfRangeException(nameof(width2));
+        if (!_isUpdated) Build();
+        var w1 = Width + 1;
+        return _sum[height1 * w1 + width1]
+               + _sum[height2 * w1 + width2]
+               - _sum[height2 * w1 + width1]
+               - _sum[height1 * w1 + width2];
+    }
+
+    private void Build()
+    {
+        _isUpdated = true;
+        var w1 = Width + 1;
+        _sum[0] = _sum[w1] = _sum[1] = 0;
+        for (var i = 1; i &amp;lt;= Height; i++)
+        for (var j = 1; j &amp;lt;= Width; j++)
+            _sum[i * w1 + j] =
+                _sum[i * w1 + (j - 1)]
+                + _sum[(i - 1) * w1 + j]
+                - _sum[(i - 1) * w1 + (j - 1)]
+                + _data[(i - 1) * Width + (j - 1)];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 000の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221112abc277</id>
 		<title>ABC277</title>
@@ -1754,209 +2238,5 @@ public static long BinarySearch(long l, long r, Func&amp;lt;long, bool&amp;gt; f
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 269の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20220910abc268</id>
-		<title>ABC268</title>
-		<link href="https://blog.aconcavy.dev/posts/20220910abc268" />
-		<updated>2022-09-10T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 268の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc268"&gt;https://atcoder.jp/contests/abc268&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc268/tasks/abc268_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC268/submissions/34724829"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;100&lt;/code&gt;までの長さ&lt;code&gt;101&lt;/code&gt;の&lt;code&gt;bool&lt;/code&gt;配列を用意して、与えられた整数の位置を&lt;code&gt;true&lt;/code&gt;にし、その&lt;code&gt;true&lt;/code&gt;の数を数え上げます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var exists = new bool[101];
-    for (var i = 0; i &amp;lt; 5; i++)
-    {
-        exists[A[i]] = true;
-    }
-    var answer = exists.Count(x =&amp;gt; x);
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc268/tasks/abc268_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC268/submissions/34727479"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Sの長さ&amp;gt;Tの長さ&lt;/code&gt;の場合は&lt;code&gt;false&lt;/code&gt;であり、それ以外の時に&lt;code&gt;S&lt;/code&gt;の長さの範囲で文字がすべて一致するかを判断します。&lt;br /&gt;
-C#では、&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.string.startswith?view=net-6.0"&gt;&lt;code&gt;String.StartWith&lt;/code&gt;&lt;/a&gt;メソッドで引数に与えられた文字列で文字列が始まっているかを判断できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var T = Scanner.Scan&amp;lt;string&amp;gt;();
-    var answer = T.StartsWith(S);
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc268/tasks/abc268_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC268/submissions/34738844"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;始点を全探索して全ての値が&lt;code&gt;i-1&lt;/code&gt;、&lt;code&gt;i&lt;/code&gt;、&lt;code&gt;i+1&lt;/code&gt;のいずれかの目の前にあるかを探索してしまうと、時間計算量が&lt;code&gt;O(N^2)&lt;/code&gt;となり実行時間制限に間に合いません。
-そこで、人&lt;code&gt;i&lt;/code&gt;と料理&lt;code&gt;P[i]&lt;/code&gt;の距離&lt;code&gt;(P[i]-i)%N&lt;/code&gt;の個数に変換することで、距離&lt;code&gt;d-1&lt;/code&gt;、&lt;code&gt;d&lt;/code&gt;、&lt;code&gt;d+1&lt;/code&gt;にある個数の和の最大値を求める問題に変換することで、時間計算量&lt;code&gt;O(N)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var P = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-
-    var count = new int[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        count[(P[i] - i + N) % N]++;
-    }
-
-    var answer = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var c = 0;
-        for (var j = 0; j &amp;lt; 3; j++)
-        {
-            c += count[(i + j) % N];
-        }
-
-        answer = Math.Max(answer, c);
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc268/tasks/abc268_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC268/submissions/34762121"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N&lt;/code&gt;個の文字列の順列として並べ替えたものの間に1以上の任意の数の&lt;code&gt;_&lt;/code&gt;を追加した文字列を全て列挙し、&lt;code&gt;M&lt;/code&gt;個の文字列に存在しない文字列があるかどうかを判定します。
-&lt;code&gt;_&lt;/code&gt;を追加する文字列を生成する方法として、現在の&lt;code&gt;_&lt;/code&gt;の個数、現在&lt;code&gt;_&lt;/code&gt;を追加しようとしてる位置、残りの追加できる&lt;code&gt;_&lt;/code&gt;の数を管理しながら深さ優先探索を行うことができます。
-また、&lt;code&gt;N=1&lt;/code&gt;の時がコーナーケースで、&lt;code&gt;3&lt;/code&gt;文字以上&lt;code&gt;16&lt;/code&gt;文字以下であることの確認が必要です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var S = new string[N];
-    var remains = 16 - (N - 1);
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        S[i] = Scanner.Scan&amp;lt;string&amp;gt;();
-        remains -= S[i].Length;
-    }
-
-    var T = new HashSet&amp;lt;string&amp;gt;();
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        var s = Scanner.Scan&amp;lt;string&amp;gt;();
-        T.Add(s);
-    }
-
-    if (N == 1)
-    {
-        Console.WriteLine(!T.Contains(S[0]) &amp;amp;&amp;amp; 3 &amp;lt;= S[0].Length &amp;amp;&amp;amp; S[0].Length &amp;lt;= 16 ? S[0] : &amp;quot;-1&amp;quot;);
-        return;
-    }
-
-    var set = new HashSet&amp;lt;string&amp;gt;();
-    var count = new int[N - 1];
-    Array.Fill(count, 1);
-    foreach (var perm in Enumerable.Range(0, N).Permute(N))
-    {
-        void Dfs(int curr, int rem)
-        {
-            if (rem &amp;lt; 0) return;
-            if (curr &amp;gt;= N - 1)
-            {
-                var builder = new StringBuilder();
-                for (var i = 0; i &amp;lt; N; i++)
-                {
-                    builder.Append(S[perm[i]]);
-                    if (i &amp;lt; N - 1) builder.Append('_', count[i]);
-                }
-
-                var x = builder.ToString();
-                set.Add(x);
-                return;
-            }
-
-            for (var k = 0; k &amp;lt;= rem; k++)
-            {
-                count[curr] += k;
-                Dfs(curr + 1, rem - k);
-                count[curr] -= k;
-            }
-        }
-
-        Dfs(0, remains);
-    }
-
-    foreach (var x in set)
-    {
-        if (!T.Contains(x))
-        {
-            Console.WriteLine(x);
-            return;
-        }
-    }
-
-    Console.WriteLine(&amp;quot;-1&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以下のような順列を列挙するメソッドを使用しました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static partial class EnumerableExtension
-{
-    public static IEnumerable&amp;lt;TSource[]&amp;gt; Permute&amp;lt;TSource&amp;gt;(this IEnumerable&amp;lt;TSource&amp;gt; source, int count)
-    {
-        if (source is null) throw new ArgumentNullException(nameof(source));
-        IEnumerable&amp;lt;TSource[]&amp;gt; Inner()
-        {
-            var items = source.ToArray();
-            if (count &amp;lt;= 0 || items.Length &amp;lt; count) throw new ArgumentOutOfRangeException(nameof(count));
-            var n = items.Length;
-            var indices = new int[n];
-            for (var i = 0; i &amp;lt; indices.Length; i++)
-            {
-                indices[i] = i;
-            }
-            var cycles = new int[count];
-            for (var i = 0; i &amp;lt; cycles.Length; i++)
-            {
-                cycles[i] = n - i;
-            }
-            TSource[] Result()
-            {
-                var result = new TSource[count];
-                for (var i = 0; i &amp;lt; count; i++)
-                {
-                    result[i] = items[indices[i]];
-                }
-                return result;
-            }
-            yield return Result();
-            while (true)
-            {
-                var done = true;
-                for (var i = count - 1; i &amp;gt;= 0; i--)
-                {
-                    cycles[i]--;
-                    if (cycles[i] == 0)
-                    {
-                        for (var j = i; j + 1 &amp;lt; indices.Length; j++)
-                        {
-                            (indices[j], indices[j + 1]) = (indices[j + 1], indices[j]);
-                        }
-                        cycles[i] = n - i;
-                    }
-                    else
-                    {
-                        (indices[i], indices[^cycles[i]]) = (indices[^cycles[i]], indices[i]);
-                        yield return Result();
-                        done = false;
-                        break;
-                    }
-                }
-                if (done) yield break;
-            }
-        }
-        return Inner();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 268の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>

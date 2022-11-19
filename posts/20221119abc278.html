@@ -1,0 +1,632 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC000</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC000">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20221119abc278">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC000</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 19 November 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 19 November 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 000の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc000">https://atcoder.jp/contests/abc000</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC278/submissions/36599335">コンテスト提出</a></p>
+<p><code>0</code>で初期化した長さ<code>N</code>の配列に先頭から<code>A[i+K]</code>の値を<code>N-K</code>回代入することで、答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = new int[N];
+    for (var i = 0; i &lt; N - K; i++)
+    {
+        B[i] = A[i + K];
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, B));
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC278/submissions/36606958">コンテスト提出</a></p>
+<p>見間違えやすい時刻は、元の時刻の<code>AB:CD</code>となる時刻であり、<code>AB</code>は時の<code>10</code>の位と分の<code>10</code>の位の値、<code>CD</code>は時の<code>1</code>の位と分の<code>1</code>の位の値になり、<code>0&lt;=AB&lt;24</code>かつ<code>0&lt;=AB&lt;60</code>であることが必要です。
+順に時刻をみていき、条件を満たす時刻が答えとなります。<br>
+<code>h=23, m=59</code>のときなど、<code>00 00</code>が答えとなることに注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, M) = Scanner.Scan&lt;int, int&gt;();
+    for (var h = H; h &lt; 24; h++)
+    {
+        for (var m = 0; m &lt; 60; m++)
+        {
+            if (h == H &amp;&amp; m &lt; M) continue;
+            var ab = h / 10 * 10 + m / 10;
+            var cd = h % 10 * 10 + m % 10;
+            if (ab &lt; 24 &amp;&amp; cd &lt; 60)
+            {
+                Console.WriteLine($&quot;{h} {m}&quot;);
+                return;
+            }
+        }
+    }
+
+    Console.WriteLine(&quot;0 0&quot;);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC278/submissions/36610705">コンテスト提出</a></p>
+<p>ユーザがフォローしている人の集合を辞書で管理し、<code>t==1,2</code>のときは集合を更新、<code>t==3</code>のときはそれぞれのユーザがフォローしている人の集合に存在しているかを判定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var dict = new Dictionary&lt;int, HashSet&lt;int&gt;&gt;();
+    while (Q-- &gt; 0)
+    {
+        var (t, a, b) = Scanner.Scan&lt;int, int, int&gt;();
+        if (!dict.ContainsKey(a)) dict[a] = new HashSet&lt;int&gt;();
+        if (!dict.ContainsKey(b)) dict[b] = new HashSet&lt;int&gt;();
+
+        if (t == 1)
+        {
+            dict[a].Add(b);
+        }
+        else if (t == 2)
+        {
+            dict[a].Remove(b);
+        }
+        else
+        {
+            var answer = dict[a].Contains(b) &amp;&amp; dict[b].Contains(a);
+            Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+        }
+    }
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC278/submissions/36621868">コンテスト提出</a></p>
+<p>クエリごとに配列のすべての値を更新してしまうと、時間計算量が<code>O(N^2)</code>になり、実行時間制限に間に合いません。<br>
+区間変更区間更新が可能な遅延セグメント木などのデータ構造を用いてクエリごとに値を更新することで、時間計算量<code>O(NlogN)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var Q = Scanner.Scan&lt;int&gt;();
+    var query = new int[Q][];
+    for (var i = 0; i &lt; Q; i++)
+    {
+        query[i] = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    }
+
+    var lst = new LazySegmentTree&lt;Monoid, long&gt;(A.Select(x =&gt; new Monoid(x, 1)).ToArray(), new Oracle());
+
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var q = query[i][0];
+        if (q == 1)
+        {
+            var x = query[i][1];
+            lst.Apply(0, N, x);
+        }
+        else if (q == 2)
+        {
+            var (idx, x) = (query[i][1] - 1, query[i][2]);
+            var monoid = lst.Get(idx);
+            lst.Set(idx, new Monoid(monoid.Value + x, monoid.Size));
+        }
+        else
+        {
+            var idx = query[i][1] - 1;
+            var answer = lst.Get(idx).Value;
+            Console.WriteLine(answer);
+        }
+    }
+}
+
+public readonly struct Monoid
+{
+    public readonly long Value;
+    public readonly int Size;
+    public Monoid(long value, int size) =&gt; (Value, Size) = (value, size);
+}
+
+public class Oracle : IOracle&lt;Monoid, long&gt;
+{
+    public long IdentityMapping =&gt; (long)1e18;
+
+    public Monoid IdentityElement =&gt; new Monoid(0, 0);
+
+    public long Compose(long f, long g)
+    {
+        return f == IdentityMapping ? g : f;
+    }
+
+    public Monoid Map(long f, Monoid x)
+    {
+        return f != IdentityMapping ? new Monoid(f * x.Size, x.Size) : x;
+    }
+
+    public Monoid Operate(Monoid a, Monoid b)
+    {
+        return new Monoid(a.Value + b.Value, a.Size + b.Size);
+    }
+}
+
+public interface IOracle&lt;TMonoid&gt;
+{
+    TMonoid IdentityElement { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public interface IOracle&lt;TMonoid, TMapping&gt; : IOracle&lt;TMonoid&gt;
+{
+    TMapping IdentityMapping { get; }
+    TMonoid Map(TMapping f, TMonoid x);
+    TMapping Compose(TMapping f, TMapping g);
+}
+
+public class LazySegmentTree&lt;TMonoid, TMapping&gt;
+{
+    public int Length { get; }
+    private readonly IOracle&lt;TMonoid, TMapping&gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly TMapping[] _lazy;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public LazySegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid, TMapping&gt; oracle)
+        : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
+    }
+
+    public LazySegmentTree(int length, IOracle&lt;TMonoid, TMapping&gt; oracle)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &lt;&lt; _log &lt; Length) _log++;
+        _dataSize = 1 &lt;&lt; _log;
+        _data = new TMonoid[_dataSize &lt;&lt; 1];
+        Array.Fill(_data, _oracle.IdentityElement);
+        _lazy = new TMapping[_dataSize];
+        Array.Fill(_lazy, _oracle.IdentityMapping);
+    }
+
+    public void Set(int index, in TMonoid value)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &gt;= 1; i--) Push(index &gt;&gt; i);
+        _data[index] = value;
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &gt;= 1; i--) Push(index &gt;&gt; i);
+        return _data[index];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        if (left == right) return _oracle.IdentityElement;
+        left += _dataSize;
+        right += _dataSize;
+        for (var i = _log; i &gt;= 1; i--)
+        {
+            if ((left &gt;&gt; i) &lt;&lt; i != left) Push(left &gt;&gt; i);
+            if ((right &gt;&gt; i) &lt;&lt; i != right) Push((right - 1) &gt;&gt; i);
+        }
+
+        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
+        while (left &lt; right)
+        {
+            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &gt;&gt;= 1;
+            right &gt;&gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&gt; _data[1];
+
+    public void Apply(int index, TMapping mapping)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        for (var i = _log; i &gt;= 1; i--) Push(index &gt;&gt; i);
+        _data[index] = _oracle.Map(mapping, _data[index]);
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public void Apply(int left, int right, in TMapping mapping)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        if (left == right) return;
+        left += _dataSize;
+        right += _dataSize;
+        for (var i = _log; i &gt;= 1; i--)
+        {
+            if ((left &gt;&gt; i) &lt;&lt; i != left) Push(left &gt;&gt; i);
+            if ((right &gt;&gt; i) &lt;&lt; i != right) Push((right - 1) &gt;&gt; i);
+        }
+
+        var (l, r) = (left, right);
+        while (l &lt; r)
+        {
+            if ((l &amp; 1) == 1) ApplyToAll(l++, mapping);
+            if ((r &amp; 1) == 1) ApplyToAll(--r, mapping);
+            l &gt;&gt;= 1;
+            r &gt;&gt;= 1;
+        }
+
+        for (var i = 1; i &lt;= _log; i++)
+        {
+            if ((left &gt;&gt; i) &lt;&lt; i != left) Update(left &gt;&gt; i);
+            if ((right &gt;&gt; i) &lt;&lt; i != right) Update((right - 1) &gt;&gt; i);
+        }
+    }
+
+    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        for (var i = _log; i &gt;= 1; i--) Push(left &gt;&gt; i);
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &lt; _dataSize)
+                {
+                    Push(left);
+                    left &lt;&lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        for (var i = _log; i &gt;= 1; i--) Push((right - 1) &gt;&gt; i);
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            right--;
+            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &lt; _dataSize)
+                {
+                    Push(right);
+                    right = (right &lt;&lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
+
+    private void ApplyToAll(int k, in TMapping mapping)
+    {
+        _data[k] = _oracle.Map(mapping, _data[k]);
+        if (k &lt; _dataSize) _lazy[k] = _oracle.Compose(mapping, _lazy[k]);
+    }
+
+    private void Push(int k)
+    {
+        ApplyToAll(k &lt;&lt; 1, _lazy[k]);
+        ApplyToAll((k &lt;&lt; 1) + 1, _lazy[k]);
+        _lazy[k] = _oracle.IdentityMapping;
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc000/tasks/abc000_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC278/submissions/36626239">コンテスト提出</a></p>
+<p>愚直に範囲にある数を計算してしまうと、時間計算量が<code>O(H^2W^2)</code>となり実行時間制限に間に合いません。<br>
+そこで、マスに書かれている値<code>c</code>ごとの二次元累積和を求めておくと、マス目全体の<code>c</code>の数と黒く塗りつぶした部分の<code>c</code>の数を引くことで、塗りつぶされていないマスに書かれている<code>c</code>の数を数え上げることができます。
+これにより、二次元累積和の構築には時間計算量<code>O(HW)</code>がかかり、<code>c</code>の数え上げには時間計算量<code>O(1)</code>で求めることができます。<br>
+そして、各<code>(k,l)</code>ごとに<code>N</code>種類の<code>c</code>の数を求めることになるので、全体計算量<code>O(HW+HWN)</code>で求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W, N, h, w) = Scanner.Scan&lt;int, int, int, int, int&gt;();
+    var A = new int[H][];
+    for (var i = 0; i &lt; H; i++)
+    {
+        A[i] = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    }
+
+    var cum = new CumulativeSum2D[N].Select(_ =&gt; new CumulativeSum2D(H, W)).ToArray();
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            var a = A[i][j] - 1;
+            cum[a].Add(i, j, 1);
+        }
+    }
+
+    var answer = new int[H - h + 1].Select(_ =&gt; new int[W - w + 1]).ToArray();
+
+    for (var i = 0; i &lt; H - h + 1; i++)
+    {
+        for (var j = 0; j &lt; W - w + 1; j++)
+        {
+            var sum = 0;
+            for (var k = 0; k &lt; N; k++)
+            {
+                var all = cum[k].Sum(H, W);
+                var blak = cum[k].Sum(i, j, i + h, j + w);
+                if (all - blak &gt; 0) sum++;
+            }
+
+            answer[i][j] = sum;
+        }
+    }
+
+    Printer.Print2D(answer, &quot; &quot;);
+}
+
+public class CumulativeSum2D
+{
+    public int Height { get; }
+    public int Width { get; }
+    private readonly long[] _data;
+    private readonly long[] _sum;
+    private bool _isUpdated;
+
+    public CumulativeSum2D(int height, int width)
+    {
+        if (height &lt;= 0) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &lt;= 0) throw new ArgumentOutOfRangeException(nameof(width));
+        Height = height;
+        Width = width;
+        _data = new long[height * width];
+        _sum = new long[(height + 1) * (width + 1)];
+    }
+
+    public void Add(int height, int width, long value)
+    {
+        if (height &lt; 0 || Height &lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &lt; 0 || Width &lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        _isUpdated = false;
+        _data[height * Width + width] += value;
+    }
+
+    public void Set(int height, int width, long value)
+    {
+        if (height &lt; 0 || Height &lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &lt; 0 || Width &lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        _isUpdated = false;
+        _data[height * Width + width] = value;
+    }
+
+    public long Get(int height, int width)
+    {
+        if (height &lt; 0 || Height &lt;= height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &lt; 0 || Width &lt;= width) throw new ArgumentOutOfRangeException(nameof(width));
+        return _data[height * Width + width];
+    }
+
+    public long Sum(int height, int width)
+    {
+        if (height &lt; 0 || Height &lt; height) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &lt; 0 || Width &lt; width) throw new ArgumentOutOfRangeException(nameof(width));
+        if (!_isUpdated) Build();
+        return _sum[height * (Width + 1) + width];
+    }
+
+    public long Sum(int height1, int width1, int height2, int width2)
+    {
+        if (height1 &lt; 0 || Height &lt; height1) throw new ArgumentOutOfRangeException(nameof(height1));
+        if (width1 &lt; 0 || Width &lt; width1) throw new ArgumentOutOfRangeException(nameof(width1));
+        if (height2 &lt; 0 || Height &lt; height2) throw new ArgumentOutOfRangeException(nameof(height2));
+        if (width2 &lt; 0 || Width &lt; width2) throw new ArgumentOutOfRangeException(nameof(width2));
+        if (!_isUpdated) Build();
+        var w1 = Width + 1;
+        return _sum[height1 * w1 + width1]
+               + _sum[height2 * w1 + width2]
+               - _sum[height2 * w1 + width1]
+               - _sum[height1 * w1 + width2];
+    }
+
+    private void Build()
+    {
+        _isUpdated = true;
+        var w1 = Width + 1;
+        _sum[0] = _sum[w1] = _sum[1] = 0;
+        for (var i = 1; i &lt;= Height; i++)
+        for (var j = 1; j &lt;= Width; j++)
+            _sum[i * w1 + j] =
+                _sum[i * w1 + (j - 1)]
+                + _sum[(i - 1) * w1 + j]
+                - _sum[(i - 1) * w1 + (j - 1)]
+                + _data[(i - 1) * Width + (j - 1)];
+    }
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20221119abc278" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
