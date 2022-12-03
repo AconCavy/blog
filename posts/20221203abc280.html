@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC280</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC280">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20221203abc280">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC280</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 03 December 2022
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 03 December 2022
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Grand Contest 280の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc280">https://atcoder.jp/contests/abc280</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc280/tasks/abc280_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc280/submissions/36947925">コンテスト提出</a></p>
+<p>文字列として入力をとり、全ての文字から<code>#</code>の数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var answer = 0;
+    for (var i = 0; i &lt; H; i++)
+    {
+        var S = Scanner.Scan&lt;string&gt;();
+        foreach (var c in S)
+        {
+            if (c == '#') answer++;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc280/tasks/abc280_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc280/submissions/36952001">コンテスト提出</a></p>
+<p><code>S[k]=A[1]+A[2]+...A[k-1]+A[k]</code>であることから、<code>S[k]=S[k-1]+A[k]</code>であることがわかります。
+そのため、<code>i==1</code>のときは<code>A[1]=S[1]</code>であり、<code>i&gt;1</code>の場合は<code>A[i]=S[i]-S[i-1]</code>として、答えとなる数列<code>A</code>を求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var A = new long[N];
+    A[0] = S[0];
+    for (var i = 1; i &lt; N; i++)
+    {
+        A[i] = S[i] - S[i - 1];
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, A));
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc280/tasks/abc280_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc280/submissions/36972273">コンテスト提出</a></p>
+<p><code>S</code>の長さの範囲では<code>S[i]!=T[i]</code>となる<code>i</code>が答えとなり、<code>T</code>が<code>S</code>の最後に文字が追加されている文字列である場合は、<code>T</code>の最後が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var T = Scanner.Scan&lt;string&gt;();
+    var N = S.Length;
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (S[i] != T[i])
+        {
+            Console.WriteLine(i + 1);
+            return;
+        }
+    }
+
+    Console.WriteLine(T.Length);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc280/tasks/abc280_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc280/submissions/37000066">復習提出</a></p>
+<p><code>K</code>について素因数分解を行い、<code>K</code>の倍数であるために必要な素数とその個数を求めます。
+そして、ある素数をその必要な個数以上使ったときの<code>n</code>の値の最大が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var K = Scanner.Scan&lt;long&gt;();
+    long answer = 0;
+    foreach (var (prime, required) in Prime.GetFactorDictionary(K))
+    {
+        long n = 0;
+        var used = 0;
+        while (used &lt; required)
+        {
+            n += prime;
+            var x = n;
+            while (x % prime == 0)
+            {
+                x /= prime;
+                used++;
+            }
+        }
+
+        answer = Math.Max(answer, n);
+    }
+
+    Console.WriteLine(answer);
+}
+
+public static class Prime
+{
+    public static IDictionary&lt;long, int&gt; GetFactorDictionary(long value)
+    {
+        var factors = new Dictionary&lt;long, int&gt;();
+        if (value &lt; 2) return factors;
+
+        void CountUp(long n)
+        {
+            if (value % n != 0) return;
+            factors[n] = 0;
+            while (value % n == 0)
+            {
+                value /= n;
+                factors[n]++;
+            }
+        }
+
+        CountUp(2);
+        for (var i = 3L; i * i &lt;= value; i += 2) CountUp(i);
+        if (value &gt; 1) factors[value] = 1;
+        return factors;
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc280/tasks/abc280_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc280/submissions/37000080">復習提出</a></p>
+<p><code>dp[i] := dp[i+2]*(i+2から遷移する確率) + dp[i+1]*(i+1から遷移する確率) + 1</code>のような攻撃回数についての期待値dpを行います。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, P) = Scanner.Scan&lt;int, int&gt;();
+    var dp = new mint[N + 1];
+    var p2 = P * mint.Inverse(100);
+    var p1 = 1 - p2;
+    for (var i = N - 1; i &gt;= 0; i--)
+    {
+        dp[i] = dp[Math.Min(N, i + 1)] * p1 + dp[Math.Min(N, i + 2)] * p2 + 1;
+    }
+
+    var answer = dp[0];
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20221203abc280" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2022 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
