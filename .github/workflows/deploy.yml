@@ -1,9 +1,13 @@
 name: deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+    paths:
+      - 'input/**'
+      - 'src/**'
 
 jobs:
   build:
