@@ -54,3 +54,5 @@ for /f "tokens=* delims=0123456789 eol=" %%X in ('findstr /n "^" %DRAFT_PATH%') 
 )
  
 endlocal
+
+call code -n . %POST_PATH%
