@@ -74,7 +74,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
             Published on Saturday, 10 December 2022
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on Saturday, 10 December 2022
+            Updated on Sunday, 11 December 2022
         </div>
 
             <div class="mt-3 mb-4">
@@ -95,7 +95,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <h3 id="a"><a href="https://atcoder.jp/contests/abc281/tasks/abc281_a">問題A</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC281/submissions/37136228">コンテスト提出</a></p>
 <p>生成すべき非負整数は、<code>0,1,2,...,N</code>の<code>N+1</code>個の整数を逆順に表示したものとなります。
-やりやすいほうやりやすいほう</p>
+やりやすい方法で解きましょう。</p>
 <h4 id="forn0"><code>for</code>文で<code>N</code>から<code>0</code>まで逆順に表示する方法</h4>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
@@ -214,7 +214,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <code>i==1</code>について、集合には<code>M</code>項目までの値があり、総和は<code>M</code>項までの昇順<code>K</code>個の総和となります。<br>
 <code>i==2</code>について、<code>i==1</code>の総和から<code>A[1]</code>または集合のうち<code>K</code>番目の値を引き、集合から<code>A[1]</code>を削除します。
 また、<code>A[2+M]</code>を集合に追加し、<code>A[2+M]</code>または集合のうち<code>K</code>番目の値を総和に足します。<br>
-<code>i&gt;2</code>についても同様の操作を行うことで、各<code>i</code>についての総和を時間計算量<code>O(logM)</code>で求めることができ、全体の時間計算量<code>(N-M+1)logM</code>で求めることができます。</p>
+<code>i&gt;2</code>についても同様の操作を行うことで、各<code>i</code>についての総和を時間計算量<code>O(logM)</code>で求めることができ、全体の時間計算量<code>O((N-M+1)logM)</code>で求めることができます。</p>
 <p>C#の標準ライブラリでは、多重集合を扱うクラスが存在しないため、多重集合のデータ構造は自前の実装が必要です。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {

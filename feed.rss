@@ -5,14 +5,14 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2022 AconCavy</copyright>
-		<pubDate>Sat, 10 Dec 2022 14:46:25 GMT</pubDate>
-		<lastBuildDate>Sat, 10 Dec 2022 14:46:25 GMT</lastBuildDate>
+		<pubDate>Sun, 11 Dec 2022 14:16:32 GMT</pubDate>
+		<lastBuildDate>Sun, 11 Dec 2022 14:16:32 GMT</lastBuildDate>
 		<item>
 			<title>ABC281</title>
 			<link>https://blog.aconcavy.dev/posts/20221210abc281</link>
 			<description>&lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221210abc281</guid>
-			<pubDate>Sat, 10 Dec 2022 00:00:00 GMT</pubDate>
+			<pubDate>Sun, 11 Dec 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -21,7 +21,7 @@
 &lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc281/tasks/abc281_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC281/submissions/37136228"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;生成すべき非負整数は、&lt;code&gt;0,1,2,...,N&lt;/code&gt;の&lt;code&gt;N+1&lt;/code&gt;個の整数を逆順に表示したものとなります。
-やりやすいほうやりやすいほう&lt;/p&gt;
+やりやすい方法で解きましょう。&lt;/p&gt;
 &lt;h4 id="forn0"&gt;&lt;code&gt;for&lt;/code&gt;文で&lt;code&gt;N&lt;/code&gt;から&lt;code&gt;0&lt;/code&gt;まで逆順に表示する方法&lt;/h4&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
@@ -140,7 +140,7 @@
 &lt;code&gt;i==1&lt;/code&gt;について、集合には&lt;code&gt;M&lt;/code&gt;項目までの値があり、総和は&lt;code&gt;M&lt;/code&gt;項までの昇順&lt;code&gt;K&lt;/code&gt;個の総和となります。&lt;br /&gt;
 &lt;code&gt;i==2&lt;/code&gt;について、&lt;code&gt;i==1&lt;/code&gt;の総和から&lt;code&gt;A[1]&lt;/code&gt;または集合のうち&lt;code&gt;K&lt;/code&gt;番目の値を引き、集合から&lt;code&gt;A[1]&lt;/code&gt;を削除します。
 また、&lt;code&gt;A[2+M]&lt;/code&gt;を集合に追加し、&lt;code&gt;A[2+M]&lt;/code&gt;または集合のうち&lt;code&gt;K&lt;/code&gt;番目の値を総和に足します。&lt;br /&gt;
-&lt;code&gt;i&amp;gt;2&lt;/code&gt;についても同様の操作を行うことで、各&lt;code&gt;i&lt;/code&gt;についての総和を時間計算量&lt;code&gt;O(logM)&lt;/code&gt;で求めることができ、全体の時間計算量&lt;code&gt;(N-M+1)logM&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;code&gt;i&amp;gt;2&lt;/code&gt;についても同様の操作を行うことで、各&lt;code&gt;i&lt;/code&gt;についての総和を時間計算量&lt;code&gt;O(logM)&lt;/code&gt;で求めることができ、全体の時間計算量&lt;code&gt;O((N-M+1)logM)&lt;/code&gt;で求めることができます。&lt;/p&gt;
 &lt;p&gt;C#の標準ライブラリでは、多重集合を扱うクラスが存在しないため、多重集合のデータ構造は自前の実装が必要です。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
