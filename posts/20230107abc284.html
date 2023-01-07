@@ -12,7 +12,7 @@ connect-src 'self' *.fontawesome.com *.typekit.net;
 style-src 'self' 'unsafe-inline';
 script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
-    <title>acon.log - ABC267</title>
+    <title>acon.log - ABC284</title>
 
     <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
     <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,10 +20,10 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
 
     
-<meta property="og:title" content="ABC267">
+<meta property="og:title" content="ABC284">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
-<meta property="og:url" content="https://blog.aconcavy.dev/posts/20220903abc267">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230107abc284">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="acon.log">
 <meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
@@ -68,13 +68,13 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                                 
 <header>
     <div class="c-post-header mb-3">
-        <h1 class="card-title c-post-header__title">ABC267</h1>
+        <h1 class="card-title c-post-header__title">ABC284</h1>
 
         <div class="card-text c-post-header__meta">
-            Published on Saturday, 03 September 2022
+            Published on Saturday, 07 January 2023
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on Saturday, 03 September 2022
+            Updated on Saturday, 07 January 2023
         </div>
 
             <div class="mt-3 mb-4">
@@ -88,176 +88,196 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
                                 <div class="c-post-body">
                                     <h2 id="section">はじめに</h2>
-<p>AtCoder Beginner Contest 267の復習記事です。</p>
+<p>AtCoder Grand Contest 284の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <h2 id="section-1">コンテスト</h2>
-<p><a href="https://atcoder.jp/contests/abc267">https://atcoder.jp/contests/abc267</a></p>
-<h3 id="a"><a href="https://atcoder.jp/contests/abc267/tasks/abc267_a">問題A</a></h3>
-<p><a href="https://atcoder.jp/contests/abc267/submissions/34533809">コンテスト提出</a></p>
-<p>与えられる文字列は5通りしかないため、それぞれに対しての答えを求めます。</p>
+<p><a href="https://atcoder.jp/contests/abc284">https://atcoder.jp/contests/abc284</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc284/tasks/abc284_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC284/submissions/37794799">コンテスト提出</a></p>
+<p>文字列を配列に受け取り、その配列を逆順にしたものを出力します。
+インデックスを逆順に参照したり、<code>IEnumerable&lt;T&gt;</code>の<code>Reverse()</code>で逆順にしたものを得ることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var S = Scanner.Scan&lt;string&gt;();
-    var answer = 0;
-    if (S == &quot;Monday&quot;) answer = 5;
-    if (S == &quot;Tuesday&quot;) answer = 4;
-    if (S == &quot;Wednesday&quot;) answer = 3;
-    if (S == &quot;Thursday&quot;) answer = 2;
-    if (S == &quot;Friday&quot;) answer = 1;
-    Console.WriteLine(answer);
-}
-</code></pre>
-<h3 id="b"><a href="https://atcoder.jp/contests/abc267/tasks/abc267_b">問題B</a></h3>
-<p><a href="https://atcoder.jp/contests/abc267/submissions/34560503">コンテスト提出</a></p>
-<p>列ごとの処理を行うため、あらかじめ列ごとにピンが1本でも立っているかを<code>bool</code>で管理できるようにします。
-1番ピンが<code>false</code>かつ、列<code>L</code>が<code>true</code>かつと列<code>R</code>が<code>true</code>かつ、列<code>L</code>と列<code>R</code>の間の列<code>M</code>が<code>false</code>であるときにスプリットになります。</p>
-<pre><code class="language-csharp line-numbers">public static void Solve()
-{
-    var S = Scanner.Scan&lt;string&gt;();
-    var T = new bool[11];
-    for (var i = 0; i &lt; S.Length; i++)
-    {
-        T[i + 1] = S[i] == '1';
-    }
-
-    var col = new bool[7];
-    col[0] |= T[7];
-    col[1] |= T[4];
-    col[2] |= T[8] || T[2];
-    col[3] |= T[5] || T[1];
-    col[4] |= T[9] || T[3];
-    col[5] |= T[6];
-    col[6] |= T[10];
-
-    if (!T[1])
-    {
-        for (var l = 0; l &lt; col.Length; l++)
-        {
-            for (var r = l + 2; r &lt; col.Length; r++)
-            {
-                for (var m = l + 1; m &lt; r; m++)
-                {
-                    if (col[l] &amp;&amp; col[r] &amp;&amp; !col[m])
-                    {
-                        Console.WriteLine(&quot;Yes&quot;);
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    Console.WriteLine(&quot;No&quot;);
-}
-</code></pre>
-<h3 id="c"><a href="https://atcoder.jp/contests/abc267/tasks/abc267_c">問題C</a></h3>
-<p><a href="https://atcoder.jp/contests/abc267/submissions/34548091">コンテスト提出</a></p>
-<p>長さ<code>M</code>の連続部分列の右側の位置<code>R</code>から位置<code>R+1</code>にずれたとき、求める総和は<code>A[R-M+1..R]</code>の区間和が引かれて<code>A[R]*M</code>が足されます。
-そのため、位置をずらして総和を更新していったときの最大値が答えとなります。
-累積和を用いることで時間計算量<code>O(1)</code>で区間和を求めることができ、全体の計算量<code>O(N)</code>で答えを求めることができます。</p>
-<pre><code class="language-csharp line-numbers">public static void Solve()
-{
-    var (N, M) = Scanner.Scan&lt;int, int&gt;();
-    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-
-    var cum = new long[N + 1];
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = new string[N];
     for (var i = 0; i &lt; N; i++)
     {
-        cum[i + 1] = cum[i] + A[i];
+        S[i] = Scanner.Scan&lt;string&gt;();
     }
 
-    var sum = 0L;
-    for (var i = 0; i &lt; M; i++)
-    {
-        sum += (i + 1) * A[i];
-    }
-
-    var answer = sum;
-    for (var i = 1; i + M &lt;= N; i++)
-    {
-        sum -= cum[i + M - 1] - cum[i - 1];
-        sum += M * A[i + M - 1];
-        answer = Math.Max(answer, sum);
-    }
-
-    Console.WriteLine(answer);
+    Console.WriteLine(string.Join(Environment.NewLine, S.Reverse()));
 }
 </code></pre>
-<h3 id="d"><a href="https://atcoder.jp/contests/abc267/tasks/abc267_d">問題D</a></h3>
-<p><a href="https://atcoder.jp/contests/abc267/submissions/34568995">コンテスト提出</a></p>
-<p><code>dp[i][j]:=i番目までみたときにBの要素をj個決めたときの求める和の最大値</code>とした動的計画法を解きます。<br>
-これは、<code>i</code>番目の要素を選ばなかったときは<code>Max(dp[i+1][j], dp[i][j])</code>であり、選んだ時は<code>Max(dp[i+1][j+1], dp[i][j]+A[i]*(j+1))</code>の遷移が成り立ちます。
-総和が負になることもあるため、<code>dp</code>テーブルを<code>-inf</code>のような値で初期化する必要があることに注意が必要です。</p>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc284/tasks/abc284_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC284/submissions/37797656">コンテスト提出</a></p>
+<p><code>A</code>のうち奇数(2で割ったとき1余るもの)の個数を数え上げます。</p>
+<pre><code class="language-csharp line-numbers">
+public static void Solve()
+{
+    var T = Scanner.Scan&lt;int&gt;();
+    while (T-- &gt; 0)
+    {
+        var N = Scanner.Scan&lt;int&gt;();
+        var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+        var answer = A.Count(x =&gt; x % 2 == 1);
+        Console.WriteLine(answer);
+    }
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc284/tasks/abc284_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC284/submissions/37800764">コンテスト提出</a></p>
+<p>始点を順に決めて幅優先探索を行ったり、<code>DisjointSetUnion</code>等のデータ構造を用いることで連結集合の個数を求めることができます。</p>
+<h4 id="section-2">始点を順に決めて幅優先探索する方法</h4>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, M) = Scanner.Scan&lt;int, int&gt;();
-    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-    const long inf = (long)1e18;
-    var dp = new long[N + 1, M + 1];
-    for (var i = 0; i &lt;= N; i++)
-    {
-        for (var j = 0; j &lt;= M; j++)
-        {
-            dp[i, j] = -inf;
-        }
-    }
-
-    dp[0, 0] = 0;
-
-    for (var i = 0; i &lt; N; i++)
-    {
-        for (var j = 0; j &lt;= M; j++)
-        {
-            dp[i + 1, j] = Math.Max(dp[i + 1, j], dp[i, j]);
-            if (j + 1 &lt;= M) dp[i + 1, j + 1] = Math.Max(dp[i + 1, j + 1], dp[i, j] + A[i] * (j + 1));
-        }
-    }
-
-    var answer = dp[N, M];
-    Console.WriteLine(answer);
-}
-</code></pre>
-<h3 id="e"><a href="https://atcoder.jp/contests/abc267/tasks/abc267_e">問題E</a></h3>
-<p><a href="https://atcoder.jp/contests/abc267/submissions/34578204">復習提出</a></p>
-<p>ある時点で頂点<code>u</code>を消すと、頂点<code>u</code>に接続している頂点<code>v</code>のコストは<code>A[u]</code>減ることになり、その時点での頂点<code>v</code>とコストのペアを<code>PriorityQueue</code>に追加していくことで、頂点<code>x</code>を消すときに必要なコストの最小値を求めることができ、全ての頂点におけるコストの最小値の最大値が答えとなります。</p>
-<pre><code class="language-csharp line-numbers">public static void Solve()
-{
-    var (N, M) = Scanner.Scan&lt;int, int&gt;();
-    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
-    var costs = new long[N];
+    var G = new List&lt;int&gt;[N].Select(_ =&gt; new List&lt;int&gt;()).ToArray();
     for (var i = 0; i &lt; M; i++)
     {
         var (u, v) = Scanner.Scan&lt;int, int&gt;();
         u--; v--;
-        costs[u] += A[v];
-        costs[v] += A[u];
         G[u].Add(v);
         G[v].Add(u);
     }
 
-    var answer = 0L;
-    var queue = new PriorityQueue&lt;(int U, long C)&gt;((x, y) =&gt; x.C.CompareTo(y.C));
+    var answer = 0;
+    var queue = new Queue&lt;int&gt;();
+    var used = new bool[N];
     for (var i = 0; i &lt; N; i++)
     {
-        queue.Enqueue((i, costs[i]));
-    }
-
-    var used = new bool[N];
-    while (queue.Count &gt; 0)
-    {
-        var (u, c) = queue.Dequeue();
-        if (used[u]) continue;
-        used[u] = true;
-        answer = Math.Max(answer, c);
-        foreach (var v in G[u])
+        if (used[i]) continue;
+        answer++;
+        queue.Enqueue(i);
+        while (queue.Count &gt; 0)
         {
-            if (used[v]) continue;
-            costs[v] -= A[u];
-            queue.Enqueue((v, costs[v]));
+            var u = queue.Dequeue();
+            foreach (var v in G[u])
+            {
+                if (used[v]) continue;
+                used[v] = true;
+                queue.Enqueue(v);
+            }
         }
     }
 
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h4 id="disjointsetunion"><code>DisjointSetUnion</code>を使う方法</h4>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var dsu = new DisjointSetUnion(N);
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        dsu.Merge(u, v);
+    }
+
+    var answer = dsu.GetGroups().Count();
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc284/tasks/abc284_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC284/submissions/37847198">コンテスト提出</a></p>
+<p>ある素数<code>a</code>で<code>N</code>を割り切れる場合、<code>a</code>が<code>p</code>のときと<code>a</code>が<code>q</code>の二通りの可能性があります。
+<code>p==a</code>の場合、つまり<code>N/p%p==0</code>の場合は<code>q=N/p/p</code>となります。
+<code>q==a</code>の場合、つまり<code>N/q==p*p</code>の場合は<code>p=Sqrt(N/q)</code>となります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var T = Scanner.Scan&lt;int&gt;();
+    var primes = Prime.Sieve((int)3e7).Select(x =&gt; (long)x).ToArray();
+    while (T-- &gt; 0)
+    {
+        var N = Scanner.Scan&lt;long&gt;();
+        foreach (var p in primes)
+        {
+            if (N % p != 0) continue;
+            var n = N / p;
+            if (n % p == 0)
+            {
+                var q = n / p;
+                Console.WriteLine($&quot;{p} {q}&quot;);
+            }
+            else
+            {
+                bool F(long x) =&gt; x * x &lt;= n;
+                var q = BinarySearch((long)3e9, 1, F);
+                Console.WriteLine($&quot;{q} {p}&quot;);
+            }
+
+            break;
+        }
+    }
+}
+
+public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+
+    return ok;
+}
+
+public static class Prime
+{
+    public static IEnumerable&lt;int&gt; Sieve(int value)
+    {
+        if (value &lt; 2) yield break;
+        yield return 2;
+        var sieve = new bool[(value + 1) / 2];
+        for (var i = 1; i &lt; sieve.Length; i++)
+        {
+            if (sieve[i]) continue;
+            yield return i * 2 + 1;
+            for (var j = i; j &lt; sieve.Length; j += i * 2 + 1) sieve[j] = true;
+        }
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc284/tasks/abc284_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC284/submissions/37831298">コンテスト提出</a></p>
+<p>行きがけ順で深さ優先探索を行い、パスを数え上げることで答えを求めることができます。
+答えの上限は<code>1e6</code>なので、答えがそれ以上になる場合はその時点で深さ優先探索を打ち切ることで実行時間制限に間に合わせることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--;
+        v--;
+        G[u].Add(v);
+        G[v].Add(u);
+    }
+
+    const int inf = (int)1e6;
+
+    var used = new bool[N];
+    used[0] = true;
+    var answer = 0;
+
+    void Dfs(int u)
+    {
+        answer++;
+        if (answer &gt;= inf) return;
+        foreach (var v in G[u])
+        {
+            if (used[v]) continue;
+            used[v] = true;
+            Dfs(v);
+            used[v] = false;
+        }
+    }
+
+    Dfs(0);
+    answer = Math.Min(answer, inf);
     Console.WriteLine(answer);
 }
 </code></pre>
@@ -266,7 +286,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                                 <footer>
     <div class="c-post-footer mt-3">
         <div class="c-post-footer__share">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20220903abc267" data-size="large">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230107abc284" data-size="large">
                 Tweet
             </a>
         </div>
