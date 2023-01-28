@@ -142,10 +142,9 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </code></pre>
 <h3 id="c"><a href="https://atcoder.jp/contests/abc287/tasks/abc287_c">問題C</a></h3>
 <p><a href="https://atcoder.jp/contests/abc287/submissions/38385675">コンテスト提出</a></p>
-<p>与えられたグラフが連結であり、ループが存在しなければパスグラフになります。
-訪れた頂点と直前の頂点を管理しながら幅優先探索を行い、直前の頂点を除いて既に訪れている頂点に2度以上訪れた場合は、グラフにはループがあります。
-また、全ての頂点が連結でない場合、幅優先探索後に訪れていない頂点が存在する場合、そのグラフは連結ではありません。
-いずれも該当しなかった場合はパスグラフになります。</p>
+<p>直線になるようなグラフがパスグラフになります。
+これは、グラフを構成する辺が<code>N-1</code>本であり、端点となる2つの頂点は次数が<code>1</code>、それ以外は次数が<code>2</code>であり、連結であるグラフです。
+グラフが連結であるかどうかは幅/深さ優先探索や<code>DisjointSetUnion</code>で調べることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, M) = Scanner.Scan&lt;int, int&gt;();
@@ -153,37 +152,34 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     for (var i = 0; i &lt; M; i++)
     {
         var (u, v) = Scanner.Scan&lt;int, int&gt;();
-        u--;
-        v--;
+        u--; v--;
         G[u].Add(v);
         G[v].Add(u);
     }
 
+    if (M != N - 1 || G.Any(x =&gt; x.Count &gt; 2))
+    {
+        Console.WriteLine(&quot;No&quot;);
+        return;
+    }
+
     var used = new bool[N];
-    var queue = new Queue&lt;(int U, int P)&gt;();
-    queue.Enqueue((0, -1));
+    var queue = new Queue&lt;int&gt;();
+    queue.Enqueue(0);
     used[0] = true;
     while (queue.Count &gt; 0)
     {
-        var (u, p) = queue.Dequeue();
-        foreach (var v in G[u])
+        var u = queue.Dequeue();
+        foreach (var v in G[u].Where(x =&gt; !used[x]))
         {
-            if (v == p) continue;
-            if (used[v])
-            {
-                Console.WriteLine(&quot;No&quot;);
-                return;
-            }
-
             used[v] = true;
-            queue.Enqueue((v, u));
+            queue.Enqueue(v);
         }
     }
 
     var answer = used.All(x =&gt; x);
     Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
 }
-
 </code></pre>
 <h3 id="d"><a href="https://atcoder.jp/contests/abc287/tasks/abc287_d">問題D</a></h3>
 <p><a href="https://atcoder.jp/contests/abc287/submissions/38402756">コンテスト提出</a></p>
