@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC288</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC288">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230204abc288">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC288</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 04 February 2023
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 04 February 2023
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Grand Contest 288の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc288">https://atcoder.jp/contests/abc288</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc288/tasks/abc288_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC288/submissions/38605622">コンテスト提出</a></p>
+<p>各クエリに対して<code>A+B</code>の答えを出力します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (A, B) = Scanner.Scan&lt;long, long&gt;();
+        var answer = A + B;
+        Console.WriteLine(answer);
+    }
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc288/tasks/abc288_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC288/submissions/38601324">コンテスト提出</a></p>
+<p>上位<code>K</code>人のみ取得し、辞書順にソートしたものを出力します。
+C#では、文字列の配列に対して、<code>Array.Sort</code>メソッドを使うことでソートすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, K) = Scanner.Scan&lt;int, int&gt;();
+    var S = new string[K];
+    for (var i = 0; i &lt; K; i++)
+    {
+        S[i] = Scanner.Scan&lt;string&gt;();
+    }
+
+    Array.Sort(S);
+    Console.WriteLine(string.Join(Environment.NewLine, S));
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc288/tasks/abc288_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC288/submissions/38595128">コンテスト提出</a></p>
+<p>頂点<code>A</code>と頂点<code>B</code>が同じ連結成分である場合、<code>A</code>と<code>B</code>に辺を追加してしまうと閉路ができてしまいます。
+そのため、<code>DisjointSetUnion</code>などのデータ構造を使い、辺をつなごうとする頂点同士が同じ連結成分であるかを判定し、同じ連結成分であればその辺を削除します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var dsu = new DisjointSetUnion(N);
+    var answer = 0;
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        a--; b--;
+        if (dsu.IsSame(a, b)) answer++;
+        dsu.Merge(a, b);
+    }
+
+    Console.WriteLine(answer);
+}
+
+public class DisjointSetUnion
+{
+    public int Length { get; }
+    private readonly int[] _parentOrSize;
+    public DisjointSetUnion(int length)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _parentOrSize = new int[Length];
+        Array.Fill(_parentOrSize, -1);
+    }
+    public int Merge(int u, int v)
+    {
+        if (u &lt; 0 || Length &lt;= u) throw new ArgumentOutOfRangeException(nameof(u));
+        if (v &lt; 0 || Length &lt;= v) throw new ArgumentOutOfRangeException(nameof(v));
+        var (x, y) = (LeaderOf(u), LeaderOf(v));
+        if (x == y) return x;
+        if (-_parentOrSize[x] &lt; -_parentOrSize[y]) (x, y) = (y, x);
+        _parentOrSize[x] += _parentOrSize[y];
+        _parentOrSize[y] = x;
+        return x;
+    }
+    public bool IsSame(int u, int v)
+    {
+        if (u &lt; 0 || Length &lt;= u) throw new ArgumentOutOfRangeException(nameof(u));
+        if (v &lt; 0 || Length &lt;= v) throw new ArgumentOutOfRangeException(nameof(v));
+        return LeaderOf(u) == LeaderOf(v);
+    }
+    public int LeaderOf(int v)
+    {
+        if (v &lt; 0 || Length &lt;= v) throw new ArgumentOutOfRangeException(nameof(v));
+        if (_parentOrSize[v] &lt; 0) return v;
+        return _parentOrSize[v] = LeaderOf(_parentOrSize[v]);
+    }
+    public int SizeOf(int v)
+    {
+        if (v &lt; 0 || Length &lt;= v) throw new ArgumentOutOfRangeException(nameof(v));
+        return -_parentOrSize[LeaderOf(v)];
+    }
+    public IEnumerable&lt;IReadOnlyCollection&lt;int&gt;&gt; GetGroups()
+    {
+        var result = new List&lt;int&gt;[Length].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+        for (var i = 0; i &lt; Length; i++) result[LeaderOf(i)].Add(i);
+        return result.Where(x =&gt; x.Count &gt; 0);
+    }
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc288/tasks/abc288_d">問題D</a></h3>
+<p>まだ解けてません;;</p>
+<!-- [コンテスト提出]()  
+[復習提出]()
+
+```csharp
+``` -->
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230204abc288" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
