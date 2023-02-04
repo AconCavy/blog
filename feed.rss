@@ -5,16 +5,16 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sat, 04 Feb 2023 14:10:36 GMT</pubDate>
-		<lastBuildDate>Sat, 04 Feb 2023 14:10:36 GMT</lastBuildDate>
+		<pubDate>Sat, 04 Feb 2023 14:21:52 GMT</pubDate>
+		<lastBuildDate>Sat, 04 Feb 2023 14:21:52 GMT</lastBuildDate>
 		<item>
 			<title>ABC288</title>
 			<link>https://blog.aconcavy.dev/posts/20230204abc288</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 288の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 288の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230204abc288</guid>
 			<pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 288の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 288の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc288"&gt;https://atcoder.jp/contests/abc288&lt;/a&gt;&lt;/p&gt;
@@ -129,11 +129,11 @@ public class DisjointSetUnion
 		<item>
 			<title>ABC287</title>
 			<link>https://blog.aconcavy.dev/posts/20230128abc287</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 287の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 287の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230128abc287</guid>
 			<pubDate>Sat, 28 Jan 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 287の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 287の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc287"&gt;https://atcoder.jp/contests/abc287&lt;/a&gt;&lt;/p&gt;
@@ -361,11 +361,11 @@ first[i] = first[i - 1] &amp;amp;&amp;amp; (f1 || f2 || f3)
 		<item>
 			<title>ABC286</title>
 			<link>https://blog.aconcavy.dev/posts/20230121abc286</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 286の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 286の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230121abc286</guid>
 			<pubDate>Sat, 21 Jan 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 286の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 286の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc286"&gt;https://atcoder.jp/contests/abc286&lt;/a&gt;&lt;/p&gt;
@@ -564,11 +564,11 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 		<item>
 			<title>ABC285</title>
 			<link>https://blog.aconcavy.dev/posts/20230115abc285</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 285の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230115abc285</guid>
 			<pubDate>Sun, 15 Jan 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 285の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc285"&gt;https://atcoder.jp/contests/abc285&lt;/a&gt;&lt;/p&gt;
@@ -766,11 +766,11 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 		<item>
 			<title>ABC284</title>
 			<link>https://blog.aconcavy.dev/posts/20230107abc284</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 284の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 284の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230107abc284</guid>
 			<pubDate>Sat, 07 Jan 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 284の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 284の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc284"&gt;https://atcoder.jp/contests/abc284&lt;/a&gt;&lt;/p&gt;
@@ -969,11 +969,11 @@ public static class Prime
 		<item>
 			<title>ABC283</title>
 			<link>https://blog.aconcavy.dev/posts/20221224abc283</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 283の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 283の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221224abc283</guid>
 			<pubDate>Sat, 24 Dec 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 283の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 283の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc283"&gt;https://atcoder.jp/contests/abc283&lt;/a&gt;&lt;/p&gt;
@@ -1204,11 +1204,11 @@ L0: a
 		<item>
 			<title>ABC282</title>
 			<link>https://blog.aconcavy.dev/posts/20221217abc282</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 282の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221217abc282</guid>
 			<pubDate>Sat, 17 Dec 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 282の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282"&gt;https://atcoder.jp/contests/abc282&lt;/a&gt;&lt;/p&gt;
@@ -1419,11 +1419,11 @@ L0: a
 		<item>
 			<title>ABC281</title>
 			<link>https://blog.aconcavy.dev/posts/20221210abc281</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 281の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221210abc281</guid>
 			<pubDate>Sun, 11 Dec 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 281の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc281"&gt;https://atcoder.jp/contests/abc281&lt;/a&gt;&lt;/p&gt;
@@ -1590,11 +1590,11 @@ L0: a
 		<item>
 			<title>ABC280</title>
 			<link>https://blog.aconcavy.dev/posts/20221203abc280</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 280の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221203abc280</guid>
 			<pubDate>Sat, 03 Dec 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 280の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280"&gt;https://atcoder.jp/contests/abc280&lt;/a&gt;&lt;/p&gt;
@@ -1733,11 +1733,11 @@ public static class Prime
 		<item>
 			<title>ABC279</title>
 			<link>https://blog.aconcavy.dev/posts/20221126abc279</link>
-			<description>&lt;p&gt;AtCoder Grand Contest 279の復習記事です。&lt;/p&gt;</description>
+			<description>&lt;p&gt;AtCoder Beginner Contest 279の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20221126abc279</guid>
 			<pubDate>Sat, 26 Nov 2022 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 279の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 279の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc279"&gt;https://atcoder.jp/contests/abc279&lt;/a&gt;&lt;/p&gt;

@@ -4,14 +4,14 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-02-04T14:10:36Z</updated>
+	<updated>2023-02-04T14:21:52Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230204abc288</id>
 		<title>ABC288</title>
 		<link href="https://blog.aconcavy.dev/posts/20230204abc288" />
 		<updated>2023-02-04T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 288の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 288の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc288"&gt;https://atcoder.jp/contests/abc288&lt;/a&gt;&lt;/p&gt;
@@ -121,7 +121,7 @@ public class DisjointSetUnion
 ```csharp
 ``` --&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 288の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 288の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230128abc287</id>
@@ -129,7 +129,7 @@ public class DisjointSetUnion
 		<link href="https://blog.aconcavy.dev/posts/20230128abc287" />
 		<updated>2023-01-28T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 287の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 287の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc287"&gt;https://atcoder.jp/contests/abc287&lt;/a&gt;&lt;/p&gt;
@@ -352,7 +352,7 @@ first[i] = first[i - 1] &amp;amp;&amp;amp; (f1 || f2 || f3)
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 287の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 287の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230121abc286</id>
@@ -360,7 +360,7 @@ first[i] = first[i - 1] &amp;amp;&amp;amp; (f1 || f2 || f3)
 		<link href="https://blog.aconcavy.dev/posts/20230121abc286" />
 		<updated>2023-01-21T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 286の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 286の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc286"&gt;https://atcoder.jp/contests/abc286&lt;/a&gt;&lt;/p&gt;
@@ -554,7 +554,7 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 286の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 286の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230115abc285</id>
@@ -562,7 +562,7 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 		<link href="https://blog.aconcavy.dev/posts/20230115abc285" />
 		<updated>2023-01-15T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 285の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc285"&gt;https://atcoder.jp/contests/abc285&lt;/a&gt;&lt;/p&gt;
@@ -755,7 +755,7 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 285の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230107abc284</id>
@@ -763,7 +763,7 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
 		<link href="https://blog.aconcavy.dev/posts/20230107abc284" />
 		<updated>2023-01-07T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 284の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 284の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc284"&gt;https://atcoder.jp/contests/abc284&lt;/a&gt;&lt;/p&gt;
@@ -957,7 +957,7 @@ public static class Prime
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 284の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 284の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221224abc283</id>
@@ -965,7 +965,7 @@ public static class Prime
 		<link href="https://blog.aconcavy.dev/posts/20221224abc283" />
 		<updated>2022-12-24T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 283の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 283の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc283"&gt;https://atcoder.jp/contests/abc283&lt;/a&gt;&lt;/p&gt;
@@ -1191,7 +1191,7 @@ L0: a
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 283の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 283の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221217abc282</id>
@@ -1199,7 +1199,7 @@ L0: a
 		<link href="https://blog.aconcavy.dev/posts/20221217abc282" />
 		<updated>2022-12-17T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 282の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282"&gt;https://atcoder.jp/contests/abc282&lt;/a&gt;&lt;/p&gt;
@@ -1405,7 +1405,7 @@ L0: a
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 282の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221210abc281</id>
@@ -1413,7 +1413,7 @@ L0: a
 		<link href="https://blog.aconcavy.dev/posts/20221210abc281" />
 		<updated>2022-12-11T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 281の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc281"&gt;https://atcoder.jp/contests/abc281&lt;/a&gt;&lt;/p&gt;
@@ -1575,7 +1575,7 @@ L0: a
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 281の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 281の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221203abc280</id>
@@ -1583,7 +1583,7 @@ L0: a
 		<link href="https://blog.aconcavy.dev/posts/20221203abc280" />
 		<updated>2022-12-03T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 280の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280"&gt;https://atcoder.jp/contests/abc280&lt;/a&gt;&lt;/p&gt;
@@ -1717,7 +1717,7 @@ public static class Prime
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 280の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20221126abc279</id>
@@ -1725,7 +1725,7 @@ public static class Prime
 		<link href="https://blog.aconcavy.dev/posts/20221126abc279" />
 		<updated>2022-11-26T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Grand Contest 279の復習記事です。&lt;/p&gt;
+&lt;p&gt;AtCoder Beginner Contest 279の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
 &lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc279"&gt;https://atcoder.jp/contests/abc279&lt;/a&gt;&lt;/p&gt;
@@ -1904,6 +1904,6 @@ public static double TernarySearch(double l, double r, Func&amp;lt;double, doubl
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;AtCoder Grand Contest 279の復習記事です。&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 279の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
