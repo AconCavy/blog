@@ -19,22 +19,22 @@ set CONTEST_NUMBER=%CONTEST_NAME:~-3%
 set CONTEST_FULL_NAME=%CONTEST_NAME%
 
 echo %CONTEST_NAME% | findstr /i "abc[0-9][0-9][0-9]" >nul
-if errorlevel 0 (
+if %ERRORLEVEL% == 0 (
   set CONTEST_FULL_NAME=AtCoder Beginner Contest %CONTEST_NUMBER%
 )
 
 echo %CONTEST_NAME% | findstr /i "arc[0-9][0-9][0-9]" >nul
-if errorlevel 0 (
+if %ERRORLEVEL% == 0 (
   set CONTEST_FULL_NAME=AtCoder Regular Contest %CONTEST_NUMBER%
 )
 
 echo %CONTEST_NAME% | findstr /i "agc[0-9][0-9][0-9]" >nul
-if errorlevel 0 (
+if %ERRORLEVEL% == 0 (
   set CONTEST_FULL_NAME=AtCoder Grand Contest %CONTEST_NUMBER%
 )
 
 echo %CONTEST_NAME% | findstr /i "a.c[0-9][0-9][0-9]" >nul
-if errorlevel 1 (
+if %ERRORLEVEL% == 1 (
   set /p CONTEST_FULL_NAME=What is the full name of the contest?:
 )
 
