@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-02-11T14:35:17Z</updated>
+	<updated>2023-02-11T14:42:16Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230211abc289</id>
 		<title>ABC289</title>
@@ -106,19 +106,25 @@
 i段目にもちが設置されていない場合、各A[j](1&amp;lt;=j&amp;lt;=N)において、i+A[j]段に移動できる。
 dp[i+A[j]] |= dp[i]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;i&lt;/code&gt;段目にもちが設置されているかを&lt;code&gt;HashSet&lt;/code&gt;などのデータ構造を使い時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求められるようにしておくことで、時間計算量は全体で&lt;code&gt;O(XN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;i&lt;/code&gt;段目にもちが設置されているかを時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求められるようにしておくことで、時間計算量は全体で&lt;code&gt;O(XN)&lt;/code&gt;で求めることができます。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var N = Scanner.Scan&amp;lt;int&amp;gt;();
     var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
     var M = Scanner.Scan&amp;lt;int&amp;gt;();
-    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToHashSet();
+    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
     var X = Scanner.Scan&amp;lt;int&amp;gt;();
     var dp = new bool[X + 1];
     dp[0] = true;
+    var mochi = new bool[X + 1];
+    foreach (var b in B)
+    {
+        mochi[b] = true;
+    }
+
     for (var i = 0; i &amp;lt; X; i++)
     {
-        if (B.Contains(i)) continue;
+        if (mochi[i]) continue;
         foreach (var a in A.Where(x =&amp;gt; i + x &amp;lt;= X))
         {
             dp[i + a] |= dp[i];

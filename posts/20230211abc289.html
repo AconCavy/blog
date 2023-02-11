@@ -183,19 +183,25 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 i段目にもちが設置されていない場合、各A[j](1&lt;=j&lt;=N)において、i+A[j]段に移動できる。
 dp[i+A[j]] |= dp[i]
 </code></pre>
-<p><code>i</code>段目にもちが設置されているかを<code>HashSet</code>などのデータ構造を使い時間計算量<code>O(1)</code>で求められるようにしておくことで、時間計算量は全体で<code>O(XN)</code>で求めることができます。</p>
+<p><code>i</code>段目にもちが設置されているかを時間計算量<code>O(1)</code>で求められるようにしておくことで、時間計算量は全体で<code>O(XN)</code>で求めることができます。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var N = Scanner.Scan&lt;int&gt;();
     var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
     var M = Scanner.Scan&lt;int&gt;();
-    var B = Scanner.ScanEnumerable&lt;int&gt;().ToHashSet();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
     var X = Scanner.Scan&lt;int&gt;();
     var dp = new bool[X + 1];
     dp[0] = true;
+    var mochi = new bool[X + 1];
+    foreach (var b in B)
+    {
+        mochi[b] = true;
+    }
+
     for (var i = 0; i &lt; X; i++)
     {
-        if (B.Contains(i)) continue;
+        if (mochi[i]) continue;
         foreach (var a in A.Where(x =&gt; i + x &lt;= X))
         {
             dp[i + a] |= dp[i];
