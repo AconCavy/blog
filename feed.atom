@@ -4,7 +4,95 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-02-11T14:42:16Z</updated>
+	<updated>2023-02-19T15:22:31Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20230219abc290</id>
+		<title>ABC290</title>
+		<link href="https://blog.aconcavy.dev/posts/20230219abc290" />
+		<updated>2023-02-19T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 290の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc290"&gt;https://atcoder.jp/contests/abc290&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc290/tasks/abc290_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC290/submissions/39009849"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A[B[i]]&lt;/code&gt;の合計値が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var B = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var answer = B.Sum(x =&amp;gt; A[x - 1]);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc290/tasks/abc290_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC290/submissions/39013731"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;o&lt;/code&gt;の数が&lt;code&gt;K&lt;/code&gt;の場合かつ&lt;code&gt;S[i]&lt;/code&gt;が&lt;code&gt;o&lt;/code&gt;の場合は&lt;code&gt;T[i]&lt;/code&gt;は&lt;code&gt;o&lt;/code&gt;となり、それ以外の場合は&lt;code&gt;T[i]&lt;/code&gt;は&lt;code&gt;x&lt;/code&gt;になります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var buffer = new char[N];
+    var k = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (k &amp;lt; K &amp;amp;&amp;amp; S[i] == 'o')
+        {
+            buffer[i] = 'o';
+            k++;
+        }
+        else
+        {
+            buffer[i] = 'x';
+        }
+    }
+    var answer = new string(buffer);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc290/tasks/abc290_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC290/submissions/39017322"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A&lt;/code&gt;の重複を取り除き昇順にソートした初めの&lt;code&gt;K&lt;/code&gt;個以内のものを&lt;code&gt;C&lt;/code&gt;としたとき、&lt;code&gt;0&lt;/code&gt;から順に数えて初めて&lt;code&gt;C&lt;/code&gt;に出現しなかった数が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var mex = 0;
+    foreach(var x in A.OrderBy(x =&amp;gt; x).Distinct().Take(K))
+    {
+        if(x == mex) mex++;
+        else break;
+    }
+
+    Console.WriteLine(mex);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc290/tasks/abc290_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC290/submissions/39040221"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;マスが無限に続き、手順i-iiiを&lt;code&gt;t&lt;/code&gt;回操作したのときの&lt;code&gt;x&lt;/code&gt;を&lt;code&gt;f(t)&lt;/code&gt;としたとき、&lt;code&gt;f(t)==D*(t-1)&lt;/code&gt;になります。
+また、マスが&lt;code&gt;N&lt;/code&gt;個で始点を&lt;code&gt;0&lt;/code&gt;としたときに、手順i-iiiを繰り返して再び始点&lt;code&gt;0&lt;/code&gt;に戻ってくる、つまり&lt;code&gt;f(t)%N==0&lt;/code&gt;となるには、&lt;code&gt;Lcm(a,b)&lt;/code&gt;を&lt;code&gt;a&lt;/code&gt;と&lt;code&gt;b&lt;/code&gt;の最小公倍数としたとき、&lt;code&gt;f(t)==Lcm(N,D)&lt;/code&gt;になる必要があります。&lt;br /&gt;
+そして、手順iiにより始点に再び戻ってきたときに始点を&lt;code&gt;+1&lt;/code&gt;することから、&lt;code&gt;K&lt;/code&gt;回操作したときの始点の変更回数は、&lt;code&gt;f(K)/Lcm(N,D)&lt;/code&gt;回であることがわかります。
+このことから、&lt;code&gt;K&lt;/code&gt;回目の&lt;code&gt;x&lt;/code&gt;の位置は&lt;code&gt;(f(K) + f(K)/Lcm(N,D)) % N&lt;/code&gt;となります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var T = Scanner.Scan&amp;lt;int&amp;gt;();
+    while (T-- &amp;gt; 0)
+    {
+        var (N, D, K) = Scanner.Scan&amp;lt;long, long, long&amp;gt;();
+        var x = D * (K - 1);
+        var answer = (x + x / Lcm(N, D)) % N;
+        Console.WriteLine(answer);
+    }
+}
+
+public static long Lcm(long a, long b) =&amp;gt; a / Gcd(a, b) * b;
+public static long Gcd(long a, long b) =&amp;gt; b == 0 ? a : Gcd(b, a % b);
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 290の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230211abc289</id>
 		<title>ABC289</title>
@@ -1760,147 +1848,5 @@ L0: a
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 281の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20221203abc280</id>
-		<title>ABC280</title>
-		<link href="https://blog.aconcavy.dev/posts/20221203abc280" />
-		<updated>2022-12-03T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280"&gt;https://atcoder.jp/contests/abc280&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc280/tasks/abc280_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280/submissions/36947925"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文字列として入力をとり、全ての文字から&lt;code&gt;#&lt;/code&gt;の数を数え上げます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H, W) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var answer = 0;
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        var S = Scanner.Scan&amp;lt;string&amp;gt;();
-        foreach (var c in S)
-        {
-            if (c == '#') answer++;
-        }
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc280/tasks/abc280_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280/submissions/36952001"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S[k]=A[1]+A[2]+...A[k-1]+A[k]&lt;/code&gt;であることから、&lt;code&gt;S[k]=S[k-1]+A[k]&lt;/code&gt;であることがわかります。
-そのため、&lt;code&gt;i==1&lt;/code&gt;のときは&lt;code&gt;A[1]=S[1]&lt;/code&gt;であり、&lt;code&gt;i&amp;gt;1&lt;/code&gt;の場合は&lt;code&gt;A[i]=S[i]-S[i-1]&lt;/code&gt;として、答えとなる数列&lt;code&gt;A&lt;/code&gt;を求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var A = new long[N];
-    A[0] = S[0];
-    for (var i = 1; i &amp;lt; N; i++)
-    {
-        A[i] = S[i] - S[i - 1];
-    }
-
-    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, A));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc280/tasks/abc280_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280/submissions/36972273"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S&lt;/code&gt;の長さの範囲では&lt;code&gt;S[i]!=T[i]&lt;/code&gt;となる&lt;code&gt;i&lt;/code&gt;が答えとなり、&lt;code&gt;T&lt;/code&gt;が&lt;code&gt;S&lt;/code&gt;の最後に文字が追加されている文字列である場合は、&lt;code&gt;T&lt;/code&gt;の最後が答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var T = Scanner.Scan&amp;lt;string&amp;gt;();
-    var N = S.Length;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        if (S[i] != T[i])
-        {
-            Console.WriteLine(i + 1);
-            return;
-        }
-    }
-
-    Console.WriteLine(T.Length);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc280/tasks/abc280_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280/submissions/37000066"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;K&lt;/code&gt;について素因数分解を行い、&lt;code&gt;K&lt;/code&gt;の倍数であるために必要な素数とその個数を求めます。
-そして、ある素数をその必要な個数以上使ったときの&lt;code&gt;n&lt;/code&gt;の値の最大が答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var K = Scanner.Scan&amp;lt;long&amp;gt;();
-    long answer = 0;
-    foreach (var (prime, required) in Prime.GetFactorDictionary(K))
-    {
-        long n = 0;
-        var used = 0;
-        while (used &amp;lt; required)
-        {
-            n += prime;
-            var x = n;
-            while (x % prime == 0)
-            {
-                x /= prime;
-                used++;
-            }
-        }
-
-        answer = Math.Max(answer, n);
-    }
-
-    Console.WriteLine(answer);
-}
-
-public static class Prime
-{
-    public static IDictionary&amp;lt;long, int&amp;gt; GetFactorDictionary(long value)
-    {
-        var factors = new Dictionary&amp;lt;long, int&amp;gt;();
-        if (value &amp;lt; 2) return factors;
-
-        void CountUp(long n)
-        {
-            if (value % n != 0) return;
-            factors[n] = 0;
-            while (value % n == 0)
-            {
-                value /= n;
-                factors[n]++;
-            }
-        }
-
-        CountUp(2);
-        for (var i = 3L; i * i &amp;lt;= value; i += 2) CountUp(i);
-        if (value &amp;gt; 1) factors[value] = 1;
-        return factors;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc280/tasks/abc280_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc280/submissions/37000080"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dp[i] := dp[i+2]*(i+2から遷移する確率) + dp[i+1]*(i+1から遷移する確率) + 1&lt;/code&gt;のような攻撃回数についての期待値dpを行います。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, P) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var dp = new mint[N + 1];
-    var p2 = P * mint.Inverse(100);
-    var p1 = 1 - p2;
-    for (var i = N - 1; i &amp;gt;= 0; i--)
-    {
-        dp[i] = dp[Math.Min(N, i + 1)] * p1 + dp[Math.Min(N, i + 2)] * p2 + 1;
-    }
-
-    var answer = dp[0];
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 280の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
