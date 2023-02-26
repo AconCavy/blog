@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-02-26T14:29:27Z</updated>
+	<updated>2023-02-26T16:11:18Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230226abc291</id>
 		<title>ABC291</title>
 		<link href="https://blog.aconcavy.dev/posts/20230226abc291" />
-		<updated>2023-02-26T00:00:00Z</updated>
+		<updated>2023-02-27T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 291の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -123,16 +123,17 @@ dp[i,1] += dp[i-1,1] (B[i]!=B[i-1])
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc291/tasks/abc291_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC291/submissions/39253701"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各整数の組について頂点&lt;code&gt;X&lt;/code&gt;から頂点&lt;code&gt;Y&lt;/code&gt;の有効辺としたグラフを考えたとき、グラフをトポロジカルソートすることができ、かつ始点と終点が一意に定まるかが条件となります。&lt;br /&gt;
-始点が一意に定まるかは、頂点の入次数が&lt;code&gt;0&lt;/code&gt;の頂点数が&lt;code&gt;1&lt;/code&gt;つであることで判定できます。&lt;br /&gt;
-同様に、終点が一意に定まるかは頂点の出次数が&lt;code&gt;0&lt;/code&gt;の頂点数が&lt;code&gt;1&lt;/code&gt;つであることで判定できます。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;各整数の組について頂点&lt;code&gt;X&lt;/code&gt;から頂点&lt;code&gt;Y&lt;/code&gt;の有効辺としたグラフを考えたとき、グラフをトポロジカルソートすることができ、かつ始点と終点が一意に定まるかが条件となります。&lt;/del&gt;&lt;br /&gt;
+&lt;del&gt;始点が一意に定まるかは、頂点の入次数が&lt;code&gt;0&lt;/code&gt;の頂点数が&lt;code&gt;1&lt;/code&gt;つであることで判定できます。&lt;/del&gt;&lt;br /&gt;
+&lt;del&gt;同様に、終点が一意に定まるかは頂点の出次数が&lt;code&gt;0&lt;/code&gt;の頂点数が&lt;code&gt;1&lt;/code&gt;つであることで判定できます。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;誤答でした。&lt;/p&gt;
+&lt;p&gt;各整数の組について頂点&lt;code&gt;X&lt;/code&gt;から頂点&lt;code&gt;Y&lt;/code&gt;の有効辺としたグラフを考えたとき、グラフをトポロジカルソートすることができ、頂点の遷移が一意であることが条件となります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
     var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
     var E = new HashSet&amp;lt;(int, int)&amp;gt;();
-    var outDeg = new int[N];
-    var inDeg = new int[N];
+    var deg = new int[N];
 
     for (var i = 0; i &amp;lt; M; i++)
     {
@@ -141,14 +142,11 @@ dp[i,1] += dp[i-1,1] (B[i]!=B[i-1])
         if (E.Contains((x, y))) continue;
         E.Add((x, y));
         G[x].Add(y);
-        outDeg[x]++;
-        inDeg[y]++;
+        deg[y]++;
     }
 
     var queue = new Queue&amp;lt;int&amp;gt;();
-    var deg = new int[N];
-    inDeg.CopyTo(deg, 0);
-    for (var i = 0; i &amp;lt; deg.Length; i++)
+    for (var i = 0; i &amp;lt; N; i++)
     {
         if (deg[i] == 0) queue.Enqueue(i);
     }
@@ -157,6 +155,12 @@ dp[i,1] += dp[i-1,1] (B[i]!=B[i-1])
     var idx = 0;
     while (queue.Count &amp;gt; 0)
     {
+        if (queue.Count &amp;gt; 1)
+        {
+            Console.WriteLine(&amp;quot;No&amp;quot;);
+            return;
+        }
+
         var u = queue.Dequeue();
         foreach (var v in G[u])
         {
@@ -167,7 +171,7 @@ dp[i,1] += dp[i-1,1] (B[i]!=B[i-1])
         result[idx++] = u;
     }
 
-    if (idx != N || outDeg.Count(x =&amp;gt; x == 0) &amp;gt; 1 || inDeg.Count(x =&amp;gt; x == 0) &amp;gt; 1)
+    if (idx != N)
     {
         Console.WriteLine(&amp;quot;No&amp;quot;);
         return;
