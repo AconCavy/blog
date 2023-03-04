@@ -4,7 +4,173 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-02-26T16:11:18Z</updated>
+	<updated>2023-03-04T14:26:36Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20230304abc292</id>
+		<title>ABC292</title>
+		<link href="https://blog.aconcavy.dev/posts/20230304abc292" />
+		<updated>2023-03-04T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 292の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc292"&gt;https://atcoder.jp/contests/abc292&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc292/tasks/abc292_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC292/submissions/39402822"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;string.ToUpper&lt;/code&gt;で文字列をすべて大文字にすることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var answer = S.ToUpper();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc292/tasks/abc292_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC292/submissions/39407218"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Y[x]&lt;/code&gt;をその時点の&lt;code&gt;x&lt;/code&gt;のイエローカードの数とし、レッドカードはイエローカード2枚分であるとします。
+そして、各イベントについて次のような処理を行います。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;イベントが&lt;code&gt;1&lt;/code&gt;の場合、&lt;code&gt;Y[x]+=1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;イベントが&lt;code&gt;2&lt;/code&gt;の場合、&lt;code&gt;Y[x]+=2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;イベントが&lt;code&gt;3&lt;/code&gt;の場合、&lt;code&gt;Y[x]&amp;gt;=2&lt;/code&gt;ならば退場処分を受けている。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var C = new int[N];
+    while (Q-- &amp;gt; 0)
+    {
+        var (e, x) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        x--;
+        if (e == 3)
+        {
+            var answer = C[x] &amp;gt;= 2 ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;;
+            Console.WriteLine(answer);
+        }
+        else
+        {
+            C[x] += e;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc292/tasks/abc292_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC292/submissions/39436921"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;また、&lt;code&gt;AB&lt;/code&gt;の値が&lt;code&gt;X&lt;/code&gt;の場合、&lt;code&gt;A*B==X&lt;/code&gt;となる&lt;code&gt;A&lt;/code&gt;と&lt;code&gt;B&lt;/code&gt;の組み合わせの個数は、&lt;code&gt;X&lt;/code&gt;の約数の個数と一致します。
+これは、時間計算量&lt;code&gt;O(Sqrt(X))&lt;/code&gt;で求めることができます。
+また、&lt;code&gt;C(n)&lt;/code&gt;を&lt;code&gt;n&lt;/code&gt;の約数の個数としたとき、&lt;code&gt;X+Y=N&lt;/code&gt;となる組み合わせは&lt;code&gt;C(X)*C(Y)&lt;/code&gt;個になります。
+そして、&lt;code&gt;AB&lt;/code&gt;の値を&lt;code&gt;X&lt;/code&gt;としたとき、&lt;code&gt;CD&lt;/code&gt;の値は&lt;code&gt;Y=N-X&lt;/code&gt;で求められるので、&lt;code&gt;AB&lt;/code&gt;を固定することで全体計算量&lt;code&gt;O(NSqrt(N))&lt;/code&gt;で求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;long&amp;gt;();
+    var dict = new Dictionary&amp;lt;long, long&amp;gt;();
+
+    long F(long n)
+    {
+        if (dict.ContainsKey(n)) return dict[n];
+        long result = 0;
+        for (var a = 1L; a * a &amp;lt;= n; a++)
+        {
+            if (n % a != 0) continue;
+            var b = n / a;
+            if (a == b) result++;
+            else result += 2;
+        }
+
+        return dict[n] = result;
+    }
+
+    long answer = 0;
+    for (var ab = 1; ab &amp;lt; N; ab++)
+    {
+        var cd = N - ab;
+        answer += F(ab) * F(cd);
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc292/tasks/abc292_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC292/submissions/39429436"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;DisjointSetUnion&lt;/code&gt;を使って、各連結成分の代表する頂点を求められるようにしておきます。
+そして、連結成分の頂点の個数と辺の個数をそれぞれ各連結成分の代表にまとめ、それらを比較することで、各連結成分の頂点の個数を辺の個数が一致するかを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    var E = new (int U, int V)[M];
+    var dsu = new DisjointSetUnion(N);
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        u--; v--;
+        E[i] = (u, v);
+        dsu.Merge(u, v);
+    }
+
+    var vc = new int[N];
+    for (var u = 0; u &amp;lt; N; u++)
+    {
+        vc[dsu.LeaderOf(u)]++;
+    }
+
+    var ec = new int[N];
+    foreach (var (u, _) in E)
+    {
+        ec[dsu.LeaderOf(u)]++;
+    }
+
+    var answer = true;
+    for (var u = 0; u &amp;lt; N; u++)
+    {
+        answer &amp;amp;= vc[u] == ec[u];
+    }
+
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc292/tasks/abc292_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC292/submissions/39444776"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ある頂点を始点&lt;code&gt;s&lt;/code&gt;としたとき、その頂点からたどり着くことができる頂点&lt;code&gt;t&lt;/code&gt;に対して、&lt;code&gt;s-&amp;gt;t&lt;/code&gt;の辺を張ることができます。
+このことから、各頂点を始点としたときに、たどり着くことができる頂点を幅優先探索などで探索することで、張ることができる辺の数を求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    for (var i = 0; i &amp;lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        u--; v--;
+        G[u].Add(v);
+    }
+
+    var used = new bool[N];
+    var queue = new Queue&amp;lt;int&amp;gt;();
+    var answer = -M;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        Array.Fill(used, false);
+        used[i] = true;
+        queue.Enqueue(i);
+        while (queue.Count &amp;gt; 0)
+        {
+            var u = queue.Dequeue();
+            foreach (var v in G[u])
+            {
+                if (used[v]) continue;
+                used[v] = true;
+                answer++;
+                queue.Enqueue(v);
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 292の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230226abc291</id>
 		<title>ABC291</title>
@@ -1701,219 +1867,5 @@ L0: a
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 283の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20221217abc282</id>
-		<title>ABC282</title>
-		<link href="https://blog.aconcavy.dev/posts/20221217abc282" />
-		<updated>2022-12-17T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282"&gt;https://atcoder.jp/contests/abc282&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc282/tasks/abc282_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282/submissions/37322378"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;C++やC#などの言語では、&lt;code&gt;char&lt;/code&gt;型の&lt;code&gt;A&lt;/code&gt;に&lt;code&gt;+0&lt;/code&gt;すると&lt;code&gt;A&lt;/code&gt;、&lt;code&gt;+1&lt;/code&gt;すると&lt;code&gt;B&lt;/code&gt;、&lt;code&gt;+25&lt;/code&gt;すると&lt;code&gt;Z&lt;/code&gt;の文字を取得することができます。
-これは、文字&lt;code&gt;A&lt;/code&gt;は数値&lt;code&gt;65&lt;/code&gt;を&lt;code&gt;char&lt;/code&gt;型にしたものに対応しており、文字&lt;code&gt;B&lt;/code&gt;や文字&lt;code&gt;Z&lt;/code&gt;はそれぞれ数値&lt;code&gt;66&lt;/code&gt;と数値&lt;code&gt;90&lt;/code&gt;に対応します。
-そのため、&lt;code&gt;A&lt;/code&gt;から&lt;code&gt;i&lt;/code&gt;進んだ数値を&lt;code&gt;char&lt;/code&gt;型に変換することで、&lt;code&gt;A&lt;/code&gt;から&lt;code&gt;i&lt;/code&gt;進んだ文字として得ることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var K = Scanner.Scan&amp;lt;int&amp;gt;();
-    var builder = new StringBuilder();
-    for (var i = 0; i &amp;lt; K; i++)
-    {
-        builder.Append((char)('A' + i));
-    }
-
-    var answer = builder.ToString();
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc282/tasks/abc282_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282/submissions/37326045"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;1&amp;lt;=i&amp;lt;j&amp;lt;=N&lt;/code&gt;となる&lt;code&gt;i&lt;/code&gt;番と&lt;code&gt;j&lt;/code&gt;番のペアにおいて、&lt;code&gt;M&lt;/code&gt;問全ての問題で少なくともどちらか一方でも解くことができるペアの数を数え上げます。
-これは、各ペアを列挙し、&amp;quot;&lt;code&gt;i&lt;/code&gt;番の&lt;code&gt;k&lt;/code&gt;問目と&lt;code&gt;j&lt;/code&gt;番の&lt;code&gt;k&lt;/code&gt;問目の少なくともどちらか一方が&lt;code&gt;o&lt;/code&gt;である&amp;quot;、という小問題を&lt;code&gt;1&amp;lt;=k&amp;lt;=M&lt;/code&gt;全てで満たしている場合の数となります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var S = new string[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        S[i] = Scanner.Scan&amp;lt;string&amp;gt;();
-    }
-
-    var answer = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        for (var j = i + 1; j &amp;lt; N; j++)
-        {
-            var ok = true;
-            for (var k = 0; k &amp;lt; M; k++)
-            {
-                ok &amp;amp;= S[i][k] == 'o' || S[j][k] == 'o';
-            }
-
-            if (ok) answer++;
-        }
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc282/tasks/abc282_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282/submissions/37329954"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;現在の文字が括られているかの判定は、それまでに出現した&lt;code&gt;&amp;quot;&lt;/code&gt;の数が奇数個であれば括られており、偶数個であれば括られていないことがわかります。
-文字を順番に見ていき、現在の文字が括られていないときの&lt;code&gt;,&lt;/code&gt;であれば、&lt;code&gt;.&lt;/code&gt;に変換します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var level = 0;
-    var T = new char[N];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var c = S[i];
-        if (c == '&amp;quot;')
-        {
-            level ^= 1;
-        }
-        else
-        {
-            if (c == ',' &amp;amp;&amp;amp; level == 0)
-            {
-                c = '.';
-            }
-        }
-
-        T[i] = c;
-    }
-
-    var answer = new string(T);
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc282/tasks/abc282_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282/submissions/37360871"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;あるグラフが連結である場合、始点を白と決めて幅優先探索などを行い、連結している頂点の色を白黒反転したものを決めていくことで、そのグラフが二部グラフであるかどうかを判定することができます。&lt;/p&gt;
-&lt;p&gt;二部グラフの性質として、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;グラフが二部グラフではない場合、いずれの頂点どうしを新たに接続しても、二部グラフにすることはできません。&lt;/li&gt;
-&lt;li&gt;グラフが二部グラフである場合、色が異なる頂点どうしを新たに接続しても、二部グラフを保つことができます。&lt;/li&gt;
-&lt;li&gt;二部グラフ&lt;code&gt;A&lt;/code&gt;と二部グラフ&lt;code&gt;B&lt;/code&gt;があるとき、&lt;code&gt;A&lt;/code&gt;のいずれの頂点と&lt;code&gt;B&lt;/code&gt;のいずれの頂点を接続しても、接続後のグラフは二部グラフを保つことができます。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;これらのことから、連結成分ごとに二部グラフかどうかを判定を行い、二部グラフではない連結成分が存在する場合、いずれの頂点どうしを新たに接続しても二部グラフにすることはできないので、答えは&lt;code&gt;0&lt;/code&gt;になります。
-対して、全ての連結成分が二部グラフである場合、次の総和が答えとなります。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;各連結成分において&lt;code&gt;白の頂点の数*黒の頂点の数-既に接続している辺の数&lt;/code&gt;が新たに追加できる辺の数となります。&lt;/li&gt;
-&lt;li&gt;連結成分の数が&lt;code&gt;K&lt;/code&gt;個であるとき、&lt;code&gt;1&amp;lt;=i&amp;lt;j&amp;lt;=K&lt;/code&gt;となる二部グラフ&lt;code&gt;i,j&lt;/code&gt;において、&lt;code&gt;iの頂点の数*jの頂点の数&lt;/code&gt;が新たに追加できる辺の数となります。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
-    var E = new (int u, int v)[M];
-
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        var (u, v) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-        u--;
-        v--;
-        G[u].Add(v);
-        G[v].Add(u);
-        E[i] = (u, v);
-    }
-
-    var colors = new int[N];
-    Array.Fill(colors, -1);
-    var queue = new Queue&amp;lt;int&amp;gt;();
-    var bipartiteSize = new List&amp;lt;long&amp;gt;();
-    var isBipartiteNode = new bool[N];
-
-    long answer = 0;
-
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        if (colors[i] != -1) continue;
-        var isBipartite = true;
-        queue.Enqueue(i);
-        colors[i] = 0;
-        long c0 = 0;
-        long c1 = 0;
-        var list = new List&amp;lt;int&amp;gt;();
-        while (queue.Count &amp;gt; 0)
-        {
-            var u = queue.Dequeue();
-            list.Add(u);
-            if (colors[u] == 0) c0++;
-            else c1++;
-
-            foreach (var v in G[u])
-            {
-                if (colors[u] == colors[v]) isBipartite = false;
-                if (colors[v] != -1) continue;
-                colors[v] = colors[u] ^ 1;
-                queue.Enqueue(v);
-            }
-        }
-
-        if (!isBipartite)
-        {
-            Console.WriteLine(0);
-            return;
-        }
-
-        bipartiteSize.Add(c0 + c1);
-        answer += c0 * c1;
-    }
-
-    answer -= E.Count(x =&amp;gt; colors[x.u] != colors[x.v]);
-
-    var cum = bipartiteSize.Sum();
-    foreach (var size in bipartiteSize)
-    {
-        cum -= size;
-        answer += size * cum;
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc282/tasks/abc282_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc282/submissions/37361144"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N&lt;/code&gt;個の頂点と&lt;code&gt;1&amp;lt;=i&amp;lt;j&amp;lt;=N&lt;/code&gt;となる頂点&lt;code&gt;i,j&lt;/code&gt;間の辺の重さが&lt;code&gt;(A[i]^A[j]+A[j]^[i])%M&lt;/code&gt;としたときの最大全域木の重みが答えとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;int, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    mint.Modulo = M;
-    var list = new List&amp;lt;(long V, int A, int B)&amp;gt;(N * (N - 1));
-
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        for (var j = i + 1; j &amp;lt; N; j++)
-        {
-            var x = A[i];
-            var y = A[j];
-            var v = mint.Power(x, y) + mint.Power(y, x);
-            list.Add((v, i, j));
-        }
-    }
-
-    var dsu = new DisjointSetUnion(N);
-    long answer = 0;
-    foreach (var (v, a, b) in list.OrderByDescending(x =&amp;gt; x.V))
-    {
-        if (dsu.IsSame(a, b)) continue;
-
-        dsu.Merge(a, b);
-        answer += v;
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 282の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
