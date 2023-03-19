@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC294</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC294">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230319abc294">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC294</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Sunday, 19 March 2023
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Sunday, 19 March 2023
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 294の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc294">https://atcoder.jp/contests/abc294</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc294/tasks/abc294_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC294/submissions/39840357">コンテスト提出</a></p>
+<p>LiNQの<code>Where</code>を使うことで、シーケンスに対してフィルタをかけることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    Console.WriteLine(string.Join(&quot; &quot;, A.Where(x =&gt; x % 2 == 0)));
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc294/tasks/abc294_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC294/submissions/39845536">コンテスト提出</a></p>
+<p><code>F(n)</code>を<code>n</code>番目の英大文字としたとき、ASCIIコードより<code>F(n)</code>は<code>(char)('A'+n-1)</code>で求めることができます。
+また、<code>A[i][j]</code>を<code>i</code>行<code>j</code>列の数字、<code>G[i][j]</code>を<code>i</code>行<code>j</code>列の文字としたとき、</p>
+<ul>
+<li><code>A[i][j]</code>が<code>0</code>ならば、<code>G[i][j]</code>は<code>'.'</code></li>
+<li><code>A[i][j]</code>が<code>0</code>以外ならば、<code>G[i][j]</code>は<code>F(A[i][j])</code></li>
+</ul>
+<p>に置換したものが答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var A = new int[H][];
+    for (var i = 0; i &lt; H; i++)
+    {
+        A[i] = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    }
+
+    char F(int n) =&gt; (char)('A' + n - 1);
+
+    var G = new char[H, W];
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            G[i, j] = A[i][j] == 0 ? '.' : F(A[i][j]);
+        }
+    }
+
+    Printer.Print2D(G);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc294/tasks/abc294_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC294/submissions/39848569">コンテスト提出</a></p>
+<p><code>A</code>と<code>B</code>を合わせ、ソートした配列<code>C</code>において、<code>A</code>と<code>B</code>における任意の数値が<code>C</code>における何番目かを求められることが必要です。
+これは辞書などのデータ構造を使って``dict[C[i]]=i`を管理することで高速に求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var (map, _) = Compress(A.Concat(B));
+    Console.WriteLine(string.Join(&quot; &quot;, A.Select(x =&gt; map[x] + 1)));
+    Console.WriteLine(string.Join(&quot; &quot;, B.Select(x =&gt; map[x] + 1)));
+}
+
+public static (Dictionary&lt;T, int&gt; Map, Dictionary&lt;int, T&gt; ReMap) Compress&lt;T&gt;(IEnumerable&lt;T&gt; source)
+{
+    var distinct = source.Distinct().ToArray();
+    Array.Sort(distinct);
+    var map = new Dictionary&lt;T, int&gt;();
+    var remap = new Dictionary&lt;int, T&gt;();
+    foreach (var (x, i) in distinct.Select((x, i) =&gt; (x, i)))
+    {
+        map[x] = i;
+        remap[i] = x;
+    }
+
+    return (map, remap);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc294/tasks/abc294_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC294/submissions/39854709">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC294/submissions/39883961">復習提出</a></p>
+<p>受付に呼ばれていない人の集合<code>S1</code>と既に受付に呼ばれているが受付に行っていない人の集合<code>S2</code>としたとき、それぞれの集合を順序付き集合で管理することで、クエリ当たりの時間計算量<code>O(logN)</code>、全体時間計算量で<code>O(QlogN)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var S1 = new SortedSet&lt;int&gt;(Enumerable.Range(0, N));
+    var S2 = new SortedSet&lt;int&gt;();
+    while (Q-- &gt; 0)
+    {
+        var e = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+        if (e[0] == 1)
+        {
+            var x = S1.Min;
+            S1.Remove(x);
+            S2.Add(x);
+        }
+        else if (e[0] == 2)
+        {
+            var x = e[1] - 1;
+            S2.Remove(x);
+        }
+        else
+        {
+            var x = S2.Min;
+            Console.WriteLine(x + 1);
+        }
+    }
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc294/tasks/abc294_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC294/submissions/39878202">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC294/submissions/39883508">復習提出</a></p>
+<p>各要素<code>V</code>について、要素の始まりの位置<code>L</code>と要素の終わりの位置<code>R</code>を管理し、対象の範囲を左から順に尺取り法で走査していきます。<br>
+1行目の<code>V</code>、<code>L</code>、<code>R</code>をそれぞれ<code>V1</code>、<code>L1</code>、<code>R1</code>とし、2行目の<code>V</code>、<code>L</code>、<code>R</code>をそれぞれ<code>V2</code>、<code>L2</code>、<code>R2</code>としたとき、対象となる範囲<code>V1</code>と<code>V2</code>が一致しているとき、<code>Min(R1,R2)-Max(L1,L2)</code>個の要素が一致します。<br>
+そして、<code>R1&lt;=R2</code>ならば、1行目の対象の範囲を1つずらし、<code>R1&gt;R2</code>ならば2行目の対象の範囲を1つずらします。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (L, N1, N2) = Scanner.Scan&lt;long, int, int&gt;();
+    var S1 = new S[N1];
+    var S2 = new S[N2];
+    for (var k = 0; k &lt; 2; k++)
+    {
+        var (N, S) = k == 0 ? (N1, S1) : (N2, S2);
+        long l = 0;
+        for (var i = 0; i &lt; N; i++)
+        {
+            var (v, len) = Scanner.Scan&lt;long, long&gt;();
+            var r = l + len;
+            S[i] = new S(v, l, r);
+            l = r;
+        }
+    }
+
+    long answer = 0;
+    var (i1, i2) = (0, 0);
+    while (i1 &lt; N1 &amp;&amp; i2 &lt; N2)
+    {
+        if (S1[i1].V == S2[i2].V)
+        {
+            var l = Math.Max(S1[i1].L, S2[i2].L);
+            var r = Math.Min(S1[i1].R, S2[i2].R);
+            answer += Math.Max(0, r - l);
+        }
+
+        if (S1[i1].R &lt;= S2[i2].R) i1++;
+        else i2++;
+    }
+
+    Console.WriteLine(answer);
+}
+
+public readonly struct S
+{
+    public readonly long V;
+    public readonly long L;
+    public readonly long R;
+    public S(long v, long l, long r) =&gt; (V, L, R) = (v, l, r);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230319abc294" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
