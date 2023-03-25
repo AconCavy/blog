@@ -5,8 +5,128 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sun, 19 Mar 2023 15:01:44 GMT</pubDate>
-		<lastBuildDate>Sun, 19 Mar 2023 15:01:44 GMT</lastBuildDate>
+		<pubDate>Sat, 25 Mar 2023 14:54:21 GMT</pubDate>
+		<lastBuildDate>Sat, 25 Mar 2023 14:54:21 GMT</lastBuildDate>
+		<item>
+			<title>ABC295</title>
+			<link>https://blog.aconcavy.dev/posts/20230325abc295</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 295の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20230325abc295</guid>
+			<pubDate>Sat, 25 Mar 2023 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 295の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc295"&gt;https://atcoder.jp/contests/abc295&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc295/tasks/abc295_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC295/submissions/40021040"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各&lt;code&gt;W&lt;/code&gt;について、&lt;code&gt;and&lt;/code&gt;、&lt;code&gt;not&lt;/code&gt;、&lt;code&gt;that&lt;/code&gt;、&lt;code&gt;the&lt;/code&gt;、&lt;code&gt;you&lt;/code&gt;のいずれかと一致するかを判定します。
+対象となる5つの語を配列にまとめることで、&lt;code&gt;Contains&lt;/code&gt;メソッドで引数に指定した値が配列内に存在するかを判定することでき、この操作を各&lt;code&gt;W&lt;/code&gt;について
+行い、いずれかが一致すれば答えは&lt;code&gt;Yes&lt;/code&gt;、しなければ答えは&lt;code&gt;No&lt;/code&gt;となります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var W = Scanner.ScanEnumerable&amp;lt;string&amp;gt;().ToArray();
+    var words = new[] { &amp;quot;and&amp;quot;, &amp;quot;not&amp;quot;, &amp;quot;that&amp;quot;, &amp;quot;the&amp;quot;, &amp;quot;you&amp;quot; };
+    var answer = W.Any(x =&amp;gt; words.Contains(x));
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc295/tasks/abc295_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC295/submissions/40027852"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;爆発後の盤面を&lt;code&gt;G&lt;/code&gt;としたとき、&lt;code&gt;G&lt;/code&gt;の初期状態は&lt;code&gt;B&lt;/code&gt;であり、&lt;code&gt;B[r1][c1]&lt;/code&gt;が爆弾の場合は、マンハッタン距離が&lt;code&gt;B[r1][c1]&lt;/code&gt;以下となる&lt;code&gt;G[r2][c2]&lt;/code&gt;を空きマスにします。&lt;br /&gt;
+&lt;code&gt;1&amp;lt;=R,C&amp;lt;=20&lt;/code&gt;と制約が小さいため、&lt;code&gt;r1&lt;/code&gt;、&lt;code&gt;c1&lt;/code&gt;、&lt;code&gt;r2&lt;/code&gt;、&lt;code&gt;c2&lt;/code&gt;を全探索しても、最大でも&lt;code&gt;20^4=160,000&lt;/code&gt;なので十分高速です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (R, C) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var B = new char[R][];
+    for (var i = 0; i &amp;lt; R; i++)
+    {
+        B[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
+    }
+
+    bool IsWallOrEmpty(char c) =&amp;gt; c == '#' || c == '.';
+    int Distance(int r1, int c1, int r2, int c2) =&amp;gt; Math.Abs(r1 - r2) + Math.Abs(c1 - c2);
+
+    var G = new char[R, C];
+    for (var i = 0; i &amp;lt; R; i++)
+    {
+        for (var j = 0; j &amp;lt; C; j++)
+        {
+            G[i, j] = B[i][j];
+        }
+    }
+
+    for (var r1 = 0; r1 &amp;lt; R; r1++)
+    {
+        for (var c1 = 0; c1 &amp;lt; C; c1++)
+        {
+            if (IsWallOrEmpty(B[r1][c1])) continue;
+            var x = B[r1][c1] - '0';
+            for (var r2 = 0; r2 &amp;lt; R; r2++)
+            {
+                for (var c2 = 0; c2 &amp;lt; C; c2++)
+                {
+                    if (Distance(r1, c1, r2, c2) &amp;lt;= x)
+                    {
+                        G[r2, c2] = '.';
+                    }
+                }
+            }
+        }
+    }
+
+    Printer.Print2D(G);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc295/tasks/abc295_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC295/submissions/40029453"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;辞書などのデータ構造を使って各色の靴下の個数をそれぞれ数え上げ、各色の&lt;code&gt;靴下の個数/2&lt;/code&gt;の合計が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var dict = new Dictionary&amp;lt;int, long&amp;gt;();
+    foreach (var a in A)
+    {
+        if (!dict.ContainsKey(a)) dict[a] = 0;
+        dict[a]++;
+    }
+
+    var answer = dict.Values.Sum(x =&amp;gt; x / 2);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc295/tasks/abc295_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC295/submissions/40047728"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;嬉しい文字列である条件は、その文字列に存在する各数字について、全ての個数が偶数であることが条件です。&lt;br /&gt;
+ある数字に注目したとき、範囲&lt;code&gt;[l,r)&lt;/code&gt;に存在する数字個数は、&lt;code&gt;cum[i]&lt;/code&gt;を&lt;code&gt;i&lt;/code&gt;文字目までの累積和としたとき、&lt;code&gt;cum[r]-cum[l]&lt;/code&gt;で求めることができます。&lt;br /&gt;
+また、範囲&lt;code&gt;[l,r)&lt;/code&gt;に存在する数字の個数が偶数であるには、&lt;code&gt;cum[r]-cum[l]&lt;/code&gt;が&lt;code&gt;偶数-偶数&lt;/code&gt;、または&lt;code&gt;奇数-奇数&lt;/code&gt;である必要があります。&lt;br /&gt;
+この条件が全ての数字に当てはまることから、&lt;code&gt;l&lt;/code&gt;文字目まで見たときの各数字の個数の偶奇と、&lt;code&gt;r&lt;/code&gt;文字目まで見たときの各数字の個数の偶奇が一致すれば、その&lt;code&gt;[l,r)&lt;/code&gt;は嬉しい文字列であることがわかります。&lt;br /&gt;
+このことから、各&lt;code&gt;0&amp;lt;=i&amp;lt;=|S|&lt;/code&gt;について、各数字の個数の偶奇の集合の個数を数え上げ、集合が&lt;code&gt;x&lt;/code&gt;個ある場合、&lt;code&gt;x&lt;/code&gt;個のうちから2個選ぶ組み合わせが、その集合になる&lt;code&gt;[l,r)&lt;/code&gt;の組み合わせの個数になります。&lt;/p&gt;
+&lt;p&gt;各数字の個数の偶奇の集合について、数字は&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt;の10種類のみかつそれぞれ偶奇の2通りのため、整数型の各ビットに偶奇フラグとして保持することができます。&lt;br /&gt;
+これは、初期状態&lt;code&gt;0&lt;/code&gt;に対して、&lt;code&gt;1&amp;lt;&amp;lt;S[i]&lt;/code&gt;の排他的論理和を累積していくことで、&lt;code&gt;i&lt;/code&gt;まで見たときの各数字の個数の偶奇の集合として管理することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - '0').ToArray();
+    var N = S.Length;
+    var dict = new Dictionary&amp;lt;int, long&amp;gt;();
+    var curr = 0;
+    dict[curr] = 1;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        curr ^= 1 &amp;lt;&amp;lt; S[i];
+        if (!dict.ContainsKey(curr)) dict[curr] = 0;
+        dict[curr]++;
+    }
+
+    var answer = dict.Values.Sum(x =&amp;gt; x * (x - 1) / 2);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC294</title>
 			<link>https://blog.aconcavy.dev/posts/20230319abc294</link>
@@ -1534,208 +1654,6 @@ public static T[] Shift&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, i
         else
         {
             Console.WriteLine($&amp;quot;{count} {value}&amp;quot;);
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC285</title>
-			<link>https://blog.aconcavy.dev/posts/20230115abc285</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20230115abc285</guid>
-			<pubDate>Sun, 15 Jan 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 285の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc285"&gt;https://atcoder.jp/contests/abc285&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38041541"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;図を見て全ての&lt;code&gt;a&lt;/code&gt;と&lt;code&gt;b&lt;/code&gt;の組み合わせを判定することもできますが、もっと簡単な方法はないか考えます。&lt;br /&gt;
-図は完全二分木であり、親&lt;code&gt;x&lt;/code&gt;は、子&lt;code&gt;x*2&lt;/code&gt;と子&lt;code&gt;x*2+1&lt;/code&gt;につながっていることがわかります。
-そして、直接結ばれているかどうかは、親子が直接的につながっている必要があることから、&lt;code&gt;a*2==b&lt;/code&gt;または&lt;code&gt;a*2+1==b&lt;/code&gt;であることが判定の条件となります。
-また、&lt;code&gt;Floor(b/2)==a&lt;/code&gt;も成り立ちます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var answer = b / 2 == a ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38047012"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;問題文が複雑ですが、&lt;code&gt;l&lt;/code&gt;は&lt;code&gt;S[k]!=S[k+i]&lt;/code&gt;が&lt;code&gt;k=0&lt;/code&gt;から何回続けることができるかを表します。
-そのため、各&lt;code&gt;i(1&amp;lt;=i&amp;lt;=N-1)&lt;/code&gt;において、&lt;code&gt;S[k]!=S[k+i] (0&amp;lt;=k&amp;lt;N-i)&lt;/code&gt;が何回成り立つかを数え上げることで、答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    for (var i = 1; i &amp;lt;= N - 1; i++)
-    {
-        var l = 0;
-        for (var k = 0; k + i &amp;lt; N; k++)
-        {
-            if (S[k] != S[k + i]) l++;
-            else break;
-        }
-
-        Console.WriteLine(l);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38049184"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;A==1,B==2,...,Z==26,AA==27,...&lt;/code&gt;であることから、&lt;code&gt;S&lt;/code&gt;の値を&lt;code&gt;26進数+1&lt;/code&gt;としたとき、10進数で&lt;code&gt;S&lt;/code&gt;の値はいくらかという問題になります。
-&lt;code&gt;S=ABC&lt;/code&gt;の場合は&lt;code&gt;1(A)*26^2 + 2(B)*26^1 + 3(C)*26^0&lt;/code&gt;のようになり、各桁の値に26のべき乗を掛けたものとなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    long b = 1;
-    long answer = 0;
-    foreach (var c in S.Select(x =&amp;gt; x - 'A' + 1).Reverse())
-    {
-        answer += c * b;
-        b *= 26;
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38052012"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38079089"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;ユーザ名を頂点とし、ユーザ名の変更を頂点&lt;code&gt;s&lt;/code&gt;から頂点&lt;code&gt;t&lt;/code&gt;への有効辺としたグラフとして考えたとき、グラフに閉路がある場合は変更することができません。(&lt;code&gt;a-&amp;gt;b-&amp;gt;c-&amp;gt;a&lt;/code&gt;としたとき、&lt;code&gt;b&lt;/code&gt;の変更は&lt;code&gt;a&lt;/code&gt;が必要だが、&lt;code&gt;a&lt;/code&gt;の変更は&lt;code&gt;c&lt;/code&gt;が必要であり、&lt;code&gt;c&lt;/code&gt;の変更は&lt;code&gt;b&lt;/code&gt;が必要となる。)
-そのため、構築したグラフに閉路があるか判定することで、答えを求めることができます。
-閉路の判定は、深さ優先探索や&lt;code&gt;DisjointSetUnion&lt;/code&gt;、トポロジカルソートなどで求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var dict = new Dictionary&amp;lt;string, int&amp;gt;();
-    var M = N * 2;
-    var G = new List&amp;lt;int&amp;gt;[M].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
-    var inDeg = new int[M];
-    var idx = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var (s, t) = Scanner.Scan&amp;lt;string, string&amp;gt;();
-        if (!dict.ContainsKey(s)) dict[s] = idx++;
-        if (!dict.ContainsKey(t)) dict[t] = idx++;
-        var (u, v) = (dict[s], dict[t]);
-        inDeg[v]++;
-        G[u].Add(v);
-    }
-
-    var queue = new Queue&amp;lt;int&amp;gt;();
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        if (inDeg[i] == 0) queue.Enqueue(i);
-    }
-
-    var sorted = new int[M];
-    var curr = 0;
-    while (queue.TryDequeue(out var u))
-    {
-        foreach (var v in G[u])
-        {
-            inDeg[v]--;
-            if (inDeg[v] == 0) queue.Enqueue(v);
-        }
-
-        sorted[curr++] = u;
-    }
-
-    var answer = curr == M;
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;まだ解けていません。&lt;/p&gt;
-&lt;!-- [コンテスト提出]()  
-[復習提出]()
-
-```csharp
-``` --&gt;
-&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc285/tasks/abc285_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38066519"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC285/submissions/38078379"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S[l..r]&lt;/code&gt;が&lt;code&gt;T&lt;/code&gt;の部分文字列であるには、&lt;code&gt;T&lt;/code&gt;が昇順であることから、&lt;code&gt;S[l..r]&lt;/code&gt;も昇順である必要があります。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S[l..r]&lt;/code&gt;が昇順であるかの判定について、&lt;code&gt;S[l..r]&lt;/code&gt;に含まれる文字ごとの個数を順にみていき、&lt;code&gt;ll=l+既にみた文字の個数&lt;/code&gt;、&lt;code&gt;cc=現在の文字の個数&lt;/code&gt;、&lt;code&gt;rr=ll+cc-1&lt;/code&gt;としたとき、&lt;code&gt;S[ll..rr]&lt;/code&gt;に含まれる現在の文字の個数が&lt;code&gt;cc&lt;/code&gt;と等しくなる必要があります。&lt;br /&gt;
-例えば、&lt;code&gt;S==aaabcba&lt;/code&gt;、&lt;code&gt;l==3&lt;/code&gt;、&lt;code&gt;r==6&lt;/code&gt;としたとき、&lt;code&gt;T==aaaabbc&lt;/code&gt;、&lt;code&gt;S[l..r]==abcb&lt;/code&gt;になります。
-文字&lt;code&gt;a&lt;/code&gt;について考えると、&lt;code&gt;ll=l&lt;/code&gt;、&lt;code&gt;cc=1&lt;/code&gt;、&lt;code&gt;rr=ll&lt;/code&gt;となり、&lt;code&gt;S[ll..rr]==a&lt;/code&gt;であり、&lt;code&gt;cc&lt;/code&gt;と等しくなります。
-文字&lt;code&gt;b&lt;/code&gt;について考えると、&lt;code&gt;ll=l+1&lt;/code&gt;、&lt;code&gt;cc=2&lt;/code&gt;、&lt;code&gt;rr=ll+1&lt;/code&gt;となり、&lt;code&gt;S[ll..rr]=bc&lt;/code&gt;であり、&lt;code&gt;cc&lt;/code&gt;と異なるので、&lt;code&gt;S[l..r]&lt;/code&gt;は昇順ではありません。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S[l..r]&lt;/code&gt;が昇順であるとき、&lt;code&gt;S[l..r]&lt;/code&gt;が&lt;code&gt;T&lt;/code&gt;の部分文字列であるかの判定について、&lt;code&gt;S[l..r]&lt;/code&gt;に含まれる最も小さい文字&lt;code&gt;a&lt;/code&gt;、最も大きい文字&lt;code&gt;z&lt;/code&gt;としたとき、&lt;code&gt;a&amp;lt;c&amp;lt;z&lt;/code&gt;となる&lt;code&gt;c&lt;/code&gt;の個数は、&lt;code&gt;T&lt;/code&gt;に含まれる&lt;code&gt;c&lt;/code&gt;の個数と一致する必要があります。&lt;br /&gt;
-例えば、&lt;code&gt;S==aabccde&lt;/code&gt;、&lt;code&gt;l==2&lt;/code&gt;、&lt;code&gt;r==6&lt;/code&gt;としたとき、&lt;code&gt;T==aabccde&lt;/code&gt;、&lt;code&gt;S[l..r]==abccd&lt;/code&gt;になり、&lt;code&gt;S[l..r]&lt;/code&gt;に含まれる最も小さい文字は&lt;code&gt;a&lt;/code&gt;、最も大きい文字は&lt;code&gt;d&lt;/code&gt;なので、&lt;code&gt;b==1&lt;/code&gt;と&lt;code&gt;c==2&lt;/code&gt;となり&lt;code&gt;T&lt;/code&gt;に含まれる&lt;code&gt;b&lt;/code&gt;と&lt;code&gt;c&lt;/code&gt;の数に一致するので、部分文字列となります。
-一方、&lt;code&gt;S==aabccdc&lt;/code&gt;、&lt;code&gt;l==2&lt;/code&gt;、&lt;code&gt;r==6&lt;/code&gt;としたとき、&lt;code&gt;T==aabcccd&lt;/code&gt;、&lt;code&gt;S[l..r]==abccd&lt;/code&gt;になり、&lt;code&gt;S[l..r]&lt;/code&gt;に含まれる最も小さい文字は&lt;code&gt;a&lt;/code&gt;、最も大きい文字は&lt;code&gt;d&lt;/code&gt;なので、&lt;code&gt;b==1&lt;/code&gt;と&lt;code&gt;c==2&lt;/code&gt;になりますが、&lt;code&gt;T&lt;/code&gt;に含まれる&lt;code&gt;b&lt;/code&gt;と&lt;code&gt;c&lt;/code&gt;の数に一致しないので、部分文字列にはなりません。&lt;/p&gt;
-&lt;p&gt;これらのことから、現在の各文字の個数と現在の各文字の指定した範囲にある個数を求められるデータ構造が必要となります。
-前者は配列、後者は&lt;code&gt;FenwickTree&lt;/code&gt;などのデータ構造を使うことで求めることができ、クエリ当たりの時間計算量は&lt;code&gt;O(logN)&lt;/code&gt;となり、全体時間計算量は&lt;code&gt;O(N+QlogN)&lt;/code&gt;となります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x - 'a').ToArray();
-    var Q = Scanner.Scan&amp;lt;int&amp;gt;();
-    var fts = new FenwickTree[26].Select(_ =&amp;gt; new FenwickTree(N)).ToArray();
-    var sc = new int[26];
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var c = S[i];
-        sc[c]++;
-        fts[c].Add(i, 1);
-    }
-
-    while (Q-- &amp;gt; 0)
-    {
-        var query = Scanner.ScanEnumerable&amp;lt;string&amp;gt;().ToArray();
-        if (query[0] == &amp;quot;1&amp;quot;)
-        {
-            var (x, c) = (int.Parse(query[1]) - 1, query[2][0] - 'a');
-            var p = S[x];
-            S[x] = c;
-            fts[p].Add(x, -1);
-            fts[c].Add(x, 1);
-            sc[p]--;
-            sc[c]++;
-        }
-        else
-        {
-            var (l, r) = (int.Parse(query[1]) - 1, int.Parse(query[2]));
-            var tc = new int[26];
-            for (var i = 0; i &amp;lt; 26; i++)
-            {
-                tc[i] = (int)fts[i].Sum(l, r);
-            }
-
-            var alpha = 0;
-            var ll = l;
-            var answer = true;
-            while (alpha &amp;lt; 26 &amp;amp;&amp;amp; tc[alpha] == 0) alpha++;
-
-            if (alpha &amp;lt; 26)
-            {
-                ll += tc[alpha];
-                alpha++;
-            }
-
-            while (answer &amp;amp;&amp;amp; alpha &amp;lt; 26 &amp;amp;&amp;amp; ll + tc[alpha] &amp;lt;= r)
-            {
-                var rr = ll + tc[alpha];
-                if (rr &amp;lt; r)
-                {
-                    answer &amp;amp;= sc[alpha] == tc[alpha];
-                }
-                else
-                {
-                    answer &amp;amp;= sc[alpha] &amp;gt;= tc[alpha];
-                }
-
-                answer &amp;amp;= tc[alpha] == fts[alpha].Sum(ll, rr);
-                ll = rr;
-                alpha++;
-            }
-
-            Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
         }
     }
 }
