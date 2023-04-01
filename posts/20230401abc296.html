@@ -1,0 +1,408 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC296</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC296">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230401abc296">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC296</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 01 April 2023
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 01 April 2023
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 296の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc296">https://atcoder.jp/contests/abc296</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc296/tasks/abc296_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC296/submissions/40210681">コンテスト提出</a></p>
+<p><code>1&lt;=i&lt;N</code>において、<code>S[i]</code>と<code>S[i+1]</code>がすべて異なっている場合、答えは<code>Yes</code>になります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+
+    var answer = true;
+    for (var i = 0; i + 1 &lt; N; i++)
+    {
+        answer &amp;= S[i] != S[i + 1];
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc296/tasks/abc296_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC296/submissions/40214277">コンテスト提出</a></p>
+<p><code>S[r][c]</code>が<code>*</code>のとなる<code>r</code>と<code>c</code>を求め、<code>r</code>と<code>c</code>を指定されたフォーマット文字列に変換します。<br>
+フォーマット文字列は、<code>{行}{列}</code>ではなく、<code>{列+'a'}{8-行}</code>であることに注意します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    const int H = 8;
+    const int W = 8;
+    var S = new char[H][];
+    for (var i = 0; i &lt; H; i++)
+    {
+        S[i] = Scanner.Scan&lt;string&gt;().ToCharArray();
+    }
+
+    string F(int r, int c) =&gt; $&quot;{(char)(c + 'a')}{8 - r}&quot;
+
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            if (S[i][j] == '*')
+            {
+                Console.WriteLine(F(i, j));
+                return;
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc296/tasks/abc296_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC296/submissions/40219829">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC296/submissions/40268336">復習提出</a></p>
+<p><code>A</code>をソートし、尺取り法で<code>A[r]-A[l]==X</code>となる<code>l</code>と<code>r</code>を探索することで、時間計算量<code>O(NlogN+N)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    Array.Sort(A);
+    var r = 0;
+    for (var l = 0; l &lt; N; l++)
+    {
+        while (r &lt; N &amp;&amp; A[r] - A[l] &lt; X) r++;
+        if (r &lt; N &amp;&amp; A[r] - A[l] == X)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
+</code></pre>
+<p><code>A[i]-A[j]==X</code>を式変形すると<code>A[i]==A[j]+X</code>であることから、<code>A</code>からなる集合<code>S</code>を用意し、<code>A[i]+X</code>が<code>S</code>に含まれているかどうかを判定することでも、答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var set = new HashSet&lt;long&gt;(A);
+    var answer = set.Any(a =&gt; set.Contains(a + X));
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc296/tasks/abc296_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC296/submissions/40233550">コンテスト提出</a></p>
+<p><code>a&lt;=b</code>とし<code>a</code>を固定して考えると、<code>M&lt;=a*b</code>より<code>b&gt;=M/a</code>、<code>Floor(M/a)&lt;=M/a&lt;=Ceil(M/a)</code>より、<code>b=Ceil(M/a)</code>とすることができ、<code>1&lt;=b&lt;=N</code>であることから、<code>c=a*Min(b,N)</code>になり、<code>c&gt;=M</code>のときの最小値が答えとなります。<br>
+時間計算量は<code>O(Min(N,Sqrt(M)))</code>程度となり、最大でも<code>1e6</code>回程度の計算で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;long, long&gt;();
+    const long Inf = (long)1e18;
+
+    long CalcB(long a) =&gt; Math.Min(N, (M + a - 1) / a);
+
+    var answer = Inf;
+    for (long a = 1; a &lt;= CalcB(a); a++)
+    {
+        var b = CalcB(a);
+        var c = a * b;
+        if (c &gt;= M) answer = Math.Min(answer, c);
+    }
+
+    if (answer == Inf) answer = -1;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc296/tasks/abc296_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC296/submissions/40261543">コンテスト提出</a></p>
+<p><code>1&lt;=i&lt;=N</code>を頂点としたグラフとし、<code>黒板にxが書かれているとき、それを消し、A[x]を新しく書く</code>という操作を<code>x</code>から<code>A[x]</code>に対する有向辺とすると、
+サイクルを構築する頂点の集合(強連結成分)に含まれる頂点には、正整数<code>K[i]</code>がどのような値であっても、始点となる頂点を任意に決めることができるので、たどり着くことができます。<br>
+このことから、<code>i</code>から<code>A[i]</code>に対する有効辺を構築したグラフに対して強連結成分分解を行い、各強連結成分を構成する頂点の総和が答えとなります。<br>
+このとき、自己辺が存在する場合に注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var isSelf = new bool[N];
+
+    var scc = new StronglyConnectedComponent(N);
+    for (var i = 0; i &lt; N; i++)
+    {
+        scc.AddEdge(i, A[i]);
+        if (i == A[i]) isSelf[i] = true;
+    }
+
+    var answer = 0;
+    foreach (var graph in scc.GetGraph())
+    {
+        if (graph.Count == 1 &amp;&amp; !isSelf[graph[0]]) continue;
+        answer += graph.Count;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<p>強連結成分に関しては以下のクラスを使いました。</p>
+<pre><code class="language-csharp line-numbers">public class StronglyConnectedComponent
+{
+    public int Length { get; }
+    private readonly List&lt;(int, Edge)&gt; _edges;
+
+    public StronglyConnectedComponent(int length)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _edges = new List&lt;(int, Edge)&gt;();
+    }
+
+    public void AddEdge(int from, int to)
+    {
+        if (from &lt; 0 || Length &lt;= from) throw new ArgumentOutOfRangeException(nameof(from));
+        if (to &lt; 0 || Length &lt;= to) throw new ArgumentOutOfRangeException(nameof(to));
+        _edges.Add((from, new Edge(to)));
+    }
+
+    public (int GroupCount, int[] IDs) GetIDs()
+    {
+        var g = new CompressedSparseRow&lt;Edge&gt;(Length, _edges);
+        var (nowOrd, groupCount) = (0, 0);
+        var visited = new Stack&lt;int&gt;(Length);
+        var low = new int[Length];
+        var ord = new int[Length];
+        Array.Fill(ord, -1);
+        var ids = new int[Length];
+
+        void Dfs(int v)
+        {
+            low[v] = ord[v] = nowOrd++;
+            visited.Push(v);
+            for (var i = g.Start[v]; i &lt; g.Start[v + 1]; i++)
+            {
+                var to = g.Edges[i].To;
+                if (ord[to] == -1)
+                {
+                    Dfs(to);
+                    low[v] = Math.Min(low[v], low[to]);
+                }
+                else
+                {
+                    low[v] = Math.Min(low[v], ord[to]);
+                }
+            }
+
+            if (low[v] != ord[v]) return;
+            while (true)
+            {
+                var u = visited.Pop();
+                ord[u] = Length;
+                ids[u] = groupCount;
+                if (u == v) break;
+            }
+
+            groupCount++;
+        }
+
+        for (var i = 0; i &lt; Length; i++)
+        {
+            if (ord[i] == -1)
+                Dfs(i);
+        }
+
+        for (var i = 0; i &lt; Length; i++)
+        {
+            ids[i] = groupCount - 1 - ids[i];
+        }
+
+        return (groupCount, ids);
+    }
+
+    public IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt; GetGraph()
+    {
+        var (groupCount, ids) = GetIDs();
+        var groups = new List&lt;int&gt;[groupCount];
+        for (var i = 0; i &lt; groups.Length; i++)
+        {
+            groups[i] = new List&lt;int&gt;();
+        }
+
+        foreach (var (id, index) in ids.Select((x, i) =&gt; (x, i)))
+        {
+            groups[id].Add(index);
+        }
+
+        return groups;
+    }
+
+    private readonly struct Edge
+    {
+        public readonly int To;
+        public Edge(int to) =&gt; To = to;
+    }
+}
+
+public class CompressedSparseRow&lt;T&gt;
+{
+    public CompressedSparseRow(int length, IEnumerable&lt;(int ID, T)&gt; edges)
+    {
+        Start = new int[length + 1];
+        var es = edges.ToArray();
+        Edges = new T[es.Length];
+        foreach (var e in es) Start[e.ID + 1]++;
+        for (var i = 0; i &lt; length; i++) Start[i + 1] += Start[i];
+        var counter = new int[length + 1];
+        Start.AsSpan().CopyTo(counter.AsSpan());
+        foreach (var (i, t) in es) Edges[counter[i]++] = t;
+    }
+
+    public int[] Start { get; }
+    public T[] Edges { get; }
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230401abc296" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
