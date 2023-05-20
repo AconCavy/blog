@@ -1,0 +1,481 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC302</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC302">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230520abc302">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC302</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 20 May 2023
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 20 May 2023
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 302の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc302">https://atcoder.jp/contests/abc302</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41536854">コンテスト提出</a></p>
+<p><code>Ceil(A/B)</code>が答えになるので、<code>(A+B-1)/B</code>で切り上げた値を得ることができます。<br>
+また、double型などの浮動小数点型だと、精度の問題で正しい値を求めることができないことがあります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B) = Scanner.Scan&lt;long, long&gt;();
+    var answer = (A + B - 1) / B;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41548153">コンテスト提出</a></p>
+<p><code>snuke</code>文字列の始点のマスの位置を<code>(ch,cw)</code>、<code>snuke</code>文字列が続く方向を<code>(dh,dw)</code>とすると、<code>snuke</code>文字列の<code>k</code>文字目は<code>(ch+dh*k,cw+dw*k)</code>の位置のマスになります。この位置のマスがグリッド上にあり、5文字全て一致している場合、始点から順に出力することで答えを得ることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W) = Scanner.Scan&lt;int, int&gt;();
+    var S = new char[H][];
+    const string Snuke = &quot;snuke&quot;;
+
+    for (var i = 0; i &lt; H; i++)
+    {
+        S[i] = Scanner.Scan&lt;string&gt;().ToCharArray();
+    }
+
+    for (var ch = 0; ch &lt; H; ch++)
+    {
+        for (var cw = 0; cw &lt; W; cw++)
+        {
+            for (var dh = -1; dh &lt;= 1; dh++)
+            {
+                for (var dw = -1; dw &lt;= 1; dw++)
+                {
+                    var ok = true;
+                    for (var k = 0; k &lt; 5 &amp;&amp; ok; k++)
+                    {
+                        var nh = ch + dh * k;
+                        var nw = cw + dw * k;
+                        if (nh &lt; 0 || nh &gt;= H || nw &lt; 0 || nw &gt;= W)
+                        {
+                            ok = false;
+                            break;
+                        }
+
+                        ok &amp;= S[nh][nw] == Snuke[k];
+                    }
+
+                    if (ok)
+                    {
+                        for (var k = 0; k &lt; 5; k++)
+                        {
+                            Console.WriteLine($&quot;{ch + 1 + dh * k} {cw + 1 + dw * k}&quot;);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41550544">コンテスト提出</a></p>
+<p><code>N</code>個の文字列の順列を全探索し、いずれかの場合において条件を満たすことができるかを判定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var S = new string[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        S[i] = Scanner.Scan&lt;string&gt;();
+    }
+
+    foreach (var perm in Permute(Enumerable.Range(0, N)))
+    {
+        var answer = true;
+        for (var k = 0; k + 1 &lt; N; k++)
+        {
+            var curr = perm[k];
+            var next = perm[k + 1];
+            var diff = 0;
+            for (var i = 0; i &lt; M; i++)
+            {
+                if (S[curr][i] != S[next][i]) diff++;
+            }
+
+            answer &amp;= diff == 1;
+        }
+
+        if (answer)
+        {
+            Console.WriteLine(&quot;Yes&quot;);
+            return;
+        }
+    }
+
+    Console.WriteLine(&quot;No&quot;);
+}
+
+public static IEnumerable&lt;T[]&gt; Permute&lt;T&gt;(IEnumerable&lt;T&gt; source)
+{
+    if (source is null) throw new ArgumentNullException(nameof(source));
+    IEnumerable&lt;T[]&gt; Inner()
+    {
+        var items = source.ToArray();
+        var n = items.Length;
+        var indices = new int[n];
+        for (var i = 0; i &lt; indices.Length; i++)
+        {
+            indices[i] = i;
+        }
+        T[] Result()
+        {
+            var result = new T[n];
+            for (var i = 0; i &lt; n; i++)
+            {
+                result[i] = items[indices[i]];
+            }
+            return result;
+        }
+        yield return Result();
+        while (true)
+        {
+            var (i, j) = (n - 2, n - 1);
+            while (i &gt;= 0)
+            {
+                if (indices[i] &lt; indices[i + 1]) break;
+                i--;
+            }
+            if (i == -1) yield break;
+            while (true)
+            {
+                if (indices[j] &gt; indices[i]) break;
+                j--;
+            }
+            (indices[i], indices[j]) = (indices[j], indices[i]);
+            Array.Reverse(indices, i + 1, n - 1 - i);
+            yield return Result();
+        }
+    }
+    return Inner();
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41557498">コンテスト提出</a></p>
+<p>全ての組み合わせを考えてしまうと、時間計算量が<code>O(NM)</code>になり、実行時間制限に間に合いません。
+<code>A</code>を固定して考えたとき、<code>A[i]</code>に対して選ぶことができる<code>B</code>の最大の贈り物は<code>A[i]+D</code>以下のものになります。<br>
+ここで、<code>B</code>のうち<code>A[i]+D</code>以下になる最大のものを<code>B</code>をソートして二部探索で求めることで、各<code>A[i]</code>に対して時間計算量<code>O(logM)</code>で求めることができ、まとめると時間計算量<code>O(NlogM)</code>で求めることができます。
+同様に、<code>B</code>を固定して考えたとき、時間計算量<code>O(MlogN)</code>で求めることができるため、全体時間計算量は<code>O(NlogM+MlogN)</code>となります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M, D) = Scanner.Scan&lt;int, int, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+
+    Array.Sort(A);
+    Array.Sort(B);
+    long answer = -1;
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        var a = A[i];
+        var j = Math.Max(0, UpperBound(B, a + D) - 1);
+        var b = B[j];
+        if (Math.Abs(a - b) &lt;= D)
+        {
+            answer = Math.Max(answer, a + b);
+        }
+    }
+
+    for (var i = 0; i &lt; M; i++)
+    {
+        var b = B[i];
+        var j = Math.Max(0, UpperBound(A, b + D) - 1);
+        var a = A[j];
+        if (Math.Abs(b - a) &lt;= D)
+        {
+            answer = Math.Max(answer, b + a);
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+
+public static int UpperBound&lt;T&gt;(ReadOnlySpan&lt;T&gt; source, T key) where T : IComparable&lt;T&gt;
+{
+    var (l, r) = (-1, source.Length);
+    while (r - l &gt; 1)
+    {
+        var m = l + (r - l) / 2;
+        if (source[m].CompareTo(key) &gt; 0) r = m;
+        else l = m;
+    }
+
+    return r;
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41563876">コンテスト提出</a></p>
+<p>頂点ごとに辺で結ばれている頂点の集合を管理しながら、クエリごとにシミュレートを行います。<br>
+「他のどの頂点とも辺で結ばれていない頂点」の数を<code>answer</code>とします。
+初期状態として、<code>answer</code>は<code>N</code>になります。</p>
+<p>1番のクエリについて、頂点<code>u</code>がその時点でほかのどの頂点とも辺で結ばれていない場合、頂点<code>v</code>と辺で結ばれるため、<code>answer</code>は<code>-1</code>されます。
+同様に、頂点<code>v</code>の場合も、その時点でほかのどの頂点とも辺で結ばれていない場合、頂点<code>u</code>と辺で結ばれるため、<code>answer</code>は<code>-1</code>されます。</p>
+<p>2番のクエリについて、頂点<code>v</code>がその時点でいずれかの頂点と辺で結ばれている場合、<code>answer</code>は<code>+1</code>されます。
+また、頂点<code>v</code>と辺で結ばれている各頂点について、その頂点の辺で結ばれている頂点集合から頂点<code>v</code>を削除した後、その頂点の辺で結ばれている頂点が存在しない場合、<code>answer</code>は<code>+1</code>されます。
+その後、頂点<code>v</code>の辺で結ばれている頂点の集合をすべて削除します。</p>
+<p>辺で結ばれている頂点の集合を<code>HashSet</code>などのデータ構造を用いることで、追加と削除を時間計算量<code>O(1)</code>で行うことができ、全体時間計算量<code>O(Q)</code>でシミュレートすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var connected = new HashSet&lt;int&gt;[N].Select(_ =&gt; new HashSet&lt;int&gt;()).ToArray();
+    var answer = N;
+
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var query = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+        var queryType = query[0];
+        var queryArgs = query.AsSpan(1);
+
+        void QF1(ReadOnlySpan&lt;int&gt; queryArgs)
+        {
+            var (u, v) = (queryArgs[0] - 1, queryArgs[1] - 1);
+            if (connected[u].Count == 0) answer--;
+            if (connected[v].Count == 0) answer--;
+            connected[u].Add(v);
+            connected[v].Add(u);
+            Console.WriteLine(answer);
+        }
+
+        void QF2(ReadOnlySpan&lt;int&gt; queryArgs)
+        {
+            var u = queryArgs[0] - 1;
+            if (connected[u].Count != 0) answer++;
+            foreach (var v in connected[u])
+            {
+                connected[v].Remove(u);
+                if (connected[v].Count == 0) answer++;
+            }
+            connected[u].Clear();
+
+            Console.WriteLine(answer);
+        }
+
+        switch (queryType)
+        {
+            case 1:
+                QF1(queryArgs);
+                break;
+            case 2:
+                QF2(queryArgs);
+                break;
+            default:
+                break;
+        }
+    }
+}
+</code></pre>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_f">問題F</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC302/submissions/41573888">コンテスト提出</a></p>
+<p>各集合を頂点とした幅優先探索を行います。</p>
+<p>整数<code>x</code>が属する集合群を<code>Has[x]</code>としたとき、始点は<code>Has[1]</code>に属する集合群になります。
+また、<code>Has[1]</code>に属する集合を<code>u</code>としたとき、<code>S[u]</code>の整数集合の最小操作回数は<code>0</code>になります。</p>
+<p>幅優先探索において、遷移元の集合を<code>u</code>としたとき、<code>u</code>から遷移することができる集合群は、整数<code>S[u][i] (1&lt;=i&lt;=A[u])</code>を含む集合、つまり<code>Has[S[u][i]]</code>の集合群になります。
+整数<code>S[u][i]</code>を<code>s1</code>、<code>s1</code>を含む集合を<code>v</code>、<code>v</code>に含まれる整数<code>S[u][j] (1&lt;=j&lt;=A[v])</code>を<code>s2</code>、整数<code>x</code>への最小操作回数を<code>costs[x]</code>としたとき、<code>s2</code>への遷移回数は<code>Min(costs[s2],costs[s1]+1)</code>になります。</p>
+<p>よって、時間計算量<code>O(N+M+Sum(A))</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var S = new HashSet&lt;int&gt;[N];
+    var Has = new HashSet&lt;int&gt;[M + 1].Select(_ =&gt; new HashSet&lt;int&gt;()).ToArray();
+    for (var i = 0; i &lt; N; i++)
+    {
+        _ = Scanner.Scan&lt;int&gt;();
+        S[i] = Scanner.ScanEnumerable&lt;int&gt;().ToHashSet();
+        foreach (var s in S[i])
+        {
+            Has[s].Add(i);
+        }
+    }
+
+    var queue = new Queue&lt;int&gt;();
+    var costs = new int[M + 1];
+    Array.Fill(costs, -1);
+    var used = new bool[N];
+
+    foreach (var u in Has[1])
+    {
+        queue.Enqueue(u);
+        used[u] = true;
+
+        foreach (var s in S[u])
+        {
+            costs[s] = 0;
+        }
+    }
+
+    while (queue.Count &gt; 0)
+    {
+        var u = queue.Dequeue();
+        foreach (var s1 in S[u])
+        {
+            foreach (var v in Has[s1])
+            {
+                if (used[v]) continue;
+                foreach (var s2 in S[v])
+                {
+                    costs[s2] = Math.Min(costs[s2], costs[s1] + 1);
+                }
+
+                queue.Enqueue(v);
+                used[v] = true;
+            }
+        }
+    }
+
+    var answer = costs[M];
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230520abc302" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
