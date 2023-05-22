@@ -74,7 +74,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
             Published on Saturday, 20 May 2023
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on Saturday, 20 May 2023
+            Updated on Sunday, 21 May 2023
         </div>
 
             <div class="mt-3 mb-4">
@@ -352,63 +352,50 @@ public static int UpperBound&lt;T&gt;(ReadOnlySpan&lt;T&gt; source, T key) where
 </code></pre>
 <h3 id="f"><a href="https://atcoder.jp/contests/abc302/tasks/abc302_f">問題F</a></h3>
 <p><a href="https://atcoder.jp/contests/ABC302/submissions/41573888">コンテスト提出</a></p>
-<p>各集合を頂点とした幅優先探索を行います。</p>
-<p>整数<code>x</code>が属する集合群を<code>Has[x]</code>としたとき、始点は<code>Has[1]</code>に属する集合群になります。
-また、<code>Has[1]</code>に属する集合を<code>u</code>としたとき、<code>S[u]</code>の整数集合の最小操作回数は<code>0</code>になります。</p>
-<p>幅優先探索において、遷移元の集合を<code>u</code>としたとき、<code>u</code>から遷移することができる集合群は、整数<code>S[u][i] (1&lt;=i&lt;=A[u])</code>を含む集合、つまり<code>Has[S[u][i]]</code>の集合群になります。
-整数<code>S[u][i]</code>を<code>s1</code>、<code>s1</code>を含む集合を<code>v</code>、<code>v</code>に含まれる整数<code>S[u][j] (1&lt;=j&lt;=A[v])</code>を<code>s2</code>、整数<code>x</code>への最小操作回数を<code>costs[x]</code>としたとき、<code>s2</code>への遷移回数は<code>Min(costs[s2],costs[s1]+1)</code>になります。</p>
-<p>よって、時間計算量<code>O(N+M+Sum(A))</code>で答えを求めることができます。</p>
+<p><del>各集合を頂点とした幅優先探索を行います。</del></p>
+<p><del>整数<code>x</code>が属する集合群を<code>Has[x]</code>としたとき、始点は<code>Has[1]</code>に属する集合群になります。</del>
+<del>また、<code>Has[1]</code>に属する集合を<code>u</code>としたとき、<code>S[u]</code>の整数集合の最小操作回数は<code>0</code>になります。</del></p>
+<p><del>幅優先探索において、遷移元の集合を<code>u</code>としたとき、<code>u</code>から遷移することができる集合群は、整数<code>S[u][i] (1&lt;=i&lt;=A[u])</code>を含む集合、つまり<code>Has[S[u][i]]</code>の集合群になります。</del>
+<del>整数<code>S[u][i]</code>を<code>s1</code>、<code>s1</code>を含む集合を<code>v</code>、<code>v</code>に含まれる整数<code>S[u][j] (1&lt;=j&lt;=A[v])</code>を<code>s2</code>、整数<code>x</code>への最小操作回数を<code>costs[x]</code>としたとき、<code>s2</code>への遷移回数は<code>Min(costs[s2],costs[s1]+1)</code>になります。</del></p>
+<p><del>よって、時間計算量<code>O(N+M+Sum(A))</code>で答えを求めることができます。</del></p>
+<p><em>2023/05/22更新</em></p>
+<p>頂点<code>1</code>から<code>N</code>を集合の番号、頂点<code>N+1</code>から<code>N+M</code>を<code>1</code>から<code>M</code>の整数に対応させ、集合から整数、整数から集合に対してそれぞれコスト1の辺を張ったグラフを作成し、幅優先探索を行います。</p>
+<p>集合から整数、整数から集合に対しての移動で2回の移動をしているため、答えが2倍になることに注意します。</p>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, M) = Scanner.Scan&lt;int, int&gt;();
-    var S = new HashSet&lt;int&gt;[N];
-    var Has = new HashSet&lt;int&gt;[M + 1].Select(_ =&gt; new HashSet&lt;int&gt;()).ToArray();
+    var S = new int[N][];
+    var G = new List&lt;int&gt;[N + M + 1].Select(x =&gt; new List&lt;int&gt;()).ToArray();
     for (var i = 0; i &lt; N; i++)
     {
         _ = Scanner.Scan&lt;int&gt;();
-        S[i] = Scanner.ScanEnumerable&lt;int&gt;().ToHashSet();
+        S[i] = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
         foreach (var s in S[i])
         {
-            Has[s].Add(i);
+            G[i + 1].Add(N + s);
+            G[N + s].Add(i + 1);
         }
     }
 
     var queue = new Queue&lt;int&gt;();
-    var costs = new int[M + 1];
+    var costs = new int[N + M + 1];
     Array.Fill(costs, -1);
-    var used = new bool[N];
-
-    foreach (var u in Has[1])
-    {
-        queue.Enqueue(u);
-        used[u] = true;
-
-        foreach (var s in S[u])
-        {
-            costs[s] = 0;
-        }
-    }
+    costs[N + 1] = 0;
+    queue.Enqueue(N + 1);
 
     while (queue.Count &gt; 0)
     {
         var u = queue.Dequeue();
-        foreach (var s1 in S[u])
+        foreach (var v in G[u])
         {
-            foreach (var v in Has[s1])
-            {
-                if (used[v]) continue;
-                foreach (var s2 in S[v])
-                {
-                    costs[s2] = Math.Min(costs[s2], costs[s1] + 1);
-                }
-
-                queue.Enqueue(v);
-                used[v] = true;
-            }
+            if (costs[v] != -1) continue;
+            costs[v] = costs[u] + 1;
+            queue.Enqueue(v);
         }
     }
 
-    var answer = costs[M];
+    var answer = costs[N + M];
+    if (answer != -1) answer = (answer - 1) / 2;
     Console.WriteLine(answer);
 }
 </code></pre>

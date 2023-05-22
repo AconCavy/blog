@@ -5,14 +5,14 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sat, 20 May 2023 15:01:07 GMT</pubDate>
-		<lastBuildDate>Sat, 20 May 2023 15:01:07 GMT</lastBuildDate>
+		<pubDate>Mon, 22 May 2023 11:29:11 GMT</pubDate>
+		<lastBuildDate>Mon, 22 May 2023 11:29:11 GMT</lastBuildDate>
 		<item>
 			<title>ABC302</title>
 			<link>https://blog.aconcavy.dev/posts/20230520abc302</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 302の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20230520abc302</guid>
-			<pubDate>Sat, 20 May 2023 00:00:00 GMT</pubDate>
+			<pubDate>Sun, 21 May 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 302の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -278,63 +278,50 @@ public static int UpperBound&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; sour
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc302/tasks/abc302_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC302/submissions/41573888"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;各集合を頂点とした幅優先探索を行います。&lt;/p&gt;
-&lt;p&gt;整数&lt;code&gt;x&lt;/code&gt;が属する集合群を&lt;code&gt;Has[x]&lt;/code&gt;としたとき、始点は&lt;code&gt;Has[1]&lt;/code&gt;に属する集合群になります。
-また、&lt;code&gt;Has[1]&lt;/code&gt;に属する集合を&lt;code&gt;u&lt;/code&gt;としたとき、&lt;code&gt;S[u]&lt;/code&gt;の整数集合の最小操作回数は&lt;code&gt;0&lt;/code&gt;になります。&lt;/p&gt;
-&lt;p&gt;幅優先探索において、遷移元の集合を&lt;code&gt;u&lt;/code&gt;としたとき、&lt;code&gt;u&lt;/code&gt;から遷移することができる集合群は、整数&lt;code&gt;S[u][i] (1&amp;lt;=i&amp;lt;=A[u])&lt;/code&gt;を含む集合、つまり&lt;code&gt;Has[S[u][i]]&lt;/code&gt;の集合群になります。
-整数&lt;code&gt;S[u][i]&lt;/code&gt;を&lt;code&gt;s1&lt;/code&gt;、&lt;code&gt;s1&lt;/code&gt;を含む集合を&lt;code&gt;v&lt;/code&gt;、&lt;code&gt;v&lt;/code&gt;に含まれる整数&lt;code&gt;S[u][j] (1&amp;lt;=j&amp;lt;=A[v])&lt;/code&gt;を&lt;code&gt;s2&lt;/code&gt;、整数&lt;code&gt;x&lt;/code&gt;への最小操作回数を&lt;code&gt;costs[x]&lt;/code&gt;としたとき、&lt;code&gt;s2&lt;/code&gt;への遷移回数は&lt;code&gt;Min(costs[s2],costs[s1]+1)&lt;/code&gt;になります。&lt;/p&gt;
-&lt;p&gt;よって、時間計算量&lt;code&gt;O(N+M+Sum(A))&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;各集合を頂点とした幅優先探索を行います。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;整数&lt;code&gt;x&lt;/code&gt;が属する集合群を&lt;code&gt;Has[x]&lt;/code&gt;としたとき、始点は&lt;code&gt;Has[1]&lt;/code&gt;に属する集合群になります。&lt;/del&gt;
+&lt;del&gt;また、&lt;code&gt;Has[1]&lt;/code&gt;に属する集合を&lt;code&gt;u&lt;/code&gt;としたとき、&lt;code&gt;S[u]&lt;/code&gt;の整数集合の最小操作回数は&lt;code&gt;0&lt;/code&gt;になります。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;幅優先探索において、遷移元の集合を&lt;code&gt;u&lt;/code&gt;としたとき、&lt;code&gt;u&lt;/code&gt;から遷移することができる集合群は、整数&lt;code&gt;S[u][i] (1&amp;lt;=i&amp;lt;=A[u])&lt;/code&gt;を含む集合、つまり&lt;code&gt;Has[S[u][i]]&lt;/code&gt;の集合群になります。&lt;/del&gt;
+&lt;del&gt;整数&lt;code&gt;S[u][i]&lt;/code&gt;を&lt;code&gt;s1&lt;/code&gt;、&lt;code&gt;s1&lt;/code&gt;を含む集合を&lt;code&gt;v&lt;/code&gt;、&lt;code&gt;v&lt;/code&gt;に含まれる整数&lt;code&gt;S[u][j] (1&amp;lt;=j&amp;lt;=A[v])&lt;/code&gt;を&lt;code&gt;s2&lt;/code&gt;、整数&lt;code&gt;x&lt;/code&gt;への最小操作回数を&lt;code&gt;costs[x]&lt;/code&gt;としたとき、&lt;code&gt;s2&lt;/code&gt;への遷移回数は&lt;code&gt;Min(costs[s2],costs[s1]+1)&lt;/code&gt;になります。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;よって、時間計算量&lt;code&gt;O(N+M+Sum(A))&lt;/code&gt;で答えを求めることができます。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2023/05/22更新&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;頂点&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;N&lt;/code&gt;を集合の番号、頂点&lt;code&gt;N+1&lt;/code&gt;から&lt;code&gt;N+M&lt;/code&gt;を&lt;code&gt;1&lt;/code&gt;から&lt;code&gt;M&lt;/code&gt;の整数に対応させ、集合から整数、整数から集合に対してそれぞれコスト1の辺を張ったグラフを作成し、幅優先探索を行います。&lt;/p&gt;
+&lt;p&gt;集合から整数、整数から集合に対しての移動で2回の移動をしているため、答えが2倍になることに注意します。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
 {
     var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var S = new HashSet&amp;lt;int&amp;gt;[N];
-    var Has = new HashSet&amp;lt;int&amp;gt;[M + 1].Select(_ =&amp;gt; new HashSet&amp;lt;int&amp;gt;()).ToArray();
+    var S = new int[N][];
+    var G = new List&amp;lt;int&amp;gt;[N + M + 1].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
     for (var i = 0; i &amp;lt; N; i++)
     {
         _ = Scanner.Scan&amp;lt;int&amp;gt;();
-        S[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToHashSet();
+        S[i] = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
         foreach (var s in S[i])
         {
-            Has[s].Add(i);
+            G[i + 1].Add(N + s);
+            G[N + s].Add(i + 1);
         }
     }
 
     var queue = new Queue&amp;lt;int&amp;gt;();
-    var costs = new int[M + 1];
+    var costs = new int[N + M + 1];
     Array.Fill(costs, -1);
-    var used = new bool[N];
-
-    foreach (var u in Has[1])
-    {
-        queue.Enqueue(u);
-        used[u] = true;
-
-        foreach (var s in S[u])
-        {
-            costs[s] = 0;
-        }
-    }
+    costs[N + 1] = 0;
+    queue.Enqueue(N + 1);
 
     while (queue.Count &amp;gt; 0)
     {
         var u = queue.Dequeue();
-        foreach (var s1 in S[u])
+        foreach (var v in G[u])
         {
-            foreach (var v in Has[s1])
-            {
-                if (used[v]) continue;
-                foreach (var s2 in S[v])
-                {
-                    costs[s2] = Math.Min(costs[s2], costs[s1] + 1);
-                }
-
-                queue.Enqueue(v);
-                used[v] = true;
-            }
+            if (costs[v] != -1) continue;
+            costs[v] = costs[u] + 1;
+            queue.Enqueue(v);
         }
     }
 
-    var answer = costs[M];
+    var answer = costs[N + M];
+    if (answer != -1) answer = (answer - 1) / 2;
     Console.WriteLine(answer);
 }
 &lt;/code&gt;&lt;/pre&gt;
