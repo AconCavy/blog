@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - abc304</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="abc304">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230603abc304">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">abc304</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on Saturday, 03 June 2023
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on Saturday, 03 June 2023
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 304の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc304">https://atcoder.jp/contests/abc304</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc304/tasks/abc304_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC304/submissions/41937503">コンテスト提出</a></p>
+<p><code>A[i]</code>が最も小さい番号の人の順番を<code>k (0-indexed)</code>としたとき、<code>i</code>番目に出力すべき人は<code>(k+i-1)%N</code>番の人となります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = new string[N];
+    var A = new int[N];
+    var first = -1;
+    const int Inf = (int)1e9;
+    var min = Inf;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (s, a) = Scanner.Scan&lt;string, int&gt;();
+        S[i] = s;
+        A[i] = a;
+        if (a &lt; min)
+        {
+            min = a;
+            first = i;
+        }
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        Console.WriteLine(S[(first + i) % N]);
+    }
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc304/tasks/abc304_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC304/submissions/41937568">コンテスト提出</a></p>
+<p><code>N</code>が<code>M</code>桁の数値であるとき、下位<code>Max(0,M-3)</code>桁を切り捨てたものが答えとなります。
+そのため、<code>K=Max(0,M-3)</code>としたとき、<code>Floor(N/K)*K</code>が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;long&gt;();
+    var M = N.ToString().Length - 3;
+    var k = 1;
+    for (var i = 0; i &lt; M; i++)
+    {
+        k *= 10;
+    }
+
+    Console.WriteLine(N / k * k);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc304/tasks/abc304_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC304/submissions/41941546">コンテスト提出</a></p>
+<p>各番号の人を頂点としたBFSを行います。
+遷移できるかの判定において、距離の2乗で判定を行うことで、浮動小数点による誤差を無視して判定することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, D) = Scanner.Scan&lt;int, int&gt;();
+    var P = new (int X, int Y)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;int, int&gt;();
+        P[i] = (x, y);
+    }
+
+    var used = new bool[N];
+    used[0] = true;
+    var queue = new Queue&lt;int&gt;();
+    queue.Enqueue(0);
+    var D2 = D * D;
+    while (queue.Count &gt; 0)
+    {
+        var u = queue.Dequeue();
+        for (var v = 0; v &lt; N; v++)
+        {
+            if (used[v]) continue;
+            var (dx, dy) = (P[u].X - P[v].X, P[u].Y - P[v].Y);
+            var d = dx * dx + dy * dy;
+            if (d &lt;= D2)
+            {
+                used[v] = true;
+                queue.Enqueue(v);
+            }
+        }
+    }
+
+    Console.WriteLine(string.Join(Environment.NewLine, used.Select(x =&gt; x ? &quot;Yes&quot; : &quot;No&quot;)));
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc304/tasks/abc304_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC304/submissions/41963721">コンテスト提出</a></p>
+<p>分割されたケーキのピースをそれぞれ、横<code>i (1&lt;=i&lt;=A+1)</code>番目、縦<code>j (1&lt;=j&lt;=B+1)</code>番目のピースとし、それぞれのピースにイチゴが何個乗っているかを数え上げます。</p>
+<p>このとき、イチゴがどのピースに乗っているかを二次元配列で管理してしまうと、計算量が<code>O((A+1)(B+1))</code>になってしまいますが、イチゴの数は高々<code>N</code>個なので、ピース<code>(i,j)</code>をキーとする辞書などのデータ構造を使うことで、計算量を<code>O(log(N))</code>に抑えて管理することができます。</p>
+<p>また、イチゴがどの位置のピースに乗っているかについて、愚直に探索してしまうと、イチゴごとに時間計算量<code>O(A+B)</code>かかりますが、二部探索をおこなうことで時間計算量<code>O(logA+logB)</code>に抑えることができます。<br>
+これにより、イチゴがあるピースにおける最小値と最大値を求めることができます。
+しかし、この最小値はイチゴがないピースは対象としていないため、イチゴがないピースが存在した場合は最小は<code>0</code>となります。<br>
+これは、<code>(i,j)</code>の組み合わせのピースを全て走査することで判定することができますが、イチゴの数は<code>N</code>個なので、<code>Min(N+1,(A+1)(B+1))</code>個の組み合わせを調べるだけで、イチゴがないピースが存在するかを判定することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (W, H) = Scanner.Scan&lt;int, int&gt;();
+    var N = Scanner.Scan&lt;int&gt;();
+    var Berries = new (int X, int Y)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;int, int&gt;();
+        Berries[i] = (x, y);
+    }
+    var AN = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToList();
+    var BN = Scanner.Scan&lt;int&gt;();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToList();
+    A.Insert(0, 0);
+    B.Insert(0, 0);
+
+    var dict = new Dictionary&lt;(int, int), int&gt;();
+    foreach (var (x, y) in Berries)
+    {
+        var i = LowerBound(A, x);
+        var j = LowerBound(B, y);
+        if (!dict.ContainsKey((i, j))) dict[(i, j)] = 0;
+        dict[(i, j)]++;
+    }
+
+    const int Inf = (int)1e9;
+    var min = Inf;
+    var max = 0;
+    foreach (var v in dict.Values)
+    {
+        min = Math.Min(min, v);
+        max = Math.Max(max, v);
+    }
+
+    var ok = false;
+    for (var i = 1; i &lt;= AN + 1 &amp;&amp; !ok; i++)
+    {
+        for (var j = 1; j &lt;= BN + 1 &amp;&amp; !ok; j++)
+        {
+            if (!dict.ContainsKey((i, j)))
+            {
+                min = 0;
+                ok = true;
+            }
+        }
+    }
+
+    Console.WriteLine($&quot;{min} {max}&quot;);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc304/tasks/abc304_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC304/submissions/41972347">コンテスト提出</a></p>
+<p><code>G</code>上で頂点<code>x</code>と頂点<code>y</code>を結ぶパスが存在しないということは、<code>x</code>、<code>y</code>が属する連結成分を<code>gx</code>、<code>gy</code>としたとき、<code>gx</code>と<code>gy</code>が別の連結成分であることが良いグラフである条件になります。<br>
+このことから、<code>gx</code>と<code>gy</code>を接続する辺を追加したときは、<code>G</code>は良いグラフではなくなります。<br>
+そのため、連結成分ごとに互いに接続してはいけない連結成分を管理し、クエリごとに<code>p</code>、<code>q</code>が互いに接続してはいけない連結成分に属していないかを判定することで答えを求めることができます。<br>
+各頂点がどの連結成分に属しているかは、<code>DisjointSetUnion</code>を使って各連結成分の代表となる頂点をインデックスにするなどの方法で管理することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var dsu = new DisjointSetUnion(N);
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        dsu.Merge(u, v);
+    }
+
+    var K = Scanner.Scan&lt;int&gt;();
+    var dict = new Dictionary&lt;int, HashSet&lt;int&gt;&gt;();
+    for (var i = 0; i &lt; K; i++)
+    {
+        var (x, y) = Scanner.Scan&lt;int, int&gt;();
+        x--; y--;
+        var xl = dsu.LeaderOf(x);
+        var yl = dsu.LeaderOf(y);
+        if (!dict.ContainsKey(xl)) dict[xl] = new HashSet&lt;int&gt;();
+        if (!dict.ContainsKey(yl)) dict[yl] = new HashSet&lt;int&gt;();
+        dict[xl].Add(yl);
+        dict[yl].Add(xl);
+    }
+
+    var Q = Scanner.Scan&lt;int&gt;();
+    for (var i = 0; i &lt; Q; i++)
+    {
+        var (p, q) = Scanner.Scan&lt;int, int&gt;();
+        p--; q--;
+        var pl = dsu.LeaderOf(p);
+        var ql = dsu.LeaderOf(q);
+        var answer = true;
+        if (dict.ContainsKey(pl)) answer &amp;= !dict[pl].Contains(ql);
+        if (dict.ContainsKey(ql)) answer &amp;= !dict[ql].Contains(pl);
+
+        Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    }
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230603abc304" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
