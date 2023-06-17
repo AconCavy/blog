@@ -5,8 +5,487 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sat, 10 Jun 2023 15:08:04 GMT</pubDate>
-		<lastBuildDate>Sat, 10 Jun 2023 15:08:04 GMT</lastBuildDate>
+		<pubDate>Sat, 17 Jun 2023 15:22:54 GMT</pubDate>
+		<lastBuildDate>Sat, 17 Jun 2023 15:22:54 GMT</lastBuildDate>
+		<item>
+			<title>ABC306</title>
+			<link>https://blog.aconcavy.dev/posts/20230617abc306</link>
+			<description>&lt;p&gt;AtCoder Beginner Contest 306の復習記事です。&lt;/p&gt;</description>
+			<guid>https://blog.aconcavy.dev/posts/20230617abc306</guid>
+			<pubDate>Sat, 17 Jun 2023 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 306の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Scannerクラス&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
+{
+    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
+    }
+    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
+    }
+    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc306"&gt;https://atcoder.jp/contests/abc306&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc306/tasks/abc306_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC306/submissions/42316809"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各文字を2回繰り返したものを出力します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var builder = new StringBuilder();
+    foreach (var c in S)
+    {
+        builder.Append($&amp;quot;{c}{c}&amp;quot;);
+    }
+
+    var answer = builder.ToString();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc306/tasks/abc306_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC306/submissions/42326644"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1&lt;/code&gt;を&lt;code&gt;i&lt;/code&gt;ビットシフトすると、&lt;code&gt;2^i&lt;/code&gt;になるので、&lt;code&gt;A[i]&amp;lt;&amp;lt;i&lt;/code&gt;を足していくことで答えを求めることができます。&lt;br /&gt;
+符号あり64bit整数型の&lt;code&gt;long&lt;/code&gt;型だと、&lt;code&gt;2^63-1&lt;/code&gt;までしか格納できないので、&lt;code&gt;ulong&lt;/code&gt;型などの符号なし64bit整数型を使うことに注意が必要です(1敗)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    ulong answer = 0;
+    for (var i = 0; i &amp;lt; A.Length; i++)
+    {
+        answer |= (ulong)A[i] &amp;lt;&amp;lt; i;
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc306/tasks/abc306_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC306/submissions/42325473"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2回目に出現する値からなる数列が答えとなります。&lt;br /&gt;
+各値が何回出現したかを管理しながら&lt;code&gt;A&lt;/code&gt;を順に走査し、値が2回目に出現したものを答えの数列に追加することで答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var count = new int[N + 1];
+    var answer = new List&amp;lt;int&amp;gt;(N);
+    foreach (var a in A)
+    {
+        count[a]++;
+        if (count[a] == 2) answer.Add(a);
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, answer));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc306/tasks/abc306_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC306/submissions/42333604"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;次のような動的計画法を解きます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[i][f] := i番目の料理まで見たとき、高橋くんがおなかの状態(f=壊している|壊していない)のときの食べた料理のおいしさの総和の最大値
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;遷移としては次のようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;f=0 // おなかを壊していない
+f=1 // おなかを壊している
+
+i番目の料理を下げてもらうとき
+dp[i+1][0] = Max(dp[i+1][0], dp[i][0])
+dp[i+1][1] = Max(dp[i+1][1], dp[i][1])
+
+i番目の解毒剤入りの料理を食べるとき(x==0)
+dp[i+1][0] = Max(dp[i+1][0], dp[i][0]+y, dp[i][1]+y)
+
+i番目の毒入りの料理を食べるとき(y==0)
+dp[i+1][1] = Max(dp[i+1][1], dp[i][0]+y)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;N&lt;/code&gt;番目の料理まで見たときのおなかを壊していないときとおなかを壊しているときのうち、最大値が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var dp = new long[N + 1, 2];
+    const int Inf = (int)1e9;
+    dp[0, 1] = -Inf;
+
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var (x, y) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        dp[i + 1, 0] = Math.Max(dp[i + 1, 0], dp[i, 0]);
+        dp[i + 1, 1] = Math.Max(dp[i + 1, 1], dp[i, 1]);
+
+        if (x == 0)
+        {
+            dp[i + 1, 0] = Math.Max(dp[i + 1, 0], dp[i, 0] + y);
+            dp[i + 1, 0] = Math.Max(dp[i + 1, 0], dp[i, 1] + y);
+        }
+        else
+        {
+            dp[i + 1, 1] = Math.Max(dp[i + 1, 1], dp[i, 0] + y);
+        }
+    }
+
+    var answer = Math.Max(dp[N, 0], dp[N, 1]);
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc306/tasks/abc306_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC306/submissions/42355592"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;クエリごとに&lt;code&gt;A&lt;/code&gt;に対してソートを行い、降順&lt;code&gt;K&lt;/code&gt;個の和を計算してしまうと、クエリ当たりの時間計算量が&lt;code&gt;O(NlogN)&lt;/code&gt;、全体の時間計算量が&lt;code&gt;O(QNlogN)&lt;/code&gt;となり、実行時間制限に間に合いません。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;f(A)&lt;/code&gt;は&lt;code&gt;A&lt;/code&gt;のうちの降順&lt;code&gt;K&lt;/code&gt;個の総和であり、&lt;code&gt;K&lt;/code&gt;個の中からある値&lt;code&gt;v&lt;/code&gt;が引かれたとき、&lt;code&gt;f(A)&lt;/code&gt;から&lt;code&gt;v&lt;/code&gt;が引かれ、&lt;code&gt;K+1&lt;/code&gt;番目の値が&lt;code&gt;f(A)&lt;/code&gt;に加えられます。
+対して、&lt;code&gt;K&lt;/code&gt;個の中にある値&lt;code&gt;v&lt;/code&gt;が加えられたとき、&lt;code&gt;f(A)&lt;/code&gt;には&lt;code&gt;v&lt;/code&gt;が加えられ、&lt;code&gt;K+1&lt;/code&gt;番目の値が&lt;code&gt;f(A)&lt;/code&gt;から引かれます。&lt;/p&gt;
+&lt;p&gt;つまり、更新前の&lt;code&gt;A[x]&lt;/code&gt;が&lt;code&gt;K&lt;/code&gt;番目以内であれば、&lt;code&gt;f(A)&lt;/code&gt;から&lt;code&gt;A[x]&lt;/code&gt;を引き、&lt;code&gt;A&lt;/code&gt;の&lt;code&gt;K+1&lt;/code&gt;番目の値を&lt;code&gt;f(A)&lt;/code&gt;に加えます。&lt;br /&gt;
+&lt;code&gt;A[x]=y&lt;/code&gt;として&lt;code&gt;A&lt;/code&gt;を更新後、&lt;code&gt;A[x]&lt;/code&gt;が&lt;code&gt;K&lt;/code&gt;番以内であれば、&lt;code&gt;f(A)&lt;/code&gt;に&lt;code&gt;A[x]&lt;/code&gt;を加え、&lt;code&gt;A&lt;/code&gt;の&lt;code&gt;K+1&lt;/code&gt;番目の値を&lt;code&gt;f(A)&lt;/code&gt;から引きます。&lt;/p&gt;
+&lt;p&gt;現在の&lt;code&gt;A&lt;/code&gt;を管理しながら&lt;code&gt;f(A)&lt;/code&gt;を更新していくことで答えを求めることができます。
+クエリにおいて、現在の&lt;code&gt;A&lt;/code&gt;の中から&lt;code&gt;K&lt;/code&gt;番目の値を高速に求める必要があり、重複を許す順序集合を使うことで、時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で値を取得することができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, K, Q) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var A = new long[N + 1];
+    var set = new Set&amp;lt;long&amp;gt;((x, y) =&amp;gt; y.CompareTo(x), true);
+    for (var i = 0; i &amp;lt;= N; i++)
+    {
+        set.Add(0);
+    }
+
+    long answer = 0;
+    for (var i = 0; i &amp;lt; Q; i++)
+    {
+        var (x, y) = Scanner.Scan&amp;lt;int, long&amp;gt;();
+        var lb1 = set.LowerBound(A[x]);
+        if (lb1 &amp;lt; K)
+        {
+            answer -= A[x];
+            answer += set.ElementAt(K);
+        }
+
+        set.Remove(A[x]);
+
+        A[x] = y;
+        set.Add(y);
+
+        var lb2 = set.LowerBound(y);
+        if (lb2 &amp;lt; K)
+        {
+            answer += y;
+            answer -= set.ElementAt(K);
+        }
+
+        Console.WriteLine(answer);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;details&gt;
+&lt;summary&gt;Set&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public class Set&amp;lt;T&amp;gt; : IReadOnlyCollection&amp;lt;T&amp;gt;
+{
+    private readonly RandomizedBinarySearchTree&amp;lt;T&amp;gt; _tree;
+    private readonly bool _allowDuplication;
+    public Set(bool allowDuplication = false) : this(Comparer&amp;lt;T&amp;gt;.Default, allowDuplication) { }
+
+    public Set(IEnumerable&amp;lt;T&amp;gt; source, bool allowDuplication = false) : this(allowDuplication)
+    {
+        foreach (var value in source) Add(value);
+    }
+
+    public Set(IEnumerable&amp;lt;T&amp;gt; source, IComparer&amp;lt;T&amp;gt; comparer, bool allowDuplication = false)
+        : this(comparer, allowDuplication)
+    {
+        foreach (var value in source) Add(value);
+    }
+
+    public Set(IEnumerable&amp;lt;T&amp;gt; source, Comparison&amp;lt;T&amp;gt; comparison, bool allowDuplication = false)
+        : this(comparison, allowDuplication)
+    {
+        foreach (var value in source) Add(value);
+    }
+
+    public Set(IComparer&amp;lt;T&amp;gt; comparer, bool allowDuplication = false)
+        : this((comparer ?? Comparer&amp;lt;T&amp;gt;.Default).Compare, allowDuplication)
+    {
+    }
+
+    public Set(Comparison&amp;lt;T&amp;gt; comparison, bool allowDuplication = false)
+    {
+        _tree = new RandomizedBinarySearchTree&amp;lt;T&amp;gt;(comparison);
+        _allowDuplication = allowDuplication;
+    }
+
+    public void Add(T value)
+    {
+        if (_allowDuplication || !_tree.Contains(value)) _tree.Insert(value);
+    }
+
+    public void Remove(T value)
+    {
+        _tree.Remove(value);
+    }
+
+    public bool Contains(T value)
+    {
+        return _tree.Contains(value);
+    }
+
+    public T ElementAt(int index)
+    {
+        return _tree.ElementAt(index);
+    }
+
+    public int LowerBound(T value)
+    {
+        return _tree.LowerBound(value);
+    }
+
+    public int UpperBound(T value)
+    {
+        return _tree.UpperBound(value);
+    }
+
+    public int Count =&amp;gt; _tree.Count;
+    public IEnumerator&amp;lt;T&amp;gt; GetEnumerator() =&amp;gt; _tree.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() =&amp;gt; GetEnumerator();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;details&gt;
+&lt;summary&gt;Randomized Binary Search Tree&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;
+public class RandomizedBinarySearchTree&amp;lt;T&amp;gt; : IReadOnlyCollection&amp;lt;T&amp;gt;
+{
+    private readonly Comparison&amp;lt;T&amp;gt; _comparison;
+    private readonly Random _random;
+    private Node _root;
+    public RandomizedBinarySearchTree(int seed = 0) : this(comparer: null, seed) { }
+
+    public RandomizedBinarySearchTree(Comparer&amp;lt;T&amp;gt; comparer, int seed = 0) : this(
+        (comparer ?? Comparer&amp;lt;T&amp;gt;.Default).Compare, seed)
+    {
+    }
+
+    public RandomizedBinarySearchTree(Comparison&amp;lt;T&amp;gt; comparison, int seed = 0)
+    {
+        _comparison = comparison;
+        _random = new Random(seed);
+    }
+
+    public void Insert(T value)
+    {
+        if (_root is null) _root = new Node(value);
+        else InsertAt(LowerBound(value), value);
+    }
+
+    public bool Remove(T value)
+    {
+        var index = LowerBound(value);
+        if (index &amp;lt; 0) return false;
+        RemoveAt(index);
+        return true;
+    }
+
+    public T ElementAt(int index)
+    {
+        if (index &amp;lt; 0 || Count &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        var node = _root;
+        var idx = CountOf(node) - CountOf(node.R) - 1;
+        while (node is { })
+        {
+            if (idx == index) return node.Value;
+            if (idx &amp;gt; index)
+            {
+                node = node.L;
+                idx -= CountOf(node?.R) + 1;
+            }
+            else
+            {
+                node = node.R;
+                idx += CountOf(node?.L) + 1;
+            }
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(index));
+    }
+
+    public bool Contains(T value)
+    {
+        return Find(value) is { };
+    }
+
+    public int Count =&amp;gt; CountOf(_root);
+    public IEnumerator&amp;lt;T&amp;gt; GetEnumerator() =&amp;gt; Enumerate(_root).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() =&amp;gt; GetEnumerator();
+    public int UpperBound(T value) =&amp;gt; Bound(value, (x, y) =&amp;gt; _comparison(x, y) &amp;gt; 0);
+    public int LowerBound(T value) =&amp;gt; Bound(value, (x, y) =&amp;gt; _comparison(x, y) &amp;gt;= 0);
+
+    public int Bound(T value, Func&amp;lt;T, T, bool&amp;gt; compare)
+    {
+        var node = _root;
+        if (node is null) return -1;
+        var bound = CountOf(node);
+        var idx = bound - CountOf(node.R) - 1;
+        while (node is { })
+        {
+            if (compare(node.Value, value))
+            {
+                node = node.L;
+                bound = Math.Min(bound, idx);
+                idx -= CountOf(node?.R) + 1;
+            }
+            else
+            {
+                node = node.R;
+                idx += CountOf(node?.L) + 1;
+            }
+        }
+
+        return bound;
+    }
+
+    private double GetProbability() =&amp;gt; _random.NextDouble();
+
+    private void InsertAt(int index, T value)
+    {
+        var (l, r) = Split(_root, index);
+        _root = Merge(Merge(l, new Node(value)), r);
+    }
+
+    private void RemoveAt(int index)
+    {
+        var (l, r1) = Split(_root, index);
+        var (_, r2) = Split(r1, 1);
+        _root = Merge(l, r2);
+    }
+
+    private Node Merge(Node l, Node r)
+    {
+        if (l is null || r is null) return l ?? r;
+        var (n, m) = (CountOf(l), CountOf(r));
+        if ((double)n / (n + m) &amp;gt; GetProbability())
+        {
+            l.R = Merge(l.R, r);
+            return l;
+        }
+        else
+        {
+            r.L = Merge(l, r.L);
+            return r;
+        }
+    }
+
+    private (Node, Node) Split(Node node, int k)
+    {
+        if (node is null) return (null, null);
+        if (k &amp;lt;= CountOf(node.L))
+        {
+            var (l, r) = Split(node.L, k);
+            node.L = r;
+            return (l, node);
+        }
+        else
+        {
+            var (l, r) = Split(node.R, k - CountOf(node.L) - 1);
+            node.R = l;
+            return (node, r);
+        }
+    }
+
+    private Node Find(T value)
+    {
+        var node = _root;
+        while (node is { })
+        {
+            var cmp = _comparison(node.Value, value);
+            if (cmp &amp;gt; 0) node = node.L;
+            else if (cmp &amp;lt; 0) node = node.R;
+            else break;
+        }
+
+        return node;
+    }
+
+    private static int CountOf(Node node) =&amp;gt; node?.Count ?? 0;
+
+    private static IEnumerable&amp;lt;T&amp;gt; Enumerate(Node node = null)
+    {
+        if (node is null) yield break;
+        foreach (var value in Enumerate(node.L)) yield return value;
+        yield return node.Value;
+        foreach (var value in Enumerate(node.R)) yield return value;
+    }
+
+    private class Node
+    {
+        internal T Value { get; }
+
+        internal Node L
+        {
+            get =&amp;gt; _l;
+            set
+            {
+                _l = value;
+                UpdateCount();
+            }
+        }
+
+        internal Node R
+        {
+            get =&amp;gt; _r;
+            set
+            {
+                _r = value;
+                UpdateCount();
+            }
+        }
+
+        internal int Count { get; private set; }
+        private Node _l;
+        private Node _r;
+
+        internal Node(T value)
+        {
+            Value = value;
+            Count = 1;
+        }
+
+        private void UpdateCount()
+        {
+            Count = (L?.Count ?? 0) + (R?.Count ?? 0) + 1;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 		<item>
 			<title>ABC305</title>
 			<link>https://blog.aconcavy.dev/posts/20230610abc305</link>
@@ -2131,267 +2610,6 @@ dp[i,Min(j+q,N),1] += dp[i,j,0]/Q; // 1&amp;lt;=q&amp;lt;=Q
 
     var answer = queue.Dequeue();
     Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>ABC296</title>
-			<link>https://blog.aconcavy.dev/posts/20230401abc296</link>
-			<description>&lt;p&gt;AtCoder Beginner Contest 296の復習記事です。&lt;/p&gt;</description>
-			<guid>https://blog.aconcavy.dev/posts/20230401abc296</guid>
-			<pubDate>Sat, 01 Apr 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 296の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc296"&gt;https://atcoder.jp/contests/abc296&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc296/tasks/abc296_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40210681"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;1&amp;lt;=i&amp;lt;N&lt;/code&gt;において、&lt;code&gt;S[i]&lt;/code&gt;と&lt;code&gt;S[i+1]&lt;/code&gt;がすべて異なっている場合、答えは&lt;code&gt;Yes&lt;/code&gt;になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-
-    var answer = true;
-    for (var i = 0; i + 1 &amp;lt; N; i++)
-    {
-        answer &amp;amp;= S[i] != S[i + 1];
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc296/tasks/abc296_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40214277"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S[r][c]&lt;/code&gt;が&lt;code&gt;*&lt;/code&gt;のとなる&lt;code&gt;r&lt;/code&gt;と&lt;code&gt;c&lt;/code&gt;を求め、&lt;code&gt;r&lt;/code&gt;と&lt;code&gt;c&lt;/code&gt;を指定されたフォーマット文字列に変換します。&lt;br /&gt;
-フォーマット文字列は、&lt;code&gt;{行}{列}&lt;/code&gt;ではなく、&lt;code&gt;{列+'a'}{8-行}&lt;/code&gt;であることに注意します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    const int H = 8;
-    const int W = 8;
-    var S = new char[H][];
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        S[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
-    }
-
-    string F(int r, int c) =&amp;gt; $&amp;quot;{(char)(c + 'a')}{8 - r}&amp;quot;
-
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        for (var j = 0; j &amp;lt; W; j++)
-        {
-            if (S[i][j] == '*')
-            {
-                Console.WriteLine(F(i, j));
-                return;
-            }
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc296/tasks/abc296_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40219829"&gt;コンテスト提出&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40268336"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;A&lt;/code&gt;をソートし、尺取り法で&lt;code&gt;A[r]-A[l]==X&lt;/code&gt;となる&lt;code&gt;l&lt;/code&gt;と&lt;code&gt;r&lt;/code&gt;を探索することで、時間計算量&lt;code&gt;O(NlogN+N)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, X) = Scanner.Scan&amp;lt;int, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    Array.Sort(A);
-    var r = 0;
-    for (var l = 0; l &amp;lt; N; l++)
-    {
-        while (r &amp;lt; N &amp;amp;&amp;amp; A[r] - A[l] &amp;lt; X) r++;
-        if (r &amp;lt; N &amp;amp;&amp;amp; A[r] - A[l] == X)
-        {
-            Console.WriteLine(&amp;quot;Yes&amp;quot;);
-            return;
-        }
-    }
-
-    Console.WriteLine(&amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;A[i]-A[j]==X&lt;/code&gt;を式変形すると&lt;code&gt;A[i]==A[j]+X&lt;/code&gt;であることから、&lt;code&gt;A&lt;/code&gt;からなる集合&lt;code&gt;S&lt;/code&gt;を用意し、&lt;code&gt;A[i]+X&lt;/code&gt;が&lt;code&gt;S&lt;/code&gt;に含まれているかどうかを判定することでも、答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, X) = Scanner.Scan&amp;lt;int, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var set = new HashSet&amp;lt;long&amp;gt;(A);
-    var answer = set.Any(a =&amp;gt; set.Contains(a + X));
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc296/tasks/abc296_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40233550"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a&amp;lt;=b&lt;/code&gt;とし&lt;code&gt;a&lt;/code&gt;を固定して考えると、&lt;code&gt;M&amp;lt;=a*b&lt;/code&gt;より&lt;code&gt;b&amp;gt;=M/a&lt;/code&gt;、&lt;code&gt;Floor(M/a)&amp;lt;=M/a&amp;lt;=Ceil(M/a)&lt;/code&gt;より、&lt;code&gt;b=Ceil(M/a)&lt;/code&gt;とすることができ、&lt;code&gt;1&amp;lt;=b&amp;lt;=N&lt;/code&gt;であることから、&lt;code&gt;c=a*Min(b,N)&lt;/code&gt;になり、&lt;code&gt;c&amp;gt;=M&lt;/code&gt;のときの最小値が答えとなります。&lt;br /&gt;
-時間計算量は&lt;code&gt;O(Min(N,Sqrt(M)))&lt;/code&gt;程度となり、最大でも&lt;code&gt;1e6&lt;/code&gt;回程度の計算で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M) = Scanner.Scan&amp;lt;long, long&amp;gt;();
-    const long Inf = (long)1e18;
-
-    long CalcB(long a) =&amp;gt; Math.Min(N, (M + a - 1) / a);
-
-    var answer = Inf;
-    for (long a = 1; a &amp;lt;= CalcB(a); a++)
-    {
-        var b = CalcB(a);
-        var c = a * b;
-        if (c &amp;gt;= M) answer = Math.Min(answer, c);
-    }
-
-    if (answer == Inf) answer = -1;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc296/tasks/abc296_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC296/submissions/40261543"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;1&amp;lt;=i&amp;lt;=N&lt;/code&gt;を頂点としたグラフとし、&lt;code&gt;黒板にxが書かれているとき、それを消し、A[x]を新しく書く&lt;/code&gt;という操作を&lt;code&gt;x&lt;/code&gt;から&lt;code&gt;A[x]&lt;/code&gt;に対する有向辺とすると、
-サイクルを構築する頂点の集合(強連結成分)に含まれる頂点には、正整数&lt;code&gt;K[i]&lt;/code&gt;がどのような値であっても、始点となる頂点を任意に決めることができるので、たどり着くことができます。&lt;br /&gt;
-このことから、&lt;code&gt;i&lt;/code&gt;から&lt;code&gt;A[i]&lt;/code&gt;に対する有効辺を構築したグラフに対して強連結成分分解を行い、各強連結成分を構成する頂点の総和が答えとなります。&lt;br /&gt;
-このとき、自己辺が存在する場合に注意が必要です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().Select(x =&amp;gt; x - 1).ToArray();
-    var isSelf = new bool[N];
-
-    var scc = new StronglyConnectedComponent(N);
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        scc.AddEdge(i, A[i]);
-        if (i == A[i]) isSelf[i] = true;
-    }
-
-    var answer = 0;
-    foreach (var graph in scc.GetGraph())
-    {
-        if (graph.Count == 1 &amp;amp;&amp;amp; !isSelf[graph[0]]) continue;
-        answer += graph.Count;
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;強連結成分に関しては以下のクラスを使いました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public class StronglyConnectedComponent
-{
-    public int Length { get; }
-    private readonly List&amp;lt;(int, Edge)&amp;gt; _edges;
-
-    public StronglyConnectedComponent(int length)
-    {
-        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
-        Length = length;
-        _edges = new List&amp;lt;(int, Edge)&amp;gt;();
-    }
-
-    public void AddEdge(int from, int to)
-    {
-        if (from &amp;lt; 0 || Length &amp;lt;= from) throw new ArgumentOutOfRangeException(nameof(from));
-        if (to &amp;lt; 0 || Length &amp;lt;= to) throw new ArgumentOutOfRangeException(nameof(to));
-        _edges.Add((from, new Edge(to)));
-    }
-
-    public (int GroupCount, int[] IDs) GetIDs()
-    {
-        var g = new CompressedSparseRow&amp;lt;Edge&amp;gt;(Length, _edges);
-        var (nowOrd, groupCount) = (0, 0);
-        var visited = new Stack&amp;lt;int&amp;gt;(Length);
-        var low = new int[Length];
-        var ord = new int[Length];
-        Array.Fill(ord, -1);
-        var ids = new int[Length];
-
-        void Dfs(int v)
-        {
-            low[v] = ord[v] = nowOrd++;
-            visited.Push(v);
-            for (var i = g.Start[v]; i &amp;lt; g.Start[v + 1]; i++)
-            {
-                var to = g.Edges[i].To;
-                if (ord[to] == -1)
-                {
-                    Dfs(to);
-                    low[v] = Math.Min(low[v], low[to]);
-                }
-                else
-                {
-                    low[v] = Math.Min(low[v], ord[to]);
-                }
-            }
-
-            if (low[v] != ord[v]) return;
-            while (true)
-            {
-                var u = visited.Pop();
-                ord[u] = Length;
-                ids[u] = groupCount;
-                if (u == v) break;
-            }
-
-            groupCount++;
-        }
-
-        for (var i = 0; i &amp;lt; Length; i++)
-        {
-            if (ord[i] == -1)
-                Dfs(i);
-        }
-
-        for (var i = 0; i &amp;lt; Length; i++)
-        {
-            ids[i] = groupCount - 1 - ids[i];
-        }
-
-        return (groupCount, ids);
-    }
-
-    public IReadOnlyList&amp;lt;IReadOnlyList&amp;lt;int&amp;gt;&amp;gt; GetGraph()
-    {
-        var (groupCount, ids) = GetIDs();
-        var groups = new List&amp;lt;int&amp;gt;[groupCount];
-        for (var i = 0; i &amp;lt; groups.Length; i++)
-        {
-            groups[i] = new List&amp;lt;int&amp;gt;();
-        }
-
-        foreach (var (id, index) in ids.Select((x, i) =&amp;gt; (x, i)))
-        {
-            groups[id].Add(index);
-        }
-
-        return groups;
-    }
-
-    private readonly struct Edge
-    {
-        public readonly int To;
-        public Edge(int to) =&amp;gt; To = to;
-    }
-}
-
-public class CompressedSparseRow&amp;lt;T&amp;gt;
-{
-    public CompressedSparseRow(int length, IEnumerable&amp;lt;(int ID, T)&amp;gt; edges)
-    {
-        Start = new int[length + 1];
-        var es = edges.ToArray();
-        Edges = new T[es.Length];
-        foreach (var e in es) Start[e.ID + 1]++;
-        for (var i = 0; i &amp;lt; length; i++) Start[i + 1] += Start[i];
-        var counter = new int[length + 1];
-        Start.AsSpan().CopyTo(counter.AsSpan());
-        foreach (var (i, t) in es) Edges[counter[i]++] = t;
-    }
-
-    public int[] Start { get; }
-    public T[] Edges { get; }
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
