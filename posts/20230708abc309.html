@@ -197,6 +197,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 {
     var (N, K) = Scanner.Scan&lt;int, long&gt;();
     var dict = new Dictionary&lt;long, long&gt;();
+    dict[1] = 0;
     long cum = 0;
     for (var i = 0; i &lt; N; i++)
     {
@@ -205,6 +206,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
         if (!dict.ContainsKey(a + 1)) dict[a + 1] = 0;
         dict[a + 1] += b;
     }
+
 
     foreach (var (a, b) in dict.OrderBy(x =&gt; x.Key))
     {

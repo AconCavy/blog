@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-07-08T14:25:47Z</updated>
+	<updated>2023-07-08T14:41:34Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230708abc309</id>
 		<title>ABC309</title>
@@ -120,6 +120,7 @@
 {
     var (N, K) = Scanner.Scan&amp;lt;int, long&amp;gt;();
     var dict = new Dictionary&amp;lt;long, long&amp;gt;();
+    dict[1] = 0;
     long cum = 0;
     for (var i = 0; i &amp;lt; N; i++)
     {
@@ -128,6 +129,7 @@
         if (!dict.ContainsKey(a + 1)) dict[a + 1] = 0;
         dict[a + 1] += b;
     }
+
 
     foreach (var (a, b) in dict.OrderBy(x =&amp;gt; x.Key))
     {
