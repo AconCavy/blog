@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
-		<title />
+		<title>acon.log</title>
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sat, 15 Jul 2023 15:08:06 GMT</pubDate>
-		<lastBuildDate>Sat, 15 Jul 2023 15:08:06 GMT</lastBuildDate>
+		<pubDate>Wed, 19 Jul 2023 01:32:43 GMT</pubDate>
+		<lastBuildDate>Wed, 19 Jul 2023 01:32:43 GMT</lastBuildDate>
 		<item>
 			<title>ABC310</title>
 			<link>https://blog.aconcavy.dev/posts/20230715abc310</link>
