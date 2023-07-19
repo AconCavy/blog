@@ -1,0 +1,5 @@
+<Project>
+    <ItemGroup>
+        <Compile Include="Extensions\**\*.cs"/>
+    </ItemGroup>
+</Project>
