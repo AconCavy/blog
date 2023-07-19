@@ -1,5 +1,6 @@
 @{
     var excerpt = Model.GetString(Keys.Excerpt);
+    var published = Model.GetDateTime(WebKeys.Published);
 }
 
 <div class="card shadow-sm c-post-preview">
@@ -9,7 +10,11 @@
         {
             <div class="card-subtitle">@Model.GetString("Lead")</div>
         }
-        <p class="post-meta c-post-preview__meta">@Model.GetDateTime(WebKeys.Published).ToLongDateString()</p>
+        <p class="post-meta c-post-preview__meta">
+            <time datetime="@published.ToString("yyyy-MM-ddTHH:mm:sszzz")">
+                @published.ToLongDateString()
+            </time>
+        </p>
         @if (!string.IsNullOrEmpty(excerpt))
         {
             <div class="card-text">@Html.Raw(excerpt)</div>

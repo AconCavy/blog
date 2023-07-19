@@ -2,6 +2,9 @@
     var title = Document.GetString("Title") ?? Document.GetString("SiteTitle");
     var description = Document.WithoutSettings().GetString("Lead") ??
                       Document.WithoutSettings().GetString(WebKeys.Description);
+    var dateTimeFormat = "yyyy-MM-ddTHH:mm:sszzz";
+    var published = Document.GetDateTime(WebKeys.Published);
+    var updated = Document.GetDateTime(WebKeys.Updated);
 }
 
 <header>
@@ -13,10 +16,10 @@
         }
 
         <div class="card-text c-post-header__meta">
-            Published on @Document.GetDateTime(WebKeys.Published).ToLongDateString()
+            Published on <time datetime="@published.ToString(dateTimeFormat)">@published.ToLongDateString()</time>
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on @Document.GetDateTime(WebKeys.Updated).ToLongDateString()
+            Updated on <time datetime="@updated.ToString(dateTimeFormat)">@updated.ToLongDateString()</time>
         </div>
 
         @if (Document.ContainsKey("Tags"))
