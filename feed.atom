@@ -4,7 +4,301 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-07-19T04:20:43Z</updated>
+	<updated>2023-07-22T14:54:07Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20230722abc311</id>
+		<title>ABC311</title>
+		<link href="https://blog.aconcavy.dev/posts/20230722abc311" />
+		<updated>2023-07-22T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 311の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Scannerクラス&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
+{
+    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
+    }
+    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
+    }
+    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc311"&gt;https://atcoder.jp/contests/abc311&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc311/tasks/abc311_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC311/submissions/43827108"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;char&lt;/code&gt;型は整数型として扱うことができるので、対象となる文字から&lt;code&gt;A&lt;/code&gt;を引くことで、&lt;code&gt;A&lt;/code&gt;の場合は&lt;code&gt;0&lt;/code&gt;、&lt;code&gt;B&lt;/code&gt;の場合は&lt;code&gt;1&lt;/code&gt;、&lt;code&gt;C&lt;/code&gt;の場合は&lt;code&gt;2&lt;/code&gt;にすることができ、配列のインデックスとして状態を管理することができます。&lt;br /&gt;
+長さが&lt;code&gt;3&lt;/code&gt;の&lt;code&gt;bool&lt;/code&gt;型配列の全てが&lt;code&gt;true&lt;/code&gt;になったときが何番目かを出力します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var used = new bool[3];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var c = S[i] - 'A';
+        used[c] = true;
+        if (used.All(x =&amp;gt; x))
+        {
+            Console.WriteLine($&amp;quot;{i + 1}&amp;quot;);
+            return;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc311/tasks/abc311_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC311/submissions/43836246"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X[i][j]&lt;/code&gt;を&lt;code&gt;i&lt;/code&gt;番目の人の&lt;code&gt;j&lt;/code&gt;日目までに連続する暇な日数としたとき、&lt;code&gt;j&lt;/code&gt;日目の全ての人の連続する暇な日数の最小値は、&lt;code&gt;j&lt;/code&gt;日目における選べる日数の最大値になります。&lt;br /&gt;
+このことから、全ての&lt;code&gt;j&lt;/code&gt;における選べる日数の最大値が答えとなります。
+&lt;code&gt;j&lt;/code&gt;日目までに連続する暇な日数は累積和で求めることができ、全体時間計算量&lt;code&gt;O(ND)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, D) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var X = new int[N][];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var s = Scanner.Scan&amp;lt;string&amp;gt;();
+        X[i] = new int[D + 1];
+        for (var j = 0; j &amp;lt; D; j++)
+        {
+            if (s[j] == 'o')
+            {
+                X[i][j + 1] = X[i][j] + 1;
+            }
+        }
+    }
+
+    var answer = 0;
+    const int Inf = (int)1e9;
+    for (var j = 0; j &amp;lt;= D; j++)
+    {
+        var min = Inf;
+        for (var i = 0; i &amp;lt; N; i++)
+        {
+            min = Math.Min(min, X[i][j]);
+        }
+
+        answer = Math.Max(answer, min);
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc311/tasks/abc311_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC311/submissions/43845949"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Disjoint Set Union&lt;/code&gt;などでグラフにおける閉路の検知と始点を決めます。
+深さ優先探索を行い、現在の頂点から既に訪れた頂点にたどり着くことができるかを判定していき、たどり着くことができるならば、その頂点は閉路を構成しているため、答えに追加するという操作を行います。&lt;br /&gt;
+この方法では、答えが逆順に追加されていることに注意が必要です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().Select(x =&amp;gt; x - 1).ToArray();
+    var G = new List&amp;lt;int&amp;gt;[N].Select(x =&amp;gt; new List&amp;lt;int&amp;gt;()).ToArray();
+    var answer = new List&amp;lt;int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i].Add(A[i]);
+    }
+
+    var dsu = new DisjointSetUnion(N);
+    var s = -1;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        if (dsu.IsSame(i, A[i]))
+        {
+            s = A[i];
+            break;
+        }
+
+        dsu.Merge(i, A[i]);
+    }
+
+    var used = new bool[N];
+    bool Dfs(int u)
+    {
+        if (used[u]) return true;
+
+        used[u] = true;
+        var result = false;
+        foreach (var v in G[u])
+        {
+            result |= Dfs(v);
+        }
+
+        if (result)
+        {
+            answer.Add(u);
+        }
+
+        return result;
+    }
+
+    Dfs(s);
+    answer.Reverse();
+    Console.WriteLine(answer.Count);
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, answer.Select(x =&amp;gt; x + 1)));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc311/tasks/abc311_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC311/submissions/43852101"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;visited[i][j][d]&lt;/code&gt;を&lt;code&gt;i&lt;/code&gt;行&lt;code&gt;j&lt;/code&gt;列目に方向&lt;code&gt;d&lt;/code&gt;で訪れたことがあるかとした幅優先探索を行います。&lt;br /&gt;
+いずれかの方向で&lt;code&gt;i&lt;/code&gt;行&lt;code&gt;j&lt;/code&gt;列目に訪れることができれば、プレイヤーが触れることができる氷とすることができ、この数の総和が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var G = new bool[N][];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        G[i] = Scanner.Scan&amp;lt;string&amp;gt;().Select(x =&amp;gt; x == '.').ToArray();
+    }
+
+    var visited = new bool[N, M, 4];
+    var queue = new Queue&amp;lt;(int H, int W, int D)&amp;gt;();
+    for (var i = 0; i &amp;lt; 4; i++)
+    {
+        visited[1, 1, i] = true;
+        queue.Enqueue((1, 1, i));
+    }
+
+    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
+
+    while (queue.Count &amp;gt; 0)
+    {
+        var (ch, cw, d) = queue.Dequeue();
+
+        var (dh1, dw1) = D4[d];
+        var (nh1, nw1) = (ch + dh1, cw + dw1);
+
+        if (nh1 &amp;lt; 0 || N &amp;lt;= nh1 || nw1 &amp;lt; 0 || M &amp;lt;= nw1) continue;
+        if (visited[nh1, nw1, d]) continue;
+        if (G[nh1][nw1])
+        {
+            visited[nh1, nw1, d] = true;
+            queue.Enqueue((nh1, nw1, d));
+        }
+        else
+        {
+            for (var d = 0; d &amp;lt; 4; d++)
+            {
+                var (dh2, dw2) = D4[d];
+                var (nh2, nw2) = (ch + dh2, cw + dw2);
+                if (nh2 &amp;lt; 0 || N &amp;lt;= nh2 || nw2 &amp;lt; 0 || M &amp;lt;= nw2) continue;
+                if (visited[nh2, nw2, d] || !G[nh2][nw2]) continue;
+                visited[nh2, nw2, d] = true;
+                queue.Enqueue((nh2, nw2, d));
+            }
+        }
+    }
+
+    var answer = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; M; j++)
+        {
+            var ok = false;
+            for (var d = 0; d &amp;lt; 4; d++)
+            {
+                ok |= visited[i, j, d];
+            }
+
+            if (ok) answer++;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc311/tasks/abc311_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC311/submissions/43864378"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;次のような動的計画法を解きます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[i][j] := (i,j)を正方形の右下隅としたときの穴のない正方形の辺の長さの最大値
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;遷移は次のようになります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;(i,j)が穴ではないとき、
+dp[i][j] = Min(dp[i-1,j], dp[i,j-1], dp[i-1,j-1]) + 1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;(i,j)&lt;/code&gt;を正方形の右下隅としたとき、&lt;code&gt;dp[i][j]&lt;/code&gt;通りの辺の長さの正方形を作ることができるので、全ての&lt;code&gt;(i,j)&lt;/code&gt;における&lt;code&gt;dp[i][j]&lt;/code&gt;の総和が答えとなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (H, W, N) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var isHole = new bool[H, W];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var (a, b) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        a--; b--;
+        isHole[a, b] = true;
+    }
+
+    var dp = new int[H, W];
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        if (!isHole[i, 0]) dp[i, 0] = 1;
+    }
+
+    for (var j = 0; j &amp;lt; W; j++)
+    {
+        if (!isHole[0, j]) dp[0, j] = 1;
+    }
+
+    const int Inf = (int)1e9;
+    for (var i = 1; i &amp;lt; H; i++)
+    {
+        for (var j = 1; j &amp;lt; W; j++)
+        {
+            if (isHole[i, j]) continue;
+            var min = Inf;
+            min = Math.Min(min, dp[i - 1, j]);
+            min = Math.Min(min, dp[i, j - 1]);
+            min = Math.Min(min, dp[i - 1, j - 1]);
+            dp[i, j] = min + 1;
+        }
+    }
+
+    long answer = 0;
+    for (var i = 0; i &amp;lt; H; i++)
+    {
+        for (var j = 0; j &amp;lt; W; j++)
+        {
+            answer += dp[i, j];
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 311の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230715abc310</id>
 		<title>ABC310</title>
@@ -2423,320 +2717,5 @@ public static int UpperBound&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; sour
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 302の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20230513abc301</id>
-		<title>ABC301</title>
-		<link href="https://blog.aconcavy.dev/posts/20230513abc301" />
-		<updated>2023-05-13T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 301の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301"&gt;https://atcoder.jp/contests/abc301&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc301/tasks/abc301_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301/submissions/41344570"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;勝った試合の数が多い方が総合勝者ということは、総合勝者は半分以上の試合で勝っていることになります。
-また、勝ち数が同じ場合は先にその勝ち数に達したものが総合勝者となるので、順に勝ち数を数え上げ、先に過半数を取得した方が総合勝者になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var t = 0;
-    var a = 0;
-    foreach (var c in S)
-    {
-        if (c == 'T') t++;
-        else a++;
-        if (t * 2 &amp;gt;= N)
-        {
-            Console.WriteLine(&amp;quot;T&amp;quot;);
-            return;
-        }
-        else if (a * 2 &amp;gt;= N)
-        {
-            Console.WriteLine(&amp;quot;A&amp;quot;);
-            return;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc301/tasks/abc301_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301/submissions/41350380"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;数列の1項目は&lt;code&gt;A&lt;/code&gt;の1項目になります。&lt;br /&gt;
-&lt;code&gt;A&lt;/code&gt;の2項目以降を考えます。
-数列に最後に追加した値を&lt;code&gt;x&lt;/code&gt;、&lt;code&gt;A&lt;/code&gt;の次の項を&lt;code&gt;a&lt;/code&gt;としたとき、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;x&amp;lt;a&lt;/code&gt;の間は、次に&lt;code&gt;x+1&lt;/code&gt;を追加する。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;x&amp;gt;a&lt;/code&gt;の間は、次に&lt;code&gt;x-1&lt;/code&gt;を追加する。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;x==a&lt;/code&gt;の場合は、&lt;code&gt;a&lt;/code&gt;を&lt;code&gt;A&lt;/code&gt;の次の項に更新する。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;という操作を繰り返すことで、答えとなる数列を生成することができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-
-    IEnumerable&amp;lt;int&amp;gt; F()
-    {
-        var x = A[0];
-        yield return x;
-        foreach (var a in A.Skip(1))
-        {
-            while (x &amp;lt; a) yield return ++x;
-            while (x &amp;gt; a) yield return --x;
-        }
-    }
-
-    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, F()));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc301/tasks/abc301_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301/submissions/41358374"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;二つの文字列を構成する文字の個数が全て一致する必要があります。
-&lt;code&gt;atcoder&lt;/code&gt;の各文字の個数が一致しない場合、少ない方の個数をその文字列にある&lt;code&gt;&amp;#64;&lt;/code&gt;の個数以内で補うことができます。
-補う操作を行ったうえで&lt;code&gt;atcoder&lt;/code&gt;の文字の個数が一致し、ほかの文字の個数もすべて一致した場合のみ答えは&lt;code&gt;Yes&lt;/code&gt;になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var T = Scanner.Scan&amp;lt;string&amp;gt;();
-    var N = S.Length;
-
-    int[] F(string str)
-    {
-        var used = new int[27];
-        foreach (var c in str)
-        {
-            if (c == '&amp;#64;') used[26]++;
-            else used[c - 'a']++;
-        }
-
-        return used;
-    }
-
-    var usedS = F(S);
-    var usedT = F(T);
-    var answer = true;
-
-    bool G(int i)
-    {
-        foreach (var c in &amp;quot;atcoder&amp;quot;)
-        {
-            if (c - 'a' == i) return true;
-        }
-
-        return false;
-    }
-
-    for (var i = 0; i &amp;lt; 26; i++)
-    {
-        var s = usedS[i];
-        var t = usedT[i];
-        if (s == t) continue;
-        if (G(i))
-        {
-            if (s &amp;gt; t)
-            {
-                var d = s - t;
-                answer &amp;amp;= usedT[26] &amp;gt;= d;
-                usedT[26] -= d;
-            }
-            else
-            {
-                var d = t - s;
-                answer &amp;amp;= usedS[26] &amp;gt;= d;
-                usedS[26] -= d;
-            }
-        }
-        else
-        {
-            answer = false;
-            break;
-        }
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc301/tasks/abc301_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301/submissions/41372439"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;?&lt;/code&gt;の部分を全て&lt;code&gt;0&lt;/code&gt;にした値が&lt;code&gt;N&lt;/code&gt;より大きい場合、答えは&lt;code&gt;-1&lt;/code&gt;となります。
-それ以外の場合、桁の大きいところから順にみていき、その&lt;code&gt;?&lt;/code&gt;を&lt;code&gt;1&lt;/code&gt;にした値が&lt;code&gt;N&lt;/code&gt;以下であるかを判定していくことで答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
-    var N = Scanner.Scan&amp;lt;long&amp;gt;();
-
-    long answer = 0;
-    for (var i = 0; i &amp;lt; S.Length; i++)
-    {
-        if (S[i] != '?') answer |= (long)(S[i] - '0') &amp;lt;&amp;lt; (S.Length - 1 - i);
-    }
-
-    if (answer &amp;gt; N)
-    {
-        Console.WriteLine(-1);
-        return;
-    }
-
-    for (var i = 0; i &amp;lt; S.Length; i++)
-    {
-        if (S[i] != '?') continue;
-        var v = answer | (1L &amp;lt;&amp;lt; (S.Length - 1 - i));
-        if (v &amp;lt;= N) answer = v;
-    }
-
-    Console.WriteLine(answer);
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc301/tasks/abc301_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc301/submissions/41395116"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;スタートマスからゴールマスの最小移動回数が&lt;code&gt;T&lt;/code&gt;より大きいとき、答えは&lt;code&gt;-1&lt;/code&gt;になります。
-それ以外のとき、次のような動的計画法を解きます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[s][u] := 訪れたお菓子のマスの集合がs、現在値がお菓子のマスがuのときの最小移動回数
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;遷移は次のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;初期値:
-dp[1&amp;lt;&amp;lt;u][u] = スタートマスからお菓子のマスuへの最小移動回数
-
-遷移:
-訪れたお菓子のマスの集合がs、お菓子のマスuからお菓子のマスvにD(u,v)の移動回数がかかるとき、
-dp[s|(1&amp;lt;&amp;lt;v)][v] = Min(dp[s|(1&amp;lt;&amp;lt;v)][v], dp[s][u]+D(u,v))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そして、各状態からゴールマスへの移動回数を足したものが&lt;code&gt;T&lt;/code&gt;回以下であるときの訪れたお菓子のマスの個数の最大値が答えとなります。&lt;br /&gt;
-お菓子のマスの個数を&lt;code&gt;M&lt;/code&gt;とすると、各お菓子のマスを始点とした幅優先探索を行うことで、&lt;code&gt;D(u,v)&lt;/code&gt;は時間計算量&lt;code&gt;O(MHW)&lt;/code&gt;で求めることができます。
-よって、時間計算量&lt;code&gt;O(MHW+(2^M)*M^2)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H, W, T) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    var A = new char[H][];
-    var G = new bool[H][];
-    var (sh, sw) = (0, 0);
-    var (gh, gw) = (0, 0);
-    var map = new Dictionary&amp;lt;(int, int), int&amp;gt;();
-    var M = 0;
-    var snacks = new List&amp;lt;(int H, int W)&amp;gt;();
-
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        A[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
-        G[i] = new bool[W];
-        for (var j = 0; j &amp;lt; W; j++)
-        {
-            if (A[i][j] == 'S') (sh, sw) = (i, j);
-            if (A[i][j] == 'G') (gh, gw) = (i, j);
-            if (A[i][j] == 'o')
-            {
-                map[(i, j)] = M++;
-                snacks.Add((i, j));
-            }
-
-            G[i][j] = A[i][j] != '#';
-        }
-    }
-
-    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
-    const int Inf = (int)1e9;
-
-    int[][] GetDistance(int h, int w)
-    {
-        var result = new int[H][];
-        for (var i = 0; i &amp;lt; H; i++)
-        {
-            result[i] = new int[W];
-            for (var j = 0; j &amp;lt; W; j++)
-            {
-                result[i][j] = Inf;
-            }
-        }
-
-        result[h][w] = 0;
-        var queue = new Queue&amp;lt;(int, int)&amp;gt;();
-        queue.Enqueue((h, w));
-        while (queue.Count &amp;gt; 0)
-        {
-            var (ch, cw) = queue.Dequeue();
-            foreach (var (dh, dw) in D4)
-            {
-                var (nh, nw) = (ch + dh, cw + dw);
-                if (nh &amp;lt; 0 || H &amp;lt;= nh || nw &amp;lt; 0 || W &amp;lt;= nw) continue;
-                if (!G[nh][nw] || result[nh][nw] != Inf) continue;
-                result[nh][nw] = result[ch][cw] + 1;
-                queue.Enqueue((nh, nw));
-            }
-        }
-
-        return result;
-    }
-
-    var startToGoal = GetDistance(sh, sw)[gh][gw];
-    if (startToGoal &amp;gt; T)
-    {
-        Console.WriteLine(-1);
-        return;
-    }
-
-    var snackDistances = new int[M][][];
-    for (var k = 0; k &amp;lt; M; k++)
-    {
-        var (h, w) = snacks[k];
-        snackDistances[k] = GetDistance(h, w);
-    }
-
-    var dp = new int[1 &amp;lt;&amp;lt; M, M];
-    for (var i = 0; i &amp;lt; 1 &amp;lt;&amp;lt; M; i++)
-    {
-        for (var j = 0; j &amp;lt; M; j++)
-        {
-            dp[i, j] = Inf;
-        }
-    }
-
-    for (var u = 0; u &amp;lt; M; u++)
-    {
-        dp[1 &amp;lt;&amp;lt; u, u] = snackDistances[u][sh][sw];
-    }
-
-    for (var cs = 0; cs &amp;lt; 1 &amp;lt;&amp;lt; M; cs++)
-    {
-        for (var u = 0; u &amp;lt; M; u++)
-        {
-            if ((cs &amp;gt;&amp;gt; u &amp;amp; 1) == 0) continue;
-            for (var v = 0; v &amp;lt; M; v++)
-            {
-                if ((cs &amp;gt;&amp;gt; v &amp;amp; 1) == 1) continue;
-                var (nh, nw) = snacks[v];
-                var nd = dp[cs, u] + snackDistances[u][nh][nw];
-                var ns = cs | (1 &amp;lt;&amp;lt; v);
-                dp[ns, v] = Math.Min(dp[ns, v], nd);
-            }
-        }
-    }
-
-    var answer = 0;
-    for (var s = 0; s &amp;lt; 1 &amp;lt;&amp;lt; M; s++)
-    {
-        for (var u = 0; u &amp;lt; M; u++)
-        {
-            var gd = dp[s, u] + snackDistances[u][gh][gw];
-            if (gd &amp;lt;= T)
-            {
-                var count = 0;
-                for (var i = 0; i &amp;lt; M; i++)
-                {
-                    count += (s &amp;gt;&amp;gt; i) &amp;amp; 1;
-                }
-
-                answer = Math.Max(answer, count);
-            }
-        }
-    }
-
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 301の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>

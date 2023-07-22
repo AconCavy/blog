@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC311</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC311">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230722abc311">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC311</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2023-07-22T00:00:00&amp;#x2B;00:00">Saturday, 22 July 2023</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2023-07-22T00:00:00&amp;#x2B;00:00">Saturday, 22 July 2023</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 311の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc311">https://atcoder.jp/contests/abc311</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc311/tasks/abc311_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC311/submissions/43827108">コンテスト提出</a></p>
+<p><code>char</code>型は整数型として扱うことができるので、対象となる文字から<code>A</code>を引くことで、<code>A</code>の場合は<code>0</code>、<code>B</code>の場合は<code>1</code>、<code>C</code>の場合は<code>2</code>にすることができ、配列のインデックスとして状態を管理することができます。<br>
+長さが<code>3</code>の<code>bool</code>型配列の全てが<code>true</code>になったときが何番目かを出力します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var S = Scanner.Scan&lt;string&gt;();
+    var used = new bool[3];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var c = S[i] - 'A';
+        used[c] = true;
+        if (used.All(x =&gt; x))
+        {
+            Console.WriteLine($&quot;{i + 1}&quot;);
+            return;
+        }
+    }
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc311/tasks/abc311_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC311/submissions/43836246">コンテスト提出</a></p>
+<p><code>X[i][j]</code>を<code>i</code>番目の人の<code>j</code>日目までに連続する暇な日数としたとき、<code>j</code>日目の全ての人の連続する暇な日数の最小値は、<code>j</code>日目における選べる日数の最大値になります。<br>
+このことから、全ての<code>j</code>における選べる日数の最大値が答えとなります。
+<code>j</code>日目までに連続する暇な日数は累積和で求めることができ、全体時間計算量<code>O(ND)</code>で答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, D) = Scanner.Scan&lt;int, int&gt;();
+    var X = new int[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var s = Scanner.Scan&lt;string&gt;();
+        X[i] = new int[D + 1];
+        for (var j = 0; j &lt; D; j++)
+        {
+            if (s[j] == 'o')
+            {
+                X[i][j + 1] = X[i][j] + 1;
+            }
+        }
+    }
+
+    var answer = 0;
+    const int Inf = (int)1e9;
+    for (var j = 0; j &lt;= D; j++)
+    {
+        var min = Inf;
+        for (var i = 0; i &lt; N; i++)
+        {
+            min = Math.Min(min, X[i][j]);
+        }
+
+        answer = Math.Max(answer, min);
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc311/tasks/abc311_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC311/submissions/43845949">コンテスト提出</a></p>
+<p><code>Disjoint Set Union</code>などでグラフにおける閉路の検知と始点を決めます。
+深さ優先探索を行い、現在の頂点から既に訪れた頂点にたどり着くことができるかを判定していき、たどり着くことができるならば、その頂点は閉路を構成しているため、答えに追加するという操作を行います。<br>
+この方法では、答えが逆順に追加されていることに注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().Select(x =&gt; x - 1).ToArray();
+    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+    var answer = new List&lt;int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i].Add(A[i]);
+    }
+
+    var dsu = new DisjointSetUnion(N);
+    var s = -1;
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (dsu.IsSame(i, A[i]))
+        {
+            s = A[i];
+            break;
+        }
+
+        dsu.Merge(i, A[i]);
+    }
+
+    var used = new bool[N];
+    bool Dfs(int u)
+    {
+        if (used[u]) return true;
+
+        used[u] = true;
+        var result = false;
+        foreach (var v in G[u])
+        {
+            result |= Dfs(v);
+        }
+
+        if (result)
+        {
+            answer.Add(u);
+        }
+
+        return result;
+    }
+
+    Dfs(s);
+    answer.Reverse();
+    Console.WriteLine(answer.Count);
+    Console.WriteLine(string.Join(&quot; &quot;, answer.Select(x =&gt; x + 1)));
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc311/tasks/abc311_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC311/submissions/43852101">コンテスト提出</a></p>
+<p><code>visited[i][j][d]</code>を<code>i</code>行<code>j</code>列目に方向<code>d</code>で訪れたことがあるかとした幅優先探索を行います。<br>
+いずれかの方向で<code>i</code>行<code>j</code>列目に訪れることができれば、プレイヤーが触れることができる氷とすることができ、この数の総和が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var G = new bool[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().Select(x =&gt; x == '.').ToArray();
+    }
+
+    var visited = new bool[N, M, 4];
+    var queue = new Queue&lt;(int H, int W, int D)&gt;();
+    for (var i = 0; i &lt; 4; i++)
+    {
+        visited[1, 1, i] = true;
+        queue.Enqueue((1, 1, i));
+    }
+
+    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
+
+    while (queue.Count &gt; 0)
+    {
+        var (ch, cw, d) = queue.Dequeue();
+
+        var (dh1, dw1) = D4[d];
+        var (nh1, nw1) = (ch + dh1, cw + dw1);
+
+        if (nh1 &lt; 0 || N &lt;= nh1 || nw1 &lt; 0 || M &lt;= nw1) continue;
+        if (visited[nh1, nw1, d]) continue;
+        if (G[nh1][nw1])
+        {
+            visited[nh1, nw1, d] = true;
+            queue.Enqueue((nh1, nw1, d));
+        }
+        else
+        {
+            for (var d = 0; d &lt; 4; d++)
+            {
+                var (dh2, dw2) = D4[d];
+                var (nh2, nw2) = (ch + dh2, cw + dw2);
+                if (nh2 &lt; 0 || N &lt;= nh2 || nw2 &lt; 0 || M &lt;= nw2) continue;
+                if (visited[nh2, nw2, d] || !G[nh2][nw2]) continue;
+                visited[nh2, nw2, d] = true;
+                queue.Enqueue((nh2, nw2, d));
+            }
+        }
+    }
+
+    var answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; M; j++)
+        {
+            var ok = false;
+            for (var d = 0; d &lt; 4; d++)
+            {
+                ok |= visited[i, j, d];
+            }
+
+            if (ok) answer++;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc311/tasks/abc311_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC311/submissions/43864378">コンテスト提出</a></p>
+<p>次のような動的計画法を解きます。</p>
+<pre><code class="language-text line-numbers">dp[i][j] := (i,j)を正方形の右下隅としたときの穴のない正方形の辺の長さの最大値
+</code></pre>
+<p>遷移は次のようになります。</p>
+<pre><code class="language-text line-numbers">(i,j)が穴ではないとき、
+dp[i][j] = Min(dp[i-1,j], dp[i,j-1], dp[i-1,j-1]) + 1;
+</code></pre>
+<p><code>(i,j)</code>を正方形の右下隅としたとき、<code>dp[i][j]</code>通りの辺の長さの正方形を作ることができるので、全ての<code>(i,j)</code>における<code>dp[i][j]</code>の総和が答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W, N) = Scanner.Scan&lt;int, int, int&gt;();
+    var isHole = new bool[H, W];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (a, b) = Scanner.Scan&lt;int, int&gt;();
+        a--; b--;
+        isHole[a, b] = true;
+    }
+
+    var dp = new int[H, W];
+    for (var i = 0; i &lt; H; i++)
+    {
+        if (!isHole[i, 0]) dp[i, 0] = 1;
+    }
+
+    for (var j = 0; j &lt; W; j++)
+    {
+        if (!isHole[0, j]) dp[0, j] = 1;
+    }
+
+    const int Inf = (int)1e9;
+    for (var i = 1; i &lt; H; i++)
+    {
+        for (var j = 1; j &lt; W; j++)
+        {
+            if (isHole[i, j]) continue;
+            var min = Inf;
+            min = Math.Min(min, dp[i - 1, j]);
+            min = Math.Min(min, dp[i, j - 1]);
+            min = Math.Min(min, dp[i - 1, j - 1]);
+            dp[i, j] = min + 1;
+        }
+    }
+
+    long answer = 0;
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            answer += dp[i, j];
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230722abc311" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
