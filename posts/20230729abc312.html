@@ -1,0 +1,479 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC312</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC312">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230729abc312">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC312</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2023-07-29T00:00:00&amp;#x2B;00:00">Saturday, 29 July 2023</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2023-07-29T00:00:00&amp;#x2B;00:00">Saturday, 29 July 2023</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 312の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc312">https://atcoder.jp/contests/abc312</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44032650">コンテスト提出</a></p>
+<p><code>S</code>が候補となる文字列に存在するかを判定します。<br>
+一つ一つ判定しても答えを求めることができますが、あらかじめ候補となる文字列を配列などで管理しておき、存在判定することでも答えを求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var OK = new string[] { &quot;ACE&quot;, &quot;BDF&quot;, &quot;CEG&quot;, &quot;DFA&quot;, &quot;EGB&quot;, &quot;FAC&quot;, &quot;GBD&quot; };
+    var S = Scanner.Scan&lt;string&gt;();
+    var answer = OK.Contains(S);
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44045617">コンテスト提出</a></p>
+<p>グリッドから<code>9*9</code>の領域を全探索し、それぞれが条件を満たすかを判定します。<br>
+条件判定をそれぞれメソッドとして切り出すことで、読みやすくすることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var G = new bool[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().Select(x =&gt; x == '#').ToArray();
+    }
+
+    bool CheckBlack(int h, int w)
+    {
+        var result = true;
+        for (var i = 0; i &lt; 3 &amp;&amp; result; i++)
+        {
+            for (var j = 0; j &lt; 3 &amp;&amp; result; j++)
+            {
+                result &amp;= G[h + i][w + j];
+                result &amp;= G[h + 6 + i][w + 6 + j];
+            }
+        }
+
+        return result;
+    }
+
+    bool CheckWhite(int h, int w)
+    {
+        var result = true;
+        for (var i = 0; i &lt; 3 &amp;&amp; result; i++)
+        {
+            result &amp;= !G[h + i][w + 3];
+            result &amp;= !G[h + 3][w + i];
+            result &amp;= !G[h + 6 + i][w + 6 - 1];
+            result &amp;= !G[h + 6 - 1][w + 6 + i];
+        }
+
+        result &amp;= !G[h + 3][w + 3];
+        result &amp;= !G[h + 6 - 1][w + 6 - 1];
+
+        return result;
+    }
+
+    for (var i = 0; i + 9 &lt;= N; i++)
+    {
+        for (var j = 0; j + 9 &lt;= M; j++)
+        {
+            if (CheckBlack(i, j) &amp;&amp; CheckWhite(i, j))
+            {
+                Console.WriteLine($&quot;{i + 1} {j + 1}&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44047011">コンテスト提出</a></p>
+<p>次のような<code>x</code>を二部探索します。</p>
+<pre><code class="language-text line-numbers">りんごをx円で売ってもよいと考える売り手の人数が、りんごをx円で買ってもよいと考える買い手の人数以上である。
+</code></pre>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var B = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+
+    bool F(long x)
+    {
+        var a = A.Count(v =&gt; x &gt;= v);
+        var b = B.Count(v =&gt; x &lt;= v);
+        return a &gt;= b;
+    }
+
+    const long Inf = (long)1e18;
+    var answer = BinarySearch(0, Inf, F);
+    Console.WriteLine(answer);
+}
+
+public static long BinarySearch(long ng, long ok, Func&lt;long, bool&gt; func)
+{
+    while (Math.Abs(ok - ng) &gt; 1)
+    {
+        var m = (ok + ng) / 2;
+        if (func(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44050433">コンテスト提出</a></p>
+<p>次のような動的計画法を解きます。</p>
+<pre><code class="language-text line-numbers">括弧列のレベルを、それまでの`(`の出現数から`)`の出現数を引いたものとしたとき、
+dp[i,j] := i番目の文字まで見たとき、現在の括弧列のレベルがjとしてありえる文字列の数
+</code></pre>
+<p>遷移は次のようになります。</p>
+<pre><code class="language-text line-numbers">S[i]が`(`のとき、
+dp[i+1,j+1] += dp[i,j] (0&lt;=j&lt;N)
+
+S[i]が`)`のとき、
+dp[i+1,j-1] += dp[i,j] (0&lt;j&lt;=N)
+
+S[i]が`?`のとき、
+dp[i+1,j+1] += dp[i,j] (0&lt;=j&lt;N)
+dp[i+1,j-1] += dp[i,j] (0&lt;j&lt;=N)
+</code></pre>
+<p><code>N</code>文字目までみたときの括弧列のレベルが<code>0</code>となるものの数が答えとなります。
+括弧列のレベルが0未満になる場合、その文字列は括弧列として成り立たないことに注意が必要です。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var N = S.Length;
+    var dp = new mint[N + 1, N + 1];
+    dp[0, 0] = 1;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var c = S[i];
+        if (c == '(' || c == '?')
+        {
+            for (var j = 0; j &lt; N; j++)
+            {
+                dp[i + 1, j + 1] += dp[i, j];
+            }
+        }
+
+        if (c == ')' || c == '?')
+        {
+            for (var j = 1; j &lt;= N; j++)
+            {
+                dp[i + 1, j - 1] += dp[i, j];
+            }
+        }
+    }
+
+    var answer = dp[N, 0];
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44087555">復習提出</a></p>
+<p>3次元空間をグリッドとしてみたとき、各直方体がどのグリッドを占有しているかを管理し、各直方体のグリッドが面する直方体の種類数を数え上げます。<br>
+与えられる線分の座標は開区間であり、座標を開区間のまま管理すると面が重複してしまうことがあるため、半開区間に変換する必要があります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new int[105, 105, 105];
+    var P = new (int X1, int Y1, int Z1, int X2, int Y2, int Z2)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (x1, y1, z1, x2, y2, z2) = Scanner.Scan&lt;int, int, int, int, int, int&gt;();
+        x1++; y1++; z1++;
+        P[i] = (x1, y1, z1, x2, y2, z2);
+
+        for (var x = x1; x &lt;= x2; x++)
+        {
+            for (var y = y1; y &lt;= y2; y++)
+            {
+                for (var z = z1; z &lt;= z2; z++)
+                {
+                    G[x, y, z] = i + 1;
+                }
+            }
+        }
+    }
+
+    foreach (var (x1, y1, z1, x2, y2, z2) in P)
+    {
+        var set = new HashSet&lt;int&gt;();
+        for (var x = x1; x &lt;= x2; x++)
+        {
+            for (var y = y1; y &lt;= y2; y++)
+            {
+                for (var z = z1; z &lt;= z2; z++)
+                {
+                    set.Add(G[x1 - 1, y, z]);
+                    set.Add(G[x2 + 1, y, z]);
+                    set.Add(G[x, y1 - 1, z]);
+                    set.Add(G[x, y2 + 1, z]);
+                    set.Add(G[x, y, z1 - 1]);
+                    set.Add(G[x, y, z2 + 1]);
+                }
+            }
+        }
+
+        set.Remove(0);
+        Console.WriteLine(set.Count);
+    }
+}
+</code></pre>
+<h3 id="f"><a href="https://atcoder.jp/contests/abc312/tasks/abc312_f">問題F</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC312/submissions/44058275">コンテスト提出</a></p>
+<p><code>M</code>個の品物のうち、缶切りが不要な缶を<code>x</code>個として固定したとき、缶切りが必要な缶と缶切りを<code>M-x</code>個選んだ時の満足度の最大値を求めます。<br>
+缶切りが不要な缶と缶切りが必要な缶は、いずれも満足度が大きいものから選ぶことが最適になります。<br>
+また、缶切りは使用できる缶の数が多い物から順に使うことが最適になります。<br>
+これにより、あらかじめ、缶切りが不要な缶を<code>a</code>個選んだ時の満足度の累積和と、缶切りが必要な缶と缶切りを合わせて<code>b</code>個選んだ時の満足度の累積和を求めておくことで、時間計算量<code>O(M)</code>で満足度の最大値を求めることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var cans0 = new List&lt;long&gt;();
+    var cans1 = new List&lt;long&gt;();
+    var openers = new List&lt;int&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (T, X) = Scanner.Scan&lt;int, int&gt;();
+        if (T == 0)
+        {
+            cans0.Add(X);
+        }
+        else if (T == 1)
+        {
+            cans1.Add(X);
+        }
+        else
+        {
+            openers.Add(X);
+        }
+    }
+
+    cans0.Sort();
+    cans0.Reverse();
+    cans1.Sort();
+    cans1.Reverse();
+    openers.Sort();
+    openers.Reverse();
+    var N0 = cans0.Count;
+    var N1 = cans1.Count;
+    var N2 = openers.Count;
+
+    var cum0 = new long[M + 1];
+    for (var i = 0; i &lt; M; i++)
+    {
+        cum0[i + 1] = cum0[i];
+        if (i &lt; N0) cum0[i + 1] += cans0[i];
+    }
+
+    var cum1 = new long[M + 1];
+    {
+        var i = 0;
+        var j = 0;
+        var rem = 0;
+        for (var k = 0; k &lt; M; k++)
+        {
+            cum1[k + 1] += cum1[k];
+            if (rem &gt; 0 &amp;&amp; i &lt; N1)
+            {
+                cum1[k + 1] += cans1[i++];
+                rem--;
+            }
+            else if (j &lt; N2)
+            {
+                rem = openers[j++];
+            }
+        }
+    }
+
+    long answer = 0;
+    for (var i = 0; i &lt;= M; i++)
+    {
+        answer = Math.Max(answer, cum0[i] + cum1[M - i]);
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230729abc312" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
