@@ -33,9 +33,15 @@ $ArticleDate = Get-Date;
 $ArticlePath = Join-Path $ProjectRoot "input\posts\$($ArticleDate.ToString("yyyyMMdd"))_${ContestName}.md"
 
 if ( [string]::IsNullOrEmpty($ContestFullName)) {
-    if ( $ContestName -match "abc*" ) { $ContestFullName = "AtCoder Beginner Contest" }
-    elseif ( $ContestName -match "arc*" ) { $ContestFullName = "AtCoder Regular Contest" }
-    elseif ( $ContestName -match "agc*" ) { $ContestFullName = "AtCoder Grand Contest" }
+    if ( $ContestName -match "^abc(?<Number>\d*$)" ) { 
+        $ContestFullName = "AtCoder Beginner Contest $($Matches.Number)"
+    }
+    elseif ( $ContestName -match "^arc(?<Number>\d*$)" ) { 
+        $ContestFullName = "AtCoder Regular Contest $($Matches.Number)" 
+    }
+    elseif ( $ContestName -match "^agc(?<Number>\d*$)" ) { 
+        $ContestFullName = "AtCoder Grand Contest $($Matches.Number)" 
+    }
     else {
         Write-Host What is the full name of the contest?:
         $ContestFullName = Read-Host
