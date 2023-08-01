@@ -1,7 +1,7 @@
 ---
 Title: ABC000
-Published: mm/dd/yyyy
-Updated: mm/dd/yyyy
+Published: MM/dd/yyyy
+Updated: MM/dd/yyyy
 Tags: [atcoder, csharp]
 ---
 
