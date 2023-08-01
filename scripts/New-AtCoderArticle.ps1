@@ -30,7 +30,7 @@ $ContestName = $ContestName.ToLower();
 
 $DraftPath = Join-Path $ProjectRoot "input/drafts/template_atcoder.md"
 $ArticleDate = Get-Date;
-$ArticlePath = Join-Path $ProjectRoot "input\posts\$($ArticleDate.ToString("yyyyMMdd"))_${ContestName}.md"
+$ArticlePath = Join-Path $ProjectRoot "input/posts/$($ArticleDate.ToString("yyyyMMdd"))_${ContestName}.md"
 
 if ( [string]::IsNullOrEmpty($ContestFullName)) {
     if ( $ContestName -match "^abc(?<Number>\d*$)" ) { 
