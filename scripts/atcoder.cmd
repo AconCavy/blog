@@ -1,3 +1,3 @@
 @echo off
 
-powershell -Command "%~dp0\Create-AtCoderArticle.ps1"
+powershell -Command "%~dp0\New-AtCoderArticle.ps1"

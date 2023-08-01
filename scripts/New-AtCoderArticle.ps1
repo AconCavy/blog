@@ -6,12 +6,12 @@ Create a new article based on the article template for AtCoder by the specified 
 
 .EXAMPLE
 
-PS > Create-AtCoderArticle -ContestName abc999
+PS > New-AtCoderArticle -ContestName abc999
 Create a new article with abc999 as the contest name.
 
 .EXAMPLE
 
-PS > Create-AtCoderArticle -ContestName foo001 -ContensFullName "Foo Contest 001"
+PS > New-AtCoderArticle -ContestName foo001 -ContensFullName "Foo Contest 001"
 Create a new article with foo001 as the contest name and Foo Contest 001 as the contest full name.
 
 #>
