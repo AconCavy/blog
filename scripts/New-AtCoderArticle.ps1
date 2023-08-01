@@ -28,7 +28,7 @@ $ProjectRoot = Split-Path $ProjectRoot -Parent;
 
 $ContestName = $ContestName.ToLower();
 
-$DraftPath = Join-Path $ProjectRoot "input/drafts/template_yyyymmdd_abc000.md"
+$DraftPath = Join-Path $ProjectRoot "input/drafts/template_atcoder.md"
 $ArticleDate = Get-Date;
 $ArticlePath = Join-Path $ProjectRoot "input\posts\$($ArticleDate.ToString("yyyyMMdd"))_${ContestName}.md"
 
