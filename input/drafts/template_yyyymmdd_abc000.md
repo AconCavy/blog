@@ -1,13 +1,13 @@
 ---
-Title: ABC000
-Published: MM/dd/yyyy
-Updated: MM/dd/yyyy
+Title: PH__Title
+Published: PH__Published
+Updated: PH__Updated
 Tags: [atcoder, csharp]
 ---
 
 ## はじめに
 
-AtCoder Beginner Contest 000の復習記事です。
+PH__ContestFullNameの復習記事です。
 
 記事における`Scanner`クラスは、自作の入力クラスです。
 
@@ -57,30 +57,30 @@ public static class Scanner
 
 ## コンテスト
 
-<https://atcoder.jp/contests/abc000>
+<https://atcoder.jp/contests/PH__ContestName>
 
-### [問題A](https://atcoder.jp/contests/abc000/tasks/abc000_a)
-
-[コンテスト提出]()
-
-```csharp
-```
-
-### [問題B](https://atcoder.jp/contests/abc000/tasks/abc000_b)
+### [問題A](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_a)
 
 [コンテスト提出]()
 
 ```csharp
 ```
 
-### [問題C](https://atcoder.jp/contests/abc000/tasks/abc000_c)
+### [問題B](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_b)
 
 [コンテスト提出]()
 
 ```csharp
 ```
 
-### [問題D](https://atcoder.jp/contests/abc000/tasks/abc000_d)
+### [問題C](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_c)
+
+[コンテスト提出]()
+
+```csharp
+```
+
+### [問題D](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_d)
 
 [コンテスト提出]()  
 [復習提出]()
@@ -88,7 +88,7 @@ public static class Scanner
 ```csharp
 ```
 
-### [問題E](https://atcoder.jp/contests/abc000/tasks/abc000_e)
+### [問題E](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_e)
 
 [コンテスト提出]()  
 [復習提出]()
@@ -96,7 +96,7 @@ public static class Scanner
 ```csharp
 ```
 
-### [問題F](https://atcoder.jp/contests/abc000/tasks/abc000_f)
+### [問題F](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_f)
 
 [コンテスト提出]()  
 [復習提出]()

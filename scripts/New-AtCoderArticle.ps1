@@ -43,8 +43,9 @@ if ( [string]::IsNullOrEmpty($ContestFullName)) {
 }
 
 Get-Content $DraftPath |
-ForEach-Object { $_ -creplace "AtCoder Beginner Contest 000", $ContestFullName } |
-ForEach-Object { $_ -creplace "abc000", $ContestName } |
-ForEach-Object { $_ -creplace "ABC000", $ContestName.ToUpper() } |
-ForEach-Object { $_ -creplace "MM/dd/yyyy", $ArticleDate.ToString("MM/dd/yyyy") } |
+ForEach-Object { $_ -creplace "PH__Title", $ContestName.ToUpper() } |
+ForEach-Object { $_ -creplace "PH__ContestFullName", $ContestFullName } |
+ForEach-Object { $_ -creplace "PH__ContestName", $ContestName } |
+ForEach-Object { $_ -creplace "PH__Updated", $ArticleDate.ToString("MM/dd/yyyy") } |
+ForEach-Object { $_ -creplace "PH__Published", $ArticleDate.ToString("MM/dd/yyyy") } |
 Add-Content $ArticlePath
