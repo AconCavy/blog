@@ -1,0 +1,490 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC320</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC320">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20230916abc320">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC320</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2023-09-16T00:00:00&amp;#x2B;00:00">Saturday, 16 September 2023</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2023-09-16T00:00:00&amp;#x2B;00:00">Saturday, 16 September 2023</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 320の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc320">https://atcoder.jp/contests/abc320</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc320/tasks/abc320_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/abc320/submissions/45588498">コンテスト提出</a></p>
+<p><code>Math.Pow</code>関数や、<code>for</code>文で<code>A</code>を<code>B</code>回掛けたもの、<code>B</code>を<code>A</code>回掛けたものを求め、それぞれを足したものを出力します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (A, B) = Scanner.Scan&lt;long, long&gt;();
+    var answer = Math.Pow(A, B) + Math.Pow(B, A);
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc320/tasks/abc320_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/abc320/submissions/45589841">コンテスト提出</a></p>
+<p>連続する部分文字列の両端の組み合わせ<code>i,j (i&lt;=j)</code>を全探索し、その部分文字列が回文であるかを判定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var N = S.Length;
+    var answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = i; j &lt; N; j++)
+        {
+            var ok = true;
+            for (var k = 0; k &lt;= j - i &amp;&amp; ok; k++)
+            {
+                var a = i + k;
+                var b = j - k;
+                ok &amp;= S[a] == S[b];
+            }
+
+            if (ok)
+            {
+                answer = Math.Max(answer, j - i + 1);
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc320/tasks/abc320_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/abc320/submissions/45601337">コンテスト提出</a></p>
+<p>スロットのリールのうち、どの数字を止めるかを固定して考えます。<br>
+止める数字を固定したとき、各リールでその数字が出現する順番を全探索します。<br>
+出現する順番が一致しているリールが2つのとき、それぞれ1周目と2周目で止めることで、その数字をそろえることができます。<br>
+出現する順番が一致しているリールが3つのとき、それぞれ1周目、2週目、3週目で止めることで、その数字をそろえることができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var M = Scanner.Scan&lt;int&gt;();
+    var list = new List&lt;int&gt;[3][];
+    for (var i = 0; i &lt; 3; i++)
+    {
+        var S = Scanner.Scan&lt;string&gt;().Select(x =&gt; x - '0').ToArray();
+        list[i] = new List&lt;int&gt;[10].Select(_ =&gt; new List&lt;int&gt;()).ToArray();
+        for (var j = 0; j &lt; M; j++)
+        {
+            list[i][S[j]].Add(j);
+        }
+    }
+
+    const int Inf = (int)1e9;
+    var answer = Inf;
+    for (var k = 0; k &lt; 10; k++)
+    {
+        foreach (var a in list[0][k])
+        {
+            foreach (var b in list[1][k])
+            {
+                foreach (var c in list[2][k])
+                {
+                    var x = a;
+                    var y = b;
+                    var z = c;
+                    if (x == y &amp;&amp; y == z)
+                    {
+                        x += M;
+                        y += M * 2;
+                    }
+                    else if (x == y)
+                    {
+                        y += M;
+                    }
+                    else if (x == z)
+                    {
+                        z += M;
+                    }
+                    else if (y == z)
+                    {
+                        z += M;
+                    }
+
+                    answer = Math.Min(answer, Math.Max(Math.Max(x, y), z));
+                }
+            }
+
+        }
+    }
+
+    if (answer == Inf) answer = -1;
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc320/tasks/abc320_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/abc320/submissions/45608907">コンテスト提出</a></p>
+<p><code>N</code>個の頂点に対して、<code>M</code>個の情報を<code>A[i]</code>から<code>B[i]</code>への<code>D(X[i],Y[i])</code>となる有向辺と<code>B[i]</code>から<code>A[i]</code>への<code>D(-X[i],-Y[i])</code>となる有向辺とした、<code>2M</code>個の辺からなる有向グラフを構築し、人<code>1</code>を始点とした幅優先探索を行い、それぞれの人の座標の集合を求めます。<br>
+各人のあり得る座標の集合において、一意に定まる場合はその座標を、それ以外の場合は<code>undecidable</code>を出力します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    const string Undecidable = &quot;undecidable&quot;;
+    var G = new HashSet&lt;(int, Point)&gt;[N].Select(x =&gt; new HashSet&lt;(int, Point)&gt;()).ToArray();
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (a, b, x, y) = Scanner.Scan&lt;int, int, long, long&gt;();
+        a--; b--;
+        G[a].Add((b, new(x, y)));
+        G[b].Add((a, new(-x, -y)));
+    }
+
+    var P = new HashSet&lt;Point&gt;[N].Select(_ =&gt; new HashSet&lt;Point&gt;()).ToArray();
+    P[0].Add(new(0, 0));
+    var queue = new Queue&lt;int&gt;();
+    queue.Enqueue(0);
+    while (queue.TryDequeue(out var u))
+    {
+        var cp = P[u].First();
+        foreach (var (v, diff) in G[u])
+        {
+            var (dx, dy) = diff;
+            var np = new Point(cp.X + dx, cp.Y + dy);
+            if (P[v].Contains(np)) continue;
+            P[v].Add(np);
+            queue.Enqueue(v);
+        }
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        if (P[i].Count == 1)
+        {
+            var p = P[i].First();
+            Console.WriteLine($&quot;{p.X} {p.Y}&quot;);
+        }
+        else
+        {
+            Console.WriteLine(Undecidable);
+        }
+    }
+}
+
+public readonly record struct Point(long X, long Y);
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc320/tasks/abc320_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/abc320/submissions/45623544">コンテスト提出</a></p>
+<p>待機列の人を番号順に管理できる優先度付きキューと、列から離れた人の番号と帰ってくる時間を時間順に管理できる優先度付きキューを用意し、そうめんが流れてくるごとに、その時間以前の列から離れた人を待機列に追加し、待機列の先頭の人にそうめんを獲得させ、その人を列から離れさせるというシミュレーションを行います。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+
+    var leavingID = new PriorityQueue&lt;R&gt;((x, y) =&gt;
+    {
+        var result = x.Time.CompareTo(y.Time);
+        if (result == 0) result = x.ID.CompareTo(y.ID);
+        return result;
+    });
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        leavingID.Enqueue(new R(i, 0));
+    }
+
+    var waitingID = new PriorityQueue&lt;int&gt;((x, y) =&gt; x.CompareTo(y));
+    var answers = new long[N];
+    for (var i = 0; i &lt; M; i++)
+    {
+        var (t, w, s) = Scanner.Scan&lt;long, long, long&gt;();
+        while (leavingID.Count &gt; 0 &amp;&amp; leavingID.Peek().Time &lt;= t)
+        {
+            var (id, _) = leavingID.Dequeue();
+            waitingID.Enqueue(id);
+        }
+
+        if (waitingID.Count == 0) continue;
+        var waited = waitingID.Dequeue();
+        answers[waited] += w;
+        var nt = t + s;
+        leavingID.Enqueue(new R(waited, nt));
+    }
+
+    Console.WriteLine(string.Join(Environment.NewLine, answers));
+}
+
+public readonly record struct R(int ID, long Time);
+
+public class PriorityQueue&lt;T&gt; : IReadOnlyCollection&lt;T&gt;
+{
+    private readonly Comparison&lt;T&gt; _comparison;
+    private readonly List&lt;T&gt; _heap;
+
+    public PriorityQueue(IEnumerable&lt;T&gt; items, IComparer&lt;T&gt; comparer = null) : this(comparer)
+    {
+        foreach (var item in items) Enqueue(item);
+    }
+
+    public PriorityQueue(IEnumerable&lt;T&gt; items, Comparison&lt;T&gt; comparison) : this(comparison)
+    {
+        foreach (var item in items) Enqueue(item);
+    }
+
+    public PriorityQueue(IComparer&lt;T&gt; comparer = null) : this((comparer ?? Comparer&lt;T&gt;.Default).Compare) { }
+
+    public PriorityQueue(Comparison&lt;T&gt; comparison)
+    {
+        _heap = new List&lt;T&gt;();
+        _comparison = comparison;
+    }
+
+    public int Count =&gt; _heap.Count;
+    public IEnumerator&lt;T&gt; GetEnumerator() =&gt; _heap.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() =&gt; GetEnumerator();
+
+    public void Enqueue(T item)
+    {
+        var child = Count;
+        _heap.Add(item);
+        while (child &gt; 0)
+        {
+            var parent = (child - 1) / 2;
+            if (_comparison(_heap[parent], _heap[child]) &lt;= 0) break;
+            (_heap[parent], _heap[child]) = (_heap[child], _heap[parent]);
+            child = parent;
+        }
+    }
+
+    public T Dequeue()
+    {
+        if (Count == 0) throw new InvalidOperationException();
+        var result = _heap[0];
+        _heap[0] = _heap[Count - 1];
+        _heap.RemoveAt(Count - 1);
+        var parent = 0;
+        while (parent * 2 + 1 &lt; Count)
+        {
+            var left = parent * 2 + 1;
+            var right = parent * 2 + 2;
+            if (right &lt; Count &amp;&amp; _comparison(_heap[left], _heap[right]) &gt; 0)
+                left = right;
+            if (_comparison(_heap[parent], _heap[left]) &lt;= 0) break;
+            (_heap[parent], _heap[left]) = (_heap[left], _heap[parent]);
+            parent = left;
+        }
+
+        return result;
+    }
+
+    public T Peek()
+    {
+        if (Count == 0) throw new InvalidOperationException();
+        return _heap[0];
+    }
+
+    public bool TryDequeue(out T result)
+    {
+        if (Count &gt; 0)
+        {
+            result = Dequeue();
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+
+    public bool TryPeek(out T result)
+    {
+        if (Count &gt; 0)
+        {
+            result = Peek();
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+
+    public void Clear() =&gt; _heap.Clear();
+    public bool Contains(T item) =&gt; _heap.Contains(item);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20230916abc320" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
