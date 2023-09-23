@@ -213,7 +213,6 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     var (N, M, P) = Scanner.Scan&lt;int, int, long&gt;();
     var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
     var B = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
-    Array.Sort(A);
     Array.Sort(B);
     var cumB = new long[M + 1];
     for (var i = 0; i &lt; M; i++)
@@ -233,28 +232,20 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     Console.WriteLine(answer);
 }
 
-public static int LowerBound&lt;T&gt;(ReadOnlyMemory&lt;T&gt; source, T key) where T : IComparable&lt;T&gt;
+public static int LowerBound&lt;T&gt;(List&lt;T&gt; source, T key) where T : IComparable&lt;T&gt;
+    =&gt; LowerBound(System.Runtime.InteropServices.CollectionsMarshal.AsSpan(source), key);
+
+public static int LowerBound&lt;T&gt;(ReadOnlySpan&lt;T&gt; source, T key) where T : IComparable&lt;T&gt;
 {
-    bool F(int i) =&gt; source.Span[i].CompareTo(key) &gt;= 0;
-    return BinarySearch(-1, source.Length, F);
-}
-public static int LowerBound&lt;T, U&gt;(ReadOnlyMemory&lt;T&gt; source, Func&lt;T, U&gt; map, U key) where U : IComparable&lt;U&gt;
-{
-    bool F(int i) =&gt; map(source.Span[i]).CompareTo(key) &gt;= 0;
-    return BinarySearch(-1, source.Length, F);
-}
-public static T BinarySearch&lt;T&gt;(T ng, T ok, Func&lt;T, bool&gt; f) where T : INumber&lt;T&gt; =&gt; BinarySearch(ng, ok, f, T.One);
-public static T BinarySearch&lt;T&gt;(T ng, T ok, Func&lt;T, bool&gt; f, T eps) where T : INumber&lt;T&gt;
-{
-    var one = T.One;
-    var two = one + one;
-    while (T.Abs(ok - ng) &gt; eps)
+    var (l, r) = (-1, source.Length);
+    while (r - l &gt; 1)
     {
-        var m = ng + (ok - ng) / two;
-        if (f(m)) ok = m;
-        else ng = m;
+        var m = l + (r - l) / 2;
+        if (source[m].CompareTo(key) &gt;= 0) r = m;
+        else l = m;
     }
-    return ok;
+
+    return r;
 }
 </code></pre>
 <h3 id="e"><a href="https://atcoder.jp/contests/abc321/tasks/abc321_e">問題E</a></h3>

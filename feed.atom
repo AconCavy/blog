@@ -4,7 +4,7 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-09-23T14:44:11Z</updated>
+	<updated>2023-09-23T18:52:08Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20230923abc321</id>
 		<title>ABC321</title>
@@ -136,7 +136,6 @@
     var (N, M, P) = Scanner.Scan&amp;lt;int, int, long&amp;gt;();
     var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
     var B = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    Array.Sort(A);
     Array.Sort(B);
     var cumB = new long[M + 1];
     for (var i = 0; i &amp;lt; M; i++)
@@ -156,28 +155,20 @@
     Console.WriteLine(answer);
 }
 
-public static int LowerBound&amp;lt;T&amp;gt;(ReadOnlyMemory&amp;lt;T&amp;gt; source, T key) where T : IComparable&amp;lt;T&amp;gt;
+public static int LowerBound&amp;lt;T&amp;gt;(List&amp;lt;T&amp;gt; source, T key) where T : IComparable&amp;lt;T&amp;gt;
+    =&amp;gt; LowerBound(System.Runtime.InteropServices.CollectionsMarshal.AsSpan(source), key);
+
+public static int LowerBound&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, T key) where T : IComparable&amp;lt;T&amp;gt;
 {
-    bool F(int i) =&amp;gt; source.Span[i].CompareTo(key) &amp;gt;= 0;
-    return BinarySearch(-1, source.Length, F);
-}
-public static int LowerBound&amp;lt;T, U&amp;gt;(ReadOnlyMemory&amp;lt;T&amp;gt; source, Func&amp;lt;T, U&amp;gt; map, U key) where U : IComparable&amp;lt;U&amp;gt;
-{
-    bool F(int i) =&amp;gt; map(source.Span[i]).CompareTo(key) &amp;gt;= 0;
-    return BinarySearch(-1, source.Length, F);
-}
-public static T BinarySearch&amp;lt;T&amp;gt;(T ng, T ok, Func&amp;lt;T, bool&amp;gt; f) where T : INumber&amp;lt;T&amp;gt; =&amp;gt; BinarySearch(ng, ok, f, T.One);
-public static T BinarySearch&amp;lt;T&amp;gt;(T ng, T ok, Func&amp;lt;T, bool&amp;gt; f, T eps) where T : INumber&amp;lt;T&amp;gt;
-{
-    var one = T.One;
-    var two = one + one;
-    while (T.Abs(ok - ng) &amp;gt; eps)
+    var (l, r) = (-1, source.Length);
+    while (r - l &amp;gt; 1)
     {
-        var m = ng + (ok - ng) / two;
-        if (f(m)) ok = m;
-        else ng = m;
+        var m = l + (r - l) / 2;
+        if (source[m].CompareTo(key) &amp;gt;= 0) r = m;
+        else l = m;
     }
-    return ok;
+
+    return r;
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
