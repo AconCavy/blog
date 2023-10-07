@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC323</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC323">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20231007abc323">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC323</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2023-10-07T00:00:00&amp;#x2B;00:00">Saturday, 07 October 2023</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2023-10-07T00:00:00&amp;#x2B;00:00">Saturday, 07 October 2023</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 323の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc323">https://atcoder.jp/contests/abc323</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc323/tasks/abc323_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC323/submissions/46279658">コンテスト提出</a></p>
+<p>偶数番目は<code>0-indexed</code>で奇数番目となり、それらが<code>0</code>であるかを判定します。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var S = Scanner.Scan&lt;string&gt;();
+    var answer = true;
+    for (var i = 1; i &lt; 16; i += 2)
+    {
+        answer &amp;= S[i] == '0';
+    }
+
+    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+}
+</code></pre>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc323/tasks/abc323_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC323/submissions/46279658">コンテスト提出</a></p>
+<p><code>i</code>番目の人の番号と勝利数をペアとしたとき、勝利数を降順、番号を昇順に並べ替えたものが答えとなります。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new char[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().ToCharArray();
+    }
+
+    var answer = new (int ID, int C)[N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        answer[i] = (i, G[i].Count(x =&gt; x == 'o'));
+    }
+
+    Console.WriteLine(string.Join(&quot; &quot;, answer.OrderByDescending(x =&gt; x.C).ThenBy(x =&gt; x.ID).Select(x =&gt; x.ID + 1)));
+}
+</code></pre>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc323/tasks/abc323_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC323/submissions/46308075">コンテスト提出</a></p>
+<p><code>i</code>番目の人がまだ解いていない問題のうち、スコアが高い問題から順に、現在の総合得点の最大より高くなるまで解くことで条件を達成できます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var scores = new long[N];
+    var queues = new PriorityQueue&lt;long, long&gt;[N];
+    long max = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        var S = Scanner.Scan&lt;string&gt;();
+        queues[i] = new PriorityQueue&lt;long, long&gt;();
+        long score = i + 1;
+        for (var j = 0; j &lt; M; j++)
+        {
+            if (S[j] == 'o') score += A[j];
+            else queues[i].Enqueue(A[j], -A[j]);
+        }
+
+        scores[i] = score;
+        max = Math.Max(max, score);
+    }
+
+    for (var i = 0; i &lt; N; i++)
+    {
+        var answer = 0;
+        while (queues[i].Count &gt; 0 &amp;&amp; scores[i] &lt; max)
+        {
+            answer++;
+            scores[i] += queues[i].Dequeue();
+        }
+
+        Console.WriteLine(answer);
+    }
+}
+</code></pre>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc323/tasks/abc323_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC323/submissions/46314486">コンテスト提出</a></p>
+<p>スライムの大きさが小さくなることはないので、大きさが小さいものから順にスライムを合成させていくことで、スライムの引数を最小にすることができます。<br>
+この操作は、辞書と優先度付きキューなどを使うことで達成することができます。</p>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var dict = new Dictionary&lt;long, long&gt;();
+    var queue = new PriorityQueue&lt;long, long&gt;();
+    for (var i = 0; i &lt; N; i++)
+    {
+        var (s, c) = Scanner.Scan&lt;long, long&gt;();
+        if (!dict.ContainsKey(s)) dict[s] = 0;
+        dict[s] += c;
+        queue.Enqueue(s, s);
+    }
+
+    while (queue.Count &gt; 0)
+    {
+        var s = queue.Dequeue();
+        var c = dict[s];
+        var ns = s * 2;
+        var nc = c / 2;
+        if (nc &gt; 0)
+        {
+            if (!dict.ContainsKey(ns)) dict[ns] = 0;
+            dict[ns] += nc;
+            dict[s] -= nc * 2;
+            queue.Enqueue(ns, ns);
+        }
+    }
+
+    var answer = dict.Values.Sum();
+    Console.WriteLine(answer);
+}
+</code></pre>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc323/tasks/abc323_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC323/submissions/46314486">コンテスト提出</a></p>
+<p><code>P[t]</code>を<code>t</code>秒に曲が切り替わる確率とします。<br>
+<code>(X+0.5)</code>秒後に曲1が再生されている確率は、<code>X</code>秒以前に曲1に切り替わり<code>X+1</code>秒以降に曲1が再生されている確率であり、これは<code>t&lt;=X&lt;t+T[1]</code>となる<code>P[t]</code>に曲1が再生される確率<code>1/N</code>を掛けたものの総和になります。<br>
+よって、<code>Sum(P[t], X-T[1]+1&lt;=t&lt;=X) / N</code>が答えとなります。</p>
+<p>各<code>P[t]</code>は次のように求めることができます。</p>
+<pre><code class="language-text line-numbers">P[0] = 1
+P[t+T[i]] = P[t]/N (0&lt;=t&lt;=X, 1&lt;=i&lt;=N)
+</code></pre>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, X) = Scanner.Scan&lt;int, int&gt;();
+    var T = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var P = new mint[X + 1];
+    P[0] = 1;
+    var pN = (mint)1 / N;
+
+    for (var i = 0; i &lt;= X; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            if (i + T[j] &lt;= X) P[i + T[j]] += P[i] * pN;
+        }
+    }
+
+    mint answer = 0;
+    for (var i = Math.Max(0, X - T[0] + 1); i &lt;= X; i++)
+    {
+        answer += P[i] * pN;
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20231007abc323" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
