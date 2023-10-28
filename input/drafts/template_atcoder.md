@@ -63,43 +63,73 @@ public static class Scanner
 
 [コンテスト提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
 
 ### [問題B](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_b)
 
 [コンテスト提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
 
 ### [問題C](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_c)
 
 [コンテスト提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
 
 ### [問題D](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_d)
 
 [コンテスト提出]()  
 [復習提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
 
 ### [問題E](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_e)
 
 [コンテスト提出]()  
 [復習提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
 
 ### [問題F](https://atcoder.jp/contests/PH__ContestName/tasks/PH__ContestName_f)
 
 [コンテスト提出]()  
 [復習提出]()
 
+<details>
+<summary>例</summary>
+
 ```csharp
 ```
+
+</details>
