@@ -4,7 +4,7 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-11-04T16:31:15Z</updated>
+	<updated>2023-11-04T16:32:22Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20231104abc327</id>
 		<title>ABC327</title>
@@ -232,7 +232,7 @@
 &lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[i][j] := i個目のコンテストまで見たとき、参加したコンテストがj個のときの最大値。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;あるコンテストが&lt;code&gt;x&lt;/code&gt;個目の選んだコンテストであった場合のパフォーマンスの重みを&lt;code&gt;w[x]&lt;/code&gt;とします。
-パフォーマンスの重みは参加した順に変動するので、&lt;code&gt;P&lt;/code&gt;を逆順にすることで、逆順にした&lt;code&gt;P&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;番目のコンテストのパフォーマンス重みを&lt;code&gt;w[j] (j&amp;lt;=i)&lt;/code&gt;とすることができます。
+また、&lt;code&gt;P&lt;/code&gt;を逆順にすることで、逆順にした&lt;code&gt;P&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;番目のコンテストのパフォーマンス重みを&lt;code&gt;w[j] (j&amp;lt;=i)&lt;/code&gt;とすることができます。
 このとき、遷移は次のようになります。&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-text line-numbers"&gt;// i番目のコンテストを選ばないとき、
 dp[i+1][j] = Max(dp[i+1][j], dp[i][j])

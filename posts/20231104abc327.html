@@ -309,7 +309,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 <pre><code class="language-text line-numbers">dp[i][j] := i個目のコンテストまで見たとき、参加したコンテストがj個のときの最大値。
 </code></pre>
 <p>あるコンテストが<code>x</code>個目の選んだコンテストであった場合のパフォーマンスの重みを<code>w[x]</code>とします。
-パフォーマンスの重みは参加した順に変動するので、<code>P</code>を逆順にすることで、逆順にした<code>P</code>の<code>i</code>番目のコンテストのパフォーマンス重みを<code>w[j] (j&lt;=i)</code>とすることができます。
+また、<code>P</code>を逆順にすることで、逆順にした<code>P</code>の<code>i</code>番目のコンテストのパフォーマンス重みを<code>w[j] (j&lt;=i)</code>とすることができます。
 このとき、遷移は次のようになります。</p>
 <pre><code class="language-text line-numbers">// i番目のコンテストを選ばないとき、
 dp[i+1][j] = Max(dp[i+1][j], dp[i][j])
