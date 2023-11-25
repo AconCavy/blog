@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC330</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC330">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20231125abc330">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC330</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2023-11-25T00:00:00&amp;#x2B;00:00">Saturday, 25 November 2023</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2023-11-25T00:00:00&amp;#x2B;00:00">Saturday, 25 November 2023</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 330の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc330">https://atcoder.jp/contests/abc330</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc330/tasks/abc330_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC330/submissions/47889596">コンテスト提出</a></p>
+<p><code>A</code>内の条件を満たす個数を数え上げます。<br>
+また、<code>C#</code>では<code>IEnumerable&lt;T&gt;</code>を実装するシーケンスに対して、<code>Count()</code>の引数に条件判定を行うラムダ式を渡すことで、シーケンス内で与えられた条件を満たすものの個数を得ることができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, L) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var answer = A.Count(x =&gt; x &gt;= L);
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc330/tasks/abc330_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC330/submissions/47919485">コンテスト提出</a><br>
+<a href="https://atcoder.jp/contests/ABC330/submissions/47943949">復習提出</a></p>
+<p><code>L&lt;=x&lt;=R</code>のうち、<code>A[i]</code>に最も近い<code>x</code>を求めます。<br>
+<code>L&lt;=A[i]&lt;=R</code>であるとき、<code>x</code>は<code>A[i]</code>です。<br>
+<code>A[i]&lt;L</code>であるとき、<code>x</code>は<code>L</code>です。<br>
+<code>A[i]&gt;R</code>であるとき、<code>x</code>は<code>R</code>です。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, L, R) = Scanner.Scan&lt;int, long, long&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    var answers = A.Select(x =&gt; Math.Min(Math.Max(L, x), R));
+    Console.WriteLine(string.Join(&quot; &quot;, answers));
+}
+</code></pre>
+</details>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc330/tasks/abc330_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC330/submissions/47918184">コンテスト提出</a></p>
+<p><code>x</code>を固定して考えると、<code>x</code>が取りうる範囲は<code>0&lt;=x&lt;=Sqrt(D)</code>になります。<br>
+これにより、<code>x^2-D</code>を<code>c</code>とすると、<code>c&gt;=0</code>のとき<code>y==0</code>で最小値を取り、<code>c&lt;0</code>のとき、<code>y==Floor(Sqrt(-c))</code>または<code>y==Ceil(Sqrt(-c))</code>で最小値を取ります。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var D = Scanner.Scan&lt;long&gt;();
+    const long Inf = 1L &lt;&lt; 60;
+    var answer = Inf;
+    for (long x = 0; x * x &lt;= D; x++)
+    {
+        var xx = x * x;
+        var c = xx - D;
+        var y = c &gt;= 0 ? 0 : (long)Math.Sqrt(-c);
+        for (var k = 0; k &lt; 2; k++)
+        {
+            var yy = (y + k) * (y + k);
+            var v = Math.Abs(xx + yy - D);
+            answer = Math.Min(answer, v);
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc330/tasks/abc330_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC330/submissions/47931077">コンテスト提出</a></p>
+<p><code>i</code>行目の<code>o</code>の個数を<code>cH[i]</code>、<code>j</code>行目の<code>o</code>の個数を<code>cW[j]</code>とします。<br>
+<code>i</code>行目<code>j</code>列のマスが<code>o</code>のとき、そのマスと同じ行にある<code>o</code>のマスを選ぶ組み合わせは<code>ch[i]-1</code>個、そのマスと同じ列にある<code>o</code>のマスを選ぶ組み合わせは<code>cw[j]-1</code>個なので、このマスを3マスのうちの1つとしたとき、このマスを含む組み合わせは<code>(ch[i]-1)*(cw[j]-1)</code>個になります。<br>
+よって、すべての<code>o</code>のマスを固定したときの組み合わせの総和が答えになります。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new char[N][];
+    for (var i = 0; i &lt; N; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().ToCharArray();
+    }
+
+    var cH = new long[N + 1];
+    var cW = new long[N + 1];
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            if (G[i][j] == 'x') continue;
+            cH[i]++;
+            cW[j]++;
+        }
+    }
+
+    long answer = 0;
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            if (G[i][j] == 'x') continue;
+            answer += (cH[i] - 1) * (cW[j] - 1);
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc330/tasks/abc330_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC330/submissions/47936346">コンテスト提出</a></p>
+<p>長さ<code>N</code>の数列において取りうる<code>mex</code>の値は、<code>0&lt;=mex&lt;=N</code>になります。<br>
+よって、<code>A[i]</code>が<code>N</code>より大きい場合は、その値に対する処理を無視することができます。
+また、数列<code>X</code>において、<code>A[i]</code>に存在する値は<code>X[A[i]]=inf</code>、存在しない値は<code>X[i]=i</code>とすることで、<code>X</code>における最小値を<code>mex</code>として求めることができます。<br>
+よって、<code>N</code>以下の値がそれぞれ何個あるかを管理しながら、<code>SegmentTree</code>などのデータ構造を使い区間内における最小値を高速で求められるようにすることで、クエリ当たり時間計算量<code>O(logN)</code>、全体時間計算量<code>O(QlogN)</code>で答えを求めることができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
+    var count = new int[N + 1];
+    var st = new SegmentTree&lt;int&gt;(N + 1, new Oracle());
+    const int Inf = 1 &lt;&lt; 30;
+    for (var i = 0; i &lt;= N; i++)
+    {
+        st.Set(i, i);
+    }
+
+    foreach (var a in A)
+    {
+        if (a &lt;= N)
+        {
+            count[a]++;
+            st.Set(a, Inf);
+        }
+    }
+
+    for (var q = 0; q &lt; Q; q++)
+    {
+        var (i, x) = Scanner.Scan&lt;int, int&gt;();
+        i--;
+        if (A[i] &lt;= N)
+        {
+            count[A[i]]--;
+            if (count[A[i]] == 0) st.Set(A[i], A[i]);
+        }
+
+        A[i] = x;
+
+        if (x &lt;= N)
+        {
+            count[x]++;
+            st.Set(x, Inf);
+        }
+
+        var mex = Math.Min(st.QueryToAll(), N);
+        Console.WriteLine(mex);
+    }
+}
+
+public class Oracle : IOracle&lt;int&gt;
+{
+    public int IdentityElement =&gt; 1 &lt;&lt; 30;
+
+    public int Operate(int a, int b)
+    {
+        return Math.Min(a, b);
+    }
+}
+
+public interface IOracle&lt;TMonoid&gt;
+{
+    TMonoid IdentityElement { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public class SegmentTree&lt;TMonoid&gt;
+{
+    public int Length { get; }
+    private readonly IOracle&lt;TMonoid&gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public SegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid&gt; oracle) : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
+    }
+
+    public SegmentTree(int length, IOracle&lt;TMonoid&gt; oracle)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &lt;&lt; _log &lt; Length) _log++;
+        _dataSize = 1 &lt;&lt; _log;
+        _data = new TMonoid[_dataSize &lt;&lt; 1];
+        Array.Fill(_data, oracle.IdentityElement);
+    }
+
+    public void Set(int index, TMonoid value)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        _data[index] = value;
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        return _data[index + _dataSize];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
+        left += _dataSize;
+        right += _dataSize;
+        while (left &lt; right)
+        {
+            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &gt;&gt;= 1;
+            right &gt;&gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&gt; _data[1];
+
+    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &lt; _dataSize)
+                {
+                    left &lt;&lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            right--;
+            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &lt; _dataSize)
+                {
+                    right = (right &lt;&lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
+}
+</code></pre>
+</details>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20231125abc330" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2023 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
