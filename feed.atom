@@ -4,7 +4,7 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-11-18T17:05:46Z</updated>
+	<updated>2023-11-25T02:53:58Z</updated>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20231118abc329</id>
 		<title>ABC329</title>
@@ -230,7 +230,7 @@
 		<id>https://blog.aconcavy.dev/posts/20231111abc328</id>
 		<title>ABC328</title>
 		<link href="https://blog.aconcavy.dev/posts/20231111abc328" />
-		<updated>2023-11-11T00:00:00Z</updated>
+		<updated>2023-11-25T00:00:00Z</updated>
 		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 328の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -480,7 +480,7 @@ public static IEnumerable&amp;lt;TSource[]&amp;gt; Combine&amp;lt;TSource&amp;gt
 部分集合&lt;code&gt;S&lt;/code&gt;が良い集合であるということは、部分集合&lt;code&gt;S&lt;/code&gt;に含まれる全てのクエリ&lt;code&gt;(a,b,d)&lt;/code&gt;において、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;であり、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;間は同じ連結成分であると考えることができます。&lt;br /&gt;
 よって、各クエリ&lt;code&gt;(a,b,d)&lt;/code&gt;を順に見ていったとき、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;が同じ連結成分である場合は、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;が成り立つ場合にのみクエリを&lt;code&gt;S&lt;/code&gt;に追加できます。&lt;br /&gt;
 一方、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;が異なる連結成分である場合は、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;となるように片方の連結集合の全ての&lt;code&gt;X&lt;/code&gt;の値を変更することで、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;を同じ連結成分にできるため、クエリを&lt;code&gt;S&lt;/code&gt;に追加することができます。&lt;br /&gt;
-この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、時間計算量&lt;code&gt;O(a(N))&lt;/code&gt;(&lt;code&gt;a(N)&lt;/code&gt;はアッカーマンの逆関数)でマージすることができます。&lt;/p&gt;
+この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、高速にマージすることができるようになります。&lt;/p&gt;
 &lt;details&gt;
 &lt;summary&gt;例&lt;/summary&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()

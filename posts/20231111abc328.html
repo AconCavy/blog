@@ -74,7 +74,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
             Published on <time datetime="2023-11-11T00:00:00&amp;#x2B;00:00">Saturday, 11 November 2023</time>
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on <time datetime="2023-11-11T00:00:00&amp;#x2B;00:00">Saturday, 11 November 2023</time>
+            Updated on <time datetime="2023-11-25T00:00:00&amp;#x2B;00:00">Saturday, 25 November 2023</time>
         </div>
 
             <div class="mt-3 mb-4">
@@ -336,7 +336,7 @@ public static IEnumerable&lt;TSource[]&gt; Combine&lt;TSource&gt;(IEnumerable&lt
 部分集合<code>S</code>が良い集合であるということは、部分集合<code>S</code>に含まれる全てのクエリ<code>(a,b,d)</code>において、<code>X[a]-X[b]==d</code>であり、頂点<code>a</code>と頂点<code>b</code>間は同じ連結成分であると考えることができます。<br>
 よって、各クエリ<code>(a,b,d)</code>を順に見ていったとき、頂点<code>a</code>と頂点<code>b</code>が同じ連結成分である場合は、<code>X[a]-X[b]==d</code>が成り立つ場合にのみクエリを<code>S</code>に追加できます。<br>
 一方、頂点<code>a</code>と頂点<code>b</code>が異なる連結成分である場合は、<code>X[a]-X[b]==d</code>となるように片方の連結集合の全ての<code>X</code>の値を変更することで、頂点<code>a</code>と頂点<code>b</code>を同じ連結成分にできるため、クエリを<code>S</code>に追加することができます。<br>
-この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、時間計算量<code>O(a(N))</code>(<code>a(N)</code>はアッカーマンの逆関数)でマージすることができます。</p>
+この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、高速にマージすることができるようになります。</p>
 <details>
 <summary>例</summary>
 <pre><code class="language-csharp line-numbers">public static void Solve()

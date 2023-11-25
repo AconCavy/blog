@@ -5,8 +5,8 @@
 		<link>https://blog.aconcavy.dev/</link>
 		<description />
 		<copyright>Copyright © 2020-2023 AconCavy</copyright>
-		<pubDate>Sat, 18 Nov 2023 17:05:46 GMT</pubDate>
-		<lastBuildDate>Sat, 18 Nov 2023 17:05:46 GMT</lastBuildDate>
+		<pubDate>Sat, 25 Nov 2023 02:53:58 GMT</pubDate>
+		<lastBuildDate>Sat, 25 Nov 2023 02:53:58 GMT</lastBuildDate>
 		<item>
 			<title>ABC329</title>
 			<link>https://blog.aconcavy.dev/posts/20231118abc329</link>
@@ -234,7 +234,7 @@
 			<link>https://blog.aconcavy.dev/posts/20231111abc328</link>
 			<description>&lt;p&gt;AtCoder Beginner Contest 328の復習記事です。&lt;/p&gt;</description>
 			<guid>https://blog.aconcavy.dev/posts/20231111abc328</guid>
-			<pubDate>Sat, 11 Nov 2023 00:00:00 GMT</pubDate>
+			<pubDate>Sat, 25 Nov 2023 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
 &lt;p&gt;AtCoder Beginner Contest 328の復習記事です。&lt;/p&gt;
 &lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
@@ -484,7 +484,7 @@ public static IEnumerable&amp;lt;TSource[]&amp;gt; Combine&amp;lt;TSource&amp;gt
 部分集合&lt;code&gt;S&lt;/code&gt;が良い集合であるということは、部分集合&lt;code&gt;S&lt;/code&gt;に含まれる全てのクエリ&lt;code&gt;(a,b,d)&lt;/code&gt;において、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;であり、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;間は同じ連結成分であると考えることができます。&lt;br /&gt;
 よって、各クエリ&lt;code&gt;(a,b,d)&lt;/code&gt;を順に見ていったとき、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;が同じ連結成分である場合は、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;が成り立つ場合にのみクエリを&lt;code&gt;S&lt;/code&gt;に追加できます。&lt;br /&gt;
 一方、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;が異なる連結成分である場合は、&lt;code&gt;X[a]-X[b]==d&lt;/code&gt;となるように片方の連結集合の全ての&lt;code&gt;X&lt;/code&gt;の値を変更することで、頂点&lt;code&gt;a&lt;/code&gt;と頂点&lt;code&gt;b&lt;/code&gt;を同じ連結成分にできるため、クエリを&lt;code&gt;S&lt;/code&gt;に追加することができます。&lt;br /&gt;
-この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、時間計算量&lt;code&gt;O(a(N))&lt;/code&gt;(&lt;code&gt;a(N)&lt;/code&gt;はアッカーマンの逆関数)でマージすることができます。&lt;/p&gt;
+この操作をマージとしたとき、連結成分の小さい方から大きい方へマージすることで、高速にマージすることができるようになります。&lt;/p&gt;
 &lt;details&gt;
 &lt;summary&gt;例&lt;/summary&gt;
 &lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
