@@ -4,7 +4,464 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2023 AconCavy</rights>
-	<updated>2023-11-25T14:37:31Z</updated>
+	<updated>2023-12-02T16:44:42Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20231202abc331</id>
+		<title>ABC331</title>
+		<link href="https://blog.aconcavy.dev/posts/20231202abc331" />
+		<updated>2023-12-02T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 331の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Scannerクラス&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
+{
+    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
+    }
+    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
+    }
+    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc331"&gt;https://atcoder.jp/contests/abc331&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc331/tasks/abc331_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC331/submissions/48105656"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;次の日を求めるので、&lt;code&gt;d&lt;/code&gt;を&lt;code&gt;+1&lt;/code&gt;します。&lt;br /&gt;
+このとき、&lt;code&gt;d&amp;gt;D&lt;/code&gt;ならば、次の月になるので、&lt;code&gt;m&lt;/code&gt;を&lt;code&gt;+1&lt;/code&gt;して&lt;code&gt;d&lt;/code&gt;が&lt;code&gt;1&lt;/code&gt;になります。&lt;br /&gt;
+このとき、&lt;code&gt;m&amp;gt;M&lt;/code&gt;ならば、次の年になるので、&lt;code&gt;y&lt;/code&gt;を&lt;code&gt;+1&lt;/code&gt;して&lt;code&gt;m&lt;/code&gt;が&lt;code&gt;1&lt;/code&gt;になります。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (M, D) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var (y, m, d) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    d++;
+
+    if (d &amp;gt; D)
+    {
+        d = 1;
+        m++;
+    }
+
+    if (m &amp;gt; M)
+    {
+        m = 1;
+        y++;
+    }
+
+    Console.WriteLine($&amp;quot;{y} {m} {d}&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc331/tasks/abc331_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC331/submissions/48102993"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;サイズごとの卵のパックを全探索します。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, S, M, L) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+    const long Inf = 1 &amp;lt;&amp;lt; 60;
+    var answer = Inf;
+
+    for (var s = 0; s &amp;lt;= (100 + 5) / 6; s++)
+    {
+        for (var m = 0; m &amp;lt;= (100 + 7) / 8; m++)
+        {
+            for (var l = 0; l &amp;lt;= (100 + 11) / 12; l++)
+            {
+                if (s * 6 + m * 8 + l * 12 &amp;gt;= N)
+                {
+                    answer = Math.Min(answer, s * S + m * M + l * L);
+                }
+            }
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;次のような動的計画法で解くこともできます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[i] := i個の卵を買うときの最小の金額
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[i+6] = Min(dp[i+6], dp[i]+S);
+dp[i+8] = Min(dp[i+8], dp[i]+M);
+dp[i+12] = Min(dp[i+12], dp[i]+L);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, S, M, L) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+    const int Inf = 1 &amp;lt;&amp;lt; 30;
+    var dp = new long[N + 1];
+    Array.Fill(dp, Inf);
+    dp[0] = 0;
+    var X = new (int, long)[] { (6, S), (8, M), (12, L) };
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        foreach (var (c, v) in X)
+        {
+            var nc = Math.Min(N, i + c);
+            dp[nc] = Math.Min(dp[nc], dp[i] + v);
+        }
+    }
+
+    var answer = dp[N];
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc331/tasks/abc331_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC331/submissions/48110811"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;各&lt;code&gt;A[i]&lt;/code&gt;について&lt;code&gt;A[i]&lt;/code&gt;より大きな要素全ての和を愚直に探索してしまうと、&lt;code&gt;A[i]&lt;/code&gt;ごとに時間計算量&lt;code&gt;O(N)&lt;/code&gt;、全体で時間計算量&lt;code&gt;O(N^2)&lt;/code&gt;になり、実行時間制限に間に合いません。&lt;br /&gt;
+そこで、各&lt;code&gt;A[i]&lt;/code&gt;に対して高速に答えを求められるようにする必要があります。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;A&lt;/code&gt;を昇順ソートしたものを&lt;code&gt;B&lt;/code&gt;、数列&lt;code&gt;B&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;番目までの累積和を&lt;code&gt;cum[i]&lt;/code&gt;、&lt;code&gt;B&lt;/code&gt;における&lt;code&gt;A[i]&lt;/code&gt;が出現する最も右側の位置を&lt;code&gt;pos[A[i]]&lt;/code&gt;とします。&lt;br /&gt;
+&lt;code&gt;A[i]&lt;/code&gt;より大きい要素全ての和は、&lt;code&gt;数列全体の和-A[i]以下の要素全ての和&lt;/code&gt;で求めることができることから、&lt;code&gt;cum[N]-cum[pos[A[i]]]&lt;/code&gt;で求めることができるようになります。&lt;br /&gt;
+あらかじめ&lt;code&gt;cum[i]&lt;/code&gt;を時間計算量&lt;code&gt;O(N)&lt;/code&gt;で求めておくことで、以降各&lt;code&gt;i&lt;/code&gt;に対して時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求めることができるようにします。&lt;br /&gt;
+また、辞書などのデータ構造や&lt;code&gt;B&lt;/code&gt;に対する二部探索を行うことで、&lt;code&gt;pos[A[i]]&lt;/code&gt;を時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で求めることができるようにします。&lt;br /&gt;
+そして、各&lt;code&gt;A[i]&lt;/code&gt;に対して&lt;code&gt;cum[N]-cum[pos[A[i]]]&lt;/code&gt;を求めていくことで、全体時間計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができるようになります。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var B = A.ToArray();
+    Array.Sort(B);
+    var pos = new Dictionary&amp;lt;long, int&amp;gt;();
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        pos[B[i]] = i;
+    }
+
+    var cum = new long[N + 1];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        cum[i + 1] = cum[i] + B[i];
+    }
+
+    var answers = new long[N];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        answers[i] = cum[N] - cum[pos[A[i]] + 1];
+    }
+
+    Console.WriteLine(string.Join(&amp;quot; &amp;quot;, answers));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc331/tasks/abc331_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC331/submissions/48136966"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N*N&lt;/code&gt;マスのパターンを&lt;code&gt;P&lt;/code&gt;とします。&lt;br /&gt;
+&lt;code&gt;P&lt;/code&gt;の&lt;code&gt;i&lt;/code&gt;行&lt;code&gt;j&lt;/code&gt;列目までのにおける黒の個数を二次元累積和を&lt;code&gt;S[i][j]&lt;/code&gt;は次のように求められます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;S[i][j] = S[i-1][j] + S[i][j-1] - S[i-1][j-1] + (P[i][j]が黒?1:0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;S[i][j]&lt;/code&gt;を時間計算量&lt;code&gt;O(N^2)&lt;/code&gt;で求めておき、各クエリ当たり時間計算量&lt;code&gt;O(1)&lt;/code&gt;で答えられるようにしておきます。&lt;/p&gt;
+&lt;p&gt;クエリ&lt;code&gt;a,b,c,d&lt;/code&gt;は閉区間&lt;code&gt;H:[a,c], W:[b,d]&lt;/code&gt;ですが、計算の都合として半開区間&lt;code&gt;H:[a,c), W:[b,d)&lt;/code&gt;とします。&lt;br /&gt;
+また、&lt;code&gt;a,b,c,d&lt;/code&gt;を&lt;code&gt;N&lt;/code&gt;で割った余りを&lt;code&gt;am,bm,cm,dm&lt;/code&gt;とします。&lt;br /&gt;
+クエリの長方形領域を&lt;code&gt;3*3&lt;/code&gt;の領域に分割すると、領域の{左上|右上|左下|右下}は&lt;code&gt;P&lt;/code&gt;の一部を覆い、{左中|右中}は&lt;code&gt;P&lt;/code&gt;の行の全てと列の一部を覆い、{上中|下中}は&lt;code&gt;P&lt;/code&gt;の行の一部と列の全てを覆い、真中が&lt;code&gt;P&lt;/code&gt;の行と列の全てを覆います。&lt;/p&gt;
+&lt;p&gt;また、｛左|右|上|下|真｝中の領域は、0以上個の&lt;code&gt;P&lt;/code&gt;を繰り返します。&lt;br /&gt;
+行を全て使うものは、縦に&lt;code&gt;hc=((c-a)-(N-am+cm))/N&lt;/code&gt;個の&lt;code&gt;P&lt;/code&gt;を並べます。&lt;br /&gt;
+同様に、列を全て使うものは、横に&lt;code&gt;wc=((d-b)-(N-bm+dm))/N&lt;/code&gt;個の&lt;code&gt;P&lt;/code&gt;を並べます。&lt;br /&gt;
+よって、各領域は次の範囲を覆います。&lt;/p&gt;
+&lt;div class="table-responsive"&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;領域&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;行&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;列&lt;/th&gt;
+&lt;th style="text-align: right;"&gt;Pの個数&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;左上&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[am,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[bm,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;右上&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[am,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,dm)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;左下&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,bm)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[cm,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;右下&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,0)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[cm,dm)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;左中&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[bm,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;hc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;右中&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,dm)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;hc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;上中&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[am,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;wc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;下中&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,cm)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;wc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;真中&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;[0,N)&lt;/td&gt;
+&lt;td style="text-align: right;"&gt;hc*wc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;よって、各領域の&lt;code&gt;P&lt;/code&gt;を覆う範囲にある黒の個数に繰り返す&lt;code&gt;P&lt;/code&gt;の個数を掛けたものの総和が答えになります。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+    var P = new char[N][];
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        P[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
+    }
+
+    var cum = new CumulativeSum2D&amp;lt;long&amp;gt;(N + 10, N + 10);
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        for (var j = 0; j &amp;lt; N; j++)
+        {
+            if (P[i][j] == 'B')
+            {
+                cum.Add(i, j, 1);
+            }
+        }
+    }
+
+    while (Q-- &amp;gt; 0)
+    {
+        var (a, b, c, d) = Scanner.Scan&amp;lt;int, int, int, int&amp;gt;();
+        c++; d++;
+
+        long answer = 0;
+        var (am, bm, cm, dm) = (a % N, b % N, c % N, d % N);
+        long hc = ((c - a) - (N - am + cm)) / N;
+        long wc = ((d - b) - (N - bm + dm)) / N;
+
+        answer += cum.Sum(am, bm, N, N); // 左上
+        answer += cum.Sum(am, 0, N, dm); // 右上
+        answer += cum.Sum(0, bm, cm, N); // 左下
+        answer += cum.Sum(0, 0, cm, dm); // 右下
+
+        answer += cum.Sum(0, bm, N, N) * hc; // 左中
+        answer += cum.Sum(0, 0, N, dm) * hc; // 右中
+        answer += cum.Sum(am, 0, N, N) * wc; // 上中
+        answer += cum.Sum(0, 0, cm, N) * wc; // 下中
+
+        answer += cum.Sum(N, N) * (hc * wc); // 中中
+
+        Console.WriteLine(answer);
+    }
+}
+
+public class CumulativeSum2D&amp;lt;T&amp;gt; where T : INumber&amp;lt;T&amp;gt;
+{
+    public int Height { get; }
+    public int Width { get; }
+    private readonly T[] _data;
+    private readonly T[] _sum;
+    private bool _isUpdated;
+
+    public CumulativeSum2D(int height, int width)
+    {
+        if (height &amp;lt;= 0) throw new ArgumentOutOfRangeException(nameof(height));
+        if (width &amp;lt;= 0) throw new ArgumentOutOfRangeException(nameof(width));
+        Height = height;
+        Width = width;
+        _data = new T[height * width];
+        _sum = new T[(height + 1) * (width + 1)];
+    }
+
+    public void Add(int height, int width, T value)
+    {
+        ThrowIfNegative(height);
+        ThrowIfGreaterThanOrEqual(height, Height);
+        ThrowIfNegative(width);
+        ThrowIfGreaterThanOrEqual(width, Width);
+        _isUpdated = false;
+        _data[height * Width + width] += value;
+    }
+
+    public void Set(int height, int width, T value)
+    {
+        ThrowIfNegative(height);
+        ThrowIfGreaterThanOrEqual(height, Height);
+        ThrowIfNegative(width);
+        ThrowIfGreaterThanOrEqual(width, Width);
+        _isUpdated = false;
+        _data[height * Width + width] = value;
+    }
+
+    public T Get(int height, int width)
+    {
+        ThrowIfNegative(height);
+        ThrowIfGreaterThanOrEqual(height, Height);
+        ThrowIfNegative(width);
+        ThrowIfGreaterThanOrEqual(width, Width);
+        return _data[height * Width + width];
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// Calculate a two-dimensional cumulative sum of [0, height), [0, width).
+    /// &amp;lt;/summary&amp;gt;
+    public T Sum(int height, int width)
+    {
+        ThrowIfNegative(height);
+        ThrowIfGreaterThan(height, Height);
+        ThrowIfNegative(width);
+        ThrowIfGreaterThan(width, Width);
+        if (!_isUpdated) Build();
+        return _sum[height * (Width + 1) + width];
+    }
+
+    /// &amp;lt;summary&amp;gt;
+    /// Calculate a two-dimensional cumulative sum of [height1, height2), [width1, width2).
+    /// &amp;lt;/summary&amp;gt;
+    public T Sum(int height1, int width1, int height2, int width2)
+    {
+        ThrowIfGreaterThan(height1, height2);
+        ThrowIfGreaterThan(width1, width2);
+        return Sum(height1, width1) + Sum(height2, width2) - Sum(height2, width1) - Sum(height1, width2);
+    }
+
+    private void Build()
+    {
+        _isUpdated = true;
+        var w1 = Width + 1;
+        _sum[0] = _sum[w1] = _sum[1] = T.Zero;
+        for (var i = 1; i &amp;lt;= Height; i++)
+        {
+            for (var j = 1; j &amp;lt;= Width; j++)
+            {
+                _sum[i * w1 + j] =
+                    _sum[i * w1 + (j - 1)]
+                    + _sum[(i - 1) * w1 + j]
+                    - _sum[(i - 1) * w1 + (j - 1)]
+                    + _data[(i - 1) * Width + (j - 1)];
+            }
+        }
+    }
+
+    private static void ThrowIfNegative(int value)
+    {
+        if (value &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(value));
+    }
+
+    private static void ThrowIfGreaterThan(int value, int other)
+    {
+        if (value &amp;gt; other) throw new ArgumentOutOfRangeException(nameof(value));
+    }
+
+    private static void ThrowIfGreaterThanOrEqual(int value, int other)
+    {
+        if (value &amp;gt;= other) throw new ArgumentOutOfRangeException(nameof(value));
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc331/tasks/abc331_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC331/submissions/48133625"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;主菜のを固定したとき、その主菜との食べ合わせが悪くない最も価格の高い副菜が、その主菜に対する最も価格が高い定食の組み合わせになります。&lt;br /&gt;
+その主菜との食べ合わせが悪くない副菜のうち、最も価格が高い副菜以外を組み合わせたところで、最も高い副菜との組み合わせのほうが定食価格が高いので、最も高い副菜以外の走査を打ち切ることができます。&lt;br /&gt;
+これにより、&lt;code&gt;N&lt;/code&gt;種類の主菜と、食べ合わせが悪い&lt;code&gt;L&lt;/code&gt;種類の食べ合わせを判定することで答えを求めることができます。&lt;br /&gt;
+したがって、食べ合わせが悪い主菜と副菜の組み合わせのペアを集合で管理し、&lt;code&gt;B&lt;/code&gt;の価格と番号をペアにしたものを、価格の降順に並べ替え、各&lt;code&gt;A&lt;/code&gt;に対して食べ合わせの判定を行うことで、時間計算量&lt;code&gt;O(MlogM+N+L)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (N, M, L) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var B = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
+    var set = new HashSet&amp;lt;(int C, int D)&amp;gt;();
+    for (var i = 0; i &amp;lt; L; i++)
+    {
+        var (c, d) = Scanner.Scan&amp;lt;int, int&amp;gt;();
+        c--; d--;
+        set.Add((c, d));
+    }
+
+    var C = B.Select((x, i) =&amp;gt; (V: x, I: i)).OrderByDescending(x =&amp;gt; x.V).ToArray();
+    long answer = 0;
+    for (var i = 0; i &amp;lt; N; i++)
+    {
+        var (a, ai) = (A[i], i);
+        for (var j = 0; j &amp;lt; M; j++)
+        {
+            var (b, bi) = C[j];
+            if (set.Contains((ai, bi))) continue;
+            answer = Math.Max(answer, a + b);
+            break;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 331の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20231125abc330</id>
 		<title>ABC330</title>
@@ -2435,219 +2892,5 @@ public static int LowerBound&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; sour
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 322の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20230923abc321</id>
-		<title>ABC321</title>
-		<link href="https://blog.aconcavy.dev/posts/20230923abc321" />
-		<updated>2023-09-23T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 321の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;Scannerクラス&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
-{
-    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
-    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
-    }
-    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
-    }
-    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
-    }
-    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
-    }
-    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
-    }
-    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
-    private static string[] ScanStringArray()
-    {
-        var line = Console.ReadLine()?.Trim() ?? string.Empty;
-        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
-    }
-    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc321"&gt;https://atcoder.jp/contests/abc321&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC321/submissions/45817144"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N&lt;/code&gt;を文字列としてみたとき、全ての&lt;code&gt;1&amp;lt;=i&amp;lt;=N-1&lt;/code&gt;において&lt;code&gt;N[i]&amp;gt;N[i+1]&lt;/code&gt;が成り立つものが&lt;code&gt;321-like Number&lt;/code&gt;になります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;string&amp;gt;();
-    var answer = true;
-    for (var i = 0; i + 1 &amp;lt; N.Length; i++)
-    {
-        answer &amp;amp;= N[i] &amp;gt; N[i + 1];
-    }
-
-    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC321/submissions/45824801"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;最後に&lt;code&gt;k&lt;/code&gt;点取ると固定したときの最終結果が&lt;code&gt;X&lt;/code&gt;以上になる&lt;code&gt;k&lt;/code&gt;を全探索します。&lt;br /&gt;
-あらかじめ、&lt;code&gt;N-1&lt;/code&gt;試合の合計スコア(&lt;code&gt;sum&lt;/code&gt;)、最低スコア(&lt;code&gt;min&lt;/code&gt;)、最高スコア(&lt;code&gt;max&lt;/code&gt;)を計算しておくと、最終試験で&lt;code&gt;k&lt;/code&gt;点とった場合、最終結果は&lt;code&gt;sum + k - Min(min,k) - Max(max,k)&lt;/code&gt;で求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, X) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var min = A.Min();
-    var max = A.Max();
-    var sum = A.Sum();
-    const int Inf = 1 &amp;lt;&amp;lt; 30;
-    var answer = Inf;
-    for (var k = 0; k &amp;lt;= 100; k++)
-    {
-        var mmin = Math.Min(min, k);
-        var mmax = Math.Max(max, k);
-        var x = sum + k - mmin - mmax;
-        if (x &amp;gt;= X)
-        {
-            answer = Math.Min(answer, k);
-        }
-    }
-
-    if (answer == Inf) answer = -1;
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC321/submissions/45887284"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;321-like Number&lt;/code&gt;の各桁に同じ数字が現れることはないため、&lt;code&gt;0&lt;/code&gt;から&lt;code&gt;9&lt;/code&gt;の数字をそれぞれ使う/使わないとしたときに、使う数字のみを降順に並べたものが&lt;code&gt;321-like Number&lt;/code&gt;になり得ます。&lt;br /&gt;
-このことから、それぞれの数字を使う/使わないとする組み合わせ&lt;code&gt;2^10-1&lt;/code&gt;通りをbit全探索し、全ての&lt;code&gt;321-like Number&lt;/code&gt;を列挙してソートすることで、&lt;code&gt;K&lt;/code&gt;番目の値を得ることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var K = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = new List&amp;lt;long&amp;gt;();
-    for (var s = 1; s &amp;lt; 1 &amp;lt;&amp;lt; 10; s++)
-    {
-        var list = new List&amp;lt;int&amp;gt;();
-        for (var i = 0; i &amp;lt; 10; i++)
-        {
-            if ((s &amp;gt;&amp;gt; i &amp;amp; 1) == 1) list.Add(i);
-        }
-
-        list.Sort();
-        list.Reverse();
-        S.Add(long.Parse(string.Join(&amp;quot;&amp;quot;, list)));
-    }
-
-    S.Sort();
-    var answer = S[K];
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC321/submissions/45853839"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;ある主菜&lt;code&gt;A[i]&lt;/code&gt;を固定したとき、副菜&lt;code&gt;B&lt;/code&gt;のうち価格が&lt;code&gt;P-A[i]&lt;/code&gt;以上のものは価格が&lt;code&gt;P&lt;/code&gt;となることから、&lt;code&gt;B&lt;/code&gt;のうち&lt;code&gt;P-A[i]&lt;/code&gt;以上のものと&lt;code&gt;P-A[i]&lt;/code&gt;より小さいもので分けて考えることができます。&lt;br /&gt;
-&lt;code&gt;P-A[i]&lt;/code&gt;以上のものの個数を&lt;code&gt;X&lt;/code&gt;としたとき、&lt;code&gt;P-A[i]&lt;/code&gt;以上のものの価格の総和は&lt;code&gt;M*P&lt;/code&gt;になります。&lt;br /&gt;
-&lt;code&gt;P-A[i]&lt;/code&gt;より小さいものの個数は&lt;code&gt;M-X&lt;/code&gt;となり、&lt;code&gt;P-A[i]&lt;/code&gt;より小さいものの価格和を&lt;code&gt;S&lt;/code&gt;とすると、&lt;code&gt;P-A[i]&lt;/code&gt;より小さいものの価格の総和は&lt;code&gt;A[i]*(M-X)+S&lt;/code&gt;となります。
-&lt;code&gt;B&lt;/code&gt;をあらかじめソートしておき、累積和を求めておくことで、各&lt;code&gt;A[i]&lt;/code&gt;ごとに&lt;code&gt;B&lt;/code&gt;のうち&lt;code&gt;P-A[i]&lt;/code&gt;以上の個数を時間計算量&lt;code&gt;O(logM)&lt;/code&gt;で求めることができ、累積和から&lt;code&gt;P-A[i]&lt;/code&gt;より小さいものの価格和を時間計算量&lt;code&gt;O(1)&lt;/code&gt;で求めることができます。&lt;br /&gt;
-よって、全体時間計算量&lt;code&gt;O(MlogM + NlogM)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, M, P) = Scanner.Scan&amp;lt;int, int, long&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    var B = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-    Array.Sort(B);
-    var cumB = new long[M + 1];
-    for (var i = 0; i &amp;lt; M; i++)
-    {
-        cumB[i + 1] = cumB[i] + B[i];
-    }
-
-    long answer = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var lb = LowerBound(B, Math.Max(0, P - A[i]));
-        var x = A[i] * lb + cumB[lb];
-        var y = (M - lb) * P;
-        answer += x + y;
-    }
-
-    Console.WriteLine(answer);
-}
-
-public static int LowerBound&amp;lt;T&amp;gt;(List&amp;lt;T&amp;gt; source, T key) where T : IComparable&amp;lt;T&amp;gt;
-    =&amp;gt; LowerBound(System.Runtime.InteropServices.CollectionsMarshal.AsSpan(source), key);
-
-public static int LowerBound&amp;lt;T&amp;gt;(ReadOnlySpan&amp;lt;T&amp;gt; source, T key) where T : IComparable&amp;lt;T&amp;gt;
-{
-    var (l, r) = (-1, source.Length);
-    while (r - l &amp;gt; 1)
-    {
-        var m = l + (r - l) / 2;
-        if (source[m].CompareTo(key) &amp;gt;= 0) r = m;
-        else l = m;
-    }
-
-    return r;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;まだ解けていません。&lt;/p&gt;
-&lt;!-- 
-```csharp
-``` --&gt;
-&lt;h3 id="f"&gt;&lt;a href="https://atcoder.jp/contests/abc321/tasks/abc321_f"&gt;問題F&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC321/submissions/45887679"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;次のような動的計画法を解きます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[s] := 現在のクエリまでみたとき、総和がsとなる組み合わせの個数
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;遷移は次のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;if op == '+'
-dp[j] += dp[i][j-x] (j=K,K-1,..,x+1,x)
-
-if op == '-'
-dp[j] -= dp[i][j-x] (j=x,x+1,..,K-1,K)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (Q, K) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var dp = new mint[K + 1];
-    dp[0] = 1;
-    for (var i = 0; i &amp;lt; Q; i++)
-    {
-        var (op, x) = Scanner.Scan&amp;lt;char, int&amp;gt;();
-        if (op == '+')
-        {
-            for (var j = K; j &amp;gt;= x; j--)
-            {
-                dp[j] += dp[j - x];
-            }
-        }
-        else
-        {
-            for (var j = x; j &amp;lt;= K; j++)
-            {
-                dp[j] -= dp[j - x];
-            }
-        }
-
-        var answer = dp[K];
-        Console.WriteLine(answer);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 321の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
