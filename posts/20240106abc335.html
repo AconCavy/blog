@@ -12,7 +12,7 @@ connect-src 'self' *.fontawesome.com *.typekit.net;
 style-src 'self' 'unsafe-inline';
 script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
-    <title>acon.log - ABC326</title>
+    <title>acon.log - ABC335</title>
 
     <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
     <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,10 +20,10 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
     <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
 
     
-<meta property="og:title" content="ABC326">
+<meta property="og:title" content="ABC335">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
-<meta property="og:url" content="https://blog.aconcavy.dev/posts/20231028abc326">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20240106abc335">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="acon.log">
 <meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
@@ -68,13 +68,13 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                                 
 <header>
     <div class="c-post-header mb-3">
-        <h1 class="card-title c-post-header__title">ABC326</h1>
+        <h1 class="card-title c-post-header__title">ABC335</h1>
 
         <div class="card-text c-post-header__meta">
-            Published on <time datetime="2023-10-28T00:00:00&amp;#x2B;00:00">Saturday, 28 October 2023</time>
+            Published on <time datetime="2024-01-06T00:00:00&amp;#x2B;00:00">Saturday, 06 January 2024</time>
         </div>
         <div class="card-text c-post-header__meta">
-            Updated on <time datetime="2023-10-28T00:00:00&amp;#x2B;00:00">Saturday, 28 October 2023</time>
+            Updated on <time datetime="2024-01-06T00:00:00&amp;#x2B;00:00">Saturday, 06 January 2024</time>
         </div>
 
             <div class="mt-3 mb-4">
@@ -88,7 +88,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 
                                 <div class="c-post-body">
                                     <h2 id="section">はじめに</h2>
-<p>AtCoder Beginner Contest 326の復習記事です。</p>
+<p>AtCoder Beginner Contest 335の復習記事です。</p>
 <p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
 <details>
 <summary>Scannerクラス</summary>
@@ -131,190 +131,205 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
 </code></pre>
 </details>
 <h2 id="section-1">コンテスト</h2>
-<p><a href="https://atcoder.jp/contests/abc326">https://atcoder.jp/contests/abc326</a></p>
-<h3 id="a"><a href="https://atcoder.jp/contests/abc326/tasks/abc326_a">問題A</a></h3>
-<p><a href="https://atcoder.jp/contests/ABC326/submissions/46992128">コンテスト提出</a></p>
-<p>階層の差が<code>d</code>階のとき、下に3階分は<code>-3&lt;=d</code>、上に2階分は<code>d&lt;=2</code>となるので、<code>-3&lt;=d&lt;=2</code>の場合に答えは<code>Yes</code>になります。</p>
+<p><a href="https://atcoder.jp/contests/abc335">https://atcoder.jp/contests/abc335</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc335/tasks/abc335_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC335/submissions/49060379">コンテスト提出</a></p>
+<p>文字列<code>S</code>を<code>char</code>型の配列とし、<code>|S|-1</code>番目の値を<code>4</code>にしたものを出力します。</p>
 <details>
 <summary>例</summary>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
-    var (X, Y) = Scanner.Scan&lt;int, int&gt;();
-    var d = Y - X;
-    var answer = -3 &lt;= d &amp;&amp; d &lt;= 2;
-    Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+    var S = Scanner.Scan&lt;string&gt;().ToCharArray();
+    S[^1] = '4';
+    Console.WriteLine(new string(S));
 }
 </code></pre>
 </details>
-<h3 id="b"><a href="https://atcoder.jp/contests/abc326/tasks/abc326_b">問題B</a></h3>
-<p><a href="https://atcoder.jp/contests/ABC326/submissions/46996643">コンテスト提出</a></p>
-<p><code>N</code>以上の整数<code>x</code>を全探索し、<code>x</code>の百の位を<code>a</code>、十の位を<code>b</code>、一の位を<code>c</code>としたとき、<code>a*b==c</code>になるかを判定します。</p>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc335/tasks/abc335_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC335/submissions/49066081">コンテスト提出</a></p>
+<p><code>x,y,z</code>の3種が取りうる組み合わせは高々<code>21^3==9261</code>なので、全探索して<code>x+y+z&lt;=N</code>が成り立つかを判定します。</p>
 <details>
 <summary>例</summary>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var N = Scanner.Scan&lt;int&gt;();
-    for (var x = N; x &lt;= 999; x++)
+    for (var x = 0; x &lt;= N; x++)
     {
-        var a = x / 100;
-        var b = x / 10 % 10;
-        var c = x % 10;
-        if (a * b == c)
+        for (var y = 0; y &lt;= N; y++)
         {
-            Console.WriteLine(x);
-            return;
+            for (var z = 0; z &lt;= N; z++)
+            {
+                var s = x + y + z;
+                if (s &lt;= N)
+                {
+                    Console.WriteLine($&quot;{x} {y} {z}&quot;);
+                }
+            }
         }
     }
 }
 </code></pre>
 </details>
-<h3 id="c"><a href="https://atcoder.jp/contests/abc326/tasks/abc326_c">問題C</a></h3>
-<p><a href="https://atcoder.jp/contests/ABC326/submissions/47002900">コンテスト提出</a></p>
-<p><code>A</code>をソートし、<code>l</code>を固定したとき、<code>A[r]&gt;=A[l]+M</code>となる<code>r</code>を求めることで、座標<code>A[l]</code>を半開区間の左端としたときに<code>r-l</code>個のプレゼントを選ぶことができるようになります。
-<code>A</code>のソートに時間計算量<code>O(NlogN)</code>、<code>r</code>を尺取り法で求めることで時間計算量<code>O(N)</code>で答えを求めることができます。</p>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc335/tasks/abc335_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC335/submissions/49116652">コンテスト提出</a></p>
+<p>クエリ2を考えます。<br>
+<code>p</code>の位置は、それまでに移動した回数が<code>q</code>回である場合、パーツ<code>1</code>が移動した回数が<code>q-p+1</code>回目の位置になります。<br>
+<code>q-p+1&lt;0</code>であるとき、<code>(1-(p-q+1),0)</code>の位置になります。<br>
+よって、クエリ1のときに<code>q</code>回目の移動回数のときのパーツ<code>1</code>の位置を記録し、クエリ2のときに上記の位置を求めることで、答えを求めることができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var P = new (int X, int Y)[Q + 1];
+    P[0] = (1, 0);
+    var q = 0;
+
+    for (var i = 1; i &lt;= Q; i++)
+    {
+        var query = Scanner.ScanEnumerable&lt;string&gt;().ToArray();
+        if (query[0] == &quot;1&quot;)
+        {
+            var (cx, cy) = P[q];
+            q++;
+            var (dx, dy) = (0, 0);
+            switch (query[1])
+            {
+                case &quot;R&quot;: dx++; break;
+                case &quot;L&quot;: dx--; break;
+                case &quot;U&quot;: dy++; break;
+                case &quot;D&quot;: dy--; break;
+                default: break;
+            }
+
+            P[q] = (cx + dx, cy + dy);
+        }
+        else
+        {
+            var p = int.Parse(query[1]);
+            var d = q - p + 1;
+            if (d &gt;= 0)
+            {
+                var (x, y) = P[d];
+                Console.WriteLine($&quot;{x} {y}&quot;);
+            }
+            else
+            {
+                var (x, y) = (1 - d, 0);
+                Console.WriteLine($&quot;{x} {y}&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+</details>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc335/tasks/abc335_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC335/submissions/49091092">コンテスト提出</a></p>
+<p>左上から時計回りに外周をたどることを考えます。<br>
+グリッド<code>G</code>の<code>ch</code>行<code>cw</code>列を<code>G[ch][cw]</code>とし、そのマスの値を<code>v</code>、進行方向を<code>d (4方向)</code>とします。<br>
+進行方向<code>d</code>の差分を<code>dh</code>行<code>dw</code>列とすると、<code>v+1</code>になるマスは<code>nh=ch+dh</code>行<code>nw=cw+dw</code>列になります。<br>
+<code>G[nh][nw]</code>がグリッドの外あるいは既に値が埋められていた場合、進行方向を時計回りに<code>90</code>度回転させます。<br>
+この処理を<code>v==N*N-1</code>まで行い、中央のマスを<code>T</code>にしたものを出力することで、答えを求めることができます。</p>
+<p>進行方向の差分を<code>D4={(0,1), (1,0), (0,-1), (-1,0)}</code>の4つ管理しておき、進行方向を時計回りに<code>90</code>度回転させる処理を<code>d=(d+1)%4</code>とすることで、<code>d</code>のときの進行方向の差分<code>D4[d]</code>として取得することができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var G = new int[N, N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            G[i, j] = -1;
+        }
+    }
+
+    var D4 = new[] { (0, 1), (1, 0), (0, -1), (-1, 0) };
+
+    void Fill(int ch, int cw, int v, int d)
+    {
+        if (v == N * N) return;
+        G[ch, cw] = v;
+        var (dh, dw) = D4[d];
+        var (nh, nw) = (ch + dh, cw + dw);
+        if (nh &lt; 0 || N &lt;= nh || nw &lt; 0 || N &lt;= nw || G[nh, nw] != -1)
+        {
+            d++;
+            d %= 4;
+            (dh, dw) = D4[d];
+            (nh, nw) = (ch + dh, cw + dw);
+        }
+
+        Fill(nh, nw, v + 1, d);
+    }
+
+    Fill(0, 0, 1, 0);
+    var answer = new string[N, N];
+    for (var i = 0; i &lt; N; i++)
+    {
+        for (var j = 0; j &lt; N; j++)
+        {
+            answer[i, j] = G[i, j].ToString();
+            if (answer[i, j] == &quot;-1&quot;) answer[i, j] = &quot;T&quot;;
+        }
+    }
+
+    Printer.Print2D(answer, &quot; &quot;);
+}
+</code></pre>
+</details>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc335/tasks/abc335_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC335/submissions/49123545">復習提出</a></p>
+<p><code>M</code>個の辺のうち、<code>A[u|v]&lt;A[1]||A[N]&lt;A[u|v]</code>の場合は、その辺は考える必要はありません。<br>
+また、<code>A[u]==A[v]</code>の場合は、<code>u</code>と<code>v</code>を同一頂点としてみなすことができ、これは<code>DisjointSetUnion</code>などで管理することができます。<br>
+そして、<code>A[u]&lt;A[v]</code>の場合は、<code>u</code>から<code>v</code>への辺のみ考えればよく、<code>A[v]&gt;A[u]</code>の場合は、<code>v</code>から<code>u</code>への辺のみを考えれば十分です。</p>
+<p><code>dp[x]</code>を頂点<code>x</code>のの最大得点とします。<br>
+頂点<code>x</code>の同一頂点を<code>L(x)</code>としたとき、<code>dp[L(1)]=1</code>、それ以外は<code>-Inf</code>で初期化します。
+頂点<code>u</code>から頂点<code>v</code>への辺があるとき、<code>A[u]</code>の小さい順から<code>dp[L(v)]=Max(dp[L(v)], dp[L(u)]+1)</code>として更新していき、<code>Max(0, dp[L(N)])</code>が答えとなります。</p>
 <details>
 <summary>例</summary>
 <pre><code class="language-csharp line-numbers">public static void Solve()
 {
     var (N, M) = Scanner.Scan&lt;int, int&gt;();
     var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-    Array.Sort(A);
-    var answer = 0;
-    var r = 0;
-    for (var l = 0; l &lt; N; l++)
+    var G = new List&lt;int&gt;[N].Select(x =&gt; new List&lt;int&gt;()).ToArray();
+    var dsu = new DisjointSetUnion(N);
+    var E = new Dictionary&lt;int, List&lt;(int U, int V)&gt;&gt;();
+    for (var i = 0; i &lt; M; i++)
     {
-        while (r &lt; N &amp;&amp; A[r] &lt; A[l] + M) r++;
-        answer = Math.Max(answer, r - l);
-    }
-
-    Console.WriteLine(answer);
-}
-</code></pre>
-</details>
-<h3 id="d"><a href="https://atcoder.jp/contests/abc326/tasks/abc326_d">問題D</a></h3>
-<p><a href="https://atcoder.jp/contests/ABC326/submissions/47046457">復習提出</a></p>
-<p>条件1から、<code>A</code>が各行/各列にちょうど1つのみ含まれるパターンは<code>5!</code>通りであり、同様に<code>B</code>と<code>C</code>も<code>5!</code>通りになります。
-<code>5!^3</code>通りパターンを全探索し、条件の2と3を満たすかを判定します。</p>
-<details>
-<summary>例</summary>
-<pre><code class="language-csharp line-numbers">public static void Solve()
-{
-    var N = Scanner.Scan&lt;int&gt;();
-    var R = Scanner.Scan&lt;string&gt;();
-    var C = Scanner.Scan&lt;string&gt;();
-
-    var G = new char[N, N];
-
-    bool CheckR()
-    {
-        var result = true;
-        for (var i = 0; i &lt; N &amp;&amp; result; i++)
+        var (u, v) = Scanner.Scan&lt;int, int&gt;();
+        u--; v--;
+        if (A[u] &lt; A[0] || A[u] &gt; A[^1]) continue;
+        if (A[v] &lt; A[0] || A[v] &gt; A[^1]) continue;
+        if (A[u] &gt; A[v]) (u, v) = (v, u);
+        if (A[u] == A[v])
         {
-            for (var j = 0; j &lt; N &amp;&amp; result; j++)
-            {
-                if (G[i, j] != '.')
-                {
-                    result &amp;= G[i, j] == R[i];
-                    break;
-                }
-            }
+            dsu.Merge(u, v);
         }
-
-        return result;
-    }
-
-    bool CheckC()
-    {
-        var result = true;
-        for (var j = 0; j &lt; N &amp;&amp; result; j++)
+        else
         {
-            for (var i = 0; i &lt; N &amp;&amp; result; i++)
-            {
-                if (G[i, j] != '.')
-                {
-                    result &amp;= G[i, j] == C[j];
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    foreach (var AI in Permutation.GeneratePermutation(N))
-    {
-        foreach (var BI in Permutation.GeneratePermutation(N))
-        {
-            foreach (var CI in Permutation.GeneratePermutation(N))
-            {
-                var ok = true;
-                for (var i = 0; i &lt; N &amp;&amp; ok; i++)
-                {
-                    ok &amp;= AI[i] != BI[i];
-                    ok &amp;= AI[i] != CI[i];
-                    ok &amp;= BI[i] != CI[i];
-                }
-
-                if (!ok) continue;
-
-                for (var i = 0; i &lt; N; i++)
-                {
-                    for (var j = 0; j &lt; N; j++)
-                    {
-                        G[i, j] = '.';
-                    }
-                }
-
-                for (var i = 0; i &lt; N; i++)
-                {
-                    G[AI[i], i] = 'A';
-                    G[BI[i], i] = 'B';
-                    G[CI[i], i] = 'C';
-                }
-
-                if (CheckR() &amp;&amp; CheckC())
-                {
-                    Console.WriteLine(&quot;Yes&quot;);
-                    Printer.Print2D(G);
-                    return;
-                }
-            }
+            if (A[u] &gt; A[v]) (u, v) = (v, u);
+            var a = A[u];
+            if (!E.ContainsKey(a)) E[a] = new List&lt;(int U, int V)&gt;();
+            E[a].Add((u, v));
         }
     }
 
-    Console.WriteLine(&quot;No&quot;);
-}
-</code></pre>
-</details>
-<h3 id="e"><a href="https://atcoder.jp/contests/abc326/tasks/abc326_e">問題E</a></h3>
-<p><a href="https://atcoder.jp/contests/ABC326/submissions/47043979">復習提出</a></p>
-<p><code>A[i]</code>が支給される確率を<code>P[i]</code>、期待値を<code>E[i]</code>としたとき、<code>E[i]=A[i]*P[i]</code>となります。<br>
-ある<code>y</code>について<code>P[y]</code>の確率は、<code>x&lt;y</code>となる<code>P[x]</code>から<code>1/N</code>の確率で推移することから、<code>cumP[y-1]=P[0]+P[1]+...+P[y-1]</code>としたとき、<code>P[y]=cumP[y-1]/N</code>として求めることができます。<br>
-よって、各<code>i</code>について累積の確率を管理しながら期待値を求めることで、時間計算量<code>O(N)</code>で答えを求めることができます。</p>
-<details>
-<summary>例</summary>
-<pre><code class="language-csharp line-numbers">public static void Solve()
-{
-    var N = Scanner.Scan&lt;int&gt;();
-    var A = Scanner.ScanEnumerable&lt;int&gt;().ToArray();
-    var iN = mint.Inverse(N);
-    var E = new mint[N + 1];
-    var P = new mint[N + 1];
-    var cumP = new mint[N + 1];
-    P[0] = cumP[0] = 1;
-    for (var i = 1; i &lt;= N; i++)
+    const int Inf = 1 &lt;&lt; 30;
+    var dp = new int[N];
+    Array.Fill(dp, -Inf);
+    dp[dsu.LeaderOf(0)] = 1;
+    foreach (var (a, edges) in E.OrderBy(x =&gt; x.Key))
     {
-        P[i] = cumP[i - 1] * iN;
-        E[i] = A[i - 1] * P[i];
-        cumP[i] = cumP[i - 1] + P[i];
+        foreach (var (u, v) in edges)
+        {
+            var (lu, lv) = (dsu.LeaderOf(u), dsu.LeaderOf(v));
+            dp[lv] = Math.Max(dp[lv], dp[lu] + 1);
+        }
     }
 
-    mint answer = 0;
-    for (var i = 1; i &lt;= N; i++)
-    {
-        answer += E[i];
-    }
-
+    var answer = Math.Max(0, dp[dsu.LeaderOf(N - 1)]);
     Console.WriteLine(answer);
 }
 </code></pre>
@@ -324,7 +339,7 @@ script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
                                 <footer>
     <div class="c-post-footer mt-3">
         <div class="c-post-footer__share">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20231028abc326" data-size="large">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20240106abc335" data-size="large">
                 Tweet
             </a>
         </div>
