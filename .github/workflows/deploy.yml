@@ -17,10 +17,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
     - name: Deploy
-      run: dotnet run -p ./src/Blog -- deploy
+      run: dotnet run --project ./src/Blog -- deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
