@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="ja"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';
+img-src 'self' * data: *.w3.org; 
+child-src 'none';
+frame-src 'self' *.twitter.com;
+font-src 'self' *.fontawesome.com;
+connect-src 'self' *.fontawesome.com *.typekit.net;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval' *.twitter.com *.typekit.net;">
+
+    <title>acon.log - ABC341</title>
+
+    <link rel="icon" href="/assets/images/favicon.svg" type="text/svg+xml">
+    <link href="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <script src="/assets/vendor/adobe/adobe_fonts.js"></script>
+
+    
+<meta property="og:title" content="ABC341">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+<meta property="og:url" content="https://blog.aconcavy.dev/posts/20240217abc341">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="acon.log">
+<meta name="twitter:image" content="https://blog.aconcavy.dev/assets/images/icon.webp">
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
+    <div class="container">
+        <a class="navbar-brand l-navbar__brand" href="/">acon.log</a>
+        <button class="navbar-toggler navbar-toggler-right l-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon l-navbar__toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item l-navbar__nav-item">
+        <a class="nav-link l-navbar__nav-link" href="/posts">Posts</a>
+    </li>
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<header class="l-header">
+    <div class="l-header__inner">
+    </div>
+</header>
+
+
+<main class="l-main">
+    <div class="container">
+        <div class="row">
+            <div id="content">
+                    <article>
+                        <div class="card shadow-sm c-post">
+                            <div class="card-body p-md-5">
+                                
+<header>
+    <div class="c-post-header mb-3">
+        <h1 class="card-title c-post-header__title">ABC341</h1>
+
+        <div class="card-text c-post-header__meta">
+            Published on <time datetime="2024-02-17T00:00:00&amp;#x2B;00:00">Saturday, 17 February 2024</time>
+        </div>
+        <div class="card-text c-post-header__meta">
+            Updated on <time datetime="2024-02-17T00:00:00&amp;#x2B;00:00">Saturday, 17 February 2024</time>
+        </div>
+
+            <div class="mt-3 mb-4">
+                    <a href="/tags/atcoder" class="badge badge-light c-tag--light"> atcoder</a>
+                    <a href="/tags/csharp" class="badge badge-light c-tag--light"> csharp</a>
+            </div>
+
+        <hr>
+    </div>
+</header>
+
+                                <div class="c-post-body">
+                                    <h2 id="section">はじめに</h2>
+<p>AtCoder Beginner Contest 341の復習記事です。</p>
+<p>記事における<code>Scanner</code>クラスは、自作の入力クラスです。</p>
+<details>
+<summary>Scannerクラス</summary>
+<pre><code class="language-csharp line-numbers">public static class Scanner
+{
+    public static T Scan&lt;T&gt;() where T : IConvertible =&gt; Convert&lt;T&gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&lt;T1, T2&gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&lt;T1, T2, T3&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&lt;T1, T2, T3, T4&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&lt;T1, T2, T3, T4, T5&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&lt;T1, T2, T3, T4, T5, T6&gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&lt;T1&gt;(input[0]), Convert&lt;T2&gt;(input[1]), Convert&lt;T3&gt;(input[2]), Convert&lt;T4&gt;(input[3]), Convert&lt;T5&gt;(input[4]), Convert&lt;T6&gt;(input[5]));
+    }
+    public static IEnumerable&lt;T&gt; ScanEnumerable&lt;T&gt;() where T : IConvertible =&gt; ScanStringArray().Select(Convert&lt;T&gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&lt;string&gt;() : line.Split(' ');
+    }
+    private static T Convert&lt;T&gt;(string value) where T : IConvertible =&gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+</code></pre>
+</details>
+<h2 id="section-1">コンテスト</h2>
+<p><a href="https://atcoder.jp/contests/abc341">https://atcoder.jp/contests/abc341</a></p>
+<h3 id="a"><a href="https://atcoder.jp/contests/abc341/tasks/abc341_a">問題A</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC341/submissions/50329620">コンテスト提出</a></p>
+<p>最初に<code>1</code>から始めて、<code>N</code>個の<code>01</code>を繋げた文字列が答えになります。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var builder = new StringBuilder();
+    builder.Append('1');
+    for (var i = 0; i &lt; N; i++)
+    {
+        builder.Append(&quot;01&quot;);
+    }
+
+    var answer = builder.ToString();
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="b"><a href="https://atcoder.jp/contests/abc341/tasks/abc341_b">問題B</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC341/submissions/50336089">コンテスト提出</a></p>
+<p><code>i</code>が小さい順に<code>S[i]</code>を<code>T[i]</code>にする行動を可能な限り行い、最終的な<code>N</code>の通貨の単位が答えになります。<br>
+つまり、<code>N</code>未満の各<code>i</code>において、<code>i+1</code>の通貨を<code>A[i]/S*T</code>増やすという作業を順に行うことで達成できます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var N = Scanner.Scan&lt;int&gt;();
+    var A = Scanner.ScanEnumerable&lt;long&gt;().ToArray();
+    for (var i = 0; i &lt; N - 1; i++)
+    {
+        var (s, t) = Scanner.Scan&lt;long, long&gt;();
+        A[i + 1] += t * (A[i] / s);
+    }
+
+    var answer = A[^1];
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="c"><a href="https://atcoder.jp/contests/abc341/tasks/abc341_c">問題C</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC341/submissions/50345688">コンテスト提出</a></p>
+<p>全ての陸の座標から移動を行い、文字列が示す順に移動を行い、経路上が全て陸の経路の数を数え上げます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (H, W, N) = Scanner.Scan&lt;int, int, int&gt;();
+    var T = Scanner.Scan&lt;string&gt;();
+    var G = new char[H][];
+    for (var i = 0; i &lt; H; i++)
+    {
+        G[i] = Scanner.Scan&lt;string&gt;().ToCharArray();
+    }
+
+    (int dh, int dw) Delta(char d)
+    {
+        return d switch
+        {
+            'L' =&gt; (0, -1),
+            'R' =&gt; (0, 1),
+            'U' =&gt; (-1, 0),
+            'D' =&gt; (1, 0),
+            _ =&gt; (0, 0)
+        };
+    }
+
+    (int h, int w) F(int ch, int cw)
+    {
+        foreach (var d in T)
+        {
+            var (dh, dw) = Delta(d);
+            var (nh, nw) = (ch + dh, cw + dw);
+            if (nh &lt; 0 || H &lt;= nh || nw &lt; 0 || W &lt;= nw) return (-1, -1);
+            if (G[nh][nw] == '#') return (-1, -1);
+            ch = nh;
+            cw = nw;
+        }
+
+        return (ch, cw);
+    }
+
+    var ok = new bool[H, W];
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            if (G[i][j] == '#') continue;
+            var (ch, cw) = F(i, j);
+            if (ch &lt; 0 || cw &lt; 0) continue;
+            ok[ch, cw] = true;
+        }
+    }
+
+    var answer = 0;
+    for (var i = 0; i &lt; H; i++)
+    {
+        for (var j = 0; j &lt; W; j++)
+        {
+            if (ok[i, j]) answer++;
+        }
+    }
+
+    Console.WriteLine(answer);
+}
+</code></pre>
+</details>
+<h3 id="d"><a href="https://atcoder.jp/contests/abc341/tasks/abc341_d">問題D</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC341/submissions/50370958">コンテスト提出</a></p>
+<p><code>x</code>以下の<code>N</code>の倍数または<code>M</code>の倍数の個数は、<code>N</code>の倍数の個数と<code>M</code>の倍数の個数から<code>LCM(N,M)</code>の倍数の個数を引いたものとなります。<br>
+また、ちょうど一方のみで割り切れる数は、<code>x</code>以下の<code>N</code>の倍数または<code>M</code>の倍数の個数からさらに<code>LCM(N,M)</code>の倍数の個数を引いたものとなります。<br>
+よって、<code>x/N + x/M - x/LCM(N,M)*2 &gt;= K</code>となる<code>x</code>を二部探索することで答えを求めることができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, M, K) = Scanner.Scan&lt;long, long, long&gt;();
+    var lcm = Lcm(N, M);
+
+    bool F(long x)
+    {
+        return (x / N) + (x / M) - ((x / lcm) * 2) &gt;= K;
+    }
+
+    const long Inf = 1L &lt;&lt; 60;
+    var answer = BinarySearch(0, Inf, F);
+    Console.WriteLine(answer);
+}
+
+public static long Gcd(long a, long b) =&gt; b == 0 ? a : Gcd(b, a % b);
+public static long Lcm(long a, long b) =&gt; a / Gcd(a, b) * b;
+
+public static T BinarySearch&lt;T&gt;(T ng, T ok, Func&lt;T, bool&gt; f) where T : INumber&lt;T&gt; =&gt; BinarySearch(ng, ok, f, T.One);
+
+public static T BinarySearch&lt;T&gt;(T ng, T ok, Func&lt;T, bool&gt; f, T eps) where T : INumber&lt;T&gt;
+{
+    var one = T.One;
+    var two = one + one;
+    while (T.Abs(ok - ng) &gt; eps)
+    {
+        var m = ng + (ok - ng) / two;
+        if (f(m)) ok = m;
+        else ng = m;
+    }
+
+    return ok;
+}
+</code></pre>
+</details>
+<h3 id="e"><a href="https://atcoder.jp/contests/abc341/tasks/abc341_e">問題E</a></h3>
+<p><a href="https://atcoder.jp/contests/ABC341/submissions/50390978">復習提出</a></p>
+<p>隣り合う数字の変化量に注目します。<br>
+隣り合う数字が異なる場合、その変化量を<code>1</code>とすると、<code>L</code>文字目から<code>R</code>文字目が良い文字列になる条件は、<code>L</code>文字目から<code>R</code>文字目までの変化量の総和がその文字列の長さ<code>-1</code>であることになります。<br>
+例えば、<code>6</code>文字の良い文字列の<code>010101</code>の変化量は<code>5</code>となり、<code>6</code>文字の良い文字列ではない<code>011010</code>の変化量は<code>4</code>となります。<br>
+ある範囲を反転させるということは、<code>L-1</code>文字目と<code>L</code>文字目の変化量が<code>1-元の変化量</code>になり、<code>L</code>文字目から<code>R</code>文字目の変化量は変わらず、<code>R</code>文字目から<code>R+1</code>文字目の変化量が<code>1-元の変化量</code>になります。<br>
+よって、一点更新区間和の<code>SegmentTree</code>を使って変化量を管理することで、クエリ当たり時間計算量<code>O(logN)</code>で答えを求めることができます。</p>
+<details>
+<summary>例</summary>
+<pre><code class="language-csharp line-numbers">public static void Solve()
+{
+    var (N, Q) = Scanner.Scan&lt;int, int&gt;();
+    var S = Scanner.Scan&lt;string&gt;().ToArray();
+    var A = new int[N - 1];
+
+    var st = new SegmentTree&lt;int&gt;(N + 1, new Oracle());
+    for (var i = 0; i + 1 &lt; N; i++)
+    {
+        st.Set(i + 1, S[i] == S[i + 1] ? 0 : 1);
+    }
+
+    while (Q-- &gt; 0)
+    {
+        var (t, l, r) = Scanner.Scan&lt;int, int, int&gt;();
+        if (t == 1)
+        {
+            st.Set(l - 1, 1 - st.Get(l - 1));
+            st.Set(r, 1 - st.Get(r));
+        }
+        else
+        {
+            var answer = st.Query(l, r) == r - l;
+            Console.WriteLine(answer ? &quot;Yes&quot; : &quot;No&quot;);
+        }
+    }
+}
+
+public class Oracle : IOracle&lt;int&gt;
+{
+    public int IdentityElement =&gt; 0;
+
+    public int Operate(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+public interface IOracle&lt;TMonoid&gt;
+{
+    TMonoid IdentityElement { get; }
+    TMonoid Operate(TMonoid a, TMonoid b);
+}
+
+public class SegmentTree&lt;TMonoid&gt;
+{
+    public int Length { get; }
+    private readonly IOracle&lt;TMonoid&gt; _oracle;
+    private readonly TMonoid[] _data;
+    private readonly int _log;
+    private readonly int _dataSize;
+
+    public SegmentTree(IReadOnlyCollection&lt;TMonoid&gt; source, IOracle&lt;TMonoid&gt; oracle) : this(source.Count, oracle)
+    {
+        var idx = _dataSize;
+        foreach (var value in source) _data[idx++] = value;
+        for (var i = _dataSize - 1; i &gt;= 1; i--) Update(i);
+    }
+
+    public SegmentTree(int length, IOracle&lt;TMonoid&gt; oracle)
+    {
+        if (length &lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
+        Length = length;
+        _oracle = oracle;
+        while (1 &lt;&lt; _log &lt; Length) _log++;
+        _dataSize = 1 &lt;&lt; _log;
+        _data = new TMonoid[_dataSize &lt;&lt; 1];
+        Array.Fill(_data, oracle.IdentityElement);
+    }
+
+    public void Set(int index, TMonoid value)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        index += _dataSize;
+        _data[index] = value;
+        for (var i = 1; i &lt;= _log; i++) Update(index &gt;&gt; i);
+    }
+
+    public TMonoid Get(int index)
+    {
+        if (index &lt; 0 || Length &lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
+        return _data[index + _dataSize];
+    }
+
+    public TMonoid Query(int left, int right)
+    {
+        if (left &lt; 0 || right &lt; left || Length &lt; right) throw new ArgumentOutOfRangeException();
+        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
+        left += _dataSize;
+        right += _dataSize;
+        while (left &lt; right)
+        {
+            if ((left &amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
+            if ((right &amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
+            left &gt;&gt;= 1;
+            right &gt;&gt;= 1;
+        }
+
+        return _oracle.Operate(sml, smr);
+    }
+
+    public TMonoid QueryToAll() =&gt; _data[1];
+
+    public int MaxRight(int left, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (left &lt; 0 || Length &lt; left) throw new ArgumentOutOfRangeException(nameof(left));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (left == Length) return Length;
+        left += _dataSize;
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            while ((left &amp; 1) == 0) left &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(sm, _data[left])))
+            {
+                while (left &lt; _dataSize)
+                {
+                    left &lt;&lt;= 1;
+                    var tmp = _oracle.Operate(sm, _data[left]);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    left++;
+                }
+
+                return left - _dataSize;
+            }
+
+            sm = _oracle.Operate(sm, _data[left]);
+            left++;
+        } while ((left &amp; -left) != left);
+
+        return Length;
+    }
+
+    public int MinLeft(int right, Func&lt;TMonoid, bool&gt; predicate)
+    {
+        if (right &lt; 0 || Length &lt; right) throw new ArgumentOutOfRangeException(nameof(right));
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
+        if (right == 0) return 0;
+        right += _dataSize;
+        var sm = _oracle.IdentityElement;
+        do
+        {
+            right--;
+            while (right &gt; 1 &amp;&amp; (right &amp; 1) == 1) right &gt;&gt;= 1;
+            if (!predicate(_oracle.Operate(_data[right], sm)))
+            {
+                while (right &lt; _dataSize)
+                {
+                    right = (right &lt;&lt; 1) + 1;
+                    var tmp = _oracle.Operate(_data[right], sm);
+                    if (!predicate(tmp)) continue;
+                    sm = tmp;
+                    right--;
+                }
+
+                return right + 1 - _dataSize;
+            }
+
+            sm = _oracle.Operate(_data[right], sm);
+        } while ((right &amp; -right) != right);
+
+        return 0;
+    }
+
+    private void Update(int k) =&gt; _data[k] = _oracle.Operate(_data[k &lt;&lt; 1], _data[(k &lt;&lt; 1) + 1]);
+}
+</code></pre>
+</details>
+
+                                </div>
+                                <footer>
+    <div class="c-post-footer mt-3">
+        <div class="c-post-footer__share">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" url="/posts/20240217abc341" data-size="large">
+                Tweet
+            </a>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-3">
+                <img class="rounded-circle c-icon-self--sm c-post-footer__icon" src="/assets/images/icon.svg" alt="icon">
+            </div>
+            <div class="col-md-4 mt-3">
+                <h5 class="card-text">AconCavy</h5>
+                <div class="card-text">C#が好きなひきこもり</div>
+                <a class="nav-link fab fa-twitter fa-2x c-icon-sns" href="https://twitter.com/AconCavy"></a>
+                <a class="nav-link fab fa-github fa-2x c-icon-sns" href="https://github.com/AconCavy"></a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+                            </div>
+                        </div>
+                    </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="l-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &#xA9; 2020-2024 AconCavy</p>
+                <ul class="list-inline text-center small">
+                        <li class="list-inline-item">
+                            <a href="/feed.rss"><i class="fa fa-rss l-footer__feed"></i> RSS Feed</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/feed.atom"><i class="fa fa-rss l-footer__feed"></i> Atom Feed</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/mirror/cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="/mirror/cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="/mirror/kit.fontawesome.com/defa8b99ee.js"></script>
+
+<script src="/assets/vendor/prism/prism.js"></script>
+
+<script async="" src="/mirror/platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
+
+</body></html>
