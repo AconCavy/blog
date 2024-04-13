@@ -4,7 +4,156 @@
 	<title>acon.log</title>
 	<link rel="self" href="https://blog.aconcavy.dev/" />
 	<rights>Copyright © 2020-2024 AconCavy</rights>
-	<updated>2024-04-06T14:21:34Z</updated>
+	<updated>2024-04-13T15:09:29Z</updated>
+	<entry>
+		<id>https://blog.aconcavy.dev/posts/20240413abc349</id>
+		<title>ABC349</title>
+		<link href="https://blog.aconcavy.dev/posts/20240413abc349" />
+		<updated>2024-04-13T00:00:00Z</updated>
+		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
+&lt;p&gt;AtCoder Beginner Contest 349の復習記事です。&lt;/p&gt;
+&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Scannerクラス&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
+{
+    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
+    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
+    }
+    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
+    }
+    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
+    }
+    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
+    }
+    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
+    {
+        var input = ScanStringArray();
+        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
+    }
+    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
+    private static string[] ScanStringArray()
+    {
+        var line = Console.ReadLine()?.Trim() ?? string.Empty;
+        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
+    }
+    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc349"&gt;https://atcoder.jp/contests/abc349&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc349/tasks/abc349_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC349/submissions/52293336"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;総和は&lt;code&gt;0&lt;/code&gt;になるので、&lt;code&gt;0-Aの総和&lt;/code&gt;が答えになります。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var N = Scanner.Scan&amp;lt;int&amp;gt;();
+    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
+    var answer = -A.Sum();
+    Console.WriteLine(answer);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc349/tasks/abc349_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC349/submissions/52298832"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文字ごとに出現数を数え上げ、全ての出現数において、その種類数が&lt;code&gt;0&lt;/code&gt;か&lt;code&gt;2&lt;/code&gt;であるかを判定します。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;();
+    var count = new int[26];
+    foreach (var c in S)
+    {
+        count[c - 'a']++;
+    }
+
+    var dict = new Dictionary&amp;lt;int, int&amp;gt;();
+    for (var i = 0; i &amp;lt; 26; i++)
+    {
+        if (count[i] == 0) continue;
+        if (!dict.ContainsKey(count[i])) dict[count[i]] = 0;
+        dict[count[i]]++;
+    }
+
+    var answer = dict.Values.All(x =&amp;gt; x == 0 || x == 2);
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc349/tasks/abc349_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC349/submissions/52306540"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;S&lt;/code&gt;を左から順にみて、&lt;code&gt;T&lt;/code&gt;の&lt;code&gt;k&lt;/code&gt;番目の小文字が出現したかを判定します。
+&lt;code&gt;S&lt;/code&gt;の末尾に&lt;code&gt;x&lt;/code&gt;を追加したものを&lt;code&gt;S&lt;/code&gt;として考えることで、末尾に&lt;code&gt;X&lt;/code&gt;を追加したものを判定することができます。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var S = Scanner.Scan&amp;lt;string&amp;gt;() + &amp;quot;x&amp;quot;;
+    var T = Scanner.Scan&amp;lt;string&amp;gt;().ToLower();
+    var k = 0;
+    foreach (var c in S)
+    {
+        if (k &amp;gt;= 3) break;
+        if (T[k] == c) k++;
+    }
+
+    var answer = k == 3;
+    Console.WriteLine(answer ? &amp;quot;Yes&amp;quot; : &amp;quot;No&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc349/tasks/abc349_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC349/submissions/52337055"&gt;コンテスト提出&lt;/a&gt;
+&lt;a href="https://atcoder.jp/contests/ABC349/submissions/52362230"&gt;復習提出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;r%b==0&lt;/code&gt;かつ&lt;code&gt;l=(r/b-1)*b&amp;gt;=L&lt;/code&gt;となる最大の&lt;code&gt;2&lt;/code&gt;のべき乗&lt;code&gt;b&lt;/code&gt;を&lt;code&gt;r&lt;/code&gt;の大きい順に求めることで達成できます。
+各数列において、&lt;code&gt;b&lt;/code&gt;は最大60回程度で求めることができます。&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;例&lt;/summary&gt;
+&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
+{
+    var (L, R) = Scanner.Scan&amp;lt;long, long&amp;gt;();
+    var answers = new List&amp;lt;(long L, long R)&amp;gt;();
+    while (R &amp;gt; L)
+    {
+        long b = 1L &amp;lt;&amp;lt; 60;
+        var l = (R / b - 1) * b;
+        while (R % b != 0 || l &amp;lt; L)
+        {
+            b &amp;gt;&amp;gt;= 1;
+            l = (R / b - 1) * b;
+        }
+        answers.Add((l, R));
+        R = l;
+    }
+
+    Console.WriteLine(answers.Count);
+    answers.Reverse();
+    foreach (var (l, r) in answers)
+    {
+        Console.WriteLine($&amp;quot;{l} {r}&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+		<summary>&lt;p&gt;AtCoder Beginner Contest 349の復習記事です。&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://blog.aconcavy.dev/posts/20240406abc348</id>
 		<title>ABC348</title>
@@ -2873,413 +3022,5 @@ public static long ExtGcd(long a, long b, out long x, out long y)
 &lt;/details&gt;
 </content>
 		<summary>&lt;p&gt;AtCoder Beginner Contest 340の復習記事です。&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://blog.aconcavy.dev/posts/20240203abc339</id>
-		<title>ABC339</title>
-		<link href="https://blog.aconcavy.dev/posts/20240203abc339" />
-		<updated>2024-02-03T00:00:00Z</updated>
-		<content>&lt;h2 id="section"&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;AtCoder Beginner Contest 339の復習記事です。&lt;/p&gt;
-&lt;p&gt;記事における&lt;code&gt;Scanner&lt;/code&gt;クラスは、自作の入力クラスです。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;Scannerクラス&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static class Scanner
-{
-    public static T Scan&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; Convert&amp;lt;T&amp;gt;(ScanStringArray()[0]);
-    public static (T1, T2) Scan&amp;lt;T1, T2&amp;gt;() where T1 : IConvertible where T2 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]));
-    }
-    public static (T1, T2, T3) Scan&amp;lt;T1, T2, T3&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]));
-    }
-    public static (T1, T2, T3, T4) Scan&amp;lt;T1, T2, T3, T4&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]));
-    }
-    public static (T1, T2, T3, T4, T5) Scan&amp;lt;T1, T2, T3, T4, T5&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]));
-    }
-    public static (T1, T2, T3, T4, T5, T6) Scan&amp;lt;T1, T2, T3, T4, T5, T6&amp;gt;() where T1 : IConvertible where T2 : IConvertible where T3 : IConvertible where T4 : IConvertible where T5 : IConvertible where T6 : IConvertible
-    {
-        var input = ScanStringArray();
-        return (Convert&amp;lt;T1&amp;gt;(input[0]), Convert&amp;lt;T2&amp;gt;(input[1]), Convert&amp;lt;T3&amp;gt;(input[2]), Convert&amp;lt;T4&amp;gt;(input[3]), Convert&amp;lt;T5&amp;gt;(input[4]), Convert&amp;lt;T6&amp;gt;(input[5]));
-    }
-    public static IEnumerable&amp;lt;T&amp;gt; ScanEnumerable&amp;lt;T&amp;gt;() where T : IConvertible =&amp;gt; ScanStringArray().Select(Convert&amp;lt;T&amp;gt;);
-    private static string[] ScanStringArray()
-    {
-        var line = Console.ReadLine()?.Trim() ?? string.Empty;
-        return string.IsNullOrEmpty(line) ? Array.Empty&amp;lt;string&amp;gt;() : line.Split(' ');
-    }
-    private static T Convert&amp;lt;T&amp;gt;(string value) where T : IConvertible =&amp;gt; (T)System.Convert.ChangeType(value, typeof(T));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h2 id="section-1"&gt;コンテスト&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/abc339"&gt;https://atcoder.jp/contests/abc339&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="a"&gt;&lt;a href="https://atcoder.jp/contests/abc339/tasks/abc339_a"&gt;問題A&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC339/submissions/49912559"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;S&lt;/code&gt;を末尾から見ていき、&lt;code&gt;.&lt;/code&gt;が出現した次の文字以降の文字列を出力します。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;例&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var S = Scanner.Scan&amp;lt;string&amp;gt;();
-    var i = S.Length - 1;
-    while (S[i] != '.') i--;
-    var answer = S[(i + 1)..];
-    Console.WriteLine(answer);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h3 id="b"&gt;&lt;a href="https://atcoder.jp/contests/abc339/tasks/abc339_b"&gt;問題B&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC339/submissions/49920492"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;上下左右の移動方向の差分&lt;code&gt;(dh,dw)&lt;/code&gt;をそれぞれ&lt;code&gt;U=(-1,0), D=(1,0), R=(0,1), L=(0,-1)&lt;/code&gt;とし、現在位置に向いている方向の差分を足した位置に移動させます。&lt;br /&gt;
-このとき、&lt;code&gt;URDL&lt;/code&gt;の順に配列として並べてインデックスで参照し、時計回りに90度の回転をインデックスを&lt;code&gt;+1&lt;/code&gt;する、反時計回りに90度の回転をインデックスを&lt;code&gt;-1&lt;/code&gt;することに対応づけることで、楽に管理することができます。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;例&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (H, W, N) = Scanner.Scan&amp;lt;int, int, int&amp;gt;();
-    var G = new char[H, W];
-    for (var i = 0; i &amp;lt; H; i++)
-    {
-        for (var j = 0; j &amp;lt; W; j++)
-        {
-            G[i, j] = '.';
-        }
-    }
-
-    var (ch, cw) = (0, 0);
-    var delta = new[] { (-1, 0), (0, 1), (1, 0), (0, -1) };
-    var dir = 0;
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        if (G[ch, cw] == '.')
-        {
-            G[ch, cw] = '#';
-            dir = (dir + 1) % 4;
-        }
-        else
-        {
-            G[ch, cw] = '.';
-            dir = (dir - 1 + 4) % 4;
-        }
-
-        var (dh, dw) = delta[dir];
-        (ch, cw) = ((ch + dh + H) % H, (cw + dw + W) % W);
-    }
-
-    Printer.Print2D(G);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h3 id="c"&gt;&lt;a href="https://atcoder.jp/contests/abc339/tasks/abc339_c"&gt;問題C&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC339/submissions/49922683"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;答えを二部探索します。&lt;br /&gt;
-バスの乗客数&lt;code&gt;x&lt;/code&gt;が与えられた情報に矛盾しないかの判定は、&lt;code&gt;A[i]&lt;/code&gt;を逆順で&lt;code&gt;x&lt;/code&gt;から引いていき、一度も&lt;code&gt;x&amp;lt;0&lt;/code&gt;にならない場合は矛盾しない乗客数となります。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;例&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;long&amp;gt;().ToArray();
-
-    bool F(long x)
-    {
-        for (var i = N - 1; i &amp;gt;= 0; i--)
-        {
-            x -= A[i];
-            if (x &amp;lt; 0) return false;
-        }
-
-        return true;
-    }
-
-    const long Inf = 1L &amp;lt;&amp;lt; 60;
-    var answer = BinarySearch(-1, Inf, F);
-    Console.WriteLine(answer);
-}
-
-public static T BinarySearch&amp;lt;T&amp;gt;(T ng, T ok, Func&amp;lt;T, bool&amp;gt; f) where T : INumber&amp;lt;T&amp;gt; =&amp;gt; BinarySearch(ng, ok, f, T.One);
-
-public static T BinarySearch&amp;lt;T&amp;gt;(T ng, T ok, Func&amp;lt;T, bool&amp;gt; f, T eps) where T : INumber&amp;lt;T&amp;gt;
-{
-    var one = T.One;
-    var two = one + one;
-    while (T.Abs(ok - ng) &amp;gt; eps)
-    {
-        var m = ng + (ok - ng) / two;
-        if (f(m)) ok = m;
-        else ng = m;
-    }
-
-    return ok;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h3 id="d"&gt;&lt;a href="https://atcoder.jp/contests/abc339/tasks/abc339_d"&gt;問題D&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC339/submissions/49961277"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;次のような動的計画法を解きます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-text line-numbers"&gt;dp[ch1][cw1][ch2][cw2] := プレイヤー1が(ch1,cw1)、プレイヤー1が(ch2,cw2)にいるときの最小移動回数。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これは、各プレイヤーの現在位置を幅優先探索で最小移動回数を計算することで、答えを求めることができます。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;例&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var N = Scanner.Scan&amp;lt;int&amp;gt;();
-    var S = new char[N][];
-    var p = new List&amp;lt;(int H, int W)&amp;gt;();
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        S[i] = Scanner.Scan&amp;lt;string&amp;gt;().ToCharArray();
-        for (var j = 0; j &amp;lt; N; j++)
-        {
-            if (S[i][j] == 'P')
-            {
-                p.Add((i, j));
-            }
-        }
-    }
-
-    const int Inf = 1 &amp;lt;&amp;lt; 30;
-
-    var D4 = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) };
-    var queue = new Queue&amp;lt;Data&amp;gt;();
-    var first = new Data(p[0].H, p[0].W, p[1].H, p[1].W);
-    queue.Enqueue(first);
-    var dp = new int[N, N, N, N];
-    for (var h1 = 0; h1 &amp;lt; N; h1++)
-    {
-        for (var w1 = 0; w1 &amp;lt; N; w1++)
-        {
-            for (var h2 = 0; h2 &amp;lt; N; h2++)
-            {
-                for (var w2 = 0; w2 &amp;lt; N; w2++)
-                {
-                    dp[h1, w1, h2, w2] = Inf;
-                }
-            }
-        }
-    }
-
-    dp[p[0].H, p[0].W, p[1].H, p[1].W] = 0;
-
-    bool CanMove(int ch, int cw, int nh, int nw)
-    {
-        return 0 &amp;lt;= nh &amp;amp;&amp;amp; nh &amp;lt; N &amp;amp;&amp;amp; 0 &amp;lt;= nw &amp;amp;&amp;amp; nw &amp;lt; N &amp;amp;&amp;amp; S[nh][nw] != '#';
-    }
-
-    var answer = Inf;
-    while (queue.Count &amp;gt; 0)
-    {
-        var curr = queue.Dequeue();
-        var (ch1, cw1, ch2, cw2) = curr;
-        foreach (var (dh, dw) in D4)
-        {
-            var (nh1, nw1) = (ch1 + dh, cw1 + dw);
-            var (nh2, nw2) = (ch2 + dh, cw2 + dw);
-            if (!CanMove(ch1, cw1, nh1, nw1)) (nh1, nw1) = (ch1, cw1);
-            if (!CanMove(ch2, cw2, nh2, nw2)) (nh2, nw2) = (ch2, cw2);
-            var next = new Data(nh1, nw1, nh2, nw2);
-            if (dp[ch1, cw1, ch2, cw2] + 1 &amp;lt; dp[nh1, nw1, nh2, nw2])
-            {
-                dp[nh1, nw1, nh2, nw2] = dp[ch1, cw1, ch2, cw2] + 1;
-                if (nh1 == nh2 &amp;amp;&amp;amp; nw1 == nw2)
-                {
-                    answer = Math.Min(answer, dp[nh1, nw1, nh2, nw2]);
-                }
-                else
-                {
-                    queue.Enqueue(next);
-                }
-            }
-        }
-    }
-
-    if (answer == Inf) answer = -1;
-    Console.WriteLine(answer);
-}
-
-public readonly record struct Data(int H1, int W1, int H2, int W2);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;h3 id="e"&gt;&lt;a href="https://atcoder.jp/contests/abc339/tasks/abc339_e"&gt;問題E&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://atcoder.jp/contests/ABC339/submissions/49952774"&gt;コンテスト提出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;A[i]&lt;/code&gt;を末尾とするときの部分列の最大の長さは、部分列の末尾が&lt;code&gt;x (A[i]-D&amp;lt;=x&amp;lt;=A[i]+D)&lt;/code&gt;のときの部分列の最大の長さ+1で求めることができます。&lt;br /&gt;
-これは、区間の最大を求めるのSegmentTreeで時間計算量&lt;code&gt;O(logN)&lt;/code&gt;で求めることができ、全体計算量&lt;code&gt;O(NlogN)&lt;/code&gt;で答えを求めることができます。&lt;/p&gt;
-&lt;details&gt;
-&lt;summary&gt;例&lt;/summary&gt;
-&lt;pre&gt;&lt;code class="language-csharp line-numbers"&gt;public static void Solve()
-{
-    var (N, D) = Scanner.Scan&amp;lt;int, int&amp;gt;();
-    var A = Scanner.ScanEnumerable&amp;lt;int&amp;gt;().ToArray();
-    var max = A.Max() + 10;
-    var st = new SegmentTree&amp;lt;int&amp;gt;(max, new Oracle());
-    for (var i = 0; i &amp;lt; N; i++)
-    {
-        var l = Math.Max(0, A[i] - D);
-        var r = Math.Min(A[i] + D + 1, max);
-        var v = st.Query(l, r);
-        st.Set(A[i], v + 1);
-    }
-
-    var answer = st.QueryToAll();
-    Console.WriteLine(answer);
-}
-
-public class Oracle : IOracle&amp;lt;int&amp;gt;
-{
-    public int IdentityElement =&amp;gt; 0;
-
-    public int Operate(int a, int b)
-    {
-        return Math.Max(a, b);
-    }
-}
-
-public interface IOracle&amp;lt;TMonoid&amp;gt;
-{
-    TMonoid IdentityElement { get; }
-    TMonoid Operate(TMonoid a, TMonoid b);
-}
-
-public class SegmentTree&amp;lt;TMonoid&amp;gt;
-{
-    public int Length { get; }
-    private readonly IOracle&amp;lt;TMonoid&amp;gt; _oracle;
-    private readonly TMonoid[] _data;
-    private readonly int _log;
-    private readonly int _dataSize;
-
-    public SegmentTree(IReadOnlyCollection&amp;lt;TMonoid&amp;gt; source, IOracle&amp;lt;TMonoid&amp;gt; oracle) : this(source.Count, oracle)
-    {
-        var idx = _dataSize;
-        foreach (var value in source) _data[idx++] = value;
-        for (var i = _dataSize - 1; i &amp;gt;= 1; i--) Update(i);
-    }
-
-    public SegmentTree(int length, IOracle&amp;lt;TMonoid&amp;gt; oracle)
-    {
-        if (length &amp;lt; 0) throw new ArgumentOutOfRangeException(nameof(length));
-        Length = length;
-        _oracle = oracle;
-        while (1 &amp;lt;&amp;lt; _log &amp;lt; Length) _log++;
-        _dataSize = 1 &amp;lt;&amp;lt; _log;
-        _data = new TMonoid[_dataSize &amp;lt;&amp;lt; 1];
-        Array.Fill(_data, oracle.IdentityElement);
-    }
-
-    public void Set(int index, TMonoid value)
-    {
-        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        index += _dataSize;
-        _data[index] = value;
-        for (var i = 1; i &amp;lt;= _log; i++) Update(index &amp;gt;&amp;gt; i);
-    }
-
-    public TMonoid Get(int index)
-    {
-        if (index &amp;lt; 0 || Length &amp;lt;= index) throw new ArgumentOutOfRangeException(nameof(index));
-        return _data[index + _dataSize];
-    }
-
-    public TMonoid Query(int left, int right)
-    {
-        if (left &amp;lt; 0 || right &amp;lt; left || Length &amp;lt; right) throw new ArgumentOutOfRangeException();
-        var (sml, smr) = (_oracle.IdentityElement, _oracle.IdentityElement);
-        left += _dataSize;
-        right += _dataSize;
-        while (left &amp;lt; right)
-        {
-            if ((left &amp;amp; 1) == 1) sml = _oracle.Operate(sml, _data[left++]);
-            if ((right &amp;amp; 1) == 1) smr = _oracle.Operate(_data[--right], smr);
-            left &amp;gt;&amp;gt;= 1;
-            right &amp;gt;&amp;gt;= 1;
-        }
-
-        return _oracle.Operate(sml, smr);
-    }
-
-    public TMonoid QueryToAll() =&amp;gt; _data[1];
-
-    public int MaxRight(int left, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
-    {
-        if (left &amp;lt; 0 || Length &amp;lt; left) throw new ArgumentOutOfRangeException(nameof(left));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
-        if (left == Length) return Length;
-        left += _dataSize;
-        var sm = _oracle.IdentityElement;
-        do
-        {
-            while ((left &amp;amp; 1) == 0) left &amp;gt;&amp;gt;= 1;
-            if (!predicate(_oracle.Operate(sm, _data[left])))
-            {
-                while (left &amp;lt; _dataSize)
-                {
-                    left &amp;lt;&amp;lt;= 1;
-                    var tmp = _oracle.Operate(sm, _data[left]);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    left++;
-                }
-
-                return left - _dataSize;
-            }
-
-            sm = _oracle.Operate(sm, _data[left]);
-            left++;
-        } while ((left &amp;amp; -left) != left);
-
-        return Length;
-    }
-
-    public int MinLeft(int right, Func&amp;lt;TMonoid, bool&amp;gt; predicate)
-    {
-        if (right &amp;lt; 0 || Length &amp;lt; right) throw new ArgumentOutOfRangeException(nameof(right));
-        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-        if (!predicate(_oracle.IdentityElement)) throw new ArgumentException(nameof(predicate));
-        if (right == 0) return 0;
-        right += _dataSize;
-        var sm = _oracle.IdentityElement;
-        do
-        {
-            right--;
-            while (right &amp;gt; 1 &amp;amp;&amp;amp; (right &amp;amp; 1) == 1) right &amp;gt;&amp;gt;= 1;
-            if (!predicate(_oracle.Operate(_data[right], sm)))
-            {
-                while (right &amp;lt; _dataSize)
-                {
-                    right = (right &amp;lt;&amp;lt; 1) + 1;
-                    var tmp = _oracle.Operate(_data[right], sm);
-                    if (!predicate(tmp)) continue;
-                    sm = tmp;
-                    right--;
-                }
-
-                return right + 1 - _dataSize;
-            }
-
-            sm = _oracle.Operate(_data[right], sm);
-        } while ((right &amp;amp; -right) != right);
-
-        return 0;
-    }
-
-    private void Update(int k) =&amp;gt; _data[k] = _oracle.Operate(_data[k &amp;lt;&amp;lt; 1], _data[(k &amp;lt;&amp;lt; 1) + 1]);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-</content>
-		<summary>&lt;p&gt;AtCoder Beginner Contest 339の復習記事です。&lt;/p&gt;</summary>
 	</entry>
 </feed>
